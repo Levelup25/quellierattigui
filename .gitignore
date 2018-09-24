@@ -2,3 +2,5 @@
 build
 bin
 nbproject
+.vscode
+gmon.out
