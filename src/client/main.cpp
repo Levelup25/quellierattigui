@@ -23,65 +23,65 @@ int main(int argc,char* argv[])
     
     testSFML();
     
-    if (argc == 2) {
+    for (int i=1;i<argc;i++) {
         // Livrable 1.1
-        if (strcmp(argv[1],"hello")==0) { 
+        if (strcmp(argv[i],"hello")==0) { 
             cout << "Bonjour le monde !" << endl;
         }
 
         // Livrable 1.final
-        if (strcmp(argv[1],"state")==0) { 
+        if (strcmp(argv[i],"state")==0) { 
 
         }
 
         // Livrable 2.1
-        if (strcmp(argv[1],"render")==0) { 
+        if (strcmp(argv[i],"render")==0) { 
 
         }
 
         // Livrable 2.2
-        if (strcmp(argv[1],"engine")==0) { 
+        if (strcmp(argv[i],"engine")==0) { 
 
         }
 
         // Livrable 2.final
-        if (strcmp(argv[1],"random_ai")==0) { 
+        if (strcmp(argv[i],"random_ai")==0) { 
 
         }
 
         // Livrable 3.1
-        if (strcmp(argv[1],"heuristic_ai")==0) { 
+        if (strcmp(argv[i],"heuristic_ai")==0) { 
 
         }
 
         // Livrable 3.final
-        if (strcmp(argv[1],"rollback")==0) { 
+        if (strcmp(argv[i],"rollback")==0) { 
 
         }
 
-        if (strcmp(argv[1],"deep_ai")==0) { 
+        if (strcmp(argv[i],"deep_ai")==0) { 
 
         }
 
         // Livrable 4.1
-        if (strcmp(argv[1],"thread")==0) { 
+        if (strcmp(argv[i],"thread")==0) { 
 
         }
 
-        if (strcmp(argv[1],"record")==0) { 
+        if (strcmp(argv[i],"record")==0) { 
 
         }
 
-        if (strcmp(argv[1],"play")==0) { 
+        if (strcmp(argv[i],"play")==0) { 
 
         }
 
         // Livrables 4.2 et 4.final
-        if (strcmp(argv[1],"listen")==0) { 
+        if (strcmp(argv[i],"listen")==0) { 
 
         }
 
-        if (strcmp(argv[1],"network")==0) { 
+        if (strcmp(argv[i],"network")==0) { 
 
         }
     }
