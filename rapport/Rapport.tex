@@ -2,12 +2,22 @@
 \usepackage{times}
 \usepackage[francais]{babel}
 \usepackage[utf8x]{inputenc}
+
 \usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage[shortlabels]{enumitem}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{\baselineskip}
+
 \usepackage{amsmath}
 \usepackage{amssymb}
+
 \usepackage{graphicx}
+\graphicspath{ {res/} }
+
 \usepackage{pdfpages}
 \usepackage{pdflscape}
+
 \usepackage{listings}
 \usepackage{longtable}
 \lstset{literate=
@@ -58,18 +68,18 @@
 
 \vspace*{2cm}
 
-\begin{center}\textbf{\Huge Projet Logiciel Transversal}\end{center}{\Large \par}
+\begin{center}\textbf{\Huge Projet }\end{center}{\Large \par}
 
-\begin{center}\textbf{\large Auteurs}\end{center}{\large \par}
+\begin{center}\textbf{\large Attigui Youness - Quellier Louis}\end{center}{\large \par}
 
 \vspace{2cm}
 
-%\begin{figure}[h]
-%\begin{center}
-%\includegraphics[width=\textwidth]{exemple.png}
-%\caption{\label{pacmangame}Exemple du jeu}
-%\end{center}
-%\end{figure}
+  \begin{figure}[ht]
+        \centering
+        \includegraphics[width=\textwidth]{dofus.png}
+        \caption{Exemple du jeu}
+    \end{figure}
+
 
 \clearpage
 
@@ -80,15 +90,66 @@
 \end{titlepage}
 
 \clearpage
-\section{Présentation Générale}
+\section {Présentation Générale}
 
 \subsection{Archétype}
-
+    Pour ce projet nous nous inspirons du gameplay du jeu \href{http://www.jeuxvideo.com/jeux/pc/00013232-dofus.htm}{"Dofus"}. Il s'agit d'un jeu de stratégie au tour par tour où il est possible de se déplacer de carte en carte pour combattre des ennemis et gagner de l'équipement et de l'expérience permettant d'améliorer son personnage et d'avancer plus loin dans le monde.
 
 \subsection{Règles du jeu}
+    Vous incarnez un héros auto-proclamé qui vient de fonder sa guilde d'aventurier dans le but de libérer le royaume de l'emprise du roi démon.
+    
+    % description aventure (début, victoire, défaite)
+    L'aventure commence avec une arme basique au choix, combiné avec un élément de prédilection. Ces armes pourront être trouvées ou achetées et gagneront des niveaux selon le nombres d'ennemis vaincus, débloquant ainsi des bonus de statistiques ainsi que des nouvelles actions, pouvant également être améliorées. Ce niveau est inhérent à l'arme et sera alors conservé lors du transfert vers un autre personnage. 
 
+	% description stats des personnages / ennemis
+    Tous les personnages du jeu possèdent en plus de leur arme un ensemble de caractéristiques propres à chacun :
+    \begin{itemize}[noitemsep,topsep=0pt]
+        \item pv : point de vie (s'ils tombent à 0, le personnage meurt et lâche son matériel sur la case sur laquelle il se trouvait)
+        \item pa : point d'action (permettent d'utiliser les actions associées aux armes)
+        \item pm : point de mouvement (permettent de se déplacer)
+        \item éléments : eau/terre/feu/air
+    \end{itemize}
+
+    % description map
+    Les différents éléments (l'eau, la terre, le feu et l'air) font partie intégrante de ce monde et sont au coeur des stratégies de combat. Des bonus et malus de type élémentaire sont appliqués selon l'attribut du joueur, de son arme et de la case du terrain sur lequel il est placé. C'est à vous d'utiliser le terrain et vos compétences à votre avantage.
+    
+    % mouvement map et mission
+    Au cours de l'histoire, d'autres aventuriers rejoindront votre guilde afin de vous aider dans votre tâche et vous serez engagés pour effectuer des missions variées afin de gagner de l'or pour acheter de nouvelles armes ou recruter de nouveaux mercenaires.
+    
+    En tant que guilde indépendante vous êtes libres de vous déplacer à votre guise dans le royaume pour accomplir les missions dans l'ordre que vous souhaitez. Néanmoins, dans ce monde il n'existe pas d'organisme régissant les missions, celles-ci vous sont confiées lorsque vous arrivez sur les lieux.
+    
+    Par moments vous devrez défendre une ville contre une attaque adverse, parfois vous devrez protéger un voyageur surpris par une embuscade ennemie ou souhaitant une escorte, d'autres fois vous devrez détruire une base fortifiée mais le plus souvent vous devrez simplement éliminer tous les adversaires présents dans une zone.
+    
+    % description terrain
+    Un combat se déroule sur un des terrains de la carte du monde. Chaque terrain est composé d'un nombre fixe de cases. Chaque case est associé à un élément (eau, terre, feu, air, neutre). Le déploiement des personnages s'effectue au début du combat sur une zones prédéterminée dépendant de la direction d'arrivée, la disposition à l'intérieur de cette zone étant libre.
+    
+    % réputation
+    Au cours de votre aventure votre guilde acquiert une certaine notoriété dans le royaume, celle-ci peut aussi bien être positive que négative, influant sur vos interactions avec les différents personnages. Au fil de vos rencontres, vous pourrez refuser certaines missions pour diverses raisons mais cela fera diminuer votre réputation. Le degré de réussite ou d'échec des missions acceptées modifiera également cette réputation.
+    
+    Si votre guilde a trop mauvaise réputation, vous serez exécutés en tant que criminel et l'aventure s'arrête là. Au contraire une très bonne réputation vous donne le privilège d'accéder à l'armurerie de Vulc contenant des armes surpuissantes mais également excessivement chères...
+    
+    % fin de l'aventure et recommencer aventure
+     L'aventure se termine après avoir vaincu l'un des 4 boss élémentaires, vous permettant débloquer son arme associée. Vous pouvez cependant perdre la partie si tous vos personnages meurent ou via le système de réputation. Les armes rencontrées au cours de l'aventure seront stockées dans votre armurerie personnelle, vous permettant de choisir une nouvelle arme de départ en recommençant une aventure. La progression d'expérience est perdue mais l'or est gardé entre chaque partie.
+    
 \subsection{Ressources}
 
+    \begin{figure}[ht]
+        \centering
+        \includegraphics[width=\textwidth]{persos.png}
+        \caption{Tileset personnages}
+    \end{figure}
+    
+    \begin{figure}[ht]
+        \centering
+        \includegraphics{monsters-32x32.png}
+        \caption{Exemple tileset ennemis}
+    \end{figure}
+    
+    \begin{figure}[ht]
+        \centering
+        \includegraphics[width=\textwidth]{field.png}
+        \caption{Exemple tileset terrain}
+    \end{figure}
 
 
 \clearpage
@@ -173,3 +234,4 @@
 %\end{landscape}
 
 \end{document}
+
