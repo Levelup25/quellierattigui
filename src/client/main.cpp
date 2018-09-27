@@ -30,58 +30,58 @@ int main(int argc,char* argv[])
         }
 
         // Livrable 1.final
-        if (strcmp(argv[i],"state")==0) { 
+        else if (strcmp(argv[i],"state")==0) { 
 
         }
 
         // Livrable 2.1
-        if (strcmp(argv[i],"render")==0) { 
+        else if (strcmp(argv[i],"render")==0) { 
 
         }
 
         // Livrable 2.2
-        if (strcmp(argv[i],"engine")==0) { 
+        else if (strcmp(argv[i],"engine")==0) { 
 
         }
 
         // Livrable 2.final
-        if (strcmp(argv[i],"random_ai")==0) { 
+        else if (strcmp(argv[i],"random_ai")==0) { 
 
         }
 
         // Livrable 3.1
-        if (strcmp(argv[i],"heuristic_ai")==0) { 
+        else if (strcmp(argv[i],"heuristic_ai")==0) { 
 
         }
 
         // Livrable 3.final
-        if (strcmp(argv[i],"rollback")==0) { 
+        else if (strcmp(argv[i],"rollback")==0) { 
 
         }
 
-        if (strcmp(argv[i],"deep_ai")==0) { 
+        else if (strcmp(argv[i],"deep_ai")==0) { 
 
         }
 
         // Livrable 4.1
-        if (strcmp(argv[i],"thread")==0) { 
+        else if (strcmp(argv[i],"thread")==0) { 
 
         }
 
-        if (strcmp(argv[i],"record")==0) { 
+        else if (strcmp(argv[i],"record")==0) { 
 
         }
 
-        if (strcmp(argv[i],"play")==0) { 
+        else if (strcmp(argv[i],"play")==0) { 
 
         }
 
         // Livrables 4.2 et 4.final
-        if (strcmp(argv[i],"listen")==0) { 
+        else if (strcmp(argv[i],"listen")==0) { 
 
         }
 
-        if (strcmp(argv[i],"network")==0) { 
+        else if (strcmp(argv[i],"network")==0) { 
 
         }
     }
