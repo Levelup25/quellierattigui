@@ -3,14 +3,17 @@
 
 state::Inventory::Inventory() {}
 
-void state::Inventory::addItem(Item& item) {
-  std::unique_ptr pi = &item;
-  content.push_back(pi);
+namespace state {
+
+void Inventory::addItem(Item& item) {
+  // TODO
 }
 
-void state::Inventory::delItem(std::size_t i) {
+void Inventory::delItem(std::size_t i) {
   if (i >= content.size()) {
     // TODO: trhow error
   }
   content.erase(content.begin() + i);
 }
+
+}  // namespace state
