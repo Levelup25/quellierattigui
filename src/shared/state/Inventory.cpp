@@ -4,8 +4,8 @@
 state::Inventory::Inventory() {}
 
 void state::Inventory::addItem(Item& item) {
-  // TODO
-  // content.push_back(item);
+  std::unique_ptr pi = &item;
+  content.push_back(pi);
 }
 
 void state::Inventory::delItem(std::size_t i) {

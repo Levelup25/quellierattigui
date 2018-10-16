@@ -3,14 +3,13 @@
 #define STATE__TEAM__H
 
 #include <string>
+#include <stdlib.h>
 #include <vector>
 #include <memory>
-#include <stdlib.h>
 
 namespace state {
   class Inventory;
   class Character;
-  class Weapon;
 }
 
 #include "Inventory.h"
@@ -24,6 +23,8 @@ namespace state {
     // Attributes
   public:
     std::string name;
+  private:
+    std::size_t indexMainCharacter;
   protected:
     std::vector<std::unique_ptr<Character>> characters;
     std::unique_ptr<Inventory> inventory;
@@ -32,8 +33,6 @@ namespace state {
     Team (std::string name = "");
     void addCharacter (Character& character);
     void delCharacter (int i);
-    void addWeapon (Weapon& weapon);
-    void delWeapon (std::size_t i);
     Character& getMainCharacter ();
     Character& getCharacter (std::size_t i);
     void setMainCharacter (std::size_t i);
