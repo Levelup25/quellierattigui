@@ -2,6 +2,7 @@
 #ifndef STATE__CELL__H
 #define STATE__CELL__H
 
+#include <stdlib.h>
 
 namespace state {
   class Character;
@@ -18,8 +19,8 @@ namespace state {
     // Associations
     // Attributes
   private:
-    int i;
-    int j;
+    std::size_t i;
+    std::size_t j;
     Character& character;
     ContentType tileContent;
     ElementType tileElement;

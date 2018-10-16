@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <memory>
+#include <stdlib.h>
 
 namespace state {
   class Item;
@@ -23,7 +24,7 @@ namespace state {
   public:
     Inventory ();
     void addItem (Item& item);
-    void delItem (int i);
+    void delItem (std::size_t i);
     // Setters and Getters
   };
 

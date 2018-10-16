@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <memory>
+#include <stdlib.h>
 
 namespace state {
   class Inventory;
@@ -29,10 +30,10 @@ namespace state {
     void addCharacter (Character& character);
     void delCharacter (int i);
     void addWeapon (Weapon& weapon);
-    void delWeapon (int i);
+    void delWeapon (std::size_t i);
     Character& getMainCharacter ();
-    Character& getCharacter (int i);
-    void setMainCharacter (int i);
+    Character& getCharacter (std::size_t i);
+    void setMainCharacter (std::size_t i);
     Inventory& getInventory ();
     // Setters and Getters
     const std::vector<std::unique_ptr<Character>>& getCharacters() const;

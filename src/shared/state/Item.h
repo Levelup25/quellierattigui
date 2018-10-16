@@ -7,6 +7,9 @@ namespace state {
 
   /// class Item - 
   class Item {
+    // Operations
+  public:
+    Item ();
     // Setters and Getters
   };
 

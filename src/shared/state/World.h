@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <memory>
+#include <stdlib.h>
 
 namespace state {
   class Cell;
@@ -25,8 +26,8 @@ namespace state {
   public:
     World (int row, int column);
     std::vector<std::vector<std::unique_ptr<Cell>>> getGrid ();
-    Cell& getCell (int i, int j);
-    void setCell (int i, int j, Cell& cell);
+    Cell& getCell (std::size_t i, std::size_t j);
+    void setCell (std::size_t i, std::size_t j, Cell& cell);
     // Setters and Getters
   };
 

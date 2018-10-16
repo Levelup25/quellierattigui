@@ -2,6 +2,7 @@
 #ifndef STATE__CHARACTER__H
 #define STATE__CHARACTER__H
 
+#include <stdlib.h>
 #include <memory>
 
 namespace state {
@@ -18,8 +19,8 @@ namespace state {
     // Associations
     // Attributes
   private:
-    int i;
-    int j;
+    std::size_t i;
+    std::size_t j;
     CharacterType type;
     int pvCurrent;
     int pvMax;
