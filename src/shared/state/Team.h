@@ -25,6 +25,7 @@ namespace state {
     std::unique_ptr<Inventory> inventory;
     // Operations
   public:
+    Team ();
     void addCharacter (Character& character);
     void delCharacter (int i);
     void addWeapon (Weapon& weapon);
@@ -32,7 +33,7 @@ namespace state {
     Character& getMainCharacter ();
     Character& getCharacter (int i);
     void setMainCharacter (int i);
-    Inventory getInventory ();
+    Inventory& getInventory ();
     // Setters and Getters
     const std::vector<std::unique_ptr<Character>>& getCharacters() const;
     void setCharacters(const std::vector<std::unique_ptr<Character>>& characters);

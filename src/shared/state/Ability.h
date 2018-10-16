@@ -19,17 +19,17 @@ namespace state {
     // Attributes
   private:
     int pa;
-    int damage;
-    int cooldownInitial;
-    int cooldownActual;
     ElementType element;
-    ZoneType target;
-    int minTarget;
-    int maxTarget;
-    ZoneType zone;
-    int minZone;
-    int maxZone;
+    int damage;
     int damageReduce;
+    int cooldownInitial;
+    int cooldownCurrent;
+    ZoneType target;
+    int targetMin;
+    int targetMax;
+    ZoneType zone;
+    int zoneMin;
+    int zoneMax;
     // Operations
   public:
     Ability (int pa, int damage, ElementType element);

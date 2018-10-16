@@ -22,6 +22,7 @@ namespace state {
     std::vector<std::unique_ptr<Team>> teams;
     // Operations
   public:
+    Fight ();
     void deploy (Team& team);
     void delQuest (int i);
     // Setters and Getters

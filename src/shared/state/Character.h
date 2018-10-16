@@ -21,15 +21,16 @@ namespace state {
     int i;
     int j;
     CharacterType type;
-    int pv;
-    int pvmax;
-    int pm;
-    int pmmax;
-    int pa;
-    int pamax;
+    int pvCurrent;
+    int pvMax;
+    int pmCurrent;
+    int pmMax;
+    int paCurrent;
+    int paMax;
     std::unique_ptr<Weapon> weapon;
     // Operations
   public:
+    Character (CharacterType type, int pv, int pa, int pm);
     void setWeapon (Weapon& weapon);
     void removeWeapon ();
     // Setters and Getters

@@ -21,6 +21,7 @@ namespace state {
     std::vector<std::unique_ptr<Item>> content;
     // Operations
   public:
+    Inventory ();
     void addItem (Item& item);
     void delItem (int i);
     // Setters and Getters
