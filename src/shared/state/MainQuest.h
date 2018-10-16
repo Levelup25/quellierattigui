@@ -2,12 +2,9 @@
 #ifndef STATE__MAINQUEST__H
 #define STATE__MAINQUEST__H
 
-
-namespace state {
-  class Item;
-}
-
-#include "Item.h"
+#include <string>
+#include <vector>
+#include <memory>
 
 namespace state {
 
@@ -15,25 +12,25 @@ namespace state {
   class MainQuest {
     // Attributes
   protected:
-    string description;
+    std::string description;
     bool finished;
     int xpReward;
     int goldReward;
-    vector<Item> ItemsReward;
+    std::vector<std::unique_ptr<Item>> ItemsReward;
     // Operations
   public:
-    String getDescription ();
+    std::string getDescription ();
     bool checkFinished ();
     // Setters and Getters
-    void setDescription(const string& description);
+    void setDescription(const std::string& description);
     bool getFinished() const;
     void setFinished(bool finished);
     int getXpReward() const;
     void setXpReward(int xpReward);
     int getGoldReward() const;
     void setGoldReward(int goldReward);
-    const vector<Item>& getItemsReward() const;
-    void setItemsReward(const vector<Item>& ItemsReward);
+    const std::vector<std::unique_ptr<Item>>& getItemsReward() const;
+    void setItemsReward(const std::vector<std::unique_ptr<Item>>& ItemsReward);
   };
 
 };

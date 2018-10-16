@@ -2,13 +2,13 @@
 #ifndef STATE__FIGHT__H
 #define STATE__FIGHT__H
 
+#include <vector>
+#include <memory>
 
 namespace state {
   class Team;
-  class SideQuest;
 }
 
-#include "SideQuest.h"
 #include "Team.h"
 
 namespace state {
@@ -19,13 +19,10 @@ namespace state {
     // Attributes
   private:
     int turn;
-    vector<Team&> teams;
-    vector<SideQuest&> quest;
+    std::vector<std::unique_ptr<Team>> teams;
     // Operations
   public:
     void deploy (Team& team);
-    void getQuest (SideQuest& quest);
-    void updateQuest (int i);
     void delQuest (int i);
     // Setters and Getters
   };

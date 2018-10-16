@@ -2,6 +2,8 @@
 #ifndef STATE__WORLD__H
 #define STATE__WORLD__H
 
+#include <vector>
+#include <memory>
 
 namespace state {
   class Cell;
@@ -18,11 +20,11 @@ namespace state {
   private:
     int row;
     int column;
-    vector<vector<Cell&>> grid;
+    std::vector<std::vector<std::unique_ptr<Cell>>> grid;
     // Operations
   public:
     World (int row, int column);
-    vector<vector<Cell&>> getGrid ();
+    std::vector<std::vector<std::unique_ptr<Cell>>> getGrid ();
     Cell& getCell (int i, int j);
     void setCell (int i, int j, Cell& cell);
     // Setters and Getters

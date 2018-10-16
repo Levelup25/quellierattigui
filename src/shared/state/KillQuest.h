@@ -2,6 +2,8 @@
 #ifndef STATE__KILLQUEST__H
 #define STATE__KILLQUEST__H
 
+#include <map>
+#include <string>
 
 namespace state {
   class MainQuest;
@@ -17,12 +19,12 @@ namespace state {
     // Associations
     // Attributes
   private:
-    map<CharacterType,int> const goal;
-    map<CharacterType,int> kills;
+    std::map<CharacterType,int> const goal;
+    std::map<CharacterType,int> kills;
     // Operations
   public:
-    KillQuest (map<CharacterType,int> goal, map<CharacterType,int> kills);
-    String getDescription ();
+    KillQuest (std::map<CharacterType,int> goal, std::map<CharacterType,int> kills);
+    std::string getDescription ();
     bool checkFinished ();
     // Setters and Getters
   };

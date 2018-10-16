@@ -2,6 +2,7 @@
 #ifndef STATE__CHARACTER__H
 #define STATE__CHARACTER__H
 
+#include <memory>
 
 namespace state {
   class Weapon;
@@ -26,7 +27,7 @@ namespace state {
     int pmmax;
     int pa;
     int pamax;
-    Weapon& weapon;
+    std::unique_ptr<Weapon> weapon;
     // Operations
   public:
     void setWeapon (Weapon& weapon);

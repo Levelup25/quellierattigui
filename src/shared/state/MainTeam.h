@@ -2,6 +2,8 @@
 #ifndef STATE__MAINTEAM__H
 #define STATE__MAINTEAM__H
 
+#include <vector>
+#include <memory>
 
 namespace state {
   class MainQuest;
@@ -18,7 +20,7 @@ namespace state {
     // Associations
     // Attributes
   private:
-    vector<MainQuest&> quests;
+    std::vector<std::unique_ptr<MainQuest>> quests;
     // Operations
   public:
     void addQuest (MainQuest& quest);

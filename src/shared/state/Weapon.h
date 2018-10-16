@@ -2,16 +2,16 @@
 #ifndef STATE__WEAPON__H
 #define STATE__WEAPON__H
 
+#include <vector>
+#include <memory>
 
 namespace state {
   class Ability;
-  class StatModifier;
   class Item;
 }
 
 #include "ElementType.h"
 #include "Item.h"
-#include "StatModifier.h"
 #include "Ability.h"
 
 namespace state {
@@ -21,16 +21,13 @@ namespace state {
     // Associations
     // Attributes
   private:
-    vector<Ability&> abilities;
+    std::vector<std::unique_ptr<Ability>> abilities;
     ElementType element;
-    vector<StatModifier&> stats;
     // Operations
   public:
     Weapon (ElementType element);
     void addAbility (Ability& ability);
     void delAbility (int i);
-    void addStat (StatModifier& stat);
-    void delStat (int i);
     // Setters and Getters
   };
 

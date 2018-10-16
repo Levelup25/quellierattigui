@@ -2,6 +2,7 @@
 #ifndef STATE__ABILITY__H
 #define STATE__ABILITY__H
 
+#include <vector>
 
 namespace state {
   class Cell;
@@ -32,8 +33,8 @@ namespace state {
     // Operations
   public:
     Ability (int pa, int damage, ElementType element);
-    vector<Cell&> getPossibleTarget ();
-    vector<Cell&> getEffectZone (Cell& target);
+    std::vector<Cell&> getPossibleTarget ();
+    std::vector<Cell&> getEffectZone (Cell& target);
     void setCooldown (int initial);
     void setTarget (ZoneType targetZone, int min, int max);
     void setZone (ZoneType zone, int min, int max, int reduce);

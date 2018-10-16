@@ -2,10 +2,12 @@
 #ifndef STATE__TEAM__H
 #define STATE__TEAM__H
 
+#include <vector>
+#include <memory>
 
 namespace state {
-  class Character;
   class Inventory;
+  class Character;
   class Weapon;
 }
 
@@ -19,8 +21,8 @@ namespace state {
     // Associations
     // Attributes
   protected:
-    vector<Character&> characters;
-    Inventory& inventory;
+    std::vector<std::unique_ptr<Character>> characters;
+    std::unique_ptr<Inventory> inventory;
     // Operations
   public:
     void addCharacter (Character& character);
@@ -32,9 +34,9 @@ namespace state {
     void setMainCharacter (int i);
     Inventory getInventory ();
     // Setters and Getters
-    const vector<Character&>& getCharacters() const;
-    void setCharacters(const vector<Character&>& characters);
-    void setInventory(const Inventory&& inventory);
+    const std::vector<std::unique_ptr<Character>>& getCharacters() const;
+    void setCharacters(const std::vector<std::unique_ptr<Character>>& characters);
+    void setInventory(const std::unique_ptr<Inventory>& inventory);
   };
 
 };

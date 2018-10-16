@@ -2,6 +2,8 @@
 #ifndef STATE__INVENTORY__H
 #define STATE__INVENTORY__H
 
+#include <vector>
+#include <memory>
 
 namespace state {
   class Item;
@@ -16,11 +18,11 @@ namespace state {
     // Associations
     // Attributes
   private:
-    vector<Item&> content;
+    std::vector<std::unique_ptr<Item>> content;
     // Operations
   public:
-    addItem (Item& item);
-    delItem (int i);
+    void addItem (Item& item);
+    void delItem (int i);
     // Setters and Getters
   };
 
