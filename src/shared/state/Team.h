@@ -2,6 +2,7 @@
 #ifndef STATE__TEAM__H
 #define STATE__TEAM__H
 
+#include <string>
 #include <vector>
 #include <memory>
 #include <stdlib.h>
@@ -21,12 +22,14 @@ namespace state {
   class Team {
     // Associations
     // Attributes
+  public:
+    std::string name;
   protected:
     std::vector<std::unique_ptr<Character>> characters;
     std::unique_ptr<Inventory> inventory;
     // Operations
   public:
-    Team ();
+    Team (std::string name = "");
     void addCharacter (Character& character);
     void delCharacter (int i);
     void addWeapon (Weapon& weapon);
