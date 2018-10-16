@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <memory>
+#include <stdlib.h>
 
 namespace state {
   class Ability;
@@ -27,7 +28,7 @@ namespace state {
   public:
     Weapon (ElementType element);
     void addAbility (Ability& ability);
-    void delAbility (int i);
+    void delAbility (std::size_t i);
     // Setters and Getters
   };
 

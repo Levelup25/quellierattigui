@@ -32,7 +32,7 @@ namespace state {
   public:
     Team (std::string name = "");
     void addCharacter (Character& character);
-    void delCharacter (int i);
+    void delCharacter (std::size_t i);
     Character& getMainCharacter ();
     Character& getCharacter (std::size_t i);
     void setMainCharacter (std::size_t i);

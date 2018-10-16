@@ -10,7 +10,6 @@ namespace state {
 
 #include "ContentType.h"
 #include "ElementType.h"
-#include "Character.h"
 
 namespace state {
 
@@ -21,12 +20,11 @@ namespace state {
   private:
     std::size_t i;
     std::size_t j;
-    Character& character;
     ContentType tileContent;
     ElementType tileElement;
     // Operations
   public:
-    Cell (int i, int j);
+    Cell (std::size_t i, std::size_t j);
     void setElement (ElementType element);
     void setContent (ContentType content);
     void setCharacter (Character& character);

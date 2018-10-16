@@ -21,11 +21,11 @@ namespace state {
   private:
     int row;
     int column;
-    std::vector<std::vector<std::unique_ptr<Cell>>> grid;
+    std::vector<std::unique_ptr<Cell>> grid;
     // Operations
   public:
     World (int row, int column);
-    std::vector<std::vector<std::unique_ptr<Cell>>> getGrid ();
+    std::vector<std::unique_ptr<Cell>> getGrid ();
     Cell& getCell (std::size_t i, std::size_t j);
     void setCell (std::size_t i, std::size_t j, Cell& cell);
     // Setters and Getters

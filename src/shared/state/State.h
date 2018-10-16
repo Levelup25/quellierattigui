@@ -16,7 +16,7 @@ namespace state {
     // Associations
     // Attributes
   private:
-    World& world;
+    World world;
     bool fight;
   protected:
     int epoch     = 0;
