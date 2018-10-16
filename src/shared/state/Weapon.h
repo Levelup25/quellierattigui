@@ -26,7 +26,7 @@ namespace state {
     ElementType element;
     // Operations
   public:
-    Weapon (ElementType element);
+    Weapon (ElementType element = neutral);
     void addAbility (Ability& ability);
     void delAbility (std::size_t i);
     // Setters and Getters

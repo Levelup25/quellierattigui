@@ -24,7 +24,7 @@ namespace state {
     ElementType tileElement;
     // Operations
   public:
-    Cell (std::size_t i, std::size_t j);
+    Cell (std::size_t i, std::size_t j, ElementType element = neutral, ContentType content = nothing);
     void setElement (ElementType element);
     void setContent (ContentType content);
     void setCharacter (Character& character);

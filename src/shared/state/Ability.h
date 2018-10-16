@@ -19,8 +19,8 @@ namespace state {
     // Attributes
   private:
     int pa;
-    ElementType element;
     int damage;
+    ElementType element;
     int damageReduce;
     int cooldownInitial;
     int cooldownCurrent;
@@ -32,7 +32,7 @@ namespace state {
     int zoneMax;
     // Operations
   public:
-    Ability (int pa, int damage, ElementType element);
+    Ability (int pa = 1, int damage = 1, ElementType element = neutral);
     std::vector<Cell&> getPossibleTarget ();
     std::vector<Cell&> getEffectZone (Cell& target);
     void setCooldown (int initial);

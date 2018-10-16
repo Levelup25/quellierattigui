@@ -7,9 +7,11 @@
 #include <stdlib.h>
 
 namespace state {
+  class Team;
   class Cell;
 }
 
+#include "Team.h"
 #include "Cell.h"
 
 namespace state {
@@ -22,6 +24,7 @@ namespace state {
     int row;
     int column;
     std::vector<std::unique_ptr<Cell>> grid;
+    std::unique_ptr<Team> teams;
     // Operations
   public:
     World (int row, int column);

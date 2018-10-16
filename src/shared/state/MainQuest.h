@@ -19,6 +19,7 @@ namespace state {
     std::vector<std::unique_ptr<Item>> ItemsReward;
     // Operations
   public:
+    MainQuest ();
     std::string getDescription ();
     bool checkFinished ();
     // Setters and Getters

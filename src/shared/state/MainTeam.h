@@ -24,6 +24,7 @@ namespace state {
     std::vector<std::unique_ptr<MainQuest>> quests;
     // Operations
   public:
+    MainTeam ();
     void addQuest (MainQuest& quest);
     void delQuest (std::size_t i);
     // Setters and Getters

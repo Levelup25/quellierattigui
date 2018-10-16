@@ -23,7 +23,7 @@ namespace state {
     int epochRate     = 15;
     // Operations
   public:
-    State (World& world);
+    State ();
     World& getWorld ();
     // Setters and Getters
     int getEpoch() const;

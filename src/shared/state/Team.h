@@ -21,11 +21,9 @@ namespace state {
   class Team {
     // Associations
     // Attributes
-  public:
-    std::string name;
-  private:
-    std::size_t indexMainCharacter;
   protected:
+    std::string name;
+    std::size_t indexMainCharacter;
     std::vector<std::unique_ptr<Character>> characters;
     std::unique_ptr<Inventory> inventory;
     // Operations
@@ -38,6 +36,10 @@ namespace state {
     void setMainCharacter (std::size_t i);
     Inventory& getInventory ();
     // Setters and Getters
+    const std::string& getName() const;
+    void setName(const std::string& name);
+    const std::size_t& getIndexMainCharacter() const;
+    void setIndexMainCharacter(const std::size_t& indexMainCharacter);
     const std::vector<std::unique_ptr<Character>>& getCharacters() const;
     void setCharacters(const std::vector<std::unique_ptr<Character>>& characters);
     void setInventory(const std::unique_ptr<Inventory>& inventory);
