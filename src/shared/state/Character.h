@@ -40,6 +40,8 @@ namespace state {
     void setName (std::string name);
     CharacterType getType ();
     void setType ();
+    std::size_t getI ();
+    std::size_t getJ ();
     // Setters and Getters
   };
 

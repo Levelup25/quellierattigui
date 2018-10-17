@@ -3,12 +3,11 @@
 namespace state {
 
 World::World(std::size_t i, std::size_t j) {
+  // Initialize the grid with the good dimension and fill them with empty cell
   grid.resize(i);
   for (std::size_t k = 0; k < i; k++) {
     grid[k].resize(j);
-  }
-  for (std::size_t l = 0; l < j; l++) {
-    for (std::size_t k = 0; k < j; k++) {
+    for (std::size_t l = 0; l < j; l++) {
       Cell* cell = new Cell();
       grid[k][l] = cell;
     }
@@ -27,13 +26,27 @@ void World::setCell(std::size_t i, std::size_t j, Cell* cell) {
   grid[i][j] = cell;
 }
 
-// Character* World::getCharacter (std::size_t i, std::size_t j) {
-//     for (std::vector<Character*>::iterator c = characters.begin() ; c !=
-//     characters.end(); ++c) {
-//         if (c->i==i && *c->j==j) return c;
-//     }
-//     return nullptr;
-// }
-// std::vector<Character*> World::getCharacters ();
+void World::addCharacter(Character* character) {
+  characters.push_back(character);
+}
+
+void World::delCharacter(std::size_t i, std::size_t j) {
+  for (auto c = characters.begin(); c != characters.end(); ++c) {
+    if ((*c)->getI() == i && (*c)->getJ() == j)
+      characters.erase(c);
+  }
+}
+
+Character* World::getCharacter(std::size_t i, std::size_t j) {
+  for (auto c = characters.begin(); c != characters.end(); ++c) {
+    if ((*c)->getI() == i && (*c)->getJ() == j)
+      return *c;
+  }
+  return nullptr;
+}
+
+std::vector<Character*> World::getCharacters() {
+  return characters;
+}
 
 }  // namespace state

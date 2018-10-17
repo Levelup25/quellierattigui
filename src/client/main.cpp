@@ -21,11 +21,26 @@ int main(int argc, char* argv[]) {
 
     // Livrable 1.final
     else if (strcmp(argv[i], "state") == 0) {
-        World world(10,10);
-        Cell* cell=world.getCell(2,2);
-        cell->setElement(fire);
-        cout<<cell->getElement()<<endl;
-        world.setCell(2,2,cell);
+      World world(10, 10);
+      Cell* cell = world.getCell(2, 2);
+      cell->setElement(fire);
+      world.setCell(2, 2, cell);
+      cout << (world.getCell(2, 2))->getElement() << endl;
+      Character* c1 = new Character(1, 2);
+      Character* c2 = new Character(3, 6);
+      Character* c3 = new Character(0, 4);
+      Character* c4 = new Character(5, 3);
+      world.addCharacter(c1);
+      world.addCharacter(c2);
+      world.addCharacter(c3);
+      world.addCharacter(c4);
+      cout << world.getCharacters().size() << endl;
+      world.delCharacter(0, 4);
+      cout << world.getCharacters().size() << endl;
+      world.delCharacter(1, 5);
+      cout << world.getCharacters().size() << endl;
+      world.delCharacter(1, 2);
+      cout << world.getCharacters().size() << endl;
     }
 
     // Livrable 2.1

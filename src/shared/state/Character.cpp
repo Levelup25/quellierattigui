@@ -18,4 +18,12 @@ Character::Character(std::size_t i,
   this->pmMax = pm;
 }
 
+std::size_t Character::getI() {
+  return i;
+}
+
+std::size_t Character::getJ() {
+  return j;
+}
+
 }  // namespace state
