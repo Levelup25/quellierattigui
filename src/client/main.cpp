@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
         world.addCharacter(c1);
         world.addCharacter(c2);
         world.addCharacter(c3);
-        world.addCharacter(c4);
+        world.addCharacter(c4);b
         cout<<world.getCharacters().size()<<endl;
         world.delCharacter(0,4);
         cout<<world.getCharacters().size()<<endl;

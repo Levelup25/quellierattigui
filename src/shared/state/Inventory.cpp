@@ -9,11 +9,14 @@ void Inventory::addItem(Item& item) {
   // TODO
 }
 
-void Inventory::delItem(std::size_t i) {
-  if (i >= content.size()) {
-    // TODO: trhow error
+void Inventory::delItem(Item* pItem) {
+  for (auto it = content.begin(); it != content.end(); it++) {
+    Item* pi = *it;
+    if (pi == pItem) {
+      content.erase(it);
+      return;
+    }
   }
-  content.erase(content.begin() + i);
 }
 
 }  // namespace state

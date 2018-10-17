@@ -3,7 +3,6 @@
 #define STATE__WEAPON__H
 
 #include <vector>
-#include <stdlib.h>
 
 namespace state {
   class Ability;
@@ -27,7 +26,7 @@ namespace state {
   public:
     Weapon (ElementType element = neutral, std::vector<Ability*> abilities = {});
     void addAbility (Ability& ability);
-    void delAbility (std::size_t i);
+    void delAbility (Ability* pAbility);
     std::vector<Ability*> getAbilities ();
     // Setters and Getters
   };
