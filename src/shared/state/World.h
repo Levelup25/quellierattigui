@@ -2,13 +2,13 @@
 #ifndef STATE__WORLD__H
 #define STATE__WORLD__H
 
-#include <vector>
-#include <memory>
 #include <stdlib.h>
+#include <vector>
 
 namespace state {
-  class Team;
+  class Character;
   class Cell;
+  class Team;
 }
 
 #include "Team.h"
@@ -21,16 +21,18 @@ namespace state {
     // Associations
     // Attributes
   private:
-    int row;
-    int column;
-    std::vector<std::unique_ptr<Cell>> grid;
-    std::unique_ptr<Team> teams;
+    std::size_t I;
+    std::size_t J;
+    std::vector<std::vector<Cell*>> grid;
+    std::vector<Character*> characters;
     // Operations
   public:
-    World (int row, int column);
-    std::vector<std::unique_ptr<Cell>> getGrid ();
-    Cell& getCell (std::size_t i, std::size_t j);
-    void setCell (std::size_t i, std::size_t j, Cell& cell);
+    World (std::size_t i, std::size_t j);
+    std::vector<std::vector<Cell*>> getGrid ();
+    Cell* getCell (std::size_t i, std::size_t j);
+    void setCell (std::size_t i, std::size_t j, Cell* cell);
+    Character* getCharacter (std::size_t i, std::size_t j);
+    std::vector<Character*> getCharacters ();
     // Setters and Getters
   };
 

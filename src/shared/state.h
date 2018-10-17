@@ -19,6 +19,5 @@
 #include "state/MainQuest.h"
 #include "state/MainTeam.h"
 #include "state/KillQuest.h"
-#include "state/Element.h"
-#include "state/TabElement.h"
+#include "state/Position.h"
 #endif

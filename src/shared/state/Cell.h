@@ -2,11 +2,6 @@
 #ifndef STATE__CELL__H
 #define STATE__CELL__H
 
-#include <stdlib.h>
-
-namespace state {
-  class Character;
-}
 
 #include "ContentType.h"
 #include "ElementType.h"
@@ -18,16 +13,13 @@ namespace state {
     // Associations
     // Attributes
   private:
-    std::size_t i;
-    std::size_t j;
     ContentType tileContent;
     ElementType tileElement;
     // Operations
   public:
-    Cell (std::size_t i, std::size_t j, ElementType element = neutral, ContentType content = nothing);
+    Cell (ElementType element = neutral, ContentType content = nothing);
     void setElement (ElementType element);
     void setContent (ContentType content);
-    void setCharacter (Character& character);
     // Setters and Getters
   };
 
