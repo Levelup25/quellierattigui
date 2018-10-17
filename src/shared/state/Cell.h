@@ -19,7 +19,9 @@ namespace state {
   public:
     Cell (ElementType element = neutral, ContentType content = nothing);
     void setElement (ElementType element);
+    ElementType getElement ();
     void setContent (ContentType content);
+    ContentType getContent ();
     // Setters and Getters
   };
 
