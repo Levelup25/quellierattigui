@@ -27,7 +27,12 @@ namespace state {
         grid[i][j]=cell;
     }
     
-    //Character* getCharacter (std::size_t i, std::size_t j);
-    //std::vector<Character*> getCharacters ();
+    Character* World::getCharacter (std::size_t i, std::size_t j) {
+        for (std::vector<Character*>::iterator c = characters.begin() ; c != characters.end(); ++c) {
+            if (c->i==i && *c->j==j) return c;
+        }
+        return nullptr;
+    }
+    //std::vector<Character*> World::getCharacters ();
 
 }  // namespace state
