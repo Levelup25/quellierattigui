@@ -6,11 +6,11 @@
 namespace state {
 
   enum ElementType {
-    neutral     = 0,
-    water     = 1,
-    earth     = 2,
-    fire     = 3,
-    wind     = 4
+    neutral,
+    water,
+    earth,
+    fire,
+    wind
   };
 
 };

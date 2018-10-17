@@ -6,9 +6,9 @@
 namespace state {
 
   enum CharacterType {
-    human     = 0,
-    goblin     = 1,
-    witch     = 2
+    human,
+    goblin,
+    witch
   };
 
 };

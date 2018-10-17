@@ -21,7 +21,7 @@ namespace state {
     // Operations
   public:
     Inventory ();
-    void addItem (Item& item);
+    void addItem (Item* item);
     void delItem (Item* pItem);
     // Setters and Getters
   };

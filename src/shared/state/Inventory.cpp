@@ -5,8 +5,8 @@ state::Inventory::Inventory() {}
 
 namespace state {
 
-void Inventory::addItem(Item& item) {
-  // TODO
+void Inventory::addItem(Item* item) {
+  content.push_back(item);
 }
 
 void Inventory::delItem(Item* pItem) {

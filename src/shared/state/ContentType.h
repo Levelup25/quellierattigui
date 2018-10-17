@@ -6,10 +6,10 @@
 namespace state {
 
   enum ContentType {
-    nothing     = 0,
-    house     = 1,
-    tree     = 2,
-    mountain     = 3
+    nothing,
+    house,
+    tree,
+    mountain
   };
 
 };

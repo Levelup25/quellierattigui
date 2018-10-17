@@ -22,7 +22,7 @@ namespace state {
   private:
     std::size_t i;
     std::size_t j;
-    std::string nom;
+    std::string name;
     CharacterType type;
     int pvCurrent;
     int pvMax;
@@ -36,6 +36,10 @@ namespace state {
     Character (std::size_t i, std::size_t j, std::string nom = "", CharacterType type = human, int pv = 3, int pa = 3, int pm = 3);
     void setWeapon (Weapon& weapon);
     void removeWeapon ();
+    std::string getName ();
+    void setName (std::string name);
+    CharacterType getType ();
+    void setType ();
     // Setters and Getters
   };
 
