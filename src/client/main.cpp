@@ -21,6 +21,11 @@ int main(int argc, char* argv[]) {
 
     // Livrable 1.final
     else if (strcmp(argv[i], "state") == 0) {
+        World world(10,10);
+        Cell* cell=world.getCell(2,2);
+        cell->setElement(fire);
+        cout<<cell->getElement()<<endl;
+        world.setCell(2,2,cell);
     }
 
     // Livrable 2.1
