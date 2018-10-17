@@ -16,14 +16,14 @@ namespace state {
     // Associations
     // Attributes
   private:
-    World& world;
+    World world;
     bool fight;
   protected:
     int epoch     = 0;
     int epochRate     = 15;
     // Operations
   public:
-    State (World& world);
+    State ();
     World& getWorld ();
     // Setters and Getters
     int getEpoch() const;

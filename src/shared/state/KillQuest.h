@@ -23,7 +23,7 @@ namespace state {
     std::map<CharacterType,int> kills;
     // Operations
   public:
-    KillQuest (std::map<CharacterType,int> goal, std::map<CharacterType,int> kills);
+    KillQuest ();
     std::string getDescription ();
     bool checkFinished ();
     // Setters and Getters

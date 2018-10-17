@@ -3,6 +3,7 @@
 #define STATE__CHARACTER__H
 
 #include <stdlib.h>
+#include <string>
 #include <memory>
 
 namespace state {
@@ -21,6 +22,7 @@ namespace state {
   private:
     std::size_t i;
     std::size_t j;
+    std::string nom;
     CharacterType type;
     int pvCurrent;
     int pvMax;
@@ -31,7 +33,7 @@ namespace state {
     std::unique_ptr<Weapon> weapon;
     // Operations
   public:
-    Character (CharacterType type, int pv, int pa, int pm);
+    Character (std::size_t i, std::size_t j, std::string nom = "", CharacterType type = human, int pv = 3, int pa = 3, int pm = 3);
     void setWeapon (Weapon& weapon);
     void removeWeapon ();
     // Setters and Getters

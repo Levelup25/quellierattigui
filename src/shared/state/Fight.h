@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <memory>
+#include <stdlib.h>
 
 namespace state {
   class Team;
@@ -24,7 +25,7 @@ namespace state {
   public:
     Fight ();
     void deploy (Team& team);
-    void delQuest (int i);
+    void delQuest (std::size_t i);
     // Setters and Getters
   };
 
