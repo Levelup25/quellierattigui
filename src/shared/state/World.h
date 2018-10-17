@@ -31,6 +31,8 @@ namespace state {
     std::vector<std::vector<Cell*>> getGrid ();
     Cell* getCell (std::size_t i, std::size_t j);
     void setCell (std::size_t i, std::size_t j, Cell* cell);
+    void addCharacter (Character* character);
+    void delCharacter (std::size_t i, std::size_t j);
     Character* getCharacter (std::size_t i, std::size_t j);
     std::vector<Character*> getCharacters ();
     // Setters and Getters

@@ -15,9 +15,11 @@ namespace state {
   class State {
     // Associations
     // Attributes
+  public:
+    bool isInventoryOpened     = false;
   private:
     World world;
-    bool fight;
+    bool isFighting     = false;
   protected:
     int epoch     = 0;
     int epochRate     = 15;

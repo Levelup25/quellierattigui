@@ -6,7 +6,6 @@
 namespace state {
 
   enum ZoneType {
-    close     = 0,
     circle     = 1,
     line     = 2,
     diag     = 3
