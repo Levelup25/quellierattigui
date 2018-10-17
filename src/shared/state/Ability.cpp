@@ -1,18 +1,9 @@
 #include "Ability.h"
 
-namespace state {
-Ability::Ability(int pa,
-                 int damage,
-                 ElementType element,
-                 int cooldown,
-                 ZoneType targetType,
-                 int targetMin,
-                 int targetMax,
-                 ZoneType effectType,
-                 int effectMin,
-                 int effectMax) {
-  cooldownCurrent = cooldown;
-  damageReduce = 0;
-}
+using namespace std;
+using namespace state;
 
-}  // namespace state
+Ability::Ability(string name, int pa, int damage, ElementType element, int cooldown, ZoneType targetType, int targetMin, int targetMax, ZoneType effectType, int effectMin, int effectMax) {
+    cooldownInitial = cooldown;
+    damageReduce = 1;
+}

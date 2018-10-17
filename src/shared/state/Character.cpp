@@ -1,38 +1,30 @@
 #include "Character.h"
 
-namespace state {
+using namespace std;
+using namespace state;
 
-Character::Character(std::size_t i,
-                     std::size_t j,
-                     std::string nom,
-                     CharacterType type,
-                     int pv,
-                     int pa,
-                     int pm) {
-  this->i = i;
-  this->j = j;
-  this->name = nom;
-  this->type = type;
-  this->pvMax = pv;
-  this->paMax = pa;
-  this->pmMax = pm;
+Character::Character(size_t i, size_t j, string nom, CharacterType type, int pv, int pa, int pm) {
+    this->i = i;
+    this->j = j;
+    this->name = nom;
+    this->type = type;
+    this->pvMax = pv;
+    this->paMax = pa;
+    this->pmMax = pm;
 }
 
-// Getter
-std::size_t Character::getI() {
-  return i;
+size_t Character::getI() {
+    return i;
 }
 
-std::size_t Character::getJ() {
-  return j;
+size_t Character::getJ() {
+    return j;
 }
 
-// Setter
-void Character::setI(std::size_t i) {
-  this->i = i;
-}
-void Character::setJ(std::size_t j) {
-  this->j = j;
+void Character::setI(size_t i) {
+    this->i = i;
 }
 
-}  // namespace state
+void Character::setJ(size_t j) {
+    this->j = j;
+}

@@ -1,52 +1,51 @@
 #include "World.h"
 
-namespace state {
+using namespace std;
+using namespace state;
 
-World::World(std::size_t i, std::size_t j) {
-  // Initialize the grid with the good dimension and fill them with empty cell
-  grid.resize(i);
-  for (std::size_t k = 0; k < i; k++) {
-    grid[k].resize(j);
-    for (std::size_t l = 0; l < j; l++) {
-      Cell* cell = new Cell();
-      grid[k][l] = cell;
+World::World(size_t i, size_t j) {
+    // Initialize the grid with the good dimension and fill them with empty cell
+    I = i;
+    J = j;
+    grid.resize(i);
+    for (size_t k = 0; k < i; k++) {
+        grid[k].resize(j);
+        for (size_t l = 0; l < j; l++) {
+            Cell* cell = new Cell();
+            grid[k][l] = cell;
+        }
     }
-  }
 }
 
-std::vector<std::vector<Cell*>> World::getGrid() {
-  return grid;
+vector<vector<Cell*>> World::getGrid() {
+    return grid;
 }
 
-Cell* World::getCell(std::size_t i, std::size_t j) {
-  return grid[i][j];
+Cell* World::getCell(size_t i, size_t j) {
+    return grid[i][j];
 }
 
-void World::setCell(std::size_t i, std::size_t j, Cell* cell) {
-  grid[i][j] = cell;
+void World::setCell(size_t i, size_t j, Cell* cell) {
+    grid[i][j] = cell;
 }
 
 void World::addCharacter(Character* character) {
-  characters.push_back(character);
+    characters.push_back(character);
 }
 
-void World::delCharacter(std::size_t i, std::size_t j) {
-  for (auto c = characters.begin(); c != characters.end(); ++c) {
-    if ((*c)->getI() == i && (*c)->getJ() == j)
-      characters.erase(c);
-  }
+void World::delCharacter(size_t i, size_t j) {
+    for (auto c = characters.begin(); c != characters.end(); ++c) {
+        if ((*c)->getI() == i && (*c)->getJ() == j) characters.erase(c);
+    }
 }
 
-Character* World::getCharacter(std::size_t i, std::size_t j) {
-  for (auto c = characters.begin(); c != characters.end(); ++c) {
-    if ((*c)->getI() == i && (*c)->getJ() == j)
-      return *c;
-  }
-  return nullptr;
+Character* World::getCharacter(size_t i, size_t j) {
+    for (auto c = characters.begin(); c != characters.end(); ++c) {
+        if ((*c)->getI() == i && (*c)->getJ() == j) return *c;
+    }
+    return nullptr;
 }
 
-std::vector<Character*> World::getCharacters() {
-  return characters;
+vector<Character*> World::getCharacters() {
+    return characters;
 }
-
-}  // namespace state

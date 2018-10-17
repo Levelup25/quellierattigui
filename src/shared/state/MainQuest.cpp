@@ -1,8 +1,8 @@
-#include "Item.h"
+#include "MainQuest.h"
 
 using namespace std;
 using namespace state;
 
-Item::Item() {
+MainQuest::MainQuest() {
 
 }

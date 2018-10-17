@@ -1,8 +1,8 @@
-#include "Item.h"
+#include "Fight.h"
 
 using namespace std;
 using namespace state;
 
-Item::Item() {
+Fight::Fight() {
 
 }

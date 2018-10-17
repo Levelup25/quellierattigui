@@ -1,8 +1,8 @@
-#include "Item.h"
+#include "KillQuest.h"
 
 using namespace std;
 using namespace state;
 
-Item::Item() {
+KillQuest::KillQuest() {
 
 }
