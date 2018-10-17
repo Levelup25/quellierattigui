@@ -20,6 +20,8 @@ namespace state {
     Cell (ElementType element = neutral, ContentType content = nothing);
     void setElement (ElementType element);
     void setContent (ContentType content);
+    ElementType getElement ();
+    ContentType getContent ();
     // Setters and Getters
   };
 

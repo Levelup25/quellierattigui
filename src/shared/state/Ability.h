@@ -24,15 +24,15 @@ namespace state {
     int damageReduce;
     int cooldownInitial;
     int cooldownCurrent;
-    ZoneType target;
+    ZoneType targetType;
     int targetMin;
     int targetMax;
-    ZoneType zone;
-    int zoneMin;
-    int zoneMax;
+    ZoneType effectType;
+    int effectMin;
+    int effectMax;
     // Operations
   public:
-    Ability (int pa = 1, int damage = 1, ElementType element = neutral);
+    Ability (int pa = 1, int damage = 1, ElementType element = neutral, int cooldown = 0, ZoneType targetType = circle, int targetMin = 1, int targetMax = 1, ZoneType effectType = circle, int effectMin = 0, int effectMax = 0);
     std::vector<Cell&> getPossibleTarget ();
     std::vector<Cell&> getEffectZone (Cell& target);
     void setCooldown (int initial);

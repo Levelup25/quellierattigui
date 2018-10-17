@@ -3,7 +3,6 @@
 #define STATE__WEAPON__H
 
 #include <vector>
-#include <memory>
 #include <stdlib.h>
 
 namespace state {
@@ -22,13 +21,14 @@ namespace state {
     // Associations
     // Attributes
   private:
-    std::vector<std::unique_ptr<Ability>> abilities;
+    std::vector<Ability*> abilities;
     ElementType element;
     // Operations
   public:
-    Weapon (ElementType element = neutral);
+    Weapon (ElementType element = neutral, std::vector<Ability*> abilities = {});
     void addAbility (Ability& ability);
     void delAbility (std::size_t i);
+    std::vector<Ability*> getAbilities ();
     // Setters and Getters
   };
 
