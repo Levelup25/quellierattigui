@@ -34,6 +34,8 @@ namespace state {
     // Operations
   public:
     Character (std::size_t i, std::size_t j, std::string nom = "", CharacterType type = human, int pv = 3, int pa = 3, int pm = 3);
+    std::size_t getI ();
+    std::size_t getJ ();
     void setWeapon (Weapon& weapon);
     void removeWeapon ();
     // Setters and Getters

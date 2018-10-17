@@ -11,6 +11,14 @@ namespace state {
         this->paMax=pa;
         this->pmMax=pm;
     }
+    
+    std::size_t Character::getI() {
+        return i;
+    }
+    
+    std::size_t Character::getJ() {
+        return j;
+    }
 
 }
 

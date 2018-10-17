@@ -8,10 +8,9 @@
 namespace state {
   class Character;
   class Cell;
-  class Team;
 }
 
-#include "Team.h"
+#include "Character.h"
 #include "Cell.h"
 
 namespace state {

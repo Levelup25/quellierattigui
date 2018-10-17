@@ -27,12 +27,25 @@ namespace state {
         grid[i][j]=cell;
     }
     
+    void World::addCharacter (Character* character) {
+        characters.push_back(character);
+    }
+    
+    void World::delCharacter (std::size_t i, std::size_t j) {
+        for (auto c = characters.begin() ; c != characters.end(); ++c) {
+            if ((*c)->getI()==i && (*c)->getJ()==j) characters.erase(c);
+        }
+    }
+    
     Character* World::getCharacter (std::size_t i, std::size_t j) {
-        for (std::vector<Character*>::iterator c = characters.begin() ; c != characters.end(); ++c) {
-            if (c->i==i && *c->j==j) return c;
+        for (auto c = characters.begin() ; c != characters.end(); ++c) {
+            if ((*c)->getI()==i && (*c)->getJ()==j) return *c;
         }
         return nullptr;
     }
-    //std::vector<Character*> World::getCharacters ();
+    
+    std::vector<Character*> World::getCharacters () {
+        return characters;
+    }
 
 }  // namespace state
