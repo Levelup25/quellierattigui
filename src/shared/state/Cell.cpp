@@ -2,11 +2,9 @@
 
 namespace state {
 
-    Cell::Cell (std::size_t i, std::size_t j, ElementType element, ContentType content) {
-            this->i=i;
-            this->j=j;
-            this->tileContent=nothing;
-            this->tileElement=neutral;
-    }
-
+Cell::Cell(ElementType element, ContentType content) {
+  this->tileContent = nothing;
+  this->tileElement = neutral;
 }
+
+}  // namespace state

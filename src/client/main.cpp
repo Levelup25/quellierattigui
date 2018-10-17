@@ -21,8 +21,6 @@ int main(int argc, char* argv[]) {
 
     // Livrable 1.final
     else if (strcmp(argv[i], "state") == 0) {
-        TabElement tab;
-        Cell cell(1,1);
     }
 
     // Livrable 2.1
