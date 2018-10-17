@@ -2,8 +2,8 @@
 #ifndef STATE__CHARACTER__H
 #define STATE__CHARACTER__H
 
-#include <string>
 #include <stdlib.h>
+#include <string>
 #include <memory>
 
 namespace state {
@@ -20,9 +20,9 @@ namespace state {
     // Associations
     // Attributes
   private:
-    std::string nom;
     std::size_t i;
     std::size_t j;
+    std::string nom;
     CharacterType type;
     int pvCurrent;
     int pvMax;
@@ -33,7 +33,7 @@ namespace state {
     std::unique_ptr<Weapon> weapon;
     // Operations
   public:
-    Character (std::string nom = "", std::size_t i, std::size_t j, CharacterType type = human, int pv = 3, int pa = 3, int pm = 3);
+    Character (std::size_t i, std::size_t j, std::string nom = "", CharacterType type = human, int pv = 3, int pa = 3, int pm = 3);
     void setWeapon (Weapon& weapon);
     void removeWeapon ();
     // Setters and Getters
