@@ -46,3 +46,11 @@ void Ability::setEffect(ZoneType effectZone, int min, int max, int reduce) {
 int Ability::getDamage() {
     return damage;
 }
+
+unsigned int Ability::getPa() {
+    return pa;
+}
+
+string Ability::getName() {
+    return name;
+}

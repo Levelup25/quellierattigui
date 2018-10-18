@@ -5,6 +5,7 @@ using namespace state;
 
 Weapon::Weapon(ElementType element, std::string name, std::vector<Ability*> abilities) {
     this->element = element;
+    this->name = name;
     this->abilities = abilities;
 }
 
@@ -20,4 +21,8 @@ void Weapon::delAbility(Ability* ability) {
 
 vector<Ability*> Weapon::getAbilities() {
     return abilities;
+}
+
+string Weapon::getName() {
+    return name;
 }
