@@ -29,8 +29,10 @@ void World::setCell(size_t i, size_t j, Cell* cell) {
   grid[i][j] = cell;
 }
 
-void World::addCharacter(Character* character) {
+void World::addCharacter(Character* character, std::size_t i, std::size_t j) {
   characters.push_back(character);
+  character->setI(i);
+  character->setJ(j);
 }
 
 void World::delCharacter(size_t i, size_t j) {
