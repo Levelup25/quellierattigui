@@ -64,3 +64,23 @@ void Character::removeWeapon() {
 unsigned int Character::getPv() {
   return pvCurrent;
 }
+
+unsigned int Character::getPm() {
+  return pmCurrent;
+}
+
+unsigned int Character::getPa() {
+  return paCurrent;
+}
+
+void Character::removePv(int pv) {
+  pvCurrent -= pv;
+}
+
+void Character::removePm(int pm) {
+  pmCurrent -= pm;
+}
+
+void Character::removePa(int pa) {
+  paCurrent -= pa;
+}
