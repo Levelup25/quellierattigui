@@ -8,6 +8,14 @@ State::State() {
     world = w;
 }
 
+void State::setFight(bool b) {
+    isFighting = b;
+}
+
+void State::setInventory(bool b) {
+    isInventoryOpened = b;
+}
+
 World* State::getWorld() {
     return world;
 }

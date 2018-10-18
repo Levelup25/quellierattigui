@@ -3,6 +3,7 @@
 using namespace std;
 using namespace state;
 
-Fight::Fight() {
-
+Fight::Fight(Team* main, Team* opponent) {
+    this->main = main;
+    this->opponent = opponent;
 }
