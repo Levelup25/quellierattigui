@@ -156,25 +156,83 @@
 \section{Description et conception des états}
 
 \subsection{Description des états}
+Un état de jeu est formé de la carte du monde possédant des cases d'un certain élément, repérées par ses coordonnées dans le monde, pouvant éventuellement posséder un obstacle infranchissable inamovible ou un personnage mobile. Ce personnage fait partie d'une équipe possédant un inventaire contenant des objets, ceux-ci étant principalement des armes pouvant être équipées individuellement et possédant diverses capacités et caractéristiques. L'équipe du joueur peut combattre et obtenir des quêtes fournissant des récompenses lors de leur accomplissement.
+Le détail des attributs et opérations des différentes classes est présenté ci-dessous.
+
+\subsubsection{State}
+\begin{itemize}
+\item L'état possède un pointeur sur la carte du monde qui contient toutes les information lié au terrain et à la position des personnages
+\item L'heure correspondant au nombre de fronts d'horloge, ainsi que la vitesse à laquelle le jeu est actualisé permet d'associer un temps à chaque état du jeu
+\item Un booléen indique si le joueur est en train de combattre ou non, et un autre indique si l'inventaire est ouvert
+\end{itemize}
+
+\subsubsection{World}
+\begin{itemize}
+\item Le monde possède un nombre prédéfini de lignes et de colonnes pour la carte
+\item Il possède aussi un tableau à 2 dimensions de toutes les cellules du jeu
+\item La liste des personnages est aussi stocké
+\end{itemize}
+
+\subsubsection{Cell}
+\begin{itemize}
+\item La case doit contenir un élément choisi parmis une énumération et peut contenir un obstacle infranchissable par les personnages
+\end{itemize}
+
+\subsubsection{Character}
+\begin{itemize}
+\item Les coordonnées du personnage
+\item Le personnage a un nom et appartient à une race qui sera utile par la suite pour les quêtes notamment
+\item Il possède également des attributs utiles au combat lui permettant de se déplacer, d'attaquer et de pouvoir encaisser des attaques
+\item Chaque personnage possède enfin une arme lui permettant d'effectuer diverses actions
+\end{itemize}
+
+\subsubsection{Team}
+\begin{itemize}
+\item L'équipe comprend l'ensemble des personnages aptes au combat. Seul un combattant représente l'équipe hors combat lors du déplacement sur la carte du monde, et seul un nombre limité de personnages peuvent combattre simultanément
+\item L'équipe stocke également l'inventaire des objets récupérés, pouvant être affectées aux différents personnages de l'équipe
+\end{itemize}
+
+\subsubsection{Inventory}
+\begin{itemize}
+\item L'inventaire comprend différents objets, entre autres les armes affectées aux combattants et celles en réserve
+\end{itemize}
+
+\subsubsection{Weapon}
+\begin{itemize}
+\item L'arme peut posséder un nom
+\item L'arme possède des capacités permettant d'attaquer ou de se défendre
+\item Elle possède également un élément de prédilection répercuté sur son porteur
+\end{itemize}
+
+\subsubsection{Ability}
+\begin{itemize}
+\item Les habilités peuvent avoir un nom, coûtent un certain nombre de points d'action, infligent un certain nombre de dégâts (ou de soin en cas de valeur négative) et possèdent éventuellement un temps de recharge de la capacité
+\item Elles possèdent un élément répercuté sur l'attaque en elle même. Elle sera souvent du même élément que l'arme, mais pourront parfois différer
+\item L'attaque possède une portée effective, et une zone d'effet dépendant du type d'arme utilisé
+\item Une réduction de dégât peut être envisagée pour les attaques de zone afin de moins affecter les personnages éloignés du point d'impact
+\end{itemize}
+
+\subsubsection{Fight}
+\begin{itemize}
+\item Le combat enregistre le nombre de tours passés afin de définir la prochaine équipe à jouer
+\item Il possède les différentes équipes se battant afin que chaque membre de l'équipe puisse se déployer avant de commencer
+\item Il possède également des quêtes permettant de gagner des récompenses en cas de réussite
+\end{itemize}
+
+\subsubsection{MainQuest}
+\begin{itemize}
+\item Les quêtes principales s'obtiennent avant d'entrer en phase de combat en effectuant certaines actions et peuvent se décliner en divers objectifs à remplir à travers plusieurs combats à travers ses classes filles
+\end{itemize}
 
 
 \subsection{Conception Logiciel}
-
-
-%\begin{landscape}
-%\begin{figure}[p]
-%\includegraphics[width=0.9\paperheight]{state.pdf}
-%\caption{\label{uml:state}Diagramme des classes d'état.} 
-%\end{figure}
-%\end{landscape}
-
-\clearpage
-\section{Rendu: Stratégie et Conception}
-
-\subsection{Stratégie de rendu d'un état}
-
-
-\subsection{Conception logiciel}
+Le diagramme des classes pour les états est présenté en Figure 5 : 
+\begin{itemize}
+\item Les classes en vert contiennent les information globales sur le déroulement du jeu et permettent de déterminer l'état actuel du jeu
+\item Les classes en jaune caractérisent les personnages et le terrain dans lequel ils évoluent
+\item Les classes en bleu déterminent les actions possibles par les différents personnages
+\item Les classes en rouge permettent d'implémenter les phases de combat ainsi que les quêtes, permettant d'obtenir du matériel ou de nouveaux membres d'équipe.
+\end{itemize}
 
 %\begin{landscape}
 %\begin{figure}[p]
