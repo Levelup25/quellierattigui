@@ -10,8 +10,11 @@ Character::Character(string nom, CharacterType type, int pv, int pa, int pm) {
   this->name = nom;
   this->type = type;
   this->pvMax = pv;
+  this->pvCurrent = pv;
   this->paMax = pa;
+  this->paCurrent = pa;
   this->pmMax = pm;
+  this->pmCurrent = pm;
 }
 
 size_t Character::getI() {

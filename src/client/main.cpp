@@ -78,7 +78,7 @@ int main(int argc, char* argv[]) {
 
       cout << "Le vilain peut infliger " << ability2->getDamage()
            << "dégat(s) avec sa capacité " << endl;
-      cout << "Le second personnage a " << villain->getPv() << " pv" << endl;
+      cout << "Le second personnage a " << heros->getPv() << " pv" << endl;
 
       cout << "Suppression du personnage" << endl;
       world->delCharacter(3, 6);
@@ -89,7 +89,6 @@ int main(int argc, char* argv[]) {
       cout << "Fin du combat" << endl;
       state.setFight(false);
 
-    
     }  // Livrable 2->1
     else if (strcmp(argv[i], "render") == 0) {
     }  // Livrable 2->2
