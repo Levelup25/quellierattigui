@@ -5,6 +5,8 @@
 #include <fstream>
 #include <iostream>
 
+#include "renderTest.h"
+
 #include "state.h"
 
 using namespace std;
@@ -17,7 +19,9 @@ int main(int argc, char* argv[]) {
     // Livrable 1->1
     if (strcmp(argv[i], "hello") == 0) {
       cout << "Bonjour le monde !" << endl;
-    }  // Livrable 1->final
+    }
+
+    // Livrable 1->final
     else if (strcmp(argv[i], "state") == 0) {
       cout << "création d'un état" << endl;
       State state;
@@ -110,22 +114,32 @@ int main(int argc, char* argv[]) {
       cout << "Fin du combat" << endl;
       state.setFight(false);
 
-    }  // Livrable 2->1
+    }
+
+    // Livrable 2->1
     else if (strcmp(argv[i], "render") == 0) {
-    }  // Livrable 2->2
+      testRender();
+    }
+
+    // Livrable 2->2
     else if (strcmp(argv[i], "engine") == 0) {
     }  // Livrable 2->final
+
     else if (strcmp(argv[i], "random_ai") == 0) {
     }  // Livrable 3->1
+
     else if (strcmp(argv[i], "heuristic_ai") == 0) {
     }  // Livrable 3->final
+
     else if (strcmp(argv[i], "rollback") == 0) {
     } else if (strcmp(argv[i], "deep_ai") == 0) {
     }  // Livrable 4->1
+
     else if (strcmp(argv[i], "thread") == 0) {
     } else if (strcmp(argv[i], "record") == 0) {
     } else if (strcmp(argv[i], "play") == 0) {
     }  // Livrables 4->2 et 4->final
+
     else if (strcmp(argv[i], "listen") == 0) {
     } else if (strcmp(argv[i], "network") == 0) {
     }
