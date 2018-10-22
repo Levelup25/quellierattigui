@@ -7,10 +7,3 @@
 
 void testRender();
 bool posInRec(sf::Vector2f pos, sf::RectangleShape rec);
-
-// In Game Windows
-class IGWindow {
-  int x, y, w, h;
-  std::string title;
-  sf::Vector2f getPosItem(int i, int j);
-};

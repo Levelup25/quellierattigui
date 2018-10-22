@@ -1,8 +1,7 @@
 #include "renderTest.h"
+#include "IGWindow.h"
 
 void testRender() {
-  sf::RenderWindow window(sf::VideoMode(700, 700), "Test rendu");
-
   // resources
   sf::Color cBlue = sf::Color(42, 103, 146);
   sf::Color white = sf::Color(255, 255, 255);
@@ -15,6 +14,17 @@ void testRender() {
       "/home/louis/Documents/3A-IS/quellierattigui/res/font/roboto/"
       "Roboto-Regular.ttf");
 
+  sf::RenderWindow window(sf::VideoMode(700, 700), "Test rendu");
+
+  // Custom windows test
+  IGWindow wTest1;
+  wTest1.setPosition(sf::Vector2f(10, 350));
+  wTest1.setTitle("Test 1");
+
+  IGWindow wTest2;
+  wTest2.setPosition(sf::Vector2f(10 + 10 + 100, 350));
+  wTest2.setTitle("Test 2");
+
   // Inventory properties
   sf::Vector2f posInv = sf::Vector2f(10, 10);
   size_t nbRow = 10, nbCol = 30;
@@ -23,8 +33,6 @@ void testRender() {
   float bodyPadding = 10;
   float caseSize = 16;
   float barBtnSize = 20;
-
-  // Inventory event state properties
 
   // calcultated properties of inventory
   sf::Vector2f posBody2Inv =
@@ -119,6 +127,8 @@ void testRender() {
 
     window.clear();
 
+    window.draw(wTest1);
+    window.draw(wTest2);
     window.draw(rec);
     window.draw(recHeader);
     window.draw(closeBtn);

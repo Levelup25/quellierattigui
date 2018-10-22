@@ -1,0 +1,79 @@
+#include "IGWindow.h"
+
+void IGWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+  target.draw(sfHeader);
+  target.draw(sfTitle);
+  target.draw(sfCloseBtn);
+  target.draw(sfContent);
+}
+
+IGWindow::IGWindow() {
+  // resources
+  sf::Color cBlue = sf::Color(42, 103, 146);
+  sf::Color white = sf::Color(255, 255, 255);
+  sf::Color black = sf::Color(0, 0, 0);
+  sf::Color grey = sf::Color(100, 100, 100);
+  sf::Color snow = sf::Color(240, 240, 240);
+
+  roboto.loadFromFile(
+      "/home/louis/Documents/3A-IS/quellierattigui/res/font/roboto/"
+      "Roboto-Regular.ttf");
+
+  pos = sf::Vector2f(10, 10);
+  size = sf::Vector2f(100, 100);
+
+  // Content
+  sfContent.setPosition(pos + sf::Vector2f(0, headerHeight));
+  sfContent.setSize(size - sf::Vector2f(0, headerHeight));
+  sfContent.setFillColor(cBlue);
+
+  // Header
+  sfHeader.setPosition(pos);
+  sfHeader.setSize(sf::Vector2f(size.x, headerHeight));
+  sfHeader.setFillColor(snow);
+
+  // Title
+  sfTitle.setPosition(pos + sf::Vector2f(barPad, 0));
+  sfTitle.setFont(roboto);
+  sfTitle.setString(title);
+  sfTitle.setCharacterSize(20);
+  sfTitle.setFillColor(black);
+
+  // Close btn
+  sf::Vector2f posRCloseBtn = sf::Vector2f(size.x - barPad - barBtnSize, 5);
+  sfCloseBtn.setPosition(pos + posRCloseBtn);
+  sfCloseBtn.setSize(sf::Vector2f(barBtnSize, barBtnSize));
+  sfCloseBtn.setFillColor(sf::Color::Red);
+}
+
+void IGWindow::setPosition(sf::Vector2f newPos) {
+  pos = newPos;
+  sfContent.setPosition(pos + sf::Vector2f(0, headerHeight));
+  sfHeader.setPosition(pos);
+  sfTitle.setPosition(pos + sf::Vector2f(barPad, 0));
+  sf::Vector2f posRCloseBtn = sf::Vector2f(size.x - barPad - barBtnSize, 5);
+  sfCloseBtn.setPosition(pos + posRCloseBtn);
+}
+
+sf::Vector2f IGWindow::getPosition() {
+  return pos;
+}
+
+void IGWindow::setSize(sf::Vector2f newSize) {
+  size = newSize;
+  sfContent.setSize(size - sf::Vector2f(0, headerHeight));
+  sfHeader.setSize(sf::Vector2f(size.x, headerHeight));
+}
+
+sf::Vector2f IGWindow::getSize() {
+  return size;
+}
+
+void IGWindow::setTitle(std::string newTitle) {
+  title = newTitle;
+  sfTitle.setString(title);
+}
+
+sf::String IGWindow::getTitle() {
+  return title;
+}
