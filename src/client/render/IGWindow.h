@@ -16,6 +16,10 @@ class IGWindow : public sf::Drawable {
   sf::Font roboto;
 
   // Event
+  sf::Vector2f posLastPressed;
+  sf::Vector2f posLastRealeased;
+  void startClosing();
+  bool isClosing = false;
 
   virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
@@ -27,11 +31,11 @@ class IGWindow : public sf::Drawable {
   sf::Text sfTitle;
 
   IGWindow();
+  ~IGWindow();
 
   bool posInRec(sf::Vector2f pos, sf::RectangleShape rec);
   bool isMouseOver();
   void receiveEvent(sf::Event);
-  void close();
 
   // getter setter
   void setPosition(sf::Vector2f newPos);
@@ -40,6 +44,7 @@ class IGWindow : public sf::Drawable {
   sf::Vector2f getSize();
   void setTitle(std::string newTitle);
   sf::String getTitle();
+  bool getIsClosing();
 };
 
 #endif  // IGWINDOW_H

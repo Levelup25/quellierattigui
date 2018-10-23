@@ -102,15 +102,35 @@ bool IGWindow::posInRec(sf::Vector2f pos, sf::RectangleShape rec) {
 void IGWindow::receiveEvent(sf::Event event) {
   if (event.type == sf::Event::MouseButtonPressed) {
     if (event.mouseButton.button == sf::Mouse::Left) {
+      sf::Vector2f posMouse{(float)event.mouseButton.x,
+                            (float)event.mouseButton.y};
+      posLastPressed = posMouse;
     }
   }
 
   else if (event.type == sf::Event::MouseButtonReleased) {
     if (event.mouseButton.button == sf::Mouse::Left) {
+      sf::Vector2f posMouse{(float)event.mouseButton.x,
+                            (float)event.mouseButton.y};
+      posLastRealeased = posMouse;
+
+      if (posInRec(posLastPressed, sfCloseBtn) &&
+          posInRec(posLastRealeased, sfCloseBtn)) {
+        startClosing();
+      }
     }
   }
 }
 
-void IGWindow::close() {
-  // TODO
+void IGWindow::startClosing() {
+  std::string s;
+  s = title;
+  std::cout << s << " se ferme" << std::endl;
+  isClosing = true;
 }
+
+bool IGWindow::getIsClosing() {
+  return isClosing;
+}
+
+IGWindow::~IGWindow() {}
