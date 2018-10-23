@@ -4,7 +4,7 @@ using namespace std;
 using namespace state;
 
 State::State() {
-    World* w = new World(10, 10);
+    World *w = new World(12, 12);
     world = w;
 }
 
@@ -16,7 +16,7 @@ void State::setInventory(bool b) {
     isInventoryOpened = b;
 }
 
-World* State::getWorld() {
+World *State::getWorld() {
     return world;
 }
 

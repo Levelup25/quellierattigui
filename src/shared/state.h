@@ -7,6 +7,7 @@
 #include "state/Cell.h"
 #include "state/Item.h"
 #include "state/Inventory.h"
+#include "state/Direction.h"
 #include "state/CharacterType.h"
 #include "state/ZoneType.h"
 #include "state/Ability.h"
