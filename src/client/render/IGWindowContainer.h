@@ -12,7 +12,8 @@ class IGWindowContainer : public sf::Drawable {
  public:
   void add(IGWindow* pwindow);
   void remove(IGWindow* pwindow);
-  void transmit(sf::Event event);
+  void putAtEnd(IGWindow* pwindow);
+  void transmit(sf::Event event, sf::Vector2f mousePos);
   std::vector<IGWindow*> getWinStack();
 
   void autoclose();

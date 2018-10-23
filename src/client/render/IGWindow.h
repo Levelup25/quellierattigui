@@ -18,6 +18,8 @@ class IGWindow : public sf::Drawable {
   // Event
   sf::Vector2f posLastPressed;
   sf::Vector2f posLastRealeased;
+  sf::Vector2f offsetMouse;
+  bool isDragging = false;
   void startClosing();
   bool isClosing = false;
 
@@ -35,7 +37,7 @@ class IGWindow : public sf::Drawable {
 
   bool posInRec(sf::Vector2f pos, sf::RectangleShape rec);
   bool isMouseOver();
-  void receiveEvent(sf::Event);
+  void receiveEvent(sf::Event, sf::Vector2f posMouse);
 
   // getter setter
   void setPosition(sf::Vector2f newPos);

@@ -99,20 +99,22 @@ bool IGWindow::posInRec(sf::Vector2f pos, sf::RectangleShape rec) {
   }
 }
 
-void IGWindow::receiveEvent(sf::Event event) {
+void IGWindow::receiveEvent(sf::Event event, sf::Vector2f posMouse) {
   if (event.type == sf::Event::MouseButtonPressed) {
     if (event.mouseButton.button == sf::Mouse::Left) {
-      sf::Vector2f posMouse{(float)event.mouseButton.x,
-                            (float)event.mouseButton.y};
       posLastPressed = posMouse;
+      if (posInRec(posLastPressed, sfHeader) &&
+          !posInRec(posLastPressed, sfCloseBtn)) {
+        offsetMouse = posMouse - pos;
+        isDragging = true;
+      }
     }
   }
 
   else if (event.type == sf::Event::MouseButtonReleased) {
     if (event.mouseButton.button == sf::Mouse::Left) {
-      sf::Vector2f posMouse{(float)event.mouseButton.x,
-                            (float)event.mouseButton.y};
       posLastRealeased = posMouse;
+      isDragging = false;
 
       if (posInRec(posLastPressed, sfCloseBtn) &&
           posInRec(posLastRealeased, sfCloseBtn)) {
@@ -120,12 +122,20 @@ void IGWindow::receiveEvent(sf::Event event) {
       }
     }
   }
+
+  else if (event.type == sf::Event::MouseMoved) {
+    if (isDragging) {
+      auto newPos = posMouse - offsetMouse;
+      setPosition(newPos);
+    } else {
+      offsetMouse = {0, 0};
+    }
+  }
 }
 
 void IGWindow::startClosing() {
   std::string s;
   s = title;
-  std::cout << s << " se ferme" << std::endl;
   isClosing = true;
 }
 

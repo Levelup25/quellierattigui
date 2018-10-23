@@ -30,13 +30,6 @@ void testRender() {
   sf::RenderWindow window(sf::VideoMode(700, 700), "Test rendu");
 
   // Custom windows test
-  IGWindow wTest1 = IGWindow();
-  wTest1.setPosition(sf::Vector2f(10, 350));
-  wTest1.setTitle("Test 1");
-
-  IGWindow wTest2 = IGWindow();
-  wTest2.setPosition(sf::Vector2f(10 + 10 + 100, 350));
-  wTest2.setTitle("Test 2");
 
   // Inventory properties
   sf::Vector2f posInv = sf::Vector2f(10, 10);
@@ -119,9 +112,6 @@ void testRender() {
       if (event.type == sf::Event::Closed)
         window.close();
 
-      wTest1.receiveEvent(event);
-      wTest2.receiveEvent(event);
-
       if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Left) {
           sf::Vector2i mousePosInt = sf::Mouse::getPosition(window);
@@ -144,8 +134,6 @@ void testRender() {
 
     window.clear();
 
-    window.draw(wTest1);
-    window.draw(wTest2);
     window.draw(rec);
     window.draw(recHeader);
     window.draw(closeBtn);
@@ -183,14 +171,18 @@ void testRender2() {
     }
   }
 
+  auto pw2 = wcontainer.getWinStack()[2];
+  wcontainer.putAtEnd(pw2);
+
   // window loop
   while (window.isOpen()) {
     sf::Event event;
     while (window.pollEvent(event)) {
       if (event.type == sf::Event::Closed)
         window.close();
-
-      wcontainer.transmit(event);
+      auto posMouseBuff = sf::Mouse::getPosition(window);
+      sf::Vector2f posMouse{(float)posMouseBuff.x, (float)posMouseBuff.y};
+      wcontainer.transmit(event, posMouse);
     }
 
     window.clear();
