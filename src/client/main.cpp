@@ -118,7 +118,7 @@ int main(int argc, char* argv[]) {
 
     // Livrable 2->1
     else if (strcmp(argv[i], "render") == 0) {
-      testRender();
+      testRender2();
     }
 
     // Livrable 2->2

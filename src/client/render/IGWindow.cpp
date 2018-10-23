@@ -63,6 +63,8 @@ void IGWindow::setSize(sf::Vector2f newSize) {
   size = newSize;
   sfContent.setSize(size - sf::Vector2f(0, headerHeight));
   sfHeader.setSize(sf::Vector2f(size.x, headerHeight));
+  sf::Vector2f posRCloseBtn = sf::Vector2f(size.x - barPad - barBtnSize, 5);
+  sfCloseBtn.setPosition(pos + posRCloseBtn);
 }
 
 sf::Vector2f IGWindow::getSize() {
@@ -76,4 +78,39 @@ void IGWindow::setTitle(std::string newTitle) {
 
 sf::String IGWindow::getTitle() {
   return title;
+}
+
+bool IGWindow::isMouseOver() {
+  // sf::Vector2i mousePosInt = sf::Mouse::getPosition(*(this->getRWindow()));
+  // sf::Vector2f mousePos = sf::Vector2f(mousePosInt.x, mousePosInt.y);
+  // return posInRec(mousePos, sfContent) or posInRec(mousePos, sfHeader);
+  return false;
+}
+
+bool IGWindow::posInRec(sf::Vector2f pos, sf::RectangleShape rec) {
+  sf::Vector2f recPos = rec.getPosition();
+  sf::Vector2f recSize = rec.getSize();
+
+  if (recPos.x <= pos.x && pos.x <= (recPos.x + recSize.x) &&
+      recPos.y <= pos.y && pos.y <= (recPos.y + recSize.y)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+void IGWindow::receiveEvent(sf::Event event) {
+  if (event.type == sf::Event::MouseButtonPressed) {
+    if (event.mouseButton.button == sf::Mouse::Left) {
+    }
+  }
+
+  else if (event.type == sf::Event::MouseButtonReleased) {
+    if (event.mouseButton.button == sf::Mouse::Left) {
+    }
+  }
+}
+
+void IGWindow::close() {
+  // TODO
 }

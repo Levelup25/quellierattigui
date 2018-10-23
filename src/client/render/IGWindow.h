@@ -1,11 +1,7 @@
 #ifndef IGWINDOW_H
 #define IGWINDOW_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 #include <SFML/Graphics.hpp>
-#include <fstream>
 #include <iostream>
 
 // In Game Windows
@@ -19,16 +15,23 @@ class IGWindow : public sf::Drawable {
   const float barPad = 10;
   sf::Font roboto;
 
+  // Event
+
+  virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+ public:
   // sfml component
   sf::RectangleShape sfHeader;
   sf::RectangleShape sfCloseBtn;
   sf::RectangleShape sfContent;
   sf::Text sfTitle;
 
-  virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
- public:
   IGWindow();
+
+  bool posInRec(sf::Vector2f pos, sf::RectangleShape rec);
+  bool isMouseOver();
+  void receiveEvent(sf::Event);
+  void close();
 
   // getter setter
   void setPosition(sf::Vector2f newPos);

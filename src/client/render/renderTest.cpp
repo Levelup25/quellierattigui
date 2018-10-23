@@ -1,5 +1,18 @@
 #include "renderTest.h"
 #include "IGWindow.h"
+#include "IGWindowContainer.h"
+
+bool posInRec(sf::Vector2f pos, sf::RectangleShape rec) {
+  sf::Vector2f recPos = rec.getPosition();
+  sf::Vector2f recSize = rec.getSize();
+
+  if (recPos.x <= pos.x && pos.x <= (recPos.x + recSize.x) &&
+      recPos.y <= pos.y && pos.y <= (recPos.y + recSize.y)) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 void testRender() {
   // resources
@@ -17,11 +30,11 @@ void testRender() {
   sf::RenderWindow window(sf::VideoMode(700, 700), "Test rendu");
 
   // Custom windows test
-  IGWindow wTest1;
+  IGWindow wTest1 = IGWindow();
   wTest1.setPosition(sf::Vector2f(10, 350));
   wTest1.setTitle("Test 1");
 
-  IGWindow wTest2;
+  IGWindow wTest2 = IGWindow();
   wTest2.setPosition(sf::Vector2f(10 + 10 + 100, 350));
   wTest2.setTitle("Test 2");
 
@@ -101,11 +114,15 @@ void testRender() {
   bool closeBtnPressed = false;
   while (window.isOpen()) {
     sf::Event event;
+
     while (window.pollEvent(event)) {
       if (event.type == sf::Event::Closed)
         window.close();
 
-      else if (event.type == sf::Event::MouseButtonPressed) {
+      wTest1.receiveEvent(event);
+      wTest2.receiveEvent(event);
+
+      if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Left) {
           sf::Vector2i mousePosInt = sf::Mouse::getPosition(window);
           sf::Vector2f mousePos = sf::Vector2f(mousePosInt.x, mousePosInt.y);
@@ -144,15 +161,40 @@ void testRender() {
   }
 }
 
-// ================== functions ===============================
-bool posInRec(sf::Vector2f pos, sf::RectangleShape rec) {
-  sf::Vector2f recPos = rec.getPosition();
-  sf::Vector2f recSize = rec.getSize();
+void testRender2() {
+  sf::RenderWindow window(sf::VideoMode(700, 700), "Test rendu");
+  IGWindowContainer wcontainer;
 
-  if (recPos.x <= pos.x && pos.x <= (recPos.x + recSize.x) &&
-      recPos.y <= pos.y && pos.y <= (recPos.y + recSize.y)) {
-    return true;
-  } else {
-    return false;
+  float space = 10, width = 150;
+  size_t row = 3, col = 4;
+
+  // create and pos subWindows
+  for (size_t i = 0; i < row; i++) {
+    for (size_t j = 0; j < col; j++) {
+      IGWindow* pw = new IGWindow();
+      sf::Vector2f pos = sf::Vector2f((j + 1) * space + j * width,
+                                      (i + 1) * space + i * width);
+      pw->setPosition(pos);
+      pw->setSize(sf::Vector2f(width, width));
+      std::string title = "Test" + std::to_string(i) + std::to_string(j);
+      pw->setTitle(title);
+
+      wcontainer.add(pw);
+    }
+  }
+
+  // window loop
+  while (window.isOpen()) {
+    sf::Event event;
+    while (window.pollEvent(event)) {
+      if (event.type == sf::Event::Closed)
+        window.close();
+
+      wcontainer.transmit(event);
+    }
+
+    window.clear();
+    window.draw(wcontainer);
+    window.display();
   }
 }
