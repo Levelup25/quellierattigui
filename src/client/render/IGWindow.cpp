@@ -103,6 +103,12 @@ void IGWindow::receiveEvent(sf::Event event, sf::Vector2f posMouse) {
   if (event.type == sf::Event::MouseButtonPressed) {
     if (event.mouseButton.button == sf::Mouse::Left) {
       posLastPressed = posMouse;
+
+      if (posInRec(posLastPressed, sfHeader) ||
+          posInRec(posLastPressed, sfContent)) {
+        displayFirst = true;
+      }
+
       if (posInRec(posLastPressed, sfHeader) &&
           !posInRec(posLastPressed, sfCloseBtn)) {
         offsetMouse = posMouse - pos;
@@ -137,10 +143,6 @@ void IGWindow::startClosing() {
   std::string s;
   s = title;
   isClosing = true;
-}
-
-bool IGWindow::getIsClosing() {
-  return isClosing;
 }
 
 IGWindow::~IGWindow() {}

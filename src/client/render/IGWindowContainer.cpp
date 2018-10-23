@@ -29,7 +29,7 @@ void IGWindowContainer::transmit(sf::Event event, sf::Vector2f posMouse) {
   for (auto pw : winStack) {
     pw->receiveEvent(event, posMouse);
   }
-  autoclose();
+  processChildrenTags();
 }
 
 void IGWindowContainer::draw(sf::RenderTarget& target,
@@ -43,12 +43,18 @@ std::vector<IGWindow*> IGWindowContainer::getWinStack() {
   return winStack;
 }
 
-void IGWindowContainer::autoclose() {
-  for (auto pw : winStack) {
-    if (pw->getIsClosing()) {
+void IGWindowContainer::processChildrenTags() {
+  auto it = winStack.begin();
+  while (it != winStack.end()) {
+    auto pw = *it;
+    if (pw->isClosing)
       remove(pw);
-      autoclose();
-      return;
+
+    else if (pw->displayFirst) {
+      putAtEnd(pw);
+      pw->displayFirst = false;
     }
+
+    it++;
   }
 }

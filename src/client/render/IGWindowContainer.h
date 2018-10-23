@@ -16,7 +16,7 @@ class IGWindowContainer : public sf::Drawable {
   void transmit(sf::Event event, sf::Vector2f mousePos);
   std::vector<IGWindow*> getWinStack();
 
-  void autoclose();
+  void processChildrenTags();
 };
 
 #endif

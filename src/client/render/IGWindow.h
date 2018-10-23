@@ -19,9 +19,7 @@ class IGWindow : public sf::Drawable {
   sf::Vector2f posLastPressed;
   sf::Vector2f posLastRealeased;
   sf::Vector2f offsetMouse;
-  bool isDragging = false;
   void startClosing();
-  bool isClosing = false;
 
   virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
@@ -31,6 +29,11 @@ class IGWindow : public sf::Drawable {
   sf::RectangleShape sfCloseBtn;
   sf::RectangleShape sfContent;
   sf::Text sfTitle;
+
+  // Event tag
+  bool isDragging = false;
+  bool displayFirst = false;
+  bool isClosing = false;
 
   IGWindow();
   ~IGWindow();
@@ -46,7 +49,6 @@ class IGWindow : public sf::Drawable {
   sf::Vector2f getSize();
   void setTitle(std::string newTitle);
   sf::String getTitle();
-  bool getIsClosing();
 };
 
 #endif  // IGWINDOW_H
