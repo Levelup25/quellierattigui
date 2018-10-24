@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "IGWindow.h"
+#include "colors.h"
 
 class IGWindowContainer : public sf::Drawable {
  protected:

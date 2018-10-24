@@ -8,13 +8,6 @@ void IGWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 }
 
 IGWindow::IGWindow() {
-  // resources
-  sf::Color cBlue = sf::Color(42, 103, 146);
-  // sf::Color white = sf::Color(255, 255, 255);
-  sf::Color black = sf::Color(0, 0, 0);
-  // sf::Color grey = sf::Color(100, 100, 100);
-  sf::Color snow = sf::Color(240, 240, 240);
-
   roboto.loadFromFile(
       "/home/louis/Documents/3A-IS/quellierattigui/res/font/roboto/"
       "Roboto-Regular.ttf");
@@ -25,19 +18,19 @@ IGWindow::IGWindow() {
   // Content
   sfContent.setPosition(pos + sf::Vector2f(0, headerHeight));
   sfContent.setSize(size - sf::Vector2f(0, headerHeight));
-  sfContent.setFillColor(cBlue);
+  sfContent.setFillColor(uicolor::cBlue);
 
   // Header
   sfHeader.setPosition(pos);
   sfHeader.setSize(sf::Vector2f(size.x, headerHeight));
-  sfHeader.setFillColor(snow);
+  sfHeader.setFillColor(uicolor::snow);
 
   // Title
   sfTitle.setPosition(pos + sf::Vector2f(barPad, 0));
   sfTitle.setFont(roboto);
   sfTitle.setString(title);
   sfTitle.setCharacterSize(20);
-  sfTitle.setFillColor(black);
+  sfTitle.setFillColor(uicolor::black);
 
   // Close btn
   sf::Vector2f posRCloseBtn = sf::Vector2f(size.x - barPad - barBtnSize, 5);

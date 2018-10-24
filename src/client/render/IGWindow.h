@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "colors.h"
 
 // In Game Windows
 class IGWindow : public sf::Drawable {
@@ -48,7 +49,7 @@ class IGWindow : public sf::Drawable {
   void receiveEvent(sf::Event, sf::Vector2f posMouse);
 
   // getters & setters
-  void setPosition(sf::Vector2f newPos);
+  virtual void setPosition(sf::Vector2f newPos);
   void setSize(sf::Vector2f newSize);
   void setTitle(std::string newTitle);
   sf::Vector2f getPosition();

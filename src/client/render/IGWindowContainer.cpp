@@ -47,14 +47,20 @@ void IGWindowContainer::processChildrenTags() {
   auto it = winStack.begin();
   while (it != winStack.end()) {
     auto pw = *it;
-    if (pw->isClosing)
+
+    if (pw->isClosing) {
+      it = winStack.erase(it);
+      pw->~IGWindow();
       remove(pw);
+    }
 
     else if (pw->displayFirst) {
-      putAtEnd(pw);
+      it = std::rotate(it, it + 1, winStack.end());
       pw->displayFirst = false;
     }
 
-    it++;
+    else {
+      ++it;
+    }
   }
 }

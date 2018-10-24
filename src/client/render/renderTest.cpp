@@ -1,6 +1,7 @@
 #include "renderTest.h"
 #include "IGWindow.h"
 #include "IGWindowContainer.h"
+#include "UIInventory.h"
 
 bool posInRec(sf::Vector2f pos, sf::RectangleShape rec) {
   sf::Vector2f recPos = rec.getPosition();
@@ -173,6 +174,11 @@ void testRender2() {
 
   auto pw2 = wcontainer.getWinStack()[2];
   wcontainer.putAtEnd(pw2);
+
+  // inventory
+  UIInventory inv;
+  inv.setPosition({30, 30});
+  wcontainer.add(&inv);
 
   // window loop
   while (window.isOpen()) {
