@@ -41,7 +41,6 @@ class UIInventory : public IGWindow {
 
  public:
   UIInventory();
-
   void setPosition(sf::Vector2f newPos);
 };
 

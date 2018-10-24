@@ -40,7 +40,8 @@ void UIInventory::draw(sf::RenderTarget& target,
   IGWindow::draw(target, states);
   for (size_t i = 0; i < nbRow; i++) {
     for (size_t j = 0; j < nbCol; j++) {
-      target.draw(sfcases[i * nbRow + j]);
+      size_t index = i * nbCol + j;
+      target.draw(sfcases[index]);
     }
   }
   target.draw(sffooterText);
@@ -72,7 +73,8 @@ void UIInventory::setPosition(sf::Vector2f newPos) {
   for (size_t i = 0; i < nbRow; i++) {
     for (size_t j = 0; j < nbCol; j++) {
       sf::Vector2f posCase2Grid = sf::Vector2f(j * caseSize.x, i * caseSize.y);
-      sfcases[i * nbRow + j].setPosition(posCase2Grid + posGrid);
+      size_t index = i * nbCol + j;
+      sfcases[index].setPosition(posCase2Grid + posGrid);
     }
   }
   sffooterText.setPosition(getPosFooterText());
