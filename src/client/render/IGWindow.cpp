@@ -1,6 +1,7 @@
 #include "IGWindow.h"
 
 void IGWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+  target.draw(sfBorder);
   target.draw(sfHeader);
   target.draw(sfTitle);
   target.draw(sfCloseBtn);
@@ -14,6 +15,13 @@ IGWindow::IGWindow() {
 
   pos = sf::Vector2f(10, 10);
   size = sf::Vector2f(100, 100);
+
+  // Border
+  sfBorder.setPosition(pos);
+  sfBorder.setSize(size);
+  sfBorder.setOutlineThickness(1);
+  sfBorder.setOutlineColor(uicolor::black);
+  sfBorder.setFillColor(sf::Color::Transparent);
 
   // Content
   sfContent.setPosition(pos + sf::Vector2f(0, headerHeight));
@@ -41,6 +49,7 @@ IGWindow::IGWindow() {
 
 void IGWindow::setPosition(sf::Vector2f newPos) {
   pos = newPos;
+  sfBorder.setPosition(pos);
   sfContent.setPosition(pos + sf::Vector2f(0, headerHeight));
   sfHeader.setPosition(pos);
   sfTitle.setPosition(pos + sf::Vector2f(barPad, 0));
@@ -54,6 +63,7 @@ sf::Vector2f IGWindow::getPosition() {
 
 void IGWindow::setSize(sf::Vector2f newSize) {
   size = newSize;
+  sfBorder.setSize(size);
   sfContent.setSize(size - sf::Vector2f(0, headerHeight));
   sfHeader.setSize(sf::Vector2f(size.x, headerHeight));
   sf::Vector2f posRCloseBtn = sf::Vector2f(size.x - barPad - barBtnSize, 5);

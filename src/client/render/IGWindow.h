@@ -8,6 +8,8 @@
 // In Game Windows
 class IGWindow : public sf::Drawable {
  protected:
+  virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
   // Properties
   sf::Vector2f pos, size;
   sf::String title = "";
@@ -18,6 +20,13 @@ class IGWindow : public sf::Drawable {
   const float barPad = 10;
   sf::Font roboto;
 
+  // sfml components
+  sf::RectangleShape sfBorder;
+  sf::RectangleShape sfHeader;
+  sf::RectangleShape sfCloseBtn;
+  sf::RectangleShape sfContent;
+  sf::Text sfTitle;
+
   // Event
   sf::Vector2f posLastPressed;
   sf::Vector2f posLastRealeased;
@@ -27,15 +36,7 @@ class IGWindow : public sf::Drawable {
   // Utility methods
   bool posInRec(sf::Vector2f pos, sf::RectangleShape rec);
 
-  virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
  public:
-  // sfml components
-  sf::RectangleShape sfHeader;
-  sf::RectangleShape sfCloseBtn;
-  sf::RectangleShape sfContent;
-  sf::Text sfTitle;
-
   // Event tag (read by parent/window manager for closing or put first, etc..)
   bool isDragging = false;
   bool displayFirst = false;
