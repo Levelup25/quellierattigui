@@ -7,10 +7,12 @@ namespace state {
   class State;
 };
 namespace render {
+  class ContentSprite;
   class CharacterSprite;
   class TileSprite;
 }
 
+#include "ContentSprite.h"
 #include "CharacterSprite.h"
 #include "TileSprite.h"
 #include "state/State.h"

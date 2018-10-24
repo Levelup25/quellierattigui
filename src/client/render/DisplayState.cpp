@@ -21,13 +21,15 @@ void DisplayState::display() {
     View view;
     view.setSize(Vector2f(n*l, m * h));
 
-    Sprite sprite, perso;
+    Sprite tile, obstacle, perso;
     TileSprite neutre("res/tileset/isometric_pixel_flat_0000.png", l, h, nb);
     TileSprite eau("res/tileset/isometric_pixel_flat_0028.png", l, h, nb);
     TileSprite terre("res/tileset/isometric_pixel_flat_0055.png", l, h, nb);
     TileSprite feu("res/tileset/isometric_pixel_flat_0037.png", l, h, nb);
     TileSprite air("res/tileset/isometric_pixel_flat_0093.png", l, h, nb);
     CharacterSprite persos("res/persos.png", l2, h2);
+    ContentSprite trees("res/trees.png", 105, 135);
+
     RectangleShape zone(Vector2f(l, h));
     zone.setFillColor(Color::Transparent);
     zone.setOutlineThickness(-1);
@@ -46,20 +48,29 @@ void DisplayState::display() {
         for (unsigned int j = yv; j < yv + m; j++) {
             for (unsigned int i = xv; i < xv + n; i++) {
                 ElementType element = grid[i][j]->getElement();
+                ContentType content = grid[i][j]->getContent();
                 if (element == neutral) {
-                    sprite = neutre.getSprite();
+                    tile = neutre.getSprite();
                 } else if (element == water) {
-                    sprite = eau.getSprite();
+                    tile = eau.getSprite();
                 } else if (element == earth) {
-                    sprite = terre.getSprite();
+                    tile = terre.getSprite();
                 } else if (element == fire) {
-                    sprite = feu.getSprite();
+                    tile = feu.getSprite();
                 } else if (element == wind) {
-                    sprite = air.getSprite();
+                    tile = air.getSprite();
                 }
-                sprite.setPosition(Vector2f(i * l, j * h));
+                tile.setPosition(Vector2f(i * l, j * h));
+                window.draw(tile);
+
+                if (content == tree) {
+                    obstacle = trees.getSprite((int) element);
+                    obstacle.setScale(Vector2f((float) l / 105, (float) h / 135));
+                    obstacle.setPosition(Vector2f(i * l, j * h));
+                    window.draw(obstacle);
+                }
+
                 zone.setPosition(Vector2f(i * l, j * h));
-                window.draw(sprite);
                 window.draw(zone);
             }
         }
