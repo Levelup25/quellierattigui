@@ -10,9 +10,9 @@ void IGWindow::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 IGWindow::IGWindow() {
   // resources
   sf::Color cBlue = sf::Color(42, 103, 146);
-  sf::Color white = sf::Color(255, 255, 255);
+  // sf::Color white = sf::Color(255, 255, 255);
   sf::Color black = sf::Color(0, 0, 0);
-  sf::Color grey = sf::Color(100, 100, 100);
+  // sf::Color grey = sf::Color(100, 100, 100);
   sf::Color snow = sf::Color(240, 240, 240);
 
   roboto.loadFromFile(
@@ -78,13 +78,6 @@ void IGWindow::setTitle(std::string newTitle) {
 
 sf::String IGWindow::getTitle() {
   return title;
-}
-
-bool IGWindow::isMouseOver() {
-  // sf::Vector2i mousePosInt = sf::Mouse::getPosition(*(this->getRWindow()));
-  // sf::Vector2f mousePos = sf::Vector2f(mousePosInt.x, mousePosInt.y);
-  // return posInRec(mousePos, sfContent) or posInRec(mousePos, sfHeader);
-  return false;
 }
 
 bool IGWindow::posInRec(sf::Vector2f pos, sf::RectangleShape rec) {

@@ -96,7 +96,7 @@ void testRender() {
   // Footer messages
   sf::Text footerMsg;
   footerMsg.setFont(roboto);
-  footerMsg.setColor(snow);
+  footerMsg.setFillColor(snow);
   footerMsg.setString("Items 1 - " + std::to_string(nbItems));
   footerMsg.setCharacterSize(15);
   sf::Vector2f posFooterMsg2Body =

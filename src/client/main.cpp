@@ -82,7 +82,7 @@ int main(int argc, char* argv[]) {
       villain->setWeapon(weapon2);
 
       cout << "Lancement du combat" << endl;
-      Fight* fight = new Fight(goodGuys, badGuys);
+      // Fight* fight = new Fight(goodGuys, badGuys);
       state.setFight(true);
       cout << "Le heros " << heros->getName() << " de l'équipe "
            << goodGuys->getName() << " possède " << heros->getPv() << "pv, "

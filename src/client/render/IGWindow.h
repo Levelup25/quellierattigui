@@ -10,6 +10,8 @@ class IGWindow : public sf::Drawable {
   // Properties
   sf::Vector2f pos, size;
   sf::String title = "";
+
+  // Const display
   const float headerHeight = 30;
   const float barBtnSize = 20;
   const float barPad = 10;
@@ -21,33 +23,36 @@ class IGWindow : public sf::Drawable {
   sf::Vector2f offsetMouse;
   void startClosing();
 
+  // Utility methods
+  bool posInRec(sf::Vector2f pos, sf::RectangleShape rec);
+
   virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
  public:
-  // sfml component
+  // sfml components
   sf::RectangleShape sfHeader;
   sf::RectangleShape sfCloseBtn;
   sf::RectangleShape sfContent;
   sf::Text sfTitle;
 
-  // Event tag
+  // Event tag (read by parent/window manager for closing or put first, etc..)
   bool isDragging = false;
   bool displayFirst = false;
   bool isClosing = false;
 
+  // Constructor, destructor
   IGWindow();
   ~IGWindow();
 
-  bool posInRec(sf::Vector2f pos, sf::RectangleShape rec);
-  bool isMouseOver();
+  // Receive and process event
   void receiveEvent(sf::Event, sf::Vector2f posMouse);
 
-  // getter setter
+  // getters & setters
   void setPosition(sf::Vector2f newPos);
-  sf::Vector2f getPosition();
   void setSize(sf::Vector2f newSize);
-  sf::Vector2f getSize();
   void setTitle(std::string newTitle);
+  sf::Vector2f getPosition();
+  sf::Vector2f getSize();
   sf::String getTitle();
 };
 
