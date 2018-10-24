@@ -60,6 +60,10 @@ void IGWindow::setSize(sf::Vector2f newSize) {
   sfCloseBtn.setPosition(pos + posRCloseBtn);
 }
 
+void IGWindow::setSizeContent(sf::Vector2f newSize) {
+  setSize(newSize + sf::Vector2f(0, headerHeight));
+}
+
 sf::Vector2f IGWindow::getSize() {
   return size;
 }

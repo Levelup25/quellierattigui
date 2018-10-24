@@ -4,7 +4,7 @@ UIInventory::UIInventory() {
   float width = contentPadding[2] + nbCol * caseSize.x + contentPadding[3],
         height = contentPadding[0] + nbRow * caseSize.y + vspace +
                  (float)footerTextHight + contentPadding[1];
-  setSize(sf::Vector2f{width, height});
+  setSizeContent(sf::Vector2f{width, height});
   setTitle("Inventory");
 
   // Invetory cases

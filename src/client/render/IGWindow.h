@@ -51,9 +51,11 @@ class IGWindow : public sf::Drawable {
   // getters & setters
   virtual void setPosition(sf::Vector2f newPos);
   void setSize(sf::Vector2f newSize);
+  void setSizeContent(sf::Vector2f newSize);
   void setTitle(std::string newTitle);
   sf::Vector2f getPosition();
   sf::Vector2f getSize();
+  sf::Vector2f getSizeContent();
   sf::String getTitle();
 };
 
