@@ -38,16 +38,18 @@ int main(int argc, char *argv[]) {
                     << " et le nouveau contenu " << (world->getCell(2, 2))->getContent() << endl;
 
             cout << "Création de 2 personnages" << endl;
-            Character *heros = new Character("Iron Man", 0, human, 3, 3, 3);
-            Character *villain = new Character("Thanos", 0, titan, 3, 3, 3);
+            Character *heros = new Character(0, "Iron Man", human, 3, 3, 3);
+            Character *villain = new Character(0, "Thanos", titan, 3, 3, 3);
 
             cout << "Création de 2 équipes" << endl;
-            Team *goodGuys = new Team(heros, "Avengers");
-            Team *badGuys = new Team(villain, "Inconnu");
+            Team *goodGuys = new Team("Avengers");
+            Team *badGuys = new Team("Inconnu");
+            world->addTeam(goodGuys);
+            world->addTeam(badGuys);
 
             cout << "Ajout des personnages à la carte du monde" << endl;
-            world->addCharacter(heros, 1, 2);
-            world->addCharacter(villain, 3, 6);
+            world->addCharacter(heros, goodGuys, 1, 2);
+            world->addCharacter(villain, badGuys, 3, 6);
 
             cout << "Nombre de personnages actuels : "
                     << world->getCharacters().size() << endl;
@@ -93,7 +95,8 @@ int main(int argc, char *argv[]) {
             cout << "Le second personnage a " << villain->getPv() << " pv et meurs" << endl;
 
             cout << "Suppression du personnage" << endl;
-            world->delCharacter(3, 6);
+            //world->delCharacter(3, 6);
+            world->delCharacter(villain);
 
             cout << "Nombre de personnages actuels sur le terrain: "
                     << world->getCharacters().size() << endl;
@@ -106,11 +109,12 @@ int main(int argc, char *argv[]) {
             State *state = new State();
             World *world;
             world = state->getWorld();
-            for (int i = 0; i < 10; i++) {
-                Character *c = new Character("", rand() % (12 * 4));
-                c->setDirection((Direction) (rand() % 4));
-                world->addCharacter(c, rand() % world->getI(), rand() % world->getJ());
+            for (int i = 0; i < 20; i++) {
+                for (int j = 0; j < 1; j++) {
+                    world->addCharacter(i, rand() % (12 * 4), rand() % world->getI(), rand() % world->getJ(), (Direction) (rand() % 4));
+                }
             }
+
             DisplayState dstate(state);
             dstate.display();
         }// Livrable 2.2

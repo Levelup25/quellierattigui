@@ -10,16 +10,17 @@ World::World(size_t i, size_t j) {
     // Initialize the grid with the good dimension and fill them with empty cell
     I = i;
     J = j;
+
     srand(time(NULL));
     vector<ElementType> vector{wind, fire, earth, water};
     random_shuffle(vector.begin(), vector.end());
     vector.push_back(neutral);
     int r, r2;
     int p = 5, p2 = 5;
-    grid.resize(i);
-    for (size_t k = 0; k < i; k++) {
-        grid[k].resize(j);
-        for (size_t l = 0; l < j; l++) {
+    grid.resize(I);
+    for (size_t k = 0; k < I; k++) {
+        grid[k].resize(J);
+        for (size_t l = 0; l < J; l++) {
             Cell* cell = new Cell();
             r = rand() % 100;
             r2 = rand() % 100;
@@ -72,8 +73,27 @@ void World::setCell(size_t i, size_t j, Cell* cell) {
     grid[i][j] = cell;
 }
 
-void World::addCharacter(Character* character, std::size_t i, std::size_t j) {
+void World::addCharacter() {
+    Team* team = new Team();
+    Character* character = new Character();
+    team->addCharacter(character);
+    teams.push_back(team);
+}
+
+void World::addCharacter(size_t iteam, int id, size_t i, size_t j, Direction direction) {
+    Character* character = new Character(id);
+    character->setDirection(direction);
+    Team* team;
+    while (teams.size() < iteam + 1) {
+        team = new Team();
+        teams.push_back(team);
+    }
+    this->addCharacter(character, teams[iteam], i, j);
+}
+
+void World::addCharacter(Character* character, Team* team, size_t i, size_t j) {
     size_t i2 = i, j2 = j, ok = 0;
+    vector<Character*> characters = this->getCharacters();
     while (!ok) {
         if (grid[i2][j2]->getContent() == nothing) {
             ok = 1;
@@ -83,35 +103,83 @@ void World::addCharacter(Character* character, std::size_t i, std::size_t j) {
         }
         if (!ok) {
             i2++;
-            if (i2 == I) {
+            if (i2 >= I) {
                 i2 = 0;
                 j2++;
-                if (j2 == J)return;
+                if (j2 >= J) {
+                    j2 = 0;
+                }
             }
+            if (i == i2 && j == j2) return;
         }
     }
     character->setI(i2);
     character->setJ(j2);
-    characters.push_back(character);
+    team->addCharacter(character);
 }
 
 void World::delCharacter(size_t i, size_t j) {
-    for (auto c = characters.begin(); c != characters.end(); ++c) {
-        if ((*c)->getI() == i && (*c)->getJ() == j) {
-            characters.erase(c);
-            return;
+    for (auto t = teams.begin(); t != teams.end(); ++t) {
+        vector<Character*> characters = (*t)->getCharacters();
+        for (auto c = characters.begin(); c != characters.end(); ++c) {
+            if ((*c)->getI() == i && (*c)->getJ() == j) {
+                characters.erase(c);
+                return;
+            }
+        }
+    }
+}
+
+void World::delCharacter(Character* character) {
+    for (auto t = teams.begin(); t != teams.end(); ++t) {
+        vector<Character*> characters = (*t)->getCharacters();
+        for (auto c = characters.begin(); c != characters.end(); ++c) {
+            if (*c == character) {
+                (*t)->delCharacter(*c);
+                return;
+            }
         }
     }
 }
 
 Character* World::getCharacter(size_t i, size_t j) {
-    for (auto c = characters.begin(); c != characters.end(); ++c) {
-        if ((*c)->getI() == i && (*c)->getJ() == j)
-            return *c;
+    for (auto t = teams.begin(); t != teams.end(); ++t) {
+        vector<Character*> characters = (*t)->getCharacters();
+        for (auto c = characters.begin(); c != characters.end(); ++c) {
+            if ((*c)->getI() == i && (*c)->getJ() == j) return *c;
+        }
     }
     return nullptr;
 }
 
+vector<Character*> World::getMainCharacters() {
+    vector<Character*> chars;
+    for (auto t = teams.begin(); t != teams.end(); ++t) {
+        chars.push_back((*t)->getMainCharacter());
+    }
+    return chars;
+}
+
 vector<Character*> World::getCharacters() {
-    return characters;
+    vector<Character*> chars;
+    for (auto t = teams.begin(); t != teams.end(); ++t) {
+        vector<Character*> characters = (*t)->getCharacters();
+        for (auto c = characters.begin(); c != characters.end(); ++c) {
+            chars.push_back(*c);
+        }
+    }
+    return chars;
+}
+
+vector<Team*> World::getTeams() {
+    return teams;
+}
+
+void World::addTeam() {
+    Team* team = new Team();
+    teams.push_back(team);
+}
+
+void World::addTeam(Team* team) {
+    teams.push_back(team);
 }

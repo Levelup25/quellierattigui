@@ -15,9 +15,8 @@
 #include "state/Character.h"
 #include "state/Team.h"
 #include "state/Fight.h"
+#include "state/MainQuest.h"
 #include "state/World.h"
 #include "state/State.h"
-#include "state/MainQuest.h"
-#include "state/MainTeam.h"
 #include "state/KillQuest.h"
 #endif

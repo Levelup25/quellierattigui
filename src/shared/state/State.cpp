@@ -4,7 +4,7 @@ using namespace std;
 using namespace state;
 
 State::State() {
-    World *w = new World(12, 12);
+    World *w = new World(12 * 12, 12 * 12);
     world = w;
 }
 

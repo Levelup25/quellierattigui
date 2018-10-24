@@ -2,14 +2,13 @@
 #ifndef RENDER__DISPLAYSTATE__H
 #define RENDER__DISPLAYSTATE__H
 
-#include <vector>
 
 namespace state {
   class State;
 };
 namespace render {
-  class TileSprite;
   class CharacterSprite;
+  class TileSprite;
 }
 
 #include "CharacterSprite.h"
@@ -24,13 +23,9 @@ namespace render {
     // Attributes
   private:
     state::State* state;
-    std::vector<TileSprite*> tiles;
-    std::vector<CharacterSprite*> characters;
     // Operations
   public:
     DisplayState (state::State* state);
-    void addTile (TileSprite* tileSprite);
-    void addCharacter (CharacterSprite* characterSprite);
     void display ();
     // Setters and Getters
   };

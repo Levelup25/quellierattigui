@@ -3,8 +3,7 @@
 using namespace std;
 using namespace state;
 
-Team::Team(Character* character, string name) {
-    characters.push_back(character);
+Team::Team(string name) {
     this->name = name;
 }
 
@@ -16,6 +15,7 @@ void Team::delCharacter(Character* character) {
     for (auto c = characters.begin(); c != characters.end(); c++) {
         if (*c == character) {
             characters.erase(c);
+            return;
         }
     }
 }

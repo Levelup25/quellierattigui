@@ -3,7 +3,7 @@
 using namespace std;
 using namespace state;
 
-Character::Character(string nom, int id, CharacterType type, int pv, int pa, int pm) {
+Character::Character(int id, string nom, CharacterType type, int pv, int pa, int pm) {
     // FIXME : Remplacer i et j par autre chose
     this->i = 0;
     this->j = 0;
