@@ -28,13 +28,13 @@ void DisplayState::display() {
     TileSprite feu("res/tileset/isometric_pixel_flat_0037.png", l, h, nb);
     TileSprite air("res/tileset/isometric_pixel_flat_0093.png", l, h, nb);
     CharacterSprite persos("res/persos.png", l2, h2);
-    RectangleShape zone(Vector2f(nb * l, nb * h));
+    RectangleShape zone(Vector2f(l, h));
     zone.setFillColor(Color::Transparent);
     zone.setOutlineThickness(-1);
     zone.setOutlineColor(Color::Black);
 
     Character* maincharacter = (world->getMainCharacters())[0];
-    int x, y, xv, yv;
+    unsigned int x, y, xv, yv;
     while (window.isOpen()) {
         x = maincharacter->getI();
         y = maincharacter->getJ();
@@ -43,8 +43,8 @@ void DisplayState::display() {
         view.setCenter(sf::Vector2f(xv * l + n * l / 2, yv * h + m * h / 2));
         window.setView(view);
 
-        for (int j = yv; j < yv + m; j++) {
-            for (int i = xv; i < xv + n; i++) {
+        for (unsigned int j = yv; j < yv + m; j++) {
+            for (unsigned int i = xv; i < xv + n; i++) {
                 ElementType element = grid[i][j]->getElement();
                 if (element == neutral) {
                     sprite = neutre.getSprite();
@@ -63,6 +63,12 @@ void DisplayState::display() {
                 window.draw(zone);
             }
         }
+        zone.setPosition(Vector2f(maincharacter->getI() * l, maincharacter->getJ() * h));
+        zone.setOutlineThickness(-2);
+        zone.setOutlineColor(Color::White);
+        window.draw(zone);
+        zone.setOutlineThickness(-1);
+        zone.setOutlineColor(Color::Black);
         vector<Character*> chars = world->getMainCharacters();
         for (auto c = chars.begin(); c != chars.end(); ++c) {
             if ((*c)->getI() >= xv && (*c)->getI() < xv + n && (*c)->getJ() >= yv && (*c)->getJ() < yv + m) {
