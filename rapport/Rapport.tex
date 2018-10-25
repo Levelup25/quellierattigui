@@ -150,7 +150,21 @@
         \includegraphics[width=\textwidth]{field.png}
         \caption{Exemple tileset terrain}
     \end{figure}
-
+    
+   \begin{figure} [ht]
+            \centering
+            \begin{subfigure}
+                \centering
+                \includegraphics[width=.4\linewidth]{trees.png}
+                \caption{Arbres}
+            \end{subfigure}%
+            \begin{subfigure}
+                \centering
+                \includegraphics[width=.4\linewidth]{rocks.png}
+                \caption{Rochers}
+            \end{subfigure}
+            \caption{Exemple d'obstacles}
+        \end{figure}
 
 \clearpage
 \section{Description et conception des états}
@@ -226,7 +240,7 @@ Le détail des attributs et opérations des différentes classes est présenté 
 
 
 \subsection{Conception Logiciel}
-Le diagramme des classes pour les états est présenté en Figure 5 : 
+Le diagramme des classes pour les états est présenté en Figure 8 : 
 \begin{itemize}
 \item Les classes en vert contiennent les information globales sur le déroulement du jeu et permettent de déterminer l'état actuel du jeu
 \item Les classes en jaune caractérisent les personnages et le terrain dans lequel ils évoluent
@@ -244,18 +258,40 @@ Le diagramme des classes pour les états est présenté en Figure 5 :
 \clearpage
 \section{Règles de changement d'états et moteur de jeu}
 
-\subsection{Règles}
+\subsection{Stratégie de rendu d’un état}
+Le rendu de l'état est possible grâce aux différentes informations récupérées de la classe World, c'est à dire les tuiles et les personnages. Il s'agit donc d'un rendu à 3 couches successives. Toutes les textures sont chargées et découpées afin de renvoyer le sprite correspondant à un personnage donné ou à une cellule du monde donnée (élément et contenu optionnel). Ce sprite est ensuite déplacé au lieu d'en générer un nouveau. Un système de vue centre la fenêtre sur une petite zone autour du personnage principal (encadré d'un carré blanc) et n'actualise l'affichage des sprites sur cette vue uniquement et pas sur le monde entier. Cela évite d'une part de charger des sprites inutilement et d'autre part de créer une carte du monde où les zones pas encore visitées ne seraient pas visibles (ce serait alors une vue du monde en entier).
 
 \clearpage
 \subsection{Conception logiciel}
 
+ Le diagramme de classes du rendu est présenté en Figure 9 : 
+\begin{itemize}
+\item Les classes en vert sont les gestionnaires des différentes ressources. Elles chargent les différentes textures du jeu lors de l'instanciation en prenant en argument leur résolution et possèdent la méthode getSprite() générant le sprite redimensionné aux dimensions des cellules, compatible avec l'état du monde, dépendant alors de la tuile à afficher (élément + contenu) et du personnage à afficher.
+\item DisplayState réutilise alors les sprites générés pour afficher la carte grâce au RenderWindow de sfml et gère la View correspondante via display().
+\end{itemize}
 
-%\begin{landscape}
-%\begin{figure}[p]
-%\includegraphics[width=0.9\paperheight]{engine.pdf}
-%\caption{\label{uml:engine}Diagramme des classes de moteur de jeu.} 
-%\end{figure}
-%\end{landscape}
+Une partie des classes n'a pas pu être représentée sur le dia vu que ces classes présentent des méthodes constantes et que dia ne gère pas ce type de fonctions. En conséquence ces headers ont été rédigés à la main. Les classes qui n'ont pas pu être incluses sont les suivantes:
+\begin{itemize}
+    \item IGWindow\\
+    La classe permet d'afficher une fenêtre qu'on peut déplacer et fermer par dessus la vue du monde
+    \item IGWindowContainer\\
+    Comme son nom l'indique celle classe contient l'ensemble des fenêtres, lorsque on souhaite ajouter une fenêtre à la vue de notre jeu il faut l'enregistrer au près du gestionnaire de window. Le gestionnaire s'occupe du déplacement et de la fermeture des fenêtres qu'il contrôle.
+    \item UIInventory\\
+    La classe permet d'afficher l'inventaire d'une team. La classe hérite de IGWindow, il est donc possible de déplacer et fermer la fenêtre.
+\end{itemize}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{render_preview.png}
+    \caption{Preview du rendu}
+\end{figure}
+
+\begin{landscape}
+    \begin{figure}[p]
+        \includegraphics[width=0.9\paperheight]{render.png}
+        \caption{\label{uml:engine}Diagramme des classes de rendu.}
+    \end{figure}
+\end{landscape}
 
 
 \section{Intelligence Artificielle}
