@@ -5,6 +5,12 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
+namespace sf {
+  class Texture;
+  class Sprite;
+}
+
+
 namespace render {
 
   /// class ContentSprite - 
@@ -22,7 +28,7 @@ namespace render {
     // Operations
   public:
     ContentSprite (int l, int h);
-    sf::Sprite getSprite (int content, int element);
+    sf::Sprite getSprite (int content, int element = 0);
     // Setters and Getters
   };
 

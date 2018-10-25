@@ -5,6 +5,12 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
+namespace sf {
+  class Texture;
+  class Sprite;
+}
+
+
 namespace render {
 
   /// class CharacterSprite - 
