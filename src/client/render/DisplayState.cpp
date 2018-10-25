@@ -1,6 +1,9 @@
 #include "DisplayState.h"
 #include <math.h>
 #include <SFML/Graphics.hpp>
+#include "IGWindow.h"
+#include "IGWindowContainer.h"
+#include "UIInventory.h"
 
 using namespace std;
 using namespace sf;
@@ -21,6 +24,19 @@ void DisplayState::display() {
   View view;
   view.setSize(Vector2f(n * l, m * h));
 
+  // UIInventory
+  IGWindowContainer wcontainer;
+  UIInventory inv;
+
+  Character* maincharacter = (world->getMainCharacters())[0];
+  unsigned int x, y, xv, yv;
+  x = maincharacter->getI();
+  y = maincharacter->getJ();
+  xv = (x / n) * n;
+  yv = (y / m) * m;
+  inv.setPosition({xv * l, yv * h});
+  wcontainer.add(&inv);
+
   Sprite tile, obstacle, perso;
   TileSprite tiles(l, h, nb);
   ContentSprite contents(l, h);
@@ -31,9 +47,22 @@ void DisplayState::display() {
   zone.setOutlineThickness(-1);
   zone.setOutlineColor(Color::Black);
 
-  Character* maincharacter = (world->getMainCharacters())[0];
-  unsigned int x, y, xv, yv;
   while (window.isOpen()) {
+    // check all the window's events that were triggered since the last
+    // iteration of the loop
+    Event event;
+    while (window.pollEvent(event)) {
+      // "close requested" event: we close the window
+      if (event.type == Event::Closed)
+        window.close();
+
+      auto posMouseBuff = sf::Mouse::getPosition(window);
+      sf::Vector2f posMouse{(float)posMouseBuff.x, (float)posMouseBuff.y};
+      wcontainer.transmit(event, posMouse);
+    }
+
+    window.clear();
+
     x = maincharacter->getI();
     y = maincharacter->getJ();
     xv = (x / n) * n;
@@ -77,16 +106,9 @@ void DisplayState::display() {
         window.draw(perso);
       }
     }
-    // check all the window's events that were triggered since the last
-    // iteration of the loop
-    Event event;
-    while (window.pollEvent(event)) {
-      // "close requested" event: we close the window
-      if (event.type == Event::Closed)
-        window.close();
-    }
 
     // end the current frame
+    window.draw(wcontainer);
     window.display();
   }
 }
