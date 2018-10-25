@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
                     << " et le contenu vaut " << (world->getCell(2, 2))->getContent() << endl;
             Cell *cell = world->getCell(2, 2);
             cell->setElement(earth);
-            cell->setContent(house);
+            cell->setContent(tree);
             cout << "le nouvel élément vaut " << (world->getCell(2, 2))->getElement()
                     << " et le nouveau contenu " << (world->getCell(2, 2))->getContent() << endl;
 

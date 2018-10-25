@@ -3,6 +3,7 @@
 #define RENDER__CONTENTSPRITE__H
 
 #include <SFML/Graphics.hpp>
+#include <vector>
 #include <string>
 
 namespace sf {
@@ -21,9 +22,11 @@ namespace render {
     sf::Sprite sprite;
     int l;
     int h;
+    std::vector<int> offsetI;
+    std::vector<int> offsetJ;
     // Operations
   public:
-    ContentSprite (std::string filename, int l, int h);
+    ContentSprite (std::string filename, int l, int h, std::vector<int> offsetI, std::vector<int> offsetJ);
     sf::Sprite getSprite (int element);
     // Setters and Getters
   };

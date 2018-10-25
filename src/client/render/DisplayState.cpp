@@ -28,7 +28,14 @@ void DisplayState::display() {
     TileSprite feu("res/tileset/isometric_pixel_flat_0037.png", l, h, nb);
     TileSprite air("res/tileset/isometric_pixel_flat_0093.png", l, h, nb);
     CharacterSprite persos("res/persos.png", l2, h2);
-    ContentSprite trees("res/trees.png", 105, 135);
+
+    vector<int> offsetI{160, 20, 160, 20, 160};
+    vector<int> offsetJ{10, 10, 10, 165, 165};
+    ContentSprite trees("res/trees.png", 105, 135, offsetI, offsetJ);
+
+    offsetI = {195, 195, 195, 195, 195};
+    offsetJ = {15, 205, 15, 300, 105};
+    ContentSprite rocks("res/rocks.png", 85, 75, offsetI, offsetJ);
 
     RectangleShape zone(Vector2f(l, h));
     zone.setFillColor(Color::Transparent);
@@ -66,6 +73,11 @@ void DisplayState::display() {
                 if (content == tree) {
                     obstacle = trees.getSprite((int) element);
                     obstacle.setScale(Vector2f((float) l / 105, (float) h / 135));
+                    obstacle.setPosition(Vector2f(i * l, j * h));
+                    window.draw(obstacle);
+                } else if (content == rock) {
+                    obstacle = rocks.getSprite((int) element);
+                    obstacle.setScale(Vector2f((float) l / 85, (float) h / 75));
                     obstacle.setPosition(Vector2f(i * l, j * h));
                     window.draw(obstacle);
                 }

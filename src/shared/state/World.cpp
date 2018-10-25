@@ -16,7 +16,7 @@ World::World(size_t i, size_t j) {
     random_shuffle(vector.begin(), vector.end());
     vector.push_back(neutral);
     int r, r2;
-    int p = 5, p2 = 20;
+    int p = 5, p2 = 10;
     grid.resize(I);
     for (size_t k = 0; k < I; k++) {
         grid[k].resize(J);
@@ -25,7 +25,7 @@ World::World(size_t i, size_t j) {
             r = rand() % 100;
             r2 = rand() % 100;
             cell->setContent(nothing);
-            for (int m = 1; m < 4; m++) {
+            for (int m = 1; m < 3; m++) {
                 if (r2 >= (m - 1) * p2 && r2 < m * p2) {
                     cell->setContent((ContentType) m);
                 }

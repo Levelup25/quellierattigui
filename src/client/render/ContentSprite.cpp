@@ -4,9 +4,11 @@ using namespace std;
 using namespace sf;
 using namespace render;
 
-ContentSprite::ContentSprite(std::string filename, int l, int h) {
+ContentSprite::ContentSprite(std::string filename, int l, int h, vector<int> offsetI, vector<int> offsetJ) {
     this->l = l;
     this->h = h;
+    this->offsetI = offsetI;
+    this->offsetJ = offsetJ;
     texture.loadFromFile(filename);
     IntRect rect(0, 0, l, h);
     sprite.setTextureRect(rect);
@@ -14,12 +16,7 @@ ContentSprite::ContentSprite(std::string filename, int l, int h) {
 }
 
 sf::Sprite ContentSprite::getSprite(int element) {
-    // 20 125 160 265
-    // 10 145 165 300
-    vector<int> offsetI{20, 160};
-    vector<int> offsetJ{10, 165};
-    if (element == 0) element = 4;
-    IntRect rect(offsetI[(element - 1) % 2], offsetJ[(element - 1) / 2], l, h);
+    IntRect rect(offsetI[element], offsetJ[element], l, h);
     sprite.setTextureRect(rect);
     return sprite;
 }
