@@ -34,7 +34,8 @@ void DisplayState::display() {
   y = maincharacter->getJ();
   xv = (x / n) * n;
   yv = (y / m) * m;
-  inv.setPosition({xv * l, yv * h});
+  Vector2f posView = {xv * l, yv * h};
+  inv.setPosition(posView + Vector2f{30, 30});
   wcontainer.add(&inv);
 
   Sprite tile, obstacle, perso;
@@ -58,7 +59,7 @@ void DisplayState::display() {
 
       auto posMouseBuff = sf::Mouse::getPosition(window);
       sf::Vector2f posMouse{(float)posMouseBuff.x, (float)posMouseBuff.y};
-      wcontainer.transmit(event, posMouse);
+      wcontainer.transmit(event, posMouse + posView);
     }
 
     window.clear();
