@@ -1,6 +1,9 @@
 #include "DisplayState.h"
-#include <SFML/Graphics.hpp>
 #include <math.h>
+#include <SFML/Graphics.hpp>
+#include "IGWindow.h"
+#include "IGWindowContainer.h"
+#include "UIInventory.h"
 
 using namespace std;
 using namespace sf;
@@ -19,7 +22,21 @@ void DisplayState::display() {
 
     RenderWindow window(VideoMode(n * l, m * h), "Jeu");
     View view;
-    view.setSize(Vector2f(n*l, m * h));
+    view.setSize(Vector2f(n * l, m * h));
+
+    // UIInventory
+    IGWindowContainer wcontainer;
+    UIInventory inv;
+
+    Character* maincharacter = (world->getMainCharacters())[0];
+    unsigned int x, y, xv, yv;
+    x = maincharacter->getI();
+    y = maincharacter->getJ();
+    xv = (x / n) * n;
+    yv = (y / m) * m;
+    Vector2f posView = {xv * l, yv * h};
+    inv.setPosition(posView + Vector2f{30, 30});
+    wcontainer.add(&inv);
 
     Sprite sprite;
     TileSprite tiles(l, h, nb);
@@ -31,9 +48,22 @@ void DisplayState::display() {
     zone.setOutlineThickness(-1);
     zone.setOutlineColor(Color::Black);
 
-    Character* maincharacter = (world->getMainCharacters())[0];
-    unsigned int x, y, xv, yv;
     while (window.isOpen()) {
+        // check all the window's events that were triggered since the last
+        // iteration of the loop
+        Event event;
+        while (window.pollEvent(event)) {
+            // "close requested" event: we close the window
+            if (event.type == Event::Closed)
+                window.close();
+
+            auto posMouseBuff = sf::Mouse::getPosition(window);
+            sf::Vector2f posMouse{(float) posMouseBuff.x, (float) posMouseBuff.y};
+            wcontainer.transmit(event, posMouse + posView);
+        }
+
+        window.clear();
+
         x = maincharacter->getI();
         y = maincharacter->getJ();
         xv = (x / n) * n;
@@ -45,7 +75,6 @@ void DisplayState::display() {
             for (unsigned int i = xv; i < xv + n; i++) {
                 ElementType element = grid[i][j]->getElement();
                 ContentType content = grid[i][j]->getContent();
-
 
                 sprite = tiles.getSprite((int) element);
                 sprite.setPosition(Vector2f(i * l, j * h));
@@ -61,34 +90,26 @@ void DisplayState::display() {
                 window.draw(zone);
             }
         }
-
-        zone.setPosition(Vector2f(maincharacter->getI() * l, maincharacter->getJ() * h));
+        zone.setPosition(
+                Vector2f(maincharacter->getI() * l, maincharacter->getJ() * h));
         zone.setOutlineThickness(-2);
         zone.setOutlineColor(Color::White);
         window.draw(zone);
         zone.setOutlineThickness(-1);
         zone.setOutlineColor(Color::Black);
-
         vector<Character*> chars = world->getMainCharacters();
         for (auto c = chars.begin(); c != chars.end(); ++c) {
-            if ((*c)->getI() >= xv && (*c)->getI() < xv + n && (*c)->getJ() >= yv && (*c)->getJ() < yv + m) {
+            if ((*c)->getI() >= xv && (*c)->getI() < xv + n && (*c)->getJ() >= yv &&
+                    (*c)->getJ() < yv + m) {
                 sprite = persos.getSprite((*c)->getId(), (int) (*c)->getDirection(), 1);
                 sprite.setScale(Vector2f(nb, (float) h / h2));
-                sprite.setPosition(
-                        Vector2f(l * (*c)->getI(), h * (*c)->getJ()));
+                sprite.setPosition(Vector2f(l * (*c)->getI(), h * (*c)->getJ()));
                 window.draw(sprite);
             }
         }
-        // check all the window's events that were triggered since the last
-        // iteration of the loop
-        Event event;
-        while (window.pollEvent(event)) {
-            // "close requested" event: we close the window
-            if (event.type == Event::Closed)
-                window.close();
-        }
 
         // end the current frame
+        window.draw(wcontainer);
         window.display();
     }
 }
