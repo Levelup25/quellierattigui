@@ -38,7 +38,7 @@ IGWindow::IGWindow() {
   sfTitle.setFont(roboto);
   sfTitle.setString(title);
   sfTitle.setCharacterSize(20);
-  sfTitle.setFillColor(uicolor::black);
+  sfTitle.setColor(uicolor::black);
 
   // Close btn
   sf::Vector2f posRCloseBtn = sf::Vector2f(size.x - barPad - barBtnSize, 5);

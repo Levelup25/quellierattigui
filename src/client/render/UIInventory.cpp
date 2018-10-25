@@ -29,7 +29,7 @@ UIInventory::UIInventory() {
 
   // Footer text
   sffooterText.setFont(roboto);
-  sffooterText.setFillColor(uicolor::snow);
+  sffooterText.setColor(uicolor::snow);
   sffooterText.setString("Items 1 - " + std::to_string(getNbItems()));
   sffooterText.setCharacterSize(footerTextHight);
   sffooterText.setPosition(getPosFooterText());
