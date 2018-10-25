@@ -21,7 +21,7 @@ void DisplayState::display() {
     View view;
     view.setSize(Vector2f(n*l, m * h));
 
-    Sprite tile, obstacle, perso;
+    Sprite sprite;
     TileSprite tiles(l, h, nb);
     ContentSprite contents(l, h);
     CharacterSprite persos("res/persos.png", l2, h2);
@@ -46,34 +46,37 @@ void DisplayState::display() {
                 ElementType element = grid[i][j]->getElement();
                 ContentType content = grid[i][j]->getContent();
 
-                tile = tiles.getSprite((int) element);
-                tile.setPosition(Vector2f(i * l, j * h));
-                window.draw(tile);
+
+                sprite = tiles.getSprite((int) element);
+                sprite.setPosition(Vector2f(i * l, j * h));
+                window.draw(sprite);
 
                 if (content != nothing) {
-                    obstacle = contents.getSprite((int) content, (int) element);
-                    obstacle.setPosition(Vector2f(i * l, j * h));
-                    window.draw(obstacle);
+                    sprite = contents.getSprite((int) content, (int) element);
+                    sprite.setPosition(Vector2f(i * l, j * h));
+                    window.draw(sprite);
                 }
 
                 zone.setPosition(Vector2f(i * l, j * h));
                 window.draw(zone);
             }
         }
+
         zone.setPosition(Vector2f(maincharacter->getI() * l, maincharacter->getJ() * h));
         zone.setOutlineThickness(-2);
         zone.setOutlineColor(Color::White);
         window.draw(zone);
         zone.setOutlineThickness(-1);
         zone.setOutlineColor(Color::Black);
+
         vector<Character*> chars = world->getMainCharacters();
         for (auto c = chars.begin(); c != chars.end(); ++c) {
             if ((*c)->getI() >= xv && (*c)->getI() < xv + n && (*c)->getJ() >= yv && (*c)->getJ() < yv + m) {
-                perso = persos.getSprite((*c)->getId(), (int) (*c)->getDirection(), 1);
-                perso.setScale(Vector2f(nb, (float) h / h2));
-                perso.setPosition(
+                sprite = persos.getSprite((*c)->getId(), (int) (*c)->getDirection(), 1);
+                sprite.setScale(Vector2f(nb, (float) h / h2));
+                sprite.setPosition(
                         Vector2f(l * (*c)->getI(), h * (*c)->getJ()));
-                window.draw(perso);
+                window.draw(sprite);
             }
         }
         // check all the window's events that were triggered since the last
