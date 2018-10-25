@@ -2,9 +2,8 @@
 #ifndef RENDER__CONTENTSPRITE__H
 #define RENDER__CONTENTSPRITE__H
 
-#include <SFML/Graphics.hpp>
 #include <vector>
-#include <string>
+#include <SFML/Graphics.hpp>
 
 namespace sf {
   class Texture;
@@ -18,16 +17,18 @@ namespace render {
   class ContentSprite {
     // Attributes
   private:
-    sf::Texture texture;
-    sf::Sprite sprite;
+    std::vector<sf::Texture> textures;
+    std::vector<sf::Sprite> sprites;
+    std::vector<std::vector<int>> dimensions;
+    std::vector<std::vector<std::vector<int>>> offsets;
     int l;
     int h;
     std::vector<int> offsetI;
     std::vector<int> offsetJ;
     // Operations
   public:
-    ContentSprite (std::string filename, int l, int h, std::vector<int> offsetI, std::vector<int> offsetJ);
-    sf::Sprite getSprite (int element);
+    ContentSprite (int l, int h);
+    sf::Sprite getSprite (int content, int element);
     // Setters and Getters
   };
 

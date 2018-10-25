@@ -22,20 +22,9 @@ void DisplayState::display() {
     view.setSize(Vector2f(n*l, m * h));
 
     Sprite tile, obstacle, perso;
-    TileSprite neutre("res/tileset/isometric_pixel_flat_0000.png", l, h, nb);
-    TileSprite eau("res/tileset/isometric_pixel_flat_0028.png", l, h, nb);
-    TileSprite terre("res/tileset/isometric_pixel_flat_0055.png", l, h, nb);
-    TileSprite feu("res/tileset/isometric_pixel_flat_0037.png", l, h, nb);
-    TileSprite air("res/tileset/isometric_pixel_flat_0093.png", l, h, nb);
+    TileSprite tiles(l, h, nb);
+    ContentSprite contents(l, h);
     CharacterSprite persos("res/persos.png", l2, h2);
-
-    vector<int> offsetI{160, 20, 160, 20, 160};
-    vector<int> offsetJ{10, 10, 10, 165, 165};
-    ContentSprite trees("res/trees.png", 105, 135, offsetI, offsetJ);
-
-    offsetI = {195, 195, 195, 195, 195};
-    offsetJ = {15, 205, 15, 300, 105};
-    ContentSprite rocks("res/rocks.png", 85, 75, offsetI, offsetJ);
 
     RectangleShape zone(Vector2f(l, h));
     zone.setFillColor(Color::Transparent);
@@ -56,28 +45,13 @@ void DisplayState::display() {
             for (unsigned int i = xv; i < xv + n; i++) {
                 ElementType element = grid[i][j]->getElement();
                 ContentType content = grid[i][j]->getContent();
-                if (element == neutral) {
-                    tile = neutre.getSprite();
-                } else if (element == water) {
-                    tile = eau.getSprite();
-                } else if (element == earth) {
-                    tile = terre.getSprite();
-                } else if (element == fire) {
-                    tile = feu.getSprite();
-                } else if (element == wind) {
-                    tile = air.getSprite();
-                }
+
+                tile = tiles.getSprite((int) element);
                 tile.setPosition(Vector2f(i * l, j * h));
                 window.draw(tile);
 
-                if (content == tree) {
-                    obstacle = trees.getSprite((int) element);
-                    obstacle.setScale(Vector2f((float) l / 105, (float) h / 135));
-                    obstacle.setPosition(Vector2f(i * l, j * h));
-                    window.draw(obstacle);
-                } else if (content == rock) {
-                    obstacle = rocks.getSprite((int) element);
-                    obstacle.setScale(Vector2f((float) l / 85, (float) h / 75));
+                if (content != nothing) {
+                    obstacle = contents.getSprite((int) content, (int) element);
                     obstacle.setPosition(Vector2f(i * l, j * h));
                     window.draw(obstacle);
                 }

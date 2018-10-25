@@ -2,8 +2,8 @@
 #ifndef RENDER__TILESPRITE__H
 #define RENDER__TILESPRITE__H
 
+#include <vector>
 #include <SFML/Graphics.hpp>
-#include <string>
 
 namespace sf {
   class Texture;
@@ -17,15 +17,15 @@ namespace render {
   class TileSprite {
     // Attributes
   private:
-    sf::Texture texture;
-    sf::Sprite sprite;
+    std::vector<sf::Texture> textures;
+    std::vector<sf::Sprite> sprites;
     int l;
     int h;
     int nbRepeat;
     // Operations
   public:
-    TileSprite (std::string filename, int l, int h, int nbRepeat = 2);
-    sf::Sprite getSprite ();
+    TileSprite (int l, int h, int nbRepeat = 3);
+    sf::Sprite getSprite (int element);
     // Setters and Getters
   };
 

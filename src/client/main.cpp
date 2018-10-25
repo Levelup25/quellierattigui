@@ -106,6 +106,7 @@ int main(int argc, char *argv[]) {
 
         }// Livrable 2.1
         else if (strcmp(argv[i], "render") == 0) {
+
             State *state = new State();
             World *world;
             world = state->getWorld();

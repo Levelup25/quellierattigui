@@ -6,7 +6,4 @@
 #include "render/CharacterSprite.h"
 #include "render/TileSprite.h"
 #include "render/DisplayState.h"
-#include "render/IGWindowContainer.h"
-#include "render/IGWindow.h"
-#include "render/UIInventory.h"
 #endif
