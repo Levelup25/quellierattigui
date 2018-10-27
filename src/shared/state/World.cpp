@@ -1,13 +1,16 @@
 #include "World.h"
+#include "AStar.hpp"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 #include <algorithm>
+#include <iostream>
 using namespace std;
 using namespace state;
 
 World::World(size_t i, size_t j) {
-    // Initialize the grid with the good dimension and fill them with empty cell
+    // Initialize the grid with the good dimension and fill them with random cells
     I = i;
     J = j;
 
@@ -25,8 +28,8 @@ World::World(size_t i, size_t j) {
             r = rand() % 100;
             r2 = rand() % 100;
             cell->setContent(nothing);
-            for (int m = 1; m < 3; m++) {
-                if (r2 >= (m - 1) * p2 && r2 < m * p2) {
+            for (int m = 2; m < 4; m++) {
+                if (r2 >= (m - 2) * p2 && r2 < (m - 1) * p2) {
                     cell->setContent((ContentType) m);
                 }
             }
@@ -89,33 +92,62 @@ void World::addCharacter(size_t iteam, int id, size_t i, size_t j, Direction dir
         teams.push_back(team);
     }
     this->addCharacter(character, teams[iteam], i, j);
+
 }
 
 void World::addCharacter(Character* character, Team* team, size_t i, size_t j) {
-    size_t i2 = i, j2 = j, ok = 0;
+    size_t i2 = i, j2 = j;
     vector<Character*> characters = this->getCharacters();
-    while (!ok) {
-        if (grid[i2][j2]->getContent() == nothing) {
-            ok = 1;
-            for (auto c = characters.begin(); c != characters.end(); ++c) {
-                if ((*c)->getI() == i2 && (*c)->getJ() == j2) ok = 0;
+    while (grid[i2][j2]->getContent() != nothing) {
+        i2++;
+        if (i2 >= I) {
+            i2 = 0;
+            j2++;
+            if (j2 >= J) {
+                j2 = 0;
             }
         }
-        if (!ok) {
-            i2++;
-            if (i2 >= I) {
-                i2 = 0;
-                j2++;
-                if (j2 >= J) {
-                    j2 = 0;
-                }
-            }
-            if (i == i2 && j == j2) return;
-        }
+        if (i == i2 && j == j2) return;
     }
     character->setI(i2);
     character->setJ(j2);
     team->addCharacter(character);
+    grid[i2][j2]->setContent((ContentType) 1);
+}
+
+void World::moveCharacter(Character* character, size_t i, size_t j) {
+    if (grid[i][j]->getContent() == nothing) {
+        size_t i2 = character->getI(), j2 = character->getJ();
+        grid[i2][j2]->setContent(nothing);
+        size_t n = sqrt(I), m = sqrt(J);
+        Character* maincharacter = (this->getMainCharacters())[0];
+        int x = maincharacter->getI(), y = maincharacter->getJ();
+        int xv = (x / n) * n, yv = (y / m) * m;
+        AStar::Generator generator;
+        generator.setWorldSize({n, m});
+        for (int l = 0; l < m; l++) {
+            for (int k = 0; k < n; k++) {
+                if (grid[k + xv][l + yv]->getContent() != nothing) generator.addCollision({k, l});
+            }
+        }
+        auto path = generator.findPath({i - xv, j - yv},
+        {
+            i2 - xv, j2 - yv
+        });
+
+        for (auto& coordinate : path) {
+            cout << coordinate.x + xv << " " << coordinate.y + yv << endl;
+        }
+        cout << endl;
+
+        character->setI(i);
+        character->setJ(j);
+        grid[i][j]->setContent((ContentType) 1);
+        if (j > j2) character->setDirection(south);
+        else if (i < i2) character->setDirection(west);
+        else if (i > i2) character->setDirection(east);
+        else if (j < j2) character->setDirection(north);
+    }
 }
 
 void World::delCharacter(size_t i, size_t j) {
@@ -123,6 +155,7 @@ void World::delCharacter(size_t i, size_t j) {
         vector<Character*> characters = (*t)->getCharacters();
         for (auto c = characters.begin(); c != characters.end(); ++c) {
             if ((*c)->getI() == i && (*c)->getJ() == j) {
+                grid[i][j]->setContent(nothing);
                 characters.erase(c);
                 return;
             }
@@ -135,6 +168,7 @@ void World::delCharacter(Character* character) {
         vector<Character*> characters = (*t)->getCharacters();
         for (auto c = characters.begin(); c != characters.end(); ++c) {
             if (*c == character) {
+                grid[character->getI()][ character->getJ()]->setContent(nothing);
                 (*t)->delCharacter(*c);
                 return;
             }

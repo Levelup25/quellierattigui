@@ -33,7 +33,7 @@ ContentSprite::ContentSprite(int l, int h) {
 }
 
 sf::Sprite ContentSprite::getSprite(int content, int element) {
-    content -= 1;
+    content -= 2;
     IntRect rect(offsets[content][0][element], offsets[content][1][element], dimensions[content][0], dimensions[content][1]);
     sprites[content].setTextureRect(rect);
     sprites[content].setScale(Vector2f((float) l / dimensions[content][0], (float) h / dimensions[content][1]));

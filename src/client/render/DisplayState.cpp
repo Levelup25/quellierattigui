@@ -49,18 +49,6 @@ void DisplayState::display() {
     zone.setOutlineColor(Color::Black);
 
     while (window.isOpen()) {
-        // check all the window's events that were triggered since the last
-        // iteration of the loop
-        Event event;
-        while (window.pollEvent(event)) {
-            // "close requested" event: we close the window
-            if (event.type == Event::Closed)
-                window.close();
-
-            auto posMouseBuff = sf::Mouse::getPosition(window);
-            sf::Vector2f posMouse{(float) posMouseBuff.x, (float) posMouseBuff.y};
-            wcontainer.transmit(event, posMouse + posView);
-        }
 
         window.clear();
 
@@ -70,7 +58,6 @@ void DisplayState::display() {
         yv = (y / m) * m;
         view.setCenter(sf::Vector2f(xv * l + n * l / 2, yv * h + m * h / 2));
         window.setView(view);
-
         for (unsigned int j = yv; j < yv + m; j++) {
             for (unsigned int i = xv; i < xv + n; i++) {
                 ElementType element = grid[i][j]->getElement();
@@ -79,17 +66,16 @@ void DisplayState::display() {
                 sprite = tiles.getSprite((int) element);
                 sprite.setPosition(Vector2f(i * l, j * h));
                 window.draw(sprite);
-
-                if (content != nothing) {
+                if ((int) content > 1) {
                     sprite = contents.getSprite((int) content, (int) element);
                     sprite.setPosition(Vector2f(i * l, j * h));
                     window.draw(sprite);
                 }
-
                 zone.setPosition(Vector2f(i * l, j * h));
                 window.draw(zone);
             }
         }
+
         zone.setPosition(
                 Vector2f(maincharacter->getI() * l, maincharacter->getJ() * h));
         zone.setOutlineThickness(-2);
@@ -97,6 +83,7 @@ void DisplayState::display() {
         window.draw(zone);
         zone.setOutlineThickness(-1);
         zone.setOutlineColor(Color::Black);
+
         vector<Character*> chars = world->getMainCharacters();
         for (auto c = chars.begin(); c != chars.end(); ++c) {
             if ((*c)->getI() >= xv && (*c)->getI() < xv + n && (*c)->getJ() >= yv &&
@@ -105,6 +92,24 @@ void DisplayState::display() {
                 sprite.setScale(Vector2f(nb, (float) h / h2));
                 sprite.setPosition(Vector2f(l * (*c)->getI(), h * (*c)->getJ()));
                 window.draw(sprite);
+            }
+        }
+
+        // check all the window's events that were triggered since the last
+        // iteration of the loop
+        Event event;
+        while (window.pollEvent(event)) {
+            // "close requested" event: we close the window
+            if (event.type == Event::Closed)
+                window.close();
+
+            posView = {xv * l, yv * h};
+            inv.setPosition(posView + Vector2f{30, 30});
+            auto posMouseBuff = sf::Mouse::getPosition(window);
+            Vector2f posMouse{(float) posMouseBuff.x, (float) posMouseBuff.y};
+            wcontainer.transmit(event, posMouse + posView);
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                world->moveCharacter(maincharacter, xv + posMouseBuff.x / l, yv + posMouseBuff.y / h);
             }
         }
 
