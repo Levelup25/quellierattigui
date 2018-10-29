@@ -9,10 +9,12 @@
 
 #include "render.h"
 #include "state.h"
+#include "engine.h"
 
 using namespace std;
 using namespace state;
 using namespace render;
+using namespace engine;
 
 #include "string.h"
 
@@ -126,8 +128,8 @@ int main(int argc, char* argv[]) {
                             rand() % world->getJ(), (Direction) (rand() % 4));
                 }
             }
-            DisplayState dstate(state);
-            dstate.display();
+            Render render(state);
+            render.display();
         }// Livrable 2.2
         else if (strcmp(argv[i], "engine") == 0) {
         }// Livrable 2.final

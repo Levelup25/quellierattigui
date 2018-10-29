@@ -35,19 +35,19 @@ void Character::setDirection(Direction direction) {
     this->direction = direction;
 }
 
-size_t Character::getI() {
+float Character::getI() {
     return i;
 }
 
-size_t Character::getJ() {
+float Character::getJ() {
     return j;
 }
 
-void Character::setI(size_t i) {
+void Character::setI(float i) {
     this->i = i;
 }
 
-void Character::setJ(size_t j) {
+void Character::setJ(float j) {
     this->j = j;
 }
 

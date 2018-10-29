@@ -1,7 +1,7 @@
 #include "World.h"
-#include "AStar.hpp"
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <time.h>
 #include <math.h>
 #include <algorithm>
@@ -115,39 +115,16 @@ void World::addCharacter(Character* character, Team* team, size_t i, size_t j) {
     grid[i2][j2]->setContent((ContentType) 1);
 }
 
-void World::moveCharacter(Character* character, size_t i, size_t j) {
-    if (grid[i][j]->getContent() == nothing) {
-        size_t i2 = character->getI(), j2 = character->getJ();
-        grid[i2][j2]->setContent(nothing);
-        size_t n = sqrt(I), m = sqrt(J);
-        Character* maincharacter = (this->getMainCharacters())[0];
-        int x = maincharacter->getI(), y = maincharacter->getJ();
-        int xv = (x / n) * n, yv = (y / m) * m;
-        AStar::Generator generator;
-        generator.setWorldSize({n, m});
-        for (int l = 0; l < m; l++) {
-            for (int k = 0; k < n; k++) {
-                if (grid[k + xv][l + yv]->getContent() != nothing) generator.addCollision({k, l});
-            }
-        }
-        auto path = generator.findPath({i - xv, j - yv},
-        {
-            i2 - xv, j2 - yv
-        });
-
-        for (auto& coordinate : path) {
-            cout << coordinate.x + xv << " " << coordinate.y + yv << endl;
-        }
-        cout << endl;
-
-        character->setI(i);
-        character->setJ(j);
-        grid[i][j]->setContent((ContentType) 1);
-        if (j > j2) character->setDirection(south);
-        else if (i < i2) character->setDirection(west);
-        else if (i > i2) character->setDirection(east);
-        else if (j < j2) character->setDirection(north);
-    }
+void World::moveCharacter(Character* character, int i, int j) {
+    int i0 = character->getI(), j0 = character->getJ();
+    grid[i0][j0]->setContent(nothing);
+    character->setI(i);
+    character->setJ(j);
+    grid[i][j]->setContent((ContentType) 1);
+    if (j > j0) character->setDirection(south);
+    else if (i < i0) character->setDirection(west);
+    else if (i > i0) character->setDirection(east);
+    else if (j < j0) character->setDirection(north);
 }
 
 void World::delCharacter(size_t i, size_t j) {
@@ -216,4 +193,12 @@ void World::addTeam() {
 
 void World::addTeam(Team* team) {
     teams.push_back(team);
+}
+
+Team* World::getMainTeam() {
+    return teams[0];
+}
+
+Character* World::getMainCharacter() {
+    return teams[0]->getMainCharacter();
 }

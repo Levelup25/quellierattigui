@@ -21,15 +21,15 @@ void Team::delCharacter(Character* character) {
 }
 
 Character* Team::getMainCharacter() {
-    return characters[indexMainCharacter];
+    return characters[0];
 }
 
 Character* Team::getCharacter(size_t i) {
     return characters[i];
 }
 
-void Team::setMainCharacter(size_t i) {
-    indexMainCharacter = i;
+void Team::swapCharacters(size_t i1, size_t i2) {
+    iter_swap(characters.begin() + i1, characters.begin() + i2);
 }
 
 const string& Team::getName() const {
@@ -38,14 +38,6 @@ const string& Team::getName() const {
 
 void Team::setName(const string& name) {
     this->name = name;
-}
-
-const size_t& Team::getIndexMainCharacter() const {
-    return indexMainCharacter;
-}
-
-void Team::setIndexMainCharacter(const size_t& indexMainCharacter) {
-    this->indexMainCharacter = indexMainCharacter;
 }
 
 const vector<Character*>& Team::getCharacters() const {

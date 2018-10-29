@@ -1,4 +1,4 @@
-#include "DisplayState.h"
+#include "Render.h"
 #include <math.h>
 #include <SFML/Graphics.hpp>
 #include "IGWindow.h"
@@ -10,11 +10,11 @@ using namespace sf;
 using namespace state;
 using namespace render;
 
-DisplayState::DisplayState(State* state) {
+Render::Render(State* state) {
     this->state = state;
 }
 
-void DisplayState::display() {
+void Render::display() {
     World* world = state->getWorld();
     vector<vector < Cell*>> grid = world->getGrid();
     int N = world->getI(), M = world->getJ(), nb = 3, l = 34 * nb, h = 24 * nb,
@@ -28,7 +28,7 @@ void DisplayState::display() {
     IGWindowContainer wcontainer;
     UIInventory inv;
 
-    Character* maincharacter = (world->getMainCharacters())[0];
+    Character* maincharacter = world->getMainCharacter();
     unsigned int x, y, xv, yv;
     x = maincharacter->getI();
     y = maincharacter->getJ();
@@ -86,11 +86,13 @@ void DisplayState::display() {
 
         vector<Character*> chars = world->getMainCharacters();
         for (auto c = chars.begin(); c != chars.end(); ++c) {
-            if ((*c)->getI() >= xv && (*c)->getI() < xv + n && (*c)->getJ() >= yv &&
-                    (*c)->getJ() < yv + m) {
-                sprite = persos.getSprite((*c)->getId(), (int) (*c)->getDirection(), 1);
+            float ic = (*c)->getI(), jc = (*c)->getJ();
+            if (ic >= xv && ic < xv + n && jc >= yv && jc < yv + m) {
+                int animation = (ic - (int) ic)*4 - 1;
+                if (animation == -1) animation = 1;
+                sprite = persos.getSprite((*c)->getId(), (int) (*c)->getDirection(), animation);
                 sprite.setScale(Vector2f(nb, (float) h / h2));
-                sprite.setPosition(Vector2f(l * (*c)->getI(), h * (*c)->getJ()));
+                sprite.setPosition(Vector2f(l * ic, h * jc));
                 window.draw(sprite);
             }
         }

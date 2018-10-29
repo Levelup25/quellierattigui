@@ -5,5 +5,5 @@
 #include "render/ContentSprite.h"
 #include "render/CharacterSprite.h"
 #include "render/TileSprite.h"
-#include "render/DisplayState.h"
+#include "render/Render.h"
 #endif
