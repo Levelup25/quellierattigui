@@ -3,18 +3,30 @@
 #define ENGINE__MOVECOMMAND__H
 
 
+namespace state {
+  class Character;
+  class State;
+};
 namespace engine {
   class Command;
 }
 
 #include "Command.h"
+#include "state/Character.h"
 
 namespace engine {
 
   /// class MoveCommand - 
   class MoveCommand : public engine::Command {
+    // Associations
+    // Attributes
+  private:
+    state::Character* character;
+    float i;
+    float j;
     // Operations
   public:
+    MoveCommand (state::State* state, state::Character* character, float i, float j);
     void execute ();
     // Setters and Getters
   };

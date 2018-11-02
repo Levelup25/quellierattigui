@@ -3,6 +3,7 @@
 #define __ENGINE__H
 
 #include "engine/Command.h"
-#include "engine/Engine.h"
 #include "engine/MoveCommand.h"
+#include "engine/Engine.h"
+#include "engine/MoveCommands.h"
 #endif

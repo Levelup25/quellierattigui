@@ -115,16 +115,16 @@ void World::addCharacter(Character* character, Team* team, size_t i, size_t j) {
     grid[i2][j2]->setContent((ContentType) 1);
 }
 
-void World::moveCharacter(Character* character, int i, int j) {
-    int i0 = character->getI(), j0 = character->getJ();
-    grid[i0][j0]->setContent(nothing);
-    character->setI(i);
-    character->setJ(j);
-    grid[i][j]->setContent((ContentType) 1);
+void World::moveCharacter(Character* character, float i, float j) {
+    float i0 = character->getI(), j0 = character->getJ();
     if (j > j0) character->setDirection(south);
     else if (i < i0) character->setDirection(west);
     else if (i > i0) character->setDirection(east);
     else if (j < j0) character->setDirection(north);
+    grid[(int) i0][(int) j0]->setContent(nothing);
+    character->setI(i);
+    character->setJ(j);
+    grid[(int) i][(int) j]->setContent(perso);
 }
 
 void World::delCharacter(size_t i, size_t j) {

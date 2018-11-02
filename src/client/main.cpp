@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <fstream>
 #include <iostream>
+#include <thread>
 
 #include "render/renderTest.h"
 
@@ -132,6 +133,37 @@ int main(int argc, char* argv[]) {
             render.display();
         }// Livrable 2.2
         else if (strcmp(argv[i], "engine") == 0) {
+            State* state = new State();
+            World* world;
+            world = state->getWorld();
+            world->addCharacter(0, rand() % (12 * 4), 7, 0, (Direction) (rand() % 4));
+            for (int i = 1; i < 20; i++) {
+                for (int j = 0; j < 1; j++) {
+                    world->addCharacter(i, rand() % (12 * 4), rand() % world->getI(),
+                            rand() % world->getJ(), (Direction) (rand() % 4));
+                }
+            }
+            Character* maincharacter = world->getMainCharacter();
+
+            Render* render = new Render(state);
+            Engine* engine = new Engine();
+
+            MoveCommands * mvcmd = new MoveCommands(state, maincharacter, engine);
+            mvcmd->addCommands(5, 4);
+
+            thread t1([engine]() {
+                char c;
+                while (engine->getSize() > 0) {
+                    c = cin.get();
+                    if (c == ' ') engine->runCommand();
+                    else if (c == '\n') engine->runCommand();
+                    }
+            });
+            thread t2([render]() {
+                render->display();
+            });
+            t1.join();
+            t2.join();
         }// Livrable 2.final
         else if (strcmp(argv[i], "random_ai") == 0) {
         }// Livrable 3.1

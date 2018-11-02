@@ -3,16 +3,14 @@
 #define ENGINE__ENGINE__H
 
 #include <vector>
+#include <stdlib.h>
 
-namespace state {
-  class State;
-};
 namespace engine {
   class Command;
+  class MoveCommand;
 }
 
-#include "state/State.h"
-#include "Command.h"
+#include "MoveCommand.h"
 
 namespace engine {
 
@@ -21,12 +19,13 @@ namespace engine {
     // Associations
     // Attributes
   private:
-    state::State* state;
     std::vector<Command*> commands;
     // Operations
   public:
-    Engine ();
     void addCommand (Command* command);
+    void runCommand ();
+    void runCommands ();
+    std::size_t getSize ();
     // Setters and Getters
   };
 

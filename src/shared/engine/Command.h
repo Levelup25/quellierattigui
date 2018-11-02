@@ -2,8 +2,6 @@
 #ifndef ENGINE__COMMAND__H
 #define ENGINE__COMMAND__H
 
-#include "AStar.h"
-#include <stdlib.h>
 
 namespace state {
   class State;
@@ -17,14 +15,15 @@ namespace engine {
   class Command {
     // Associations
     // Attributes
-  private:
+  protected:
     state::State* state;
-    AStar::Generator generator;
     // Operations
   public:
-    void setGenerator ();
-    void execute (state::Character* character, std::size_t i, std::size_t j);
+    virtual ~Command ();
+    virtual void execute ();
     // Setters and Getters
+    const state::State*& getState() const;
+    void setState(const state::State*& state);
   };
 
 };

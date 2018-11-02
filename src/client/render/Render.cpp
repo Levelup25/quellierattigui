@@ -88,7 +88,7 @@ void Render::display() {
         for (auto c = chars.begin(); c != chars.end(); ++c) {
             float ic = (*c)->getI(), jc = (*c)->getJ();
             if (ic >= xv && ic < xv + n && jc >= yv && jc < yv + m) {
-                int animation = (ic - (int) ic)*4 - 1;
+                int animation = (ic - (int) ic + jc - (int) jc)*4 - 1;
                 if (animation == -1) animation = 1;
                 sprite = persos.getSprite((*c)->getId(), (int) (*c)->getDirection(), animation);
                 sprite.setScale(Vector2f(nb, (float) h / h2));
@@ -99,10 +99,10 @@ void Render::display() {
 
         // check all the window's events that were triggered since the last
         // iteration of the loop
-        Event event;
+        sf::Event event;
         while (window.pollEvent(event)) {
             // "close requested" event: we close the window
-            if (event.type == Event::Closed)
+            if (event.type == sf::Event::Closed)
                 window.close();
 
             posView = {xv * l, yv * h};
