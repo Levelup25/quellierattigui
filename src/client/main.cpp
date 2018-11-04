@@ -75,10 +75,10 @@ int main(int argc, char* argv[]) {
             weapon2->addAbility(ability2);
 
             cout << "Placement des armes dans les inventaires" << endl;
-            Inventory inv1 = goodGuys->getInventory();
-            Inventory inv2 = badGuys->getInventory();
-            inv1.addItem(weapon1);
-            inv2.addItem(weapon2);
+            Inventory* inv1 = goodGuys->getInventory();
+            Inventory* inv2 = badGuys->getInventory();
+            inv1->addItem(weapon1);
+            inv2->addItem(weapon2);
 
             cout << "Équipement des armes" << endl;
             heros->setWeapon(weapon1);
@@ -86,7 +86,7 @@ int main(int argc, char* argv[]) {
 
             cout << "Lancement du combat" << endl;
             Fight* fight = new Fight(goodGuys, badGuys);
-            state->setFight(true);
+            state->isFighting = false;
             cout << "Le heros " << heros->getName() << " de l'équipe "
                     << goodGuys->getName() << " possède " << heros->getPv() << "pv, "
                     << heros->getPa() << "pa et " << heros->getPm() << "pm." << endl;
@@ -116,7 +116,7 @@ int main(int argc, char* argv[]) {
                     << world->getCharacters().size() << endl;
 
             cout << "Fin du combat" << endl;
-            state->setFight(false);
+            state->isFighting = false;
 
         }// Livrable 2.1
         else if (strcmp(argv[i], "render") == 0) {
@@ -129,33 +129,57 @@ int main(int argc, char* argv[]) {
                             rand() % world->getJ(), (Direction) (rand() % 4));
                 }
             }
-            Render render(state);
-            render.display();
+            Render* render = new Render(state);
+            render->display();
         }// Livrable 2.2
         else if (strcmp(argv[i], "engine") == 0) {
             State* state = new State();
             World* world;
             world = state->getWorld();
+
             world->addCharacter(0, rand() % (12 * 4), 7, 0, (Direction) (rand() % 4));
-            for (int i = 1; i < 20; i++) {
-                for (int j = 0; j < 1; j++) {
-                    world->addCharacter(i, rand() % (12 * 4), rand() % world->getI(),
-                            rand() % world->getJ(), (Direction) (rand() % 4));
-                }
-            }
-            Character* maincharacter = world->getMainCharacter();
+            world->addCharacter(1, rand() % (12 * 4), 5, 4, (Direction) (rand() % 4));
+
+            Team* team1 = world->getTeams()[0];
+            Team* team2 = world->getTeams()[1];
+
+            Character* char1 = team1->getCharacter(0);
+            Character* char2 = team2->getCharacter(0);
+
+            Weapon* weapon1 = new Weapon();
+            Weapon* weapon2 = new Weapon();
+
+            Ability* ability1 = new Ability();
+            Ability* ability2 = new Ability();
+
+            weapon1->addAbility(ability1);
+            weapon2->addAbility(ability2);
+
+            ability1->setTarget(circle, 1, 5);
+            ability2->setTarget(line, 1, 4);
+            ability1->setEffect(circle, 0, 3);
+            ability2->setEffect(line, 0, 2);
+
+            Inventory* inv1 = team1->getInventory();
+            Inventory* inv2 = team2->getInventory();
+
+            //            inv1->addItem(weapon1);
+            //            inv2->addItem(weapon2);
+
+            char1->setWeapon(weapon1);
+            char2->setWeapon(weapon2);
 
             Render* render = new Render(state);
             Engine* engine = new Engine();
 
-            MoveCommands * mvcmd = new MoveCommands(state, maincharacter, engine);
-            mvcmd->addCommands(5, 4);
+            MoveCommands * mvcmd = new MoveCommands(state, engine, char1);
+            mvcmd->addCommands(char2->getI(), char2->getJ());
 
             thread t1([engine]() {
                 char c;
                 while (engine->getSize() > 0) {
                     c = cin.get();
-                    if (c == ' ') engine->runCommand();
+                    if (c == ' ') engine->runCommand(); //ne fonctionne pas ... :(
                     else if (c == '\n') engine->runCommand();
                     }
             });

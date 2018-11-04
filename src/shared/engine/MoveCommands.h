@@ -27,9 +27,11 @@ namespace engine {
     state::Character* character;
     Engine* engine;
     AStar::Generator generator;
+    std::size_t n     = 12;
+    std::size_t m     = 12;
     // Operations
   public:
-    MoveCommands (state::State* state, state::Character* character, Engine* engine);
+    MoveCommands (state::State* state, Engine* engine, state::Character* character);
     void addCommands (std::size_t i, std::size_t j);
   private:
     void setGenerator ();

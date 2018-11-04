@@ -7,10 +7,9 @@
 
 namespace engine {
   class Command;
-  class MoveCommand;
 }
 
-#include "MoveCommand.h"
+#include "Command.h"
 
 namespace engine {
 

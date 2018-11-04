@@ -20,7 +20,7 @@ namespace engine {
     // Operations
   public:
     virtual ~Command ();
-    virtual void execute ();
+    virtual void execute () = 0;
     // Setters and Getters
     const state::State*& getState() const;
     void setState(const state::State*& state);

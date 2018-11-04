@@ -1,5 +1,4 @@
 #include "Render.h"
-#include <math.h>
 #include <SFML/Graphics.hpp>
 #include "IGWindow.h"
 #include "IGWindowContainer.h"
@@ -17,8 +16,8 @@ Render::Render(State* state) {
 void Render::display() {
     World* world = state->getWorld();
     vector<vector < Cell*>> grid = world->getGrid();
-    int N = world->getI(), M = world->getJ(), nb = 3, l = 34 * nb, h = 24 * nb,
-            l2 = 32, h2 = 32, n = sqrt(N), m = sqrt(M);
+    int nb = 3, l = 34 * nb, h = 24 * nb,
+            l2 = 32, h2 = 32;
 
     RenderWindow window(VideoMode(n * l, m * h), "Jeu");
     View view;
@@ -29,6 +28,9 @@ void Render::display() {
     UIInventory inv;
 
     Character* maincharacter = world->getMainCharacter();
+    Ability* ability = maincharacter->getWeapon()->getAbilities()[0];
+    vector<Character*> chars = world->getMainCharacters();
+
     unsigned int x, y, xv, yv;
     x = maincharacter->getI();
     y = maincharacter->getJ();
@@ -66,6 +68,7 @@ void Render::display() {
                 sprite = tiles.getSprite((int) element);
                 sprite.setPosition(Vector2f(i * l, j * h));
                 window.draw(sprite);
+
                 if ((int) content > 1) {
                     sprite = contents.getSprite((int) content, (int) element);
                     sprite.setPosition(Vector2f(i * l, j * h));
@@ -76,15 +79,28 @@ void Render::display() {
             }
         }
 
-        zone.setPosition(
-                Vector2f(maincharacter->getI() * l, maincharacter->getJ() * h));
-        zone.setOutlineThickness(-2);
-        zone.setOutlineColor(Color::White);
-        window.draw(zone);
-        zone.setOutlineThickness(-1);
-        zone.setOutlineColor(Color::Black);
+        if (state->isFighting) {
+            int ok = 0;
+            auto posMouseBuff = sf::Mouse::getPosition(window);
+            vector<vector<int>> targets = ability->getTargetZone({x, y});
+            zone.setFillColor(Color(0, 0, 255, 128));
+            for (vector<int> coord : targets) {
+                zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
+                window.draw(zone);
+                if (coord[0] == (xv + posMouseBuff.x / l) && coord[1] == (yv + posMouseBuff.y / h)) ok = 1;
+            }
 
-        vector<Character*> chars = world->getMainCharacters();
+            if (ok) {
+                vector<vector<int>> effects = ability->getEffectZone({xv + posMouseBuff.x / l, yv + posMouseBuff.y / h});
+                zone.setFillColor(Color(255, 0, 0, 128));
+                for (vector<int> coord : effects) {
+                    zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
+                    window.draw(zone);
+                }
+            }
+            zone.setFillColor(Color::Transparent);
+        }
+
         for (auto c = chars.begin(); c != chars.end(); ++c) {
             float ic = (*c)->getI(), jc = (*c)->getJ();
             if (ic >= xv && ic < xv + n && jc >= yv && jc < yv + m) {
@@ -96,6 +112,14 @@ void Render::display() {
                 window.draw(sprite);
             }
         }
+
+        zone.setPosition(
+                Vector2f(maincharacter->getI() * l, maincharacter->getJ() * h));
+        zone.setOutlineThickness(-2);
+        zone.setOutlineColor(Color::White);
+        window.draw(zone);
+        zone.setOutlineThickness(-1);
+        zone.setOutlineColor(Color::Black);
 
         // check all the window's events that were triggered since the last
         // iteration of the loop

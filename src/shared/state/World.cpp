@@ -186,6 +186,16 @@ vector<Team*> World::getTeams() {
     return teams;
 }
 
+Team* World::getTeam(Character* character) {
+    for (auto t = teams.begin(); t != teams.end(); ++t) {
+        vector<Character*> characters = (*t)->getCharacters();
+        for (auto c = characters.begin(); c != characters.end(); ++c) {
+            if ((*c) == character) return *t;
+        }
+    }
+    return nullptr;
+}
+
 void World::addTeam() {
     Team* team = new Team();
     teams.push_back(team);

@@ -28,30 +28,18 @@ Character* Team::getCharacter(size_t i) {
     return characters[i];
 }
 
+vector<Character*> Team::getCharacters() {
+    return characters;
+}
+
 void Team::swapCharacters(size_t i1, size_t i2) {
     iter_swap(characters.begin() + i1, characters.begin() + i2);
 }
 
-const string& Team::getName() const {
+string Team::getName() {
     return name;
 }
 
-void Team::setName(const string& name) {
-    this->name = name;
-}
-
-const vector<Character*>& Team::getCharacters() const {
-    return characters;
-}
-
-void Team::setCharacters(const vector<Character*>& characters) {
-    this->characters = characters;
-}
-
-const Inventory& Team::getInventory() const {
+Inventory* Team::getInventory() {
     return inventory;
-}
-
-void Team::setInventory(const Inventory& inventory) {
-    this->inventory = inventory;
 }

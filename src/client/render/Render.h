@@ -2,6 +2,7 @@
 #ifndef RENDER__RENDER__H
 #define RENDER__RENDER__H
 
+#include <stdlib.h>
 
 namespace state {
   class State;
@@ -25,6 +26,8 @@ namespace render {
     // Attributes
   private:
     state::State* state;
+    std::size_t n     = 12;
+    std::size_t m     = 12;
     // Operations
   public:
     Render (state::State* state);

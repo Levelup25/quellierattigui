@@ -3,17 +3,8 @@
 using namespace std;
 using namespace state;
 
-State::State() {
-    World *w = new World(12 * 12, 12 * 12);
-    world = w;
-}
-
-void State::setFight(bool b) {
-    isFighting = b;
-}
-
-void State::setInventory(bool b) {
-    isInventoryOpened = b;
+State::State(size_t i, size_t j) {
+    world = new World(i, j);
 }
 
 World *State::getWorld() {
