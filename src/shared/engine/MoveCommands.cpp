@@ -1,7 +1,7 @@
 #include "MoveCommands.h"
 #include "MoveCommand.h"
+#include "DirectionCommand.h"
 #include "FightCommand.h"
-#include <iostream>
 
 using namespace std;
 using namespace state;
@@ -43,6 +43,10 @@ void MoveCommands::addCommands(size_t i, size_t j) {
     float step = 1.0 / 4;
     for (auto coord = path.begin() + 1; coord != path.end(); coord++) {
         float i = (*coord).x, j = (*coord).y;
+        if (j > j0) engine->addCommand(new DirectionCommand(character, 0));
+        else if (i < i0) engine->addCommand(new DirectionCommand(character, 1));
+        else if (i > i0) engine->addCommand(new DirectionCommand(character, 2));
+        else if (j < j0) engine->addCommand(new DirectionCommand(character, 3));
         for (float f = 1 - step; f >= 0; f = f - step) {
             //cout << (i0 - i) * f + i + xv << " " << (j0 - j) * f + j + yv << endl;
             engine->addCommand(new MoveCommand(state, character, (i0 - i) * f + i + xv, (j0 - j) * f + j + yv));
@@ -51,5 +55,11 @@ void MoveCommands::addCommands(size_t i, size_t j) {
         j0 = j;
     }
     generator.addCollision({i, j});
+    if ((int) world->getGrid()[i][j]->getContent() > 0) {
+        if (j > j0) engine->addCommand(new DirectionCommand(character, 0));
+        else if (i < i0) engine->addCommand(new DirectionCommand(character, 1));
+        else if (i > i0) engine->addCommand(new DirectionCommand(character, 2));
+        else if (j < j0) engine->addCommand(new DirectionCommand(character, 3));
+    }
     if ((int) world->getGrid()[i][j]->getContent() == 1) engine->addCommand(new FightCommand(state, world->getTeam(character), world->getTeam(world->getCharacter(i, j))));
 }

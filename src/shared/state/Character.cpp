@@ -35,6 +35,10 @@ void Character::setDirection(Direction direction) {
     this->direction = direction;
 }
 
+void Character::setDirection(int direction) {
+    this->direction = (Direction) direction;
+}
+
 float Character::getI() {
     return i;
 }

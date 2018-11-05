@@ -18,64 +18,42 @@ Ability::Ability(std::string name, unsigned int pa, int damage, ElementType elem
     this->effectMax = effectMax;
 }
 
-vector<vector<int>> Ability::getTargetZone(vector<int> position) {
-    vector<vector<int>> targets;
+vector<vector<int>> Ability::getZone(vector<int> position, ZoneType zone, int min, int max) {
+    vector<vector<int>> zones;
     int i = position[0], j = position[1];
-    for (int k = targetMin; k <= targetMax; k++) {
-        if (k == 0) targets.push_back({i, j});
+    for (int k = min; k <= max; k++) {
+        if (k == 0) zones.push_back({i, j});
         else {
-            if (targetType == circle) {
+            if (zone == circle) {
                 for (int l = 0; l < k; l++) {
-                    targets.push_back({i - l, j - k + l});
-                    targets.push_back({i - k + l, j + l});
-                    targets.push_back({i + k - l, j - l});
-                    targets.push_back({i + l, j + k - l});
+                    zones.push_back({i - l, j - k + l});
+                    zones.push_back({i - k + l, j + l});
+                    zones.push_back({i + k - l, j - l});
+                    zones.push_back({i + l, j + k - l});
                 }
-            } else if (targetType == line) {
-                targets.push_back({i, j - k});
-                targets.push_back({i - k, j});
-                targets.push_back({i + k, j});
-                targets.push_back({i, j + k});
+            } else if (zone == line) {
+                zones.push_back({i, j - k});
+                zones.push_back({i - k, j});
+                zones.push_back({i + k, j});
+                zones.push_back({i, j + k});
 
-            } else if (targetType == diag) {
-                targets.push_back({i - k, j - k});
-                targets.push_back({i - k, j + k});
-                targets.push_back({i + k, j - k});
-                targets.push_back({i + k, j + k});
+            } else if (zone == diag) {
+                zones.push_back({i - k, j - k});
+                zones.push_back({i - k, j + k});
+                zones.push_back({i + k, j - k});
+                zones.push_back({i + k, j + k});
             }
         }
     }
-    return targets;
+    return zones;
 }
 
-vector<vector<int>> Ability::getEffectZone(vector<int> target) {
-    vector<vector<int>> effects;
-    int i = target[0], j = target[1];
-    for (int k = effectMin; k <= effectMax; k++) {
-        if (k == 0) effects.push_back({i, j});
-        else {
-            if (effectType == circle) {
-                for (int l = 0; l < k; l++) {
-                    effects.push_back({i - l, j - k + l});
-                    effects.push_back({i - k + l, j + l});
-                    effects.push_back({i + k - l, j - l});
-                    effects.push_back({i + l, j + k - l});
-                }
-            } else if (effectType == line) {
-                effects.push_back({i, j - k});
-                effects.push_back({i - k, j});
-                effects.push_back({i + k, j});
-                effects.push_back({i, j + k});
+vector<vector<int>> Ability::getTargetZone(vector<int> position) {
+    return getZone(position, targetType, targetMin, targetMax);
+}
 
-            } else if (effectType == diag) {
-                effects.push_back({i - k, j - k});
-                effects.push_back({i - k, j + k});
-                effects.push_back({i + k, j - k});
-                effects.push_back({i + k, j + k});
-            }
-        }
-    }
-    return effects;
+vector<vector<int>> Ability::getEffectZone(vector<int> position) {
+    return getZone(position, effectType, effectMin, effectMax);
 }
 
 void Ability::setCooldown(int initial) {

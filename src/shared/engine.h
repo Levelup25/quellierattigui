@@ -7,4 +7,5 @@
 #include "engine/MoveCommand.h"
 #include "engine/MoveCommands.h"
 #include "engine/FightCommand.h"
+#include "engine/DirectionCommand.h"
 #endif
