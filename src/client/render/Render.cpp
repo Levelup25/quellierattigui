@@ -17,8 +17,7 @@ Render::Render(State* state, Engine* engine) {
 }
 
 void Render::display() {
-    World* world = state->getWorld();
-    vector<vector < Cell*>> grid = world->getGrid();
+    vector<vector < Cell*>> grid = state->getGrid();
     int nb = 3, l = 34 * nb, h = 24 * nb, l2 = 32, h2 = 32;
 
     RenderWindow window(VideoMode(n * l, m * h), "Jeu");
@@ -29,7 +28,7 @@ void Render::display() {
     IGWindowContainer wcontainer;
     UIInventory inv;
 
-    Character* maincharacter = world->getMainCharacter();
+    Character* maincharacter = state->getMainCharacter();
     Ability* ability = maincharacter->getWeapon()->getAbilities()[0];
     mvcmd = new MoveCommands(state, engine, maincharacter);
     vector<Character*> chars;
@@ -59,7 +58,7 @@ void Render::display() {
         if (state->isFighting())
             chars = state->getFight()->getFightingCharacters();
         else
-            chars = world->getMainCharacters();
+            chars = state->getMainCharacters();
 
         x = maincharacter->getI();
         y = maincharacter->getJ();
@@ -144,7 +143,7 @@ void Render::display() {
             inv.setPosition(posView + Vector2f{30, 30});
             auto posMouseBuff = sf::Mouse::getPosition(window);
             Vector2f posMouse{(float) posMouseBuff.x, (float) posMouseBuff.y};
-            wcontainer.transmit(event, posMouse + posView);
+            //wcontainer.transmit(event, posMouse + posView);
 
             if (event.type == sf::Event::MouseButtonPressed) {
                 if (event.mouseButton.button == sf::Mouse::Left) {
@@ -153,9 +152,8 @@ void Render::display() {
             }
         }
 
-
         // end the current frame
-        window.draw(wcontainer);
+        //window.draw(wcontainer);
         window.display();
     }
 }

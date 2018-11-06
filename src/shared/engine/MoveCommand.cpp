@@ -12,5 +12,5 @@ MoveCommand::MoveCommand(State* state, Character* character, float i, float j) {
 }
 
 void MoveCommand::execute() {
-    state->getWorld()->moveCharacter(character, i, j);
+    state->moveCharacter(character, i, j);
 }
