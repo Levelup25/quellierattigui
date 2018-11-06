@@ -36,10 +36,7 @@ void MoveCommands::addCommands(size_t i, size_t j) {
     auto path = generator.findPath({i - xv, j - yv},
     {
         i0 - xv, j0 - yv    });
-    if (content > 0) {
-        generator.addCollision({i, j});
-        path.pop_back();
-    }
+    if (content > 0) path.pop_back();
 
     float step = 1.0 / 4;
     for (auto coord = path.begin() + 1; coord != path.end(); coord++) {
@@ -72,18 +69,7 @@ void MoveCommands::addCommands(size_t i, size_t j) {
 
     content = (int) world->getGrid()[i][j]->getContent();
 
-    if (content == 0) {
-        engine->addCommand(new MoveCommand(state, character, i, j));
-    }
-
-    generator.addCollision({i, j});
-
-    if (content > 0) {
-        if (j > j0) engine->addCommand(new DirectionCommand(character, 0));
-        else if (i < i0) engine->addCommand(new DirectionCommand(character, 1));
-        else if (i > i0) engine->addCommand(new DirectionCommand(character, 2));
-        else if (j < j0) engine->addCommand(new DirectionCommand(character, 3));
-    }
-
     if (content == 1) engine->addCommand(new FightCommand(state, world->getTeam(character), world->getTeam(world->getCharacter(i, j))));
+
+    this->setGenerator();
 }

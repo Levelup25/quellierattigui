@@ -9,8 +9,10 @@ void Engine::addCommand(Command* command) {
 }
 
 void Engine::runCommand() {
-    commands[0]->execute();
-    commands.erase(commands.begin());
+    if (commands.size() > 0) {
+        commands[0]->execute();
+        commands.erase(commands.begin());
+    }
 }
 
 void Engine::runCommands() {

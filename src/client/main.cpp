@@ -137,9 +137,9 @@ int main(int argc, char* argv[]) {
       world = state->getWorld();
 
       world->addCharacter(0, rand() % (12 * 4), 7, 0, (Direction)(rand() % 4));
-      world->addCharacter(1, rand() % (12 * 4), 5, 4, (Direction)(rand() % 4));
+      world->addCharacter(1, rand() % (12 * 4), 15, 4, (Direction)(rand() % 4));
       world->addCharacter(0, rand() % (12 * 4), 7, 0, (Direction)(rand() % 4));
-      world->addCharacter(1, rand() % (12 * 4), 5, 4, (Direction)(rand() % 4));
+      world->addCharacter(1, rand() % (12 * 4), 15, 4, (Direction)(rand() % 4));
 
       Team* team1 = world->getTeams()[0];
       Team* team2 = world->getTeams()[1];
@@ -173,18 +173,17 @@ int main(int argc, char* argv[]) {
       Engine* engine = new Engine();
       Render* render = new Render(state, engine);
 
-      MoveCommands* mvcmd = new MoveCommands(state, engine, char1);
+      // MoveCommands* mvcmd = new MoveCommands(state, engine, char1);
       // mvcmd->addCommands(char2->getI(), char2->getJ());
-      mvcmd->addCommands(11, 11);
+      // mvcmd->addCommands(11, 11);
 
       thread t1([engine]() {
-        char c;
-        while (engine->getSize() > 0) {
-          c = cin.get();
-          if (c == ' ')
-            engine->runCommand();  // ne fonctionne pas ... :(
-          else if (c == '\n')
+        sf::Clock clock;
+        while (1) {
+          if (clock.getElapsedTime().asSeconds() >= 0.1) {
             engine->runCommand();
+            clock.restart();
+          }
         }
       });
       thread t2([render]() { render->display(); });

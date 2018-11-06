@@ -1,5 +1,6 @@
 #include "Render.h"
 #include <SFML/Graphics.hpp>
+#include <iostream>
 #include "IGWindow.h"
 #include "IGWindowContainer.h"
 #include "UIInventory.h"
@@ -145,8 +146,14 @@ void Render::display() {
       auto posMouseBuff = sf::Mouse::getPosition(window);
       Vector2f posMouse{(float)posMouseBuff.x, (float)posMouseBuff.y};
       wcontainer.transmit(event, posMouse + posView);
-      if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        mvcmd->addCommands(xv + posMouseBuff.x / l, yv + posMouseBuff.y / h);
+
+      if (event.type == sf::Event::MouseButtonPressed) {
+        if (event.mouseButton.button == sf::Mouse::Left) {
+          mvcmd->addCommands(xv + event.mouseButton.x / l,
+                             yv + event.mouseButton.x / h);
+          cout << xv + event.mouseButton.x / l << " "
+               << yv + event.mouseButton.y / h << endl;
+        }
       }
     }
 
