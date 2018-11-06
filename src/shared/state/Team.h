@@ -35,6 +35,7 @@ namespace state {
     void swapCharacters (std::size_t i1, std::size_t i2);
     std::string getName ();
     Inventory* getInventory ();
+    bool isAlive ();
     // Setters and Getters
   };
 

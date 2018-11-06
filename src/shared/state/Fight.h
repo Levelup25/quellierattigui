@@ -25,6 +25,7 @@ namespace state {
     Fight (Team* main, Team* opponent);
     std::vector<Team*> getTeams ();
     std::vector<Character*> getFightingCharacters ();
+    bool shouldEnd ();
     // Setters and Getters
   };
 

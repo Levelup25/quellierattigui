@@ -27,3 +27,7 @@ std::vector<Character*> Fight::getFightingCharacters() {
 
   return allCharacters;
 }
+
+bool Fight::shouldEnd() {
+  return !main->isAlive() or opponent->isAlive();
+}
