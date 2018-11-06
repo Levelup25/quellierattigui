@@ -1,5 +1,6 @@
 #include "Render.h"
 #include <SFML/Graphics.hpp>
+#include <iostream>
 #include "IGWindow.h"
 #include "IGWindowContainer.h"
 #include "UIInventory.h"
@@ -18,8 +19,7 @@ Render::Render(State* state, Engine* engine) {
 void Render::display() {
     World* world = state->getWorld();
     vector<vector < Cell*>> grid = world->getGrid();
-    int nb = 3, l = 34 * nb, h = 24 * nb,
-            l2 = 32, h2 = 32;
+    int nb = 3, l = 34 * nb, h = 24 * nb, l2 = 32, h2 = 32;
 
     RenderWindow window(VideoMode(n * l, m * h), "Jeu");
     View view;
@@ -54,11 +54,12 @@ void Render::display() {
     zone.setOutlineColor(Color::Black);
 
     while (window.isOpen()) {
-
         window.clear();
 
-        if (state->isFighting) chars = world->getFightingCharacters();
-        else chars = world->getMainCharacters();
+        if (state->isFighting())
+            chars = state->getFight()->getFightingCharacters();
+        else
+            chars = world->getMainCharacters();
 
         x = maincharacter->getI();
         y = maincharacter->getJ();
@@ -85,7 +86,7 @@ void Render::display() {
             }
         }
 
-        if (state->isFighting) {
+        if (state->isFighting()) {
             int ok = 0;
             auto posMouseBuff = sf::Mouse::getPosition(window);
             vector<vector<int>> targets = ability->getTargetZone({x, y});
@@ -93,7 +94,9 @@ void Render::display() {
             for (vector<int> coord : targets) {
                 zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
                 window.draw(zone);
-                if (coord[0] == (xv + posMouseBuff.x / l) && coord[1] == (yv + posMouseBuff.y / h)) ok = 1;
+                if (coord[0] == (xv + posMouseBuff.x / l) &&
+                        coord[1] == (yv + posMouseBuff.y / h))
+                    ok = 1;
             }
 
             if (ok) {
@@ -110,9 +113,11 @@ void Render::display() {
         for (auto c = chars.begin(); c != chars.end(); ++c) {
             float ic = (*c)->getI(), jc = (*c)->getJ();
             if (ic >= xv && ic < xv + n && jc >= yv && jc < yv + m) {
-                int animation = (ic - (int) ic + jc - (int) jc)*4 - 1;
-                if (animation == -1) animation = 1;
-                sprite = persos.getSprite((*c)->getId(), (int) (*c)->getDirection(), animation);
+                int animation = (ic - (int) ic + jc - (int) jc) * 4 - 1;
+                if (animation == -1)
+                    animation = 1;
+                sprite = persos.getSprite((*c)->getId(), (int) (*c)->getDirection(),
+                        animation);
                 sprite.setScale(Vector2f(nb, (float) h / h2));
                 sprite.setPosition(Vector2f(l * ic, h * jc));
                 window.draw(sprite);
@@ -147,6 +152,7 @@ void Render::display() {
                 }
             }
         }
+
 
         // end the current frame
         window.draw(wcontainer);

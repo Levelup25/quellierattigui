@@ -6,10 +6,12 @@
 
 namespace state {
   class World;
+  class Fight;
   class Observable;
 }
 
 #include "Observable.h"
+#include "Fight.h"
 #include "World.h"
 
 namespace state {
@@ -19,10 +21,10 @@ namespace state {
     // Associations
     // Attributes
   public:
-    bool isFighting     = false;
     bool isInventoryOpened     = false;
   private:
     World* world;
+    Fight* fight     = nullptr;
   protected:
     int epoch     = 0;
     int epochRate     = 15;
@@ -30,6 +32,10 @@ namespace state {
   public:
     State (std::size_t i = 144, std::size_t j = 144);
     World* getWorld ();
+    bool isFighting ();
+    Fight* getFight ();
+    void setFight (Fight* fight);
+    void delFight ();
     // Setters and Getters
     int getEpoch() const;
     void setEpoch(int epoch);
