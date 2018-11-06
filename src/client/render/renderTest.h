@@ -7,4 +7,3 @@
 
 bool posInRec(sf::Vector2f pos, sf::RectangleShape rec);
 void testRender();
-void testRender2();

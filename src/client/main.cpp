@@ -75,8 +75,8 @@ int main(int argc, char* argv[]) {
       weapon2->addAbility(ability2);
 
       cout << "Placement des armes dans les inventaires" << endl;
-      Inventory* inv1 = goodGuys->getInventory();
-      Inventory* inv2 = badGuys->getInventory();
+      state::Inventory* inv1 = goodGuys->getInventory();
+      state::Inventory* inv2 = badGuys->getInventory();
       inv1->addItem(weapon1);
       inv2->addItem(weapon2);
 
@@ -131,7 +131,9 @@ int main(int argc, char* argv[]) {
       Render* render = new Render(state, new Engine());
       render->display();
     }  // Livrable 2.2
-    else if (strcmp(argv[i], "engine") == 0) {
+    else if (strcmp(argv[i], "renderTest") == 0) {
+      testRender();
+    } else if (strcmp(argv[i], "engine") == 0) {
       State* state = new State();
       World* world;
       world = state->getWorld();
@@ -161,8 +163,8 @@ int main(int argc, char* argv[]) {
       ability1->setEffect(circle, 0, 3);
       ability2->setEffect(line, 0, 2);
 
-      Inventory* inv1 = team1->getInventory();
-      Inventory* inv2 = team2->getInventory();
+      state::Inventory* inv1 = team1->getInventory();
+      state::Inventory* inv2 = team2->getInventory();
 
       inv1->addItem(weapon1);
       inv2->addItem(weapon2);
