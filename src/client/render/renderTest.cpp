@@ -1,10 +1,11 @@
 #include "renderTest.h"
-//#include "IGWindow.h"
-//#include "IGWindowContainer.h"
-//#include "UIInventory.h"
+#include "WindowManager.h"
+
+using namespace render;
 
 void testRender() {
   sf::RenderWindow window(sf::VideoMode(700, 700), "Render Test");
+  auto wm = WindowManager();
 
   // window loop
   while (window.isOpen()) {
@@ -15,9 +16,12 @@ void testRender() {
 
       auto posMouseBuff = sf::Mouse::getPosition(window);
       sf::Vector2f posMouse{(float)posMouseBuff.x, (float)posMouseBuff.y};
+
+      wm.receiveEvent(event, posMouse);
     }
 
     window.clear();
+    window.draw(wm);
     window.display();
   }
 }

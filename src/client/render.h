@@ -6,4 +6,13 @@
 #include "render/CharacterSprite.h"
 #include "render/TileSprite.h"
 #include "render/Render.h"
+#include "render/Element.h"
+#include "render/ElementComposite.h"
+#include "render/WindowManager.h"
+#include "render/Button.h"
+#include "render/TitleBarButton.h"
+#include "render/TitleBar.h"
+#include "render/Window.h"
+#include "render/Inventory.h"
+#include "render/WindowTest.h"
 #endif
