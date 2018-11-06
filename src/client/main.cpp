@@ -117,8 +117,9 @@ int main(int argc, char* argv[]) {
         else if (strcmp(argv[i], "render") == 0) {
             State* state = new State();
             for (int i = 0; i < 10; i++) {
+                state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4), rand() % state->getI(), rand() % state->getJ());
                 for (int j = 0; j < 1; j++) {
-                    state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4), rand() % state->getI(), rand() % state->getJ());
+                    state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4), state->getI(), state->getJ());
                 }
             }
 
@@ -130,8 +131,10 @@ int main(int argc, char* argv[]) {
 
             state->addCharacter(0, rand() % (12 * 4), (Direction) (rand() % 4), 7, 0);
             state->addCharacter(1, rand() % (12 * 4), (Direction) (rand() % 4), 6, 4);
-            state->addCharacter(0, rand() % (12 * 4), (Direction) (rand() % 4), state->getI(), state->getJ());
-            state->addCharacter(1, rand() % (12 * 4), (Direction) (rand() % 4), state->getI(), state->getJ());
+            for (int i = 0; i < 4; i++) {
+                state->addCharacter(0, rand() % (12 * 4), (Direction) (rand() % 4));
+                state->addCharacter(1, rand() % (12 * 4), (Direction) (rand() % 4));
+            }
 
             Team* team1 = state->getTeams()[0];
             Team* team2 = state->getTeams()[1];

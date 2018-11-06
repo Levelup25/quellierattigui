@@ -95,34 +95,31 @@ void State::addCharacter(size_t iteam, int id, Direction direction, size_t i, si
 }
 
 void State::addCharacter(Character* character, Team* team, size_t i, size_t j) {
-    if (i < I && j < J) {
-        size_t i2 = i, j2 = j;
-        vector<Character*> characters = this->getCharacters();
-        while (grid[i2][j2]->getContent() != nothing) {
-            i2++;
-            if (i2 % n == 0) {
-                i2 -= n;
-                j2++;
-                if (j2 % m == 0) {
-                    j2 -= m;
-                    i2 += n;
-                }
+    size_t i2 = i, j2 = j;
+    while (grid[i2][j2]->getContent() != nothing) {
+        i2++;
+        if (i2 % n == 0) {
+            i2 -= n;
+            j2++;
+            if (j2 % m == 0) {
+                j2 -= m;
+                i2 += n;
             }
-            if (i2 >= I) {
-                i2 = 0;
-                j2++;
-                if (j2 >= J) {
-                    j2 = 0;
-                }
-            }
-            if (i == i2 && j == j2)
-                return;
         }
-        character->setI(i2);
-        character->setJ(j2);
-        team->addCharacter(character);
-        grid[i2][j2]->setContent((ContentType) 1);
+        if (i2 >= I) {
+            i2 = 0;
+            j2++;
+            if (j2 >= J) {
+                j2 = 0;
+            }
+        }
+        if (i == i2 && j == j2)
+            return;
     }
+    character->setI(i2);
+    character->setJ(j2);
+    team->addCharacter(character);
+    if (character == team->getMainCharacter()) grid[i2][j2]->setContent((ContentType) 1);
 }
 
 void State::moveCharacter(Character* character, float i, float j) {
@@ -247,4 +244,38 @@ void State::setFight(Fight* fight) {
 
 bool State::isFighting() {
     return fight != nullptr;
+}
+
+void State::deploy() {
+    Team* team1 = fight->getTeams()[0];
+    Team* team2 = fight->getTeams()[1];
+    int i0 = team2->getMainCharacter()->getI(), j0 = team2->getMainCharacter()->getJ();
+    int xv = (i0 / n) * n, yv = (j0 / m) * m;
+
+    if (this->isFighting()) {
+        int i, j;
+        for (auto mainchars : team1->getCharacters()) {
+            do {
+                i = xv + n / 6 + rand() % (2 * n / 3);
+                j = yv + 2 * m / 3 + rand() % (m / 4);
+            } while (grid[i][j]->getContent() != nothing);
+            this->moveCharacter(mainchars, i, j);
+            mainchars->setDirection(north);
+        }
+        for (auto oppchars : team2->getCharacters()) {
+            do {
+                i = xv + n / 6 + rand() % (2 * n / 3);
+                j = yv + m / 12 + rand() % (m / 4);
+            } while (grid[i][j]->getContent() != nothing);
+            this->moveCharacter(oppchars, i, j);
+            oppchars->setDirection(south);
+        }
+    }
+    // 2/12   8/12   2/12   =>  1/6     2/3     1/6
+
+    // 1/12 => 1/12
+    // 3/12 => 1/4
+    // 4/12 => 1/3
+    // 3/12 => 1/4
+    // 1/12 => 1/12
 }

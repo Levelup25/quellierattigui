@@ -53,20 +53,21 @@ void MoveCommands::addCommands(size_t i, size_t j) {
             i0 = k;
             j0 = l;
         }
-        if (i % n == 0 && i > 0) {
-            engine->addCommand(new DirectionCommand(character, 1));
-            engine->addCommand(new MoveCommand(state, character, i - 1, j));
-        } else if ((i + 1) % n == 0 && i < state->getI() - 1) {
-            engine->addCommand(new DirectionCommand(character, 2));
-            engine->addCommand(new MoveCommand(state, character, i + 1, j));
-        } else if (j % m == 0 && j > 0) {
-            engine->addCommand(new DirectionCommand(character, 0));
-            engine->addCommand(new MoveCommand(state, character, i, j - 1));
-        } else if ((j + 1) % m == 0 && j < state->getJ() - 1) {
-            engine->addCommand(new DirectionCommand(character, 4));
-            engine->addCommand(new MoveCommand(state, character, i, j + 1));
+        if (!state->isFighting()) {
+            if (i % n == 0 && i > 0) {
+                engine->addCommand(new DirectionCommand(character, 1));
+                engine->addCommand(new MoveCommand(state, character, i - 1, j));
+            } else if ((i + 1) % n == 0 && i < state->getI() - 1) {
+                engine->addCommand(new DirectionCommand(character, 2));
+                engine->addCommand(new MoveCommand(state, character, i + 1, j));
+            } else if (j % m == 0 && j > 0) {
+                engine->addCommand(new DirectionCommand(character, 0));
+                engine->addCommand(new MoveCommand(state, character, i, j - 1));
+            } else if ((j + 1) % m == 0 && j < state->getJ() - 1) {
+                engine->addCommand(new DirectionCommand(character, 4));
+                engine->addCommand(new MoveCommand(state, character, i, j + 1));
+            }
         }
-
         content = (int) state->getGrid()[i][j]->getContent();
 
         if (content == 1) engine->addCommand(new FightCommand(state, state->getTeam(character), state->getTeam(state->getCharacter(i, j))));

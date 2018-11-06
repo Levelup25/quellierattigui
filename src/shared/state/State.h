@@ -69,6 +69,7 @@ namespace state {
     bool isFighting ();
     Fight* getFight ();
     void setFight (Fight* fight);
+    void deploy ();
     // Setters and Getters
     int getEpoch() const;
     void setEpoch(int epoch);
