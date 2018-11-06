@@ -2,32 +2,40 @@
 #ifndef STATE__STATE__H
 #define STATE__STATE__H
 
+#include <stdlib.h>
 
 namespace state {
   class World;
+  class Fight;
+  class Observable;
 }
 
+#include "Observable.h"
+#include "Fight.h"
 #include "World.h"
 
 namespace state {
 
   /// class State - 
-  class State {
+  class State : public state::Observable {
     // Associations
     // Attributes
+  public:
+    bool isInventoryOpened     = false;
   private:
     World* world;
-    bool isFighting     = false;
-    bool isInventoryOpened     = false;
+    Fight* fight     = nullptr;
   protected:
     int epoch     = 0;
     int epochRate     = 15;
     // Operations
   public:
-    State ();
+    State (std::size_t i = 144, std::size_t j = 144);
     World* getWorld ();
-    void setFight (bool b);
-    void setInventory (bool b);
+    bool isFighting ();
+    Fight* getFight ();
+    void setFight (Fight* fight);
+    void delFight ();
     // Setters and Getters
     int getEpoch() const;
     void setEpoch(int epoch);

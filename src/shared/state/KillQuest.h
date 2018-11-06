@@ -3,7 +3,6 @@
 #define STATE__KILLQUEST__H
 
 #include <map>
-#include <string>
 
 namespace state {
   class MainQuest;
@@ -24,8 +23,6 @@ namespace state {
     // Operations
   public:
     KillQuest ();
-    std::string getDescription ();
-    bool checkFinished ();
     // Setters and Getters
   };
 

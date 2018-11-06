@@ -29,6 +29,8 @@ namespace state {
     std::vector<std::vector<Cell*>> grid;
     std::vector<Team*> teams;
     std::vector<MainQuest*> quests;
+    std::size_t n     = 12;
+    std::size_t m     = 12;
     // Operations
   public:
     World (std::size_t i, std::size_t j);
@@ -40,17 +42,20 @@ namespace state {
     void addCharacter ();
     void addCharacter (std::size_t iteam, int id = 0, std::size_t i = 0, std::size_t j = 0, Direction direction = south);
     void addCharacter (Character* character, Team* team, std::size_t i = 0, std::size_t j = 0);
-    void moveCharacter (Character* character, std::size_t i, std::size_t j);
+    void moveCharacter (Character* character, float i, float j);
     void delCharacter (std::size_t i = 0, std::size_t j = 0);
     void delCharacter (Character* character);
     Character* getCharacter (std::size_t i, std::size_t j);
     std::vector<Character*> getMainCharacters ();
     std::vector<Character*> getCharacters ();
     std::vector<Team*> getTeams ();
+    Team* getTeam (Character* character);
     void addTeam ();
     void addTeam (Team* team);
     void addQuest (MainQuest* quest);
     void delQuest (MainQuest* quest);
+    Team* getMainTeam ();
+    Character* getMainCharacter ();
     // Setters and Getters
   };
 

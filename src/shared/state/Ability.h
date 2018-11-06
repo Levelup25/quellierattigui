@@ -5,13 +5,8 @@
 #include <string>
 #include <vector>
 
-namespace state {
-  class Cell;
-}
-
 #include "ElementType.h"
 #include "ZoneType.h"
-#include "Cell.h"
 
 namespace state {
 
@@ -36,14 +31,16 @@ namespace state {
     // Operations
   public:
     Ability (std::string name = "", unsigned int pa = 1, int damage = 1, ElementType element = neutral, int damageReduce = 100, int cooldown = 0, ZoneType targetType = circle, int targetMin = 1, int targetMax = 1, ZoneType effectType = circle, int effectMin = 0, int effectMax = 0);
-    std::vector<Cell&> getPossibleTarget ();
-    std::vector<Cell&> getEffectZone (Cell& target);
+    std::vector<std::vector<int>> getTargetZone (std::vector<int> position);
+    std::vector<std::vector<int>> getEffectZone (std::vector<int> position);
     void setCooldown (int initial);
     void setTarget (ZoneType targetZone, int min, int max);
-    void setEffect (ZoneType effectZone, int min, int max, int reduce);
+    void setEffect (ZoneType effectZone, int min, int max, int reduce = 100);
     int getDamage ();
     unsigned int getPa ();
     std::string getName ();
+  private:
+    std::vector<std::vector<int>> getZone (std::vector<int> position, ZoneType zone, int min, int max);
     // Setters and Getters
   };
 

@@ -3,16 +3,16 @@
 #define STATE__TEAM__H
 
 #include <string>
-#include <stdlib.h>
 #include <vector>
+#include <stdlib.h>
 
 namespace state {
   class Character;
   class Inventory;
 }
 
-#include "Inventory.h"
 #include "Character.h"
+#include "Inventory.h"
 
 namespace state {
 
@@ -20,11 +20,10 @@ namespace state {
   class Team {
     // Associations
     // Attributes
-  protected:
+  private:
     std::string name;
-    std::size_t indexMainCharacter     = 0;
     std::vector<Character*> characters;
-    Inventory inventory;
+    Inventory* inventory;
     // Operations
   public:
     Team (std::string name = "");
@@ -32,16 +31,11 @@ namespace state {
     void delCharacter (Character* character);
     Character* getMainCharacter ();
     Character* getCharacter (std::size_t i);
-    void setMainCharacter (std::size_t i);
+    std::vector<Character*> getCharacters ();
+    void swapCharacters (std::size_t i1, std::size_t i2);
+    std::string getName ();
+    Inventory* getInventory ();
     // Setters and Getters
-    const std::string& getName() const;
-    void setName(const std::string& name);
-    const std::size_t& getIndexMainCharacter() const;
-    void setIndexMainCharacter(const std::size_t& indexMainCharacter);
-    const std::vector<Character*>& getCharacters() const;
-    void setCharacters(const std::vector<Character*>& characters);
-    const Inventory& getInventory() const;
-    void setInventory(const Inventory& inventory);
   };
 
 };

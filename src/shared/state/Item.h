@@ -9,7 +9,7 @@ namespace state {
   class Item {
     // Operations
   public:
-    Item ();
+    virtual ~Item ();
     // Setters and Getters
   };
 

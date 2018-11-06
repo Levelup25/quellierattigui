@@ -8,7 +8,8 @@ namespace state {
   enum ZoneType {
     circle,
     line,
-    diag
+    diag,
+    all
   };
 
 };
