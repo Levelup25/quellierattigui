@@ -7,6 +7,7 @@ namespace state {
 
   enum ContentType {
     nothing,
+    perso,
     tree,
     rock
   };

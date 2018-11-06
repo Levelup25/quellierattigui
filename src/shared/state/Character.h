@@ -2,7 +2,6 @@
 #ifndef STATE__CHARACTER__H
 #define STATE__CHARACTER__H
 
-#include <stdlib.h>
 #include <string>
 
 namespace state {
@@ -20,8 +19,8 @@ namespace state {
     // Associations
     // Attributes
   private:
-    std::size_t i;
-    std::size_t j;
+    float i;
+    float j;
     int id;
     Direction direction;
     std::string name;
@@ -36,14 +35,15 @@ namespace state {
     // Operations
   public:
     Character (int id = 0, std::string nom = "", CharacterType type = human, int pv = 3, int pa = 3, int pm = 3);
-    std::size_t getI ();
-    void setI (std::size_t i);
-    std::size_t getJ ();
-    void setJ (std::size_t j);
+    float getI ();
+    void setI (float i);
+    float getJ ();
+    void setJ (float j);
     int getId ();
     void setId (int id);
     Direction getDirection ();
     void setDirection (Direction direction);
+    void setDirection (int direction);
     std::string getName ();
     void setName (std::string name);
     CharacterType getType ();

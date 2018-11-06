@@ -2,6 +2,7 @@
 #ifndef STATE__FIGHT__H
 #define STATE__FIGHT__H
 
+#include <vector>
 
 namespace state {
   class Team;
@@ -22,7 +23,7 @@ namespace state {
     // Operations
   public:
     Fight (Team* main, Team* opponent);
-    void deploy (Team& team);
+    std::vector<Team*> getTeams ();
     // Setters and Getters
   };
 
