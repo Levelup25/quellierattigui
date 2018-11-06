@@ -129,7 +129,7 @@ int main(int argc, char* argv[]) {
                             rand() % world->getJ(), (Direction) (rand() % 4));
                 }
             }
-            Render* render = new Render(state);
+            Render* render = new Render(state, new Engine());
             render->display();
         }// Livrable 2.2
         else if (strcmp(argv[i], "engine") == 0) {
@@ -137,6 +137,8 @@ int main(int argc, char* argv[]) {
             World* world;
             world = state->getWorld();
 
+            world->addCharacter(0, rand() % (12 * 4), 7, 0, (Direction) (rand() % 4));
+            world->addCharacter(1, rand() % (12 * 4), 5, 4, (Direction) (rand() % 4));
             world->addCharacter(0, rand() % (12 * 4), 7, 0, (Direction) (rand() % 4));
             world->addCharacter(1, rand() % (12 * 4), 5, 4, (Direction) (rand() % 4));
 
@@ -163,17 +165,18 @@ int main(int argc, char* argv[]) {
             Inventory* inv1 = team1->getInventory();
             Inventory* inv2 = team2->getInventory();
 
-            //            inv1->addItem(weapon1);
-            //            inv2->addItem(weapon2);
+            inv1->addItem(weapon1);
+            inv2->addItem(weapon2);
 
             char1->setWeapon(weapon1);
             char2->setWeapon(weapon2);
 
-            Render* render = new Render(state);
             Engine* engine = new Engine();
+            Render* render = new Render(state, engine);
 
             MoveCommands * mvcmd = new MoveCommands(state, engine, char1);
-            mvcmd->addCommands(char2->getI(), char2->getJ());
+            //mvcmd->addCommands(char2->getI(), char2->getJ());
+            mvcmd->addCommands(11, 11);
 
             thread t1([engine]() {
                 char c;

@@ -7,3 +7,10 @@ Fight::Fight(Team* main, Team* opponent) {
     this->main = main;
     this->opponent = opponent;
 }
+
+vector<Team*> Fight::getTeams() {
+    return
+    {
+        main, opponent
+    };
+}

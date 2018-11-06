@@ -100,6 +100,14 @@ void World::addCharacter(Character* character, Team* team, size_t i, size_t j) {
     vector<Character*> characters = this->getCharacters();
     while (grid[i2][j2]->getContent() != nothing) {
         i2++;
+        if (i2 % n == 0) {
+            i2 -= n;
+            j2++;
+            if (j2 % m == 0) {
+                j2 -= m;
+                i2 += n;
+            }
+        }
         if (i2 >= I) {
             i2 = 0;
             j2++;
@@ -167,6 +175,19 @@ vector<Character*> World::getMainCharacters() {
     return chars;
 }
 
+vector<Character*> World::getFightingCharacters() {
+    vector<Character*> chars;
+    Team* team1 = fight->getTeams()[0];
+    Team* team2 = fight->getTeams()[1];
+    for (auto c : team1->getCharacters()) {
+        chars.push_back(c);
+    }
+    for (auto c : team2->getCharacters()) {
+        chars.push_back(c);
+    }
+    return chars;
+}
+
 vector<Character*> World::getCharacters() {
     vector<Character*> chars;
     for (auto t = teams.begin(); t != teams.end(); ++t) {
@@ -207,4 +228,12 @@ Team* World::getMainTeam() {
 
 Character* World::getMainCharacter() {
     return teams[0]->getMainCharacter();
+}
+
+void World::setFight(Team* main, Team* opponent) {
+    fight = new Fight(main, opponent);
+}
+
+void World::delFight() {
+    fight = nullptr;
 }

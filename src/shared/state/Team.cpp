@@ -5,6 +5,7 @@ using namespace state;
 
 Team::Team(string name) {
     this->name = name;
+    inventory = new Inventory();
 }
 
 void Team::addCharacter(Character* character) {

@@ -8,9 +8,11 @@ using namespace std;
 using namespace sf;
 using namespace state;
 using namespace render;
+using namespace engine;
 
-Render::Render(State* state) {
+Render::Render(State* state, Engine* engine) {
     this->state = state;
+    this->engine = engine;
 }
 
 void Render::display() {
@@ -29,7 +31,8 @@ void Render::display() {
 
     Character* maincharacter = world->getMainCharacter();
     Ability* ability = maincharacter->getWeapon()->getAbilities()[0];
-    vector<Character*> chars = world->getMainCharacters();
+    mvcmd = new MoveCommands(state, engine, maincharacter);
+    vector<Character*> chars;
 
     unsigned int x, y, xv, yv;
     x = maincharacter->getI();
@@ -53,6 +56,9 @@ void Render::display() {
     while (window.isOpen()) {
 
         window.clear();
+
+        if (state->isFighting) chars = world->getFightingCharacters();
+        else chars = world->getMainCharacters();
 
         x = maincharacter->getI();
         y = maincharacter->getJ();
@@ -135,7 +141,7 @@ void Render::display() {
             Vector2f posMouse{(float) posMouseBuff.x, (float) posMouseBuff.y};
             wcontainer.transmit(event, posMouse + posView);
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-                world->moveCharacter(maincharacter, xv + posMouseBuff.x / l, yv + posMouseBuff.y / h);
+                mvcmd->addCommands(xv + posMouseBuff.x / l, yv + posMouseBuff.y / h);
             }
         }
 

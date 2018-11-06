@@ -12,5 +12,6 @@ FightCommand::FightCommand(State* state, Team* att, Team* def) {
 
 void FightCommand::execute() {
     state->isFighting = true;
+    state->getWorld()->setFight(att, def);
 
 }

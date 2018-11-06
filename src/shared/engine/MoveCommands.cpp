@@ -30,36 +30,60 @@ void MoveCommands::addCommands(size_t i, size_t j) {
     World* world = state->getWorld();
     int i0 = character->getI(), j0 = character->getJ();
     int xv = (i0 / n) * n, yv = (j0 / m) * m;
+    int content = (int) world->getGrid()[i][j]->getContent();
     generator.removeCollision({i0, j0});
     generator.removeCollision({i, j});
     auto path = generator.findPath({i - xv, j - yv},
     {
         i0 - xv, j0 - yv    });
-    if ((int) world->getGrid()[i][j]->getContent() > 0) {
+    if (content > 0) {
         generator.addCollision({i, j});
         path.pop_back();
     }
 
     float step = 1.0 / 4;
     for (auto coord = path.begin() + 1; coord != path.end(); coord++) {
-        float i = (*coord).x, j = (*coord).y;
-        if (j > j0) engine->addCommand(new DirectionCommand(character, 0));
-        else if (i < i0) engine->addCommand(new DirectionCommand(character, 1));
-        else if (i > i0) engine->addCommand(new DirectionCommand(character, 2));
-        else if (j < j0) engine->addCommand(new DirectionCommand(character, 3));
+        float k = (*coord).x, l = (*coord).y;
+        if (l > j0) engine->addCommand(new DirectionCommand(character, 0));
+        else if (k < i0) engine->addCommand(new DirectionCommand(character, 1));
+        else if (k > i0) engine->addCommand(new DirectionCommand(character, 2));
+        else if (l < j0) engine->addCommand(new DirectionCommand(character, 3));
         for (float f = 1 - step; f >= 0; f = f - step) {
-            //cout << (i0 - i) * f + i + xv << " " << (j0 - j) * f + j + yv << endl;
-            engine->addCommand(new MoveCommand(state, character, (i0 - i) * f + i + xv, (j0 - j) * f + j + yv));
+            //cout << (i0 - k) * f + k + xv << " " << (j0 - l) * f + l + yv << endl;
+            engine->addCommand(new MoveCommand(state, character, (i0 - k) * f + k + xv, (j0 - l) * f + l + yv));
         }
-        i0 = i;
-        j0 = j;
+        i0 = k;
+        j0 = l;
     }
+
+    if (i % n == 0 && i > 0) {
+        i--;
+        engine->addCommand(new DirectionCommand(character, 1));
+    } else if ((i + 1) % n == 0 && i < world->getI() - 1) {
+        i++;
+        engine->addCommand(new DirectionCommand(character, 2));
+    } else if (j % m == 0 && j > 0) {
+        j--;
+        engine->addCommand(new DirectionCommand(character, 0));
+    } else if ((j + 1) % m == 0 && j < world->getJ() - 1) {
+        j++;
+        engine->addCommand(new DirectionCommand(character, 4));
+    }
+
+    content = (int) world->getGrid()[i][j]->getContent();
+
+    if (content == 0) {
+        engine->addCommand(new MoveCommand(state, character, i, j));
+    }
+
     generator.addCollision({i, j});
-    if ((int) world->getGrid()[i][j]->getContent() > 0) {
+
+    if (content > 0) {
         if (j > j0) engine->addCommand(new DirectionCommand(character, 0));
         else if (i < i0) engine->addCommand(new DirectionCommand(character, 1));
         else if (i > i0) engine->addCommand(new DirectionCommand(character, 2));
         else if (j < j0) engine->addCommand(new DirectionCommand(character, 3));
     }
-    if ((int) world->getGrid()[i][j]->getContent() == 1) engine->addCommand(new FightCommand(state, world->getTeam(character), world->getTeam(world->getCharacter(i, j))));
+
+    if (content == 1) engine->addCommand(new FightCommand(state, world->getTeam(character), world->getTeam(world->getCharacter(i, j))));
 }

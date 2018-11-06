@@ -7,7 +7,7 @@ State::State(size_t i, size_t j) {
     world = new World(i, j);
 }
 
-World *State::getWorld() {
+World* State::getWorld() {
     return world;
 }
 
