@@ -11,14 +11,14 @@ MoveCommands::MoveCommands(State* state, Engine* engine, Character* character) {
     this->state = state;
     this->character = character;
     this->engine = engine;
-    setGenerator();
+    generator.setWorldSize({n, m});
 }
 
 void MoveCommands::setGenerator() {
     World* world = state->getWorld();
     int i0 = character->getI(), j0 = character->getJ();
     int xv = (i0 / n) * n, yv = (j0 / m) * m;
-    generator.setWorldSize({n, m});
+    generator.clearCollisions();
     for (int l = 0; l < m; l++) {
         for (int k = 0; k < n; k++) {
             if (world->getGrid()[k + xv][l + yv]->getContent() != nothing) generator.addCollision({k, l});
@@ -27,6 +27,7 @@ void MoveCommands::setGenerator() {
 }
 
 void MoveCommands::addCommands(size_t i, size_t j) {
+    this->setGenerator();
     World* world = state->getWorld();
     int i0 = character->getI(), j0 = character->getJ();
     int xv = (i0 / n) * n, yv = (j0 / m) * m;
@@ -56,20 +57,22 @@ void MoveCommands::addCommands(size_t i, size_t j) {
     if (i % n == 0 && i > 0) {
         i--;
         engine->addCommand(new DirectionCommand(character, 1));
+        engine->addCommand(new MoveCommand(state, character, i, j));
     } else if ((i + 1) % n == 0 && i < world->getI() - 1) {
         i++;
         engine->addCommand(new DirectionCommand(character, 2));
+        engine->addCommand(new MoveCommand(state, character, i, j));
     } else if (j % m == 0 && j > 0) {
         j--;
         engine->addCommand(new DirectionCommand(character, 0));
+        engine->addCommand(new MoveCommand(state, character, i, j));
     } else if ((j + 1) % m == 0 && j < world->getJ() - 1) {
         j++;
         engine->addCommand(new DirectionCommand(character, 4));
+        engine->addCommand(new MoveCommand(state, character, i, j));
     }
 
     content = (int) world->getGrid()[i][j]->getContent();
 
     if (content == 1) engine->addCommand(new FightCommand(state, world->getTeam(character), world->getTeam(world->getCharacter(i, j))));
-
-    this->setGenerator();
 }

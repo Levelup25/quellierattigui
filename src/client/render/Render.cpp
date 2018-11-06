@@ -3,7 +3,6 @@
 #include "IGWindow.h"
 #include "IGWindowContainer.h"
 #include "UIInventory.h"
-#include <iostream>
 
 using namespace std;
 using namespace sf;
@@ -144,8 +143,7 @@ void Render::display() {
 
             if (event.type == sf::Event::MouseButtonPressed) {
                 if (event.mouseButton.button == sf::Mouse::Left) {
-                    mvcmd->addCommands(xv + event.mouseButton.x / l, yv + event.mouseButton.x / h);
-                    cout << xv + event.mouseButton.x / l << " " << yv + event.mouseButton.x / h << endl;
+                    mvcmd->addCommands(xv + event.mouseButton.x / l, yv + event.mouseButton.y / h);
                 }
             }
         }
