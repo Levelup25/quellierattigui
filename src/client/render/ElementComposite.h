@@ -17,13 +17,23 @@ namespace render {
   class ElementComposite : public render::Element {
     // Associations
     // Attributes
-  public:
+  protected:
     std::vector<Element*> children;
+    sf::Vector2f posParent;
+    sf::Vector2f size;
     // Operations
   public:
     void transmitEvent (sf::Event event, sf::Vector2f posMouse);
     void draw (sf::RenderTarget& target, sf::RenderStates states) const;
+    void add (Element* pchild);
+    void remove (Element* pchild);
     // Setters and Getters
+    const std::vector<Element*>& getChildren() const;
+    void setChildren(const std::vector<Element*>& children);
+    const sf::Vector2f& getPosParent() const;
+    void setPosParent(const sf::Vector2f& posParent);
+    const sf::Vector2f& getSize() const;
+    void setSize(const sf::Vector2f& size);
   };
 
 };

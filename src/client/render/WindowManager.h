@@ -16,7 +16,7 @@ namespace render {
   /// class WindowManager - 
   class WindowManager : public render::ElementComposite {
     // Attributes
-  public:
+  protected:
     Inventory* inventory;
     // Operations
   public:
@@ -25,6 +25,8 @@ namespace render {
   private:
     void toggleInventory ();
     // Setters and Getters
+    const Inventory*& getInventory() const;
+    void setInventory(const Inventory*& inventory);
   };
 
 };

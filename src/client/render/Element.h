@@ -17,7 +17,7 @@ namespace render {
   public:
     Element ();
     void receiveEvent (sf::Event event, sf::Vector2f posMouse);
-    void draw (sf::RenderTarget& target, sf::RenderStates states) const;
+    virtual void draw (sf::RenderTarget& target, sf::RenderStates states) const;
     // Setters and Getters
   };
 

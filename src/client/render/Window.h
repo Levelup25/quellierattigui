@@ -2,11 +2,11 @@
 #ifndef RENDER__WINDOW__H
 #define RENDER__WINDOW__H
 
-#include <SFML/Graphics.hpp>
 
 namespace render {
-  class Element;
+  class Rectangle;
   class TitleBar;
+  class Element;
   class ElementComposite;
 }
 
@@ -20,23 +20,21 @@ namespace render {
     // Associations
     // Attributes
   protected:
-    sf::Vector2f size;
-    Element* border;
-    TitleBar* titleBar;
-    Element* content;
+    Rectangle* pborder;
+    TitleBar* ptitleBar;
+    Element* pcontent;
     bool wantToClose     = false;
     // Operations
   public:
+    Window ();
     bool getWantToClose ();
     // Setters and Getters
-    const sf::Vector2f& getSize() const;
-    void setSize(const sf::Vector2f& size);
-    const Element*& getBorder() const;
-    void setBorder(const Element*& border);
-    const TitleBar*& getTitleBar() const;
-    void setTitleBar(const TitleBar*& titleBar);
-    const Element*& getContent() const;
-    void setContent(const Element*& content);
+    const Rectangle*& getPborder() const;
+    void setPborder(const Rectangle*& pborder);
+    const TitleBar*& getPtitleBar() const;
+    void setPtitleBar(const TitleBar*& ptitleBar);
+    const Element*& getPcontent() const;
+    void setPcontent(const Element*& pcontent);
     void setWantToClose(bool wantToClose);
   };
 

@@ -19,14 +19,17 @@ namespace render {
   class TitleBar : public render::ElementComposite {
     // Associations
     // Attributes
-  public:
+  protected:
     std::string title;
     std::vector<TitleBarButton*> buttons;
-    float height;
     // Operations
   public:
     TitleBar ();
     // Setters and Getters
+    const std::string& getTitle() const;
+    void setTitle(const std::string& title);
+    const std::vector<TitleBarButton*>& getButtons() const;
+    void setButtons(const std::vector<TitleBarButton*>& buttons);
   };
 
 };

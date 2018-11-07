@@ -1,4 +1,6 @@
 #include "renderTest.h"
+#include "Rectangle.h"
+#include "Window.h"
 #include "WindowManager.h"
 
 using namespace render;
@@ -6,6 +8,8 @@ using namespace render;
 void testRender() {
   sf::RenderWindow window(sf::VideoMode(700, 700), "Render Test");
   auto wm = WindowManager();
+  auto w1 = Window();
+  wm.add(&w1);
 
   // window loop
   while (window.isOpen()) {
@@ -16,7 +20,6 @@ void testRender() {
 
       auto posMouseBuff = sf::Mouse::getPosition(window);
       sf::Vector2f posMouse{(float)posMouseBuff.x, (float)posMouseBuff.y};
-
       wm.receiveEvent(event, posMouse);
     }
 

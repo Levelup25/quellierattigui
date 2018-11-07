@@ -14,5 +14,5 @@
 #include "render/TitleBar.h"
 #include "render/Window.h"
 #include "render/Inventory.h"
-#include "render/WindowTest.h"
+#include "render/Rectangle.h"
 #endif
