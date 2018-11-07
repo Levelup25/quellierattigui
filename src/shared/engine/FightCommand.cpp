@@ -6,6 +6,7 @@ using namespace engine;
 
 FightCommand::FightCommand(State* state, Team* att, Team* def) {
     this->state = state;
+    this->character = nullptr;
     this->att = att;
     this->def = def;
 }

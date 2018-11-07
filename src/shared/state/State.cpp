@@ -218,6 +218,8 @@ void State::delTeam(Team* team) {
     for (auto t = teams.begin(); t != teams.end(); ++t) {
         if ((*t) == team) {
             teams.erase(t);
+            delete team;
+            team = nullptr;
             return;
         }
     }
@@ -259,6 +261,7 @@ void State::deploy() {
     for (auto c : fight->getTeam(0)->getCharacters()) {
         c->resetPm();
         c->resetPa();
+        c->resetPv();
     }
 
     Team* team1 = fight->getTeams()[0];

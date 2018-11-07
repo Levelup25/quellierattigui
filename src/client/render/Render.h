@@ -9,6 +9,7 @@ namespace state {
 };
 namespace engine {
   class Engine;
+  class AttackCommand;
   class MoveCommands;
 };
 namespace render {
@@ -17,6 +18,7 @@ namespace render {
   class TileSprite;
 }
 
+#include "engine/AttackCommand.h"
 #include "engine/MoveCommands.h"
 #include "engine/Engine.h"
 #include "ContentSprite.h"
@@ -33,7 +35,6 @@ namespace render {
   private:
     state::State* state;
     engine::Engine* engine;
-    engine::MoveCommands* mvcmd;
     std::size_t n     = 12;
     std::size_t m     = 12;
     // Operations

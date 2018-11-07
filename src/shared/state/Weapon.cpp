@@ -15,8 +15,16 @@ void Weapon::addAbility(Ability* ability) {
 
 void Weapon::delAbility(Ability* ability) {
     for (auto ab = abilities.begin(); ab != abilities.end(); ab++) {
-        if (*ab == ability) abilities.erase(ab);
+        if (*ab == ability) {
+            abilities.erase(ab);
+            delete ability;
+            ability = nullptr;
+        }
     }
+}
+
+Ability * Weapon::getAbility(size_t i) {
+    return abilities[i];
 }
 
 vector<Ability*> Weapon::getAbilities() {

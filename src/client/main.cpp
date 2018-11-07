@@ -135,7 +135,7 @@ int main(int argc, char* argv[]) {
                     Character* c = state->getCharacters().back();
                     c->setPm(2 + rand() % 5);
                     c->setPv(1 + rand() % 4);
-                    c->setPa(1 + rand() % 4);
+                    c->setPa(2 + rand() % 3);
                     Weapon* w = new Weapon();
                     Ability* a = w->getAbilities()[0];
                     int r1 = 1 + rand() % 2, r2 = rand() % 3;

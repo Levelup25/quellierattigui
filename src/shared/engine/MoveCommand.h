@@ -4,24 +4,21 @@
 
 
 namespace state {
-  class Character;
   class State;
+  class Character;
 };
 namespace engine {
   class Command;
 }
 
 #include "Command.h"
-#include "state/Character.h"
 
 namespace engine {
 
   /// class MoveCommand - 
   class MoveCommand : public engine::Command {
-    // Associations
     // Attributes
   private:
-    state::Character* character;
     float i;
     float j;
     // Operations

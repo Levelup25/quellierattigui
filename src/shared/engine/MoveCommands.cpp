@@ -8,9 +8,12 @@ using namespace std;
 using namespace state;
 using namespace engine;
 
-MoveCommands::MoveCommands(State* state, Engine* engine) {
+MoveCommands::MoveCommands(State* state, Engine* engine, Character* character, size_t i, size_t j) {
     this->state = state;
     this->engine = engine;
+    this->character = character;
+    this->i = i;
+    this->j = j;
     generator.setWorldSize({n, m});
 }
 
@@ -25,7 +28,7 @@ void MoveCommands::setGenerator() {
     }
 }
 
-vector<vector<int>> MoveCommands::getPath(Character* character, size_t i, size_t j) {
+vector<vector<int>> MoveCommands::getPath() {
     vector<vector<int>> coords;
     if (character->getPm() > 0) {
         this->character = character;
@@ -50,7 +53,7 @@ vector<vector<int>> MoveCommands::getPath(Character* character, size_t i, size_t
     return coords;
 }
 
-void MoveCommands::addCommands(Character* character, size_t i, size_t j) {
+void MoveCommands::execute() {
     this->character = character;
     this->setGenerator();
     int i0 = character->getI(), j0 = character->getJ();

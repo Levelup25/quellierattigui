@@ -8,4 +8,5 @@
 #include "engine/MoveCommands.h"
 #include "engine/FightCommand.h"
 #include "engine/DirectionCommand.h"
+#include "engine/AttackCommand.h"
 #endif

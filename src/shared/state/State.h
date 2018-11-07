@@ -28,6 +28,7 @@ namespace state {
     // Associations
     // Attributes
   public:
+    int etatCombat     = 0;
     bool isInventoryOpened     = false;
   private:
     std::size_t I     = 144;

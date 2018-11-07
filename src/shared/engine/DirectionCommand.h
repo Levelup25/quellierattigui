@@ -11,16 +11,13 @@ namespace engine {
 }
 
 #include "Command.h"
-#include "state/Character.h"
 
 namespace engine {
 
   /// class DirectionCommand - 
   class DirectionCommand : public engine::Command {
-    // Associations
     // Attributes
   private:
-    state::Character* character;
     int direction;
     // Operations
   public:

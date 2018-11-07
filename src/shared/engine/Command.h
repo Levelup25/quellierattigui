@@ -5,8 +5,10 @@
 
 namespace state {
   class State;
+  class Character;
 }
 
+#include "state/Character.h"
 #include "state/State.h"
 
 namespace engine {
@@ -17,6 +19,7 @@ namespace engine {
     // Attributes
   protected:
     state::State* state;
+    state::Character* character;
     // Operations
   public:
     virtual ~Command ();
@@ -24,6 +27,8 @@ namespace engine {
     // Setters and Getters
     const state::State*& getState() const;
     void setState(const state::State*& state);
+    const state::Character*& getCharacter() const;
+    void setCharacter(const state::Character*& character);
   };
 
 };

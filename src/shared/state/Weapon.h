@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <stdlib.h>
 
 namespace state {
   class Ability;
@@ -29,6 +30,7 @@ namespace state {
     Weapon (ElementType element = neutral, std::string name = "", std::vector<Ability*> abilities = {new Ability()});
     void addAbility (Ability* ability);
     void delAbility (Ability* ability);
+    Ability* getAbility (std::size_t i);
     std::vector<Ability*> getAbilities ();
     std::string getName ();
     // Setters and Getters

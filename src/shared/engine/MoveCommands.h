@@ -2,39 +2,42 @@
 #ifndef ENGINE__MOVECOMMANDS__H
 #define ENGINE__MOVECOMMANDS__H
 
-#include "AStar.h"
 #include <stdlib.h>
+#include "AStar.h"
 #include <vector>
 
+namespace engine {
+  class Engine;
+};
 namespace state {
   class State;
   class Character;
 };
 namespace engine {
-  class Engine;
+  class Command;
 }
 
-#include "state/State.h"
+#include "Command.h"
 #include "Engine.h"
 
 namespace engine {
 
   /// class MoveCommands - 
-  class MoveCommands {
+  class MoveCommands : public engine::Command {
     // Associations
     // Attributes
   private:
-    state::State* state;
-    state::Character* character;
     Engine* engine;
+    std::size_t i;
+    std::size_t j;
     AStar::Generator generator;
     std::size_t n     = 12;
     std::size_t m     = 12;
     // Operations
   public:
-    MoveCommands (state::State* state, Engine* engine);
-    std::vector<std::vector<int>> getPath (state::Character* character, std::size_t i, std::size_t j);
-    void addCommands (state::Character* character, std::size_t i, std::size_t j);
+    MoveCommands (state::State* state, Engine* engine, state::Character* character, std::size_t i, std::size_t j);
+    std::vector<std::vector<int>> getPath ();
+    void execute ();
   private:
     void setGenerator ();
     // Setters and Getters
