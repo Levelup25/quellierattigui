@@ -129,27 +129,22 @@ int main(int argc, char* argv[]) {
         else if (strcmp(argv[i], "engine") == 0) {
             State* state = new State();
 
-            state->addCharacter(0, rand() % (12 * 4), (Direction) (rand() % 4), 7, 0);
-            state->addCharacter(1, rand() % (12 * 4), (Direction) (rand() % 4), 6, 4);
-            state->addCharacter(2, rand() % (12 * 4), (Direction) (rand() % 4), 8, 7);
-            for (int i = 0; i < 4; i++) {
-                state->addCharacter(0, rand() % (12 * 4), (Direction) (rand() % 4));
-                state->addCharacter(1, rand() % (12 * 4), (Direction) (rand() % 4));
-                state->addCharacter(2, rand() % (12 * 4), (Direction) (rand() % 4));
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 5; j++) {
+                    state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4), rand() % 12, rand() % 12);
+                    Character* c = state->getCharacters().back();
+                    c->setPm(2 + rand() % 5);
+                    c->setPv(1 + rand() % 4);
+                    c->setPa(1 + rand() % 4);
+                    Weapon* w = new Weapon();
+                    Ability* a = w->getAbilities()[0];
+                    int r1 = 1 + rand() % 2, r2 = rand() % 3;
+                    a->setTarget((ZoneType) (rand() % 3), r1, r1 + rand() % 5);
+                    a->setEffect((ZoneType) (rand() % 3), r2, r2 + rand() % 5);
+                    a->setPa(1 + rand() % 2);
+                    c->setWeapon(w);
+                }
             }
-
-            Team* team1 = state->getTeams()[0];
-            Character* char1 = team1->getCharacter(0);
-            Weapon* weapon1 = new Weapon();
-            Ability* ability1 = weapon1->getAbilities()[0];
-            Ability* ability2 = weapon1->getAbilities()[0];
-            ability1->setTarget(circle, 1, 5);
-            ability2->setTarget(line, 1, 4);
-            ability1->setEffect(circle, 0, 3);
-            ability2->setEffect(line, 0, 2);
-            Inventory* inv1 = team1->getInventory();
-            inv1->addItem(weapon1);
-            char1->setWeapon(weapon1);
 
             Engine* engine = new Engine();
             Render* render = new Render(state, engine);
@@ -159,7 +154,8 @@ int main(int argc, char* argv[]) {
             cout << "Cliquez sur un personnage pour se battre" << endl;
             cout << "Appuyez sur M pour se déplacer" << endl;
             cout << "Appuyez sur A pour attaquer" << endl;
-            cout << "Appuyez sur Entrée pour passer son tour. Pendant le tour adverse vous ne pouvez rien faire à part passer le tour" << endl;
+            cout << "Appuyez sur Entrée pour passer son tour" << endl;
+            cout << "Pendant le tour adverse vous ne pouvez rien faire à part passer le tour" << endl;
 
             thread t1([engine]() {
                 sf::Clock clock;

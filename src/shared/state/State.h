@@ -60,6 +60,7 @@ namespace state {
     std::vector<Character*> getCharacters ();
     std::vector<Team*> getTeams ();
     Team* getTeam (Character* character);
+    void delTeam (Team* team);
     void addTeam ();
     void addTeam (Team* team);
     void addQuest (MainQuest* quest);

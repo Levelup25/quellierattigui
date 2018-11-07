@@ -214,6 +214,15 @@ Team* State::getMainTeam() {
     return teams[0];
 }
 
+void State::delTeam(Team* team) {
+    for (auto t = teams.begin(); t != teams.end(); ++t) {
+        if ((*t) == team) {
+            teams.erase(t);
+            return;
+        }
+    }
+}
+
 Character* State::getMainCharacter() {
     return teams[0]->getMainCharacter();
 }
@@ -247,6 +256,11 @@ bool State::isFighting() {
 }
 
 void State::deploy() {
+    for (auto c : fight->getTeam(0)->getCharacters()) {
+        c->resetPm();
+        c->resetPa();
+    }
+
     Team* team1 = fight->getTeams()[0];
     Team* team2 = fight->getTeams()[1];
     int i0 = team2->getMainCharacter()->getI(), j0 = team2->getMainCharacter()->getJ();
@@ -281,10 +295,18 @@ void State::deploy() {
 }
 
 void State::endFight() {
-    if (!(fight->getTeams()[0]->isAlive() and fight->getTeams()[1]->isAlive())) {
-        for (auto c : fight->getFightingCharacters()) {
+    if (!fight->getTeam(0)->isAlive()) {
+        for (auto c : fight->getTeam(1)->getCharacters()) {
             grid[c->getI()][c->getJ()]->setContent(nothing);
         }
+        this->delTeam(fight->getTeam(0));
+        delete fight;
+        fight = nullptr;
+    } else if (!fight->getTeam(1)->isAlive()) {
+        for (auto c : fight->getTeam(0)->getCharacters()) {
+            grid[c->getI()][c->getJ()]->setContent(nothing);
+        }
+        this->delTeam(fight->getTeam(1));
         delete fight;
         fight = nullptr;
     }

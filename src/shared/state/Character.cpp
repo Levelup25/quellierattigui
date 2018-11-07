@@ -84,6 +84,18 @@ void Character::removeWeapon() {
     this->weapon = nullptr;
 }
 
+void Character::setPv(unsigned int pv) {
+    pvMax = pv;
+}
+
+void Character::setPm(unsigned int pm) {
+    pmMax = pm;
+}
+
+void Character::setPa(unsigned int pa) {
+    paMax = pa;
+}
+
 unsigned int Character::getPv() {
     return pvCurrent;
 }

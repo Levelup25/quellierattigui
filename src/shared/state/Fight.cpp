@@ -12,6 +12,11 @@ int Fight::getTurn() {
     return turn;
 }
 
+Team* Fight::getTeam(size_t i) {
+    if (i == 0) return main;
+    else if (i == 1) return opponent;
+}
+
 vector<Team*> Fight::getTeams() {
     return
     {
@@ -31,7 +36,7 @@ std::vector<Character*> Fight::getFightingCharacters() {
 }
 
 void Fight::endTurn() {
-    for (auto c : this->getTeams()[turn % 2]->getCharacters()) {
+    for (auto c : this->getTeam(turn % 2)->getCharacters()) {
         c->resetPm();
         c->resetPa();
     }

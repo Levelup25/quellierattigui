@@ -186,6 +186,7 @@ void Render::display() {
                                 }
                             }
                             state->endFight();
+                            if (!state->isFighting()) EtatCombat = 0;
                         } else if (state->isFighting() && state->getMainTeam()->getCharacter(X, Y) != nullptr) maincharacter = state->getMainTeam()->getCharacter(X, Y);
                     }
                 }

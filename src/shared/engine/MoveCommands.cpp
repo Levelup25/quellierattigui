@@ -20,7 +20,7 @@ void MoveCommands::setGenerator() {
     generator.clearCollisions();
     for (int l = 0; l < m; l++) {
         for (int k = 0; k < n; k++) {
-            if (state->getGrid()[k + xv][l + yv]->getContent() != nothing) generator.addCollision({k, l});
+            if (state->getCell(k + xv, l + yv)->getContent() != nothing) generator.addCollision({k, l});
         }
     }
 }
@@ -61,7 +61,7 @@ void MoveCommands::addCommands(Character* character, size_t i, size_t j) {
     {
         (int) (i0 - xv), (int) (j0 - yv)    });
     path.erase(path.begin());
-    if ((int) state->getGrid()[i][j]->getContent() > 0 && path.size() > 0) path.pop_back();
+    if ((int) state->getCell(i, j)->getContent() > 0 && path.size() > 0) path.pop_back();
 
     float step = 1.0 / 4;
 
@@ -80,22 +80,25 @@ void MoveCommands::addCommands(Character* character, size_t i, size_t j) {
             i0 = k;
             j0 = l;
         }
-        if (!state->isFighting()) {
-            if (i % n == 0 && i > 0) {
-                engine->addCommand(new DirectionCommand(character, 1));
-                engine->addCommand(new MoveCommand(state, character, i - 1, j));
-            } else if ((i + 1) % n == 0 && i < state->getI() - 1) {
-                engine->addCommand(new DirectionCommand(character, 2));
-                engine->addCommand(new MoveCommand(state, character, i + 1, j));
-            } else if (j % m == 0 && j > 0) {
-                engine->addCommand(new DirectionCommand(character, 0));
-                engine->addCommand(new MoveCommand(state, character, i, j - 1));
-            } else if ((j + 1) % m == 0 && j < state->getJ() - 1) {
-                engine->addCommand(new DirectionCommand(character, 4));
-                engine->addCommand(new MoveCommand(state, character, i, j + 1));
-            }
+    }
+    if (state->getCharacter(i, j) != character && (int) state->getCell(i, j)->getContent() == 1 && !state->isFighting()) engine->addCommand(new FightCommand(state, state->getTeam(character), state->getTeam(state->getCharacter(i, j))));
+    else if (!state->isFighting()) {
+        if (i % n == 0 && i > 0) {
+            i--;
+            engine->addCommand(new DirectionCommand(character, 1));
+            if (state->getCell(i, j)->getContent() == 0) engine->addCommand(new MoveCommand(state, character, i, j));
+        } else if ((i + 1) % n == 0 && i < state->getI() - 1) {
+            i++;
+            engine->addCommand(new DirectionCommand(character, 2));
+            if (state->getCell(i, j)->getContent() == 0) engine->addCommand(new MoveCommand(state, character, i, j));
+        } else if (j % m == 0 && j > 0) {
+            j--;
+            engine->addCommand(new DirectionCommand(character, 3));
+            if (state->getCell(i, j)->getContent() == 0) engine->addCommand(new MoveCommand(state, character, i, j));
+        } else if ((j + 1) % m == 0 && j < state->getJ() - 1) {
+            j++;
+            engine->addCommand(new DirectionCommand(character, 0));
+            if (state->getCell(i, j)->getContent() == 0) engine->addCommand(new MoveCommand(state, character, i, j));
         }
     }
-    if (state->getCharacter(i, j) != character && (int) state->getGrid()[i][j]->getContent() == 1 && !state->isFighting()) engine->addCommand(new FightCommand(state, state->getTeam(character), state->getTeam(state->getCharacter(i, j))));
-
 }

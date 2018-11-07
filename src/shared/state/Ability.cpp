@@ -84,3 +84,11 @@ unsigned int Ability::getPa() {
 string Ability::getName() {
     return name;
 }
+
+void Ability::setDamage(int dmg) {
+    damage = dmg;
+}
+
+void Ability::setPa(unsigned int pa) {
+    this->pa = pa;
+}

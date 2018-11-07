@@ -51,6 +51,9 @@ namespace state {
     Weapon* getWeapon ();
     void setWeapon (Weapon* weapon);
     void removeWeapon ();
+    void setPv (unsigned int pv);
+    void setPm (unsigned int pm);
+    void setPa (unsigned int pa);
     unsigned int getPv ();
     unsigned int getPm ();
     unsigned int getPa ();

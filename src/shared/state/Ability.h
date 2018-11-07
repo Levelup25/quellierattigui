@@ -39,6 +39,8 @@ namespace state {
     int getDamage ();
     unsigned int getPa ();
     std::string getName ();
+    void setDamage (int dmg);
+    void setPa (unsigned int pa);
   private:
     std::vector<std::vector<int>> getZone (std::vector<int> position, ZoneType zone, int min, int max);
     // Setters and Getters

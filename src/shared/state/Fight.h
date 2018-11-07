@@ -2,6 +2,7 @@
 #ifndef STATE__FIGHT__H
 #define STATE__FIGHT__H
 
+#include <stdlib.h>
 #include <vector>
 
 namespace state {
@@ -24,6 +25,7 @@ namespace state {
   public:
     Fight (Team* main, Team* opponent);
     int getTurn ();
+    Team* getTeam (std::size_t i);
     std::vector<Team*> getTeams ();
     std::vector<Character*> getFightingCharacters ();
     void endTurn ();
