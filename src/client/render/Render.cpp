@@ -96,7 +96,7 @@ void Render::display() {
         if (state->isFighting() && state->getFight()->getTurn() % 2 == 1) {
             auto posMouseBuff = sf::Mouse::getPosition(window);
             int X = xv + posMouseBuff.x / l, Y = yv + posMouseBuff.y / h;
-            if (EtatCombat == 0 && grid[X][Y]->getContent() == nothing) {
+            if (EtatCombat == 0) {
                 moves = mvcmd->getPath(maincharacter, X, Y);
                 zone.setFillColor(Color(0, 255, 0, 128));
                 for (vector<int> coord : moves) {
@@ -185,6 +185,7 @@ void Render::display() {
                                     }
                                 }
                             }
+                            state->endFight();
                         } else if (state->isFighting() && state->getMainTeam()->getCharacter(X, Y) != nullptr) maincharacter = state->getMainTeam()->getCharacter(X, Y);
                     }
                 }
@@ -197,8 +198,7 @@ void Render::display() {
                         EtatCombat = 1;
                     } else if (event.key.code == sf::Keyboard::Return) {
                         state->getFight()->endTurn();
-                        state->endFight();
-                        if (state->getFight() == nullptr)EtatCombat = 0;
+                        EtatCombat = 0;
                     }
                 }
             }

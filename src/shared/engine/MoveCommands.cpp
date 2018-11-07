@@ -39,11 +39,13 @@ vector<vector<int>> MoveCommands::getPath(Character* character, size_t i, size_t
             (int) (i0 - xv), (int) (j0 - yv)        });
         path.erase(path.begin());
 
+        if (state->getCell(i, j)->getContent() > 0 && path.size() > 0)path.pop_back();
         if (path.size() <= character->getPm()) {
             for (auto coord : path) {
                 coords.push_back({xv + coord.x, yv + coord.y});
             }
         }
+
     }
     return coords;
 }
