@@ -26,7 +26,7 @@ namespace state {
     ElementType element;
     // Operations
   public:
-    Weapon (ElementType element = neutral, std::string name = "", std::vector<Ability*> abilities = {});
+    Weapon (ElementType element = neutral, std::string name = "", std::vector<Ability*> abilities = {new Ability()});
     void addAbility (Ability* ability);
     void delAbility (Ability* ability);
     std::vector<Ability*> getAbilities ();

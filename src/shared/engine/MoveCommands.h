@@ -4,6 +4,7 @@
 
 #include "AStar.h"
 #include <stdlib.h>
+#include <vector>
 
 namespace state {
   class State;
@@ -31,8 +32,9 @@ namespace engine {
     std::size_t m     = 12;
     // Operations
   public:
-    MoveCommands (state::State* state, Engine* engine, state::Character* character);
-    void addCommands (std::size_t i, std::size_t j);
+    MoveCommands (state::State* state, Engine* engine);
+    std::vector<std::vector<int>> getPath (state::Character* character, std::size_t i, std::size_t j);
+    void addCommands (state::Character* character, std::size_t i, std::size_t j);
   private:
     void setGenerator ();
     // Setters and Getters

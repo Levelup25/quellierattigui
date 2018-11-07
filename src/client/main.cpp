@@ -145,11 +145,8 @@ int main(int argc, char* argv[]) {
             Weapon* weapon1 = new Weapon();
             Weapon* weapon2 = new Weapon();
 
-            Ability* ability1 = new Ability();
-            Ability* ability2 = new Ability();
-
-            weapon1->addAbility(ability1);
-            weapon2->addAbility(ability2);
+            Ability* ability1 = weapon1->getAbilities()[0];
+            Ability* ability2 = weapon2->getAbilities()[0];
 
             ability1->setTarget(circle, 1, 5);
             ability2->setTarget(line, 1, 4);
@@ -168,9 +165,8 @@ int main(int argc, char* argv[]) {
             Engine* engine = new Engine();
             Render* render = new Render(state, engine);
 
-            // MoveCommands* mvcmd = new MoveCommands(state, engine, char1);
-            // mvcmd->addCommands(char2->getI(), char2->getJ());
-            // mvcmd->addCommands(11, 11);
+            cout << "Cliquez pour vous déplacer" << endl;
+            cout << "Se déplacer au bord de l'écran " << endl;
 
             thread t1([engine]() {
                 sf::Clock clock;

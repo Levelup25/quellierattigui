@@ -17,6 +17,7 @@ Character::Character(int id, string nom, CharacterType type, int pv, int pa, int
     this->paCurrent = pa;
     this->pmMax = pm;
     this->pmCurrent = pm;
+    weapon = new Weapon();
 }
 
 int Character::getId() {
@@ -95,14 +96,29 @@ unsigned int Character::getPa() {
     return paCurrent;
 }
 
+void Character::resetPv() {
+    pvCurrent = pvMax;
+}
+
+void Character::resetPm() {
+    pmCurrent = pmMax;
+}
+
+void Character::resetPa() {
+    paCurrent = paMax;
+}
+
 void Character::removePv(int pv) {
-    pvCurrent -= pv;
+    if (pv >= pvCurrent) pvCurrent = 0;
+    else pvCurrent -= pv;
 }
 
 void Character::removePm(int pm) {
-    pmCurrent -= pm;
+    if (pm >= pmCurrent) pmCurrent = 0;
+    else pmCurrent -= pm;
 }
 
 void Character::removePa(int pa) {
-    paCurrent -= pa;
+    if (pa >= paCurrent) paCurrent = 0;
+    else paCurrent -= pa;
 }

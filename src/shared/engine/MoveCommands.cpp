@@ -2,14 +2,14 @@
 #include "MoveCommand.h"
 #include "DirectionCommand.h"
 #include "FightCommand.h"
+#include <iostream>
 
 using namespace std;
 using namespace state;
 using namespace engine;
 
-MoveCommands::MoveCommands(State* state, Engine* engine, Character* character) {
+MoveCommands::MoveCommands(State* state, Engine* engine) {
     this->state = state;
-    this->character = character;
     this->engine = engine;
     generator.setWorldSize({n, m});
 }
@@ -25,7 +25,31 @@ void MoveCommands::setGenerator() {
     }
 }
 
-void MoveCommands::addCommands(size_t i, size_t j) {
+vector<vector<int>> MoveCommands::getPath(Character* character, size_t i, size_t j) {
+    vector<vector<int>> coords;
+    if (character->getPm() > 0) {
+        this->character = character;
+        this->setGenerator();
+        int i0 = character->getI(), j0 = character->getJ();
+        int xv = (i0 / n) * n, yv = (j0 / m) * m;
+        generator.removeCollision({i0 - xv, j0 - yv});
+        generator.removeCollision({i - xv, j - yv});
+        auto path = generator.findPath({(int) (i - xv), int( j - yv)},
+        {
+            (int) (i0 - xv), (int) (j0 - yv)        });
+        path.erase(path.begin());
+
+        if (path.size() <= character->getPm()) {
+            for (auto coord : path) {
+                coords.push_back({xv + coord.x, yv + coord.y});
+            }
+        }
+    }
+    return coords;
+}
+
+void MoveCommands::addCommands(Character* character, size_t i, size_t j) {
+    this->character = character;
     this->setGenerator();
     int i0 = character->getI(), j0 = character->getJ();
     int xv = (i0 / n) * n, yv = (j0 / m) * m;
@@ -34,13 +58,14 @@ void MoveCommands::addCommands(size_t i, size_t j) {
     auto path = generator.findPath({(int) (i - xv), int( j - yv)},
     {
         (int) (i0 - xv), (int) (j0 - yv)    });
-    int content = (int) state->getGrid()[i][j]->getContent();
-    if (content > 0 && path.size() > 0) path.pop_back();
+    path.erase(path.begin());
+    if ((int) state->getGrid()[i][j]->getContent() > 0 && path.size() > 0) path.pop_back();
 
     float step = 1.0 / 4;
 
-    if (path.size() > 1) {
-        for (auto coord = path.begin() + 1; coord != path.end(); coord++) {
+    if (path.size() > 0 && (!state->isFighting() || (state->isFighting() && state->getFight()->getTurn() % 2 == 1 && path.size() <= character->getPm()))) {
+        if (state->isFighting()) character->removePm(path.size());
+        for (auto coord = path.begin(); coord != path.end(); coord++) {
             float k = (*coord).x + xv, l = (*coord).y + yv;
             if (l > j0) engine->addCommand(new DirectionCommand(character, 0));
             else if (k < i0) engine->addCommand(new DirectionCommand(character, 1));
@@ -68,8 +93,7 @@ void MoveCommands::addCommands(size_t i, size_t j) {
                 engine->addCommand(new MoveCommand(state, character, i, j + 1));
             }
         }
-        content = (int) state->getGrid()[i][j]->getContent();
-
-        if (content == 1) engine->addCommand(new FightCommand(state, state->getTeam(character), state->getTeam(state->getCharacter(i, j))));
     }
+    if (state->getCharacter(i, j) != character && (int) state->getGrid()[i][j]->getContent() == 1 && !state->isFighting()) engine->addCommand(new FightCommand(state, state->getTeam(character), state->getTeam(state->getCharacter(i, j))));
+
 }

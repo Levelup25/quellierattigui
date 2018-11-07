@@ -23,9 +23,10 @@ namespace state {
     // Operations
   public:
     Fight (Team* main, Team* opponent);
+    int getTurn ();
     std::vector<Team*> getTeams ();
     std::vector<Character*> getFightingCharacters ();
-    bool shouldEnd ();
+    void endTurn ();
     // Setters and Getters
   };
 

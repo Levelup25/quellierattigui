@@ -29,8 +29,8 @@ void Render::display() {
     UIInventory inv;
 
     Character* maincharacter = state->getMainCharacter();
-    Ability* ability = maincharacter->getWeapon()->getAbilities()[0];
-    mvcmd = new MoveCommands(state, engine, maincharacter);
+    Ability* ability;
+    mvcmd = new MoveCommands(state, engine);
     vector<Character*> chars;
 
     unsigned int x, y, xv, yv;
@@ -52,14 +52,22 @@ void Render::display() {
     zone.setOutlineThickness(-1);
     zone.setOutlineColor(Color::Black);
 
+    vector<vector<int>> moves;
+    vector<vector<int>> targets;
+    vector<vector<int>> effects;
+
+    int EtatCombat = 0;
     while (window.isOpen()) {
         window.clear();
 
         if (state->isFighting())
             chars = state->getFight()->getFightingCharacters();
-        else
+        else {
             chars = state->getMainCharacters();
+            maincharacter = state->getMainCharacter();
+        }
 
+        ability = maincharacter->getWeapon()->getAbilities()[0];
         x = maincharacter->getI();
         y = maincharacter->getJ();
         xv = (x / n) * n;
@@ -85,26 +93,36 @@ void Render::display() {
             }
         }
 
-        if (state->isFighting()) {
-            int ok = 0;
+        if (state->isFighting() && state->getFight()->getTurn() % 2 == 1) {
             auto posMouseBuff = sf::Mouse::getPosition(window);
-            vector<vector<int>> targets = ability->getTargetZone({x, y});
-            zone.setFillColor(Color(0, 0, 255, 128));
-            for (vector<int> coord : targets) {
-                zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
-                window.draw(zone);
-                if (coord[0] == (xv + posMouseBuff.x / l) &&
-                        coord[1] == (yv + posMouseBuff.y / h))
-                    ok = 1;
-            }
-
-            if (ok) {
-                vector<vector<int>> effects = ability->getEffectZone({xv + posMouseBuff.x / l, yv + posMouseBuff.y / h});
-                zone.setFillColor(Color(255, 0, 0, 128));
-                for (vector<int> coord : effects) {
+            int X = xv + posMouseBuff.x / l, Y = yv + posMouseBuff.y / h;
+            if (EtatCombat == 0 && grid[X][Y]->getContent() == nothing) {
+                moves = mvcmd->getPath(maincharacter, X, Y);
+                zone.setFillColor(Color(0, 255, 0, 128));
+                for (vector<int> coord : moves) {
                     zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
                     window.draw(zone);
                 }
+            } else if (EtatCombat == 1 && maincharacter->getPa() >= ability->getPa()) {
+                int ok = 0;
+                targets = ability->getTargetZone({x, y});
+                zone.setFillColor(Color(0, 0, 255, 128));
+                for (vector<int> coord : targets) {
+                    zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
+                    window.draw(zone);
+                    if (coord[0] == (xv + posMouseBuff.x / l) &&
+                            coord[1] == (yv + posMouseBuff.y / h))
+                        ok = 1;
+                }
+
+                if (ok) {
+                    effects = ability->getEffectZone({X, Y});
+                    zone.setFillColor(Color(255, 0, 0, 128));
+                    for (vector<int> coord : effects) {
+                        zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
+                        window.draw(zone);
+                    }
+                } else effects = {};
             }
             zone.setFillColor(Color::Transparent);
         }
@@ -147,7 +165,41 @@ void Render::display() {
 
             if (event.type == sf::Event::MouseButtonPressed) {
                 if (event.mouseButton.button == sf::Mouse::Left) {
-                    mvcmd->addCommands(xv + event.mouseButton.x / l, yv + event.mouseButton.y / h);
+                    int X = xv + event.mouseButton.x / l, Y = yv + event.mouseButton.y / h;
+                    if (EtatCombat == 0) {
+                        if (state->isFighting() && state->getMainTeam()->getCharacter(X, Y) != nullptr) maincharacter = state->getMainTeam()->getCharacter(X, Y);
+                        else mvcmd->addCommands(maincharacter, X, Y);
+                    } else if (EtatCombat == 1) {
+                        if (effects.size() > 0 && maincharacter->getPa() >= ability->getPa()) {
+                            maincharacter->removePa(ability->getPa());
+                            for (auto effect : effects) {
+                                Character* c = state->getCharacter(effect[0], effect[1]);
+                                if (c != nullptr) {
+                                    c->removePv(ability->getDamage());
+                                    if (c->getPv() == 0) {
+                                        grid[X][Y]->setContent(nothing);
+                                        if (c == maincharacter) {
+                                            state->delCharacter(c);
+                                            maincharacter = state->getMainCharacter();
+                                        } else state->delCharacter(c);
+                                    }
+                                }
+                            }
+                        } else if (state->isFighting() && state->getMainTeam()->getCharacter(X, Y) != nullptr) maincharacter = state->getMainTeam()->getCharacter(X, Y);
+                    }
+                }
+            }
+            if (event.type == sf::Event::KeyPressed) {
+                if (state->isFighting()) {
+                    if (event.key.code == sf::Keyboard::M) {
+                        EtatCombat = 0;
+                    } else if (event.key.code == sf::Keyboard::A) {
+                        EtatCombat = 1;
+                    } else if (event.key.code == sf::Keyboard::Return) {
+                        state->getFight()->endTurn();
+                        state->endFight();
+                        if (state->getFight() == nullptr)EtatCombat = 0;
+                    }
                 }
             }
         }

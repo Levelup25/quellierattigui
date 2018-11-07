@@ -31,6 +31,7 @@ namespace state {
     void delCharacter (Character* character);
     Character* getMainCharacter ();
     Character* getCharacter (std::size_t i);
+    Character* getCharacter (std::size_t i, std::size_t j);
     std::vector<Character*> getCharacters ();
     void swapCharacters (std::size_t i1, std::size_t i2);
     std::string getName ();

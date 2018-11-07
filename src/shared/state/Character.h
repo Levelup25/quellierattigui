@@ -54,6 +54,9 @@ namespace state {
     unsigned int getPv ();
     unsigned int getPm ();
     unsigned int getPa ();
+    void resetPv ();
+    void resetPm ();
+    void resetPa ();
     void removePv (int pv);
     void removePm (int pm);
     void removePa (int pa);

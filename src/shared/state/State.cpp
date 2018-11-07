@@ -279,3 +279,13 @@ void State::deploy() {
     // 3/12 => 1/4
     // 1/12 => 1/12
 }
+
+void State::endFight() {
+    if (!(fight->getTeams()[0]->isAlive() and fight->getTeams()[1]->isAlive())) {
+        for (auto c : fight->getFightingCharacters()) {
+            grid[c->getI()][c->getJ()]->setContent(nothing);
+        }
+        delete fight;
+        fight = nullptr;
+    }
+}
