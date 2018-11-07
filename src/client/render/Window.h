@@ -4,7 +4,6 @@
 
 
 namespace render {
-  class Rectangle;
   class TitleBar;
   class Element;
   class ElementComposite;
@@ -20,7 +19,6 @@ namespace render {
     // Associations
     // Attributes
   protected:
-    Rectangle* pborder;
     TitleBar* ptitleBar;
     Element* pcontent;
     bool wantToClose     = false;
@@ -29,8 +27,6 @@ namespace render {
     Window ();
     bool getWantToClose ();
     // Setters and Getters
-    const Rectangle*& getPborder() const;
-    void setPborder(const Rectangle*& pborder);
     const TitleBar*& getPtitleBar() const;
     void setPtitleBar(const TitleBar*& ptitleBar);
     const Element*& getPcontent() const;

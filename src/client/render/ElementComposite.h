@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 namespace render {
+  class Rectangle;
   class Element;
 }
 
@@ -17,14 +18,17 @@ namespace render {
   class ElementComposite : public render::Element {
     // Associations
     // Attributes
+  public:
+    Rectangle* pborder;
   protected:
     std::vector<Element*> children;
     sf::Vector2f posParent;
     sf::Vector2f size;
     // Operations
   public:
-    void transmitEvent (sf::Event event, sf::Vector2f posMouse);
+    ElementComposite ();
     void draw (sf::RenderTarget& target, sf::RenderStates states) const;
+    void transmitEvent (sf::Event event, sf::Vector2f posMouse);
     void add (Element* pchild);
     void remove (Element* pchild);
     // Setters and Getters

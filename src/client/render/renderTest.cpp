@@ -1,9 +1,11 @@
 #include "renderTest.h"
+#include <iostream>
 #include "Rectangle.h"
 #include "Window.h"
 #include "WindowManager.h"
 
 using namespace render;
+using namespace std;
 
 void testRender() {
   sf::RenderWindow window(sf::VideoMode(700, 700), "Render Test");
