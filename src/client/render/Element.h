@@ -3,6 +3,7 @@
 #define RENDER__ELEMENT__H
 
 #include <SFML/Graphics.hpp>
+#include <string>
 
 namespace sf {
   class Drawable;
@@ -13,12 +14,23 @@ namespace render {
 
   /// class Element - 
   class Element : public sf::Drawable {
+    // Attributes
+  protected:
+    sf::Vector2f posParent;
+    sf::Vector2f pos;
     // Operations
   public:
     Element ();
-    void receiveEvent (sf::Event event, sf::Vector2f posMouse);
+    virtual void receiveEvent (sf::Event event, sf::Vector2f posMouse);
+    sf::Vector2f getAbsPos () const;
+    std::string posToStr (sf::Vector2f pos) const;
+    virtual void updatePos ();
     virtual void draw (sf::RenderTarget& target, sf::RenderStates states) const;
     // Setters and Getters
+    const sf::Vector2f& getPosParent() const;
+    void setPosParent(const sf::Vector2f& posParent);
+    const sf::Vector2f& getPos() const;
+    void setPos(const sf::Vector2f& pos);
   };
 
 };

@@ -21,6 +21,7 @@ namespace render {
   public:
     Rectangle ();
     void draw (sf::RenderTarget& target, sf::RenderStates states) const;
+    void updatePos ();
     // Setters and Getters
     const sf::RectangleShape& getRecshape() const;
     void setRecshape(const sf::RectangleShape& recshape);

@@ -6,4 +6,8 @@ using namespace std;
 
 TitleBar::TitleBar() {
   cout << "titleBar init" << endl;
+
+  auto borderRecshape = pborder->getRecshape();
+  borderRecshape.setFillColor(sf::Color::Blue);
+  pborder->setRecshape(borderRecshape);
 }

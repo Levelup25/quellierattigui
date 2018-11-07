@@ -12,6 +12,17 @@ void testRender() {
   auto wm = WindowManager();
   auto w1 = Window();
   wm.add(&w1);
+  w1.setPos({50, 50});
+
+  cout << "wm : " << wm.posToStr(wm.getAbsPos()) << endl;
+  cout << "w1 : " << wm.posToStr(w1.getAbsPos()) << endl;
+
+  auto w1border = *w1.pborder;
+  auto w1bar = *w1.ptitleBar;
+  auto w1barBorder = *w1bar.pborder;
+  cout << "w1 border : " << wm.posToStr(w1border.getAbsPos()) << endl;
+  cout << "w1 bar : " << wm.posToStr(w1bar.getAbsPos()) << endl;
+  cout << "w1 bar border : " << wm.posToStr(w1barBorder.getAbsPos()) << endl;
 
   // window loop
   while (window.isOpen()) {

@@ -4,15 +4,15 @@
 
 
 namespace render {
-  class Element;
+  class Rectangle;
 }
 
-#include "Element.h"
+#include "Rectangle.h"
 
 namespace render {
 
   /// class Button - 
-  class Button : public render::Element {
+  class Button : public render::Rectangle {
     // Operations
   public:
     Button ();

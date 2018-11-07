@@ -18,7 +18,7 @@ namespace render {
   class Window : public render::ElementComposite {
     // Associations
     // Attributes
-  protected:
+  public:
     TitleBar* ptitleBar;
     Element* pcontent;
     bool wantToClose     = false;
@@ -27,11 +27,6 @@ namespace render {
     Window ();
     bool getWantToClose ();
     // Setters and Getters
-    const TitleBar*& getPtitleBar() const;
-    void setPtitleBar(const TitleBar*& ptitleBar);
-    const Element*& getPcontent() const;
-    void setPcontent(const Element*& pcontent);
-    void setWantToClose(bool wantToClose);
   };
 
 };

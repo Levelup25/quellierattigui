@@ -14,4 +14,6 @@ Window::Window() {
 
   add(ptitleBar);
   add(pcontent);
+
+  ptitleBar->setSize({size.x, 30});
 }

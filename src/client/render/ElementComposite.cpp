@@ -46,6 +46,7 @@ void ElementComposite::setChildren(const std::vector<Element*>& children) {
 
 void ElementComposite::add(Element* pchild) {
   children.push_back(pchild);
+  pchild->setPosParent(pos);
 }
 
 void ElementComposite::remove(Element* pchild) {
@@ -55,5 +56,12 @@ void ElementComposite::remove(Element* pchild) {
       children.erase(it);
       return;
     }
+  }
+}
+
+void ElementComposite::updatePos() {
+  for (auto pchild : children) {
+    pchild->setPosParent(getAbsPos());
+    pchild->updatePos();
   }
 }

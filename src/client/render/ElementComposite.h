@@ -11,6 +11,7 @@ namespace render {
 }
 
 #include "Element.h"
+#include "Rectangle.h"
 
 namespace render {
 
@@ -22,20 +23,18 @@ namespace render {
     Rectangle* pborder;
   protected:
     std::vector<Element*> children;
-    sf::Vector2f posParent;
     sf::Vector2f size;
     // Operations
   public:
     ElementComposite ();
-    void draw (sf::RenderTarget& target, sf::RenderStates states) const;
+    virtual void draw (sf::RenderTarget& target, sf::RenderStates states) const;
     void transmitEvent (sf::Event event, sf::Vector2f posMouse);
     void add (Element* pchild);
     void remove (Element* pchild);
+    virtual void updatePos ();
     // Setters and Getters
     const std::vector<Element*>& getChildren() const;
     void setChildren(const std::vector<Element*>& children);
-    const sf::Vector2f& getPosParent() const;
-    void setPosParent(const sf::Vector2f& posParent);
     const sf::Vector2f& getSize() const;
     void setSize(const sf::Vector2f& size);
   };
