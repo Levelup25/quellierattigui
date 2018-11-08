@@ -15,36 +15,19 @@ void Element::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   }
 };
 
-void Element::updateEvent(sf::Event event, sf::Vector2f posMouse){};
+void Element::reactEvent(sf::Event event, sf::Vector2f posMouse){};
 
 const sf::Vector2f Element::getPosRelative() const {
   return posRelative;
 }
 void Element::setPosRelative(const sf::Vector2f pos) {
   this->posRelative = pos;
-  notifyPos();
+  updatePosAbs();
+  notifyEditPosAbs();
 }
 
-const sf::Vector2f Element::getAbsPos() const {
-  if (pparent) {
-    float x, y;
-    auto parentPos = pparent->getAbsPos();
-    auto parentSize = pparent->getSize();
-    if (posRelative.x >= 0)
-      x = parentPos.x + posRelative.x;
-    else
-      x = parentPos.x + parentSize.x + posRelative.x;
-
-    if (posRelative.y >= 0)
-      y = parentPos.y + posRelative.y;
-    else
-      y = parentPos.y + parentSize.y + posRelative.y;
-
-    return sf::Vector2f({x, y});
-  }
-
-  else
-    return posRelative;
+const sf::Vector2f Element::getPosAbs() const {
+  return posAbs;
 }
 
 std::string Element::posToStr(sf::Vector2f pos) const {
@@ -57,7 +40,7 @@ const sf::Vector2f Element::getSize() const {
 
 void Element::setSize(const sf::Vector2f size) {
   this->size = size;
-  notifySize();
+  notifyEditSize();
 }
 
 void Element::add(Element* pchild) {
@@ -75,33 +58,29 @@ void Element::remove(Element* pchild) {
   }
 }
 
-void Element::notifyPos() {
+void Element::notifyEditPosAbs() {
   for (auto pchild : pchildren) {
-    pchild->updatePosParent();
+    pchild->reactEditPosAbsParent();
   }
 }
-void Element::notifySize() {
+void Element::notifyEditSize() {
   for (auto pchild : pchildren) {
-    pchild->updateSizeParent();
+    pchild->reactEditSizeParent();
   }
 }
 
-void Element::updatePosParent() {
-  for (auto pchild : pchildren) {
-    pchild->updatePosParent();
-  }
+void Element::reactEditPosAbsParent() {
+  updatePosAbs();
 }
-void Element::updateSizeParent() {
-  for (auto pchild : pchildren) {
-    pchild->updateSizeParent();
-  }
-}
+
+void Element::reactEditSizeParent() {}
 
 void Element::setParent(Element* pparent) {
   this->pparent = pparent;
   updateDepth();
-  updatePosParent();
-  updateSizeParent();
+  updatePosAbs();
+  reactEditPosAbsParent();
+  reactEditSizeParent();
 }
 const Element* Element::getParent() const {
   return pparent;
@@ -126,7 +105,7 @@ void Element::printTreeView() const {
   auto classname = typeid(*this).name();
   auto sep = string(depth, ' ');
   cout << sep;
-  cout << posToStr(getAbsPos()) << " ";
+  cout << posToStr(getPosAbs()) << " ";
   cout << posToStr(posRelative) << " ";
   cout << posToStr(size) << " ";
   cout << classname << endl;
@@ -135,4 +114,28 @@ void Element::printTreeView() const {
   }
   if (depth == 0)
     cout << endl;
+}
+
+void Element::updatePosAbs() {
+  if (pparent) {
+    float x, y;
+    auto parentPos = pparent->getPosAbs();
+    auto parentSize = pparent->getSize();
+    if (posRelative.x >= 0)
+      x = parentPos.x + posRelative.x;
+    else
+      x = parentPos.x + parentSize.x + posRelative.x;
+
+    if (posRelative.y >= 0)
+      y = parentPos.y + posRelative.y;
+    else
+      y = parentPos.y + parentSize.y + posRelative.y;
+
+    posAbs = {x, y};
+  }
+
+  else
+    posAbs = posRelative;
+
+  notifyEditPosAbs();
 }

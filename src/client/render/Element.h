@@ -19,6 +19,8 @@ namespace render {
   /// class Element - 
   class Element : public sf::Drawable {
     // Attributes
+  public:
+    sf::Vector2f posAbs;
   private:
     Element* pparent     = nullptr;
     std::vector<Element*> pchildren;
@@ -31,16 +33,17 @@ namespace render {
     virtual void draw (sf::RenderTarget& target, sf::RenderStates states) const;
     virtual void setPosRelative (const sf::Vector2f pos);
     const sf::Vector2f getPosRelative () const;
-    const sf::Vector2f getAbsPos () const;
+    const sf::Vector2f getPosAbs () const;
     std::string posToStr (sf::Vector2f pos) const;
     virtual void setSize (const sf::Vector2f size);
     const sf::Vector2f getSize () const;
-    void notifyPos ();
-    void notifySize ();
+    void notifyEditPosAbs ();
+    void notifyEditSize ();
     void notifyEvent (sf::Event event, sf::Vector2f posMouse);
-    virtual void updatePosParent ();
-    virtual void updateSizeParent ();
-    virtual void updateEvent (sf::Event event, sf::Vector2f posMouse);
+    virtual void updatePosAbs ();
+    virtual void reactEditPosAbsParent ();
+    virtual void reactEditSizeParent ();
+    virtual void reactEvent (sf::Event event, sf::Vector2f posMouse);
     void add (Element* pchild);
     void remove (Element* pchild);
     void setParent (Element* pparent);

@@ -21,9 +21,8 @@ namespace render {
   public:
     Rectangle ();
     void draw (sf::RenderTarget& target, sf::RenderStates states) const;
-    void setPosRelative (const sf::Vector2f pos);
     void setSize (const sf::Vector2f size);
-    void updatePosParent ();
+    void updatePosAbs ();
     // Setters and Getters
   };
 

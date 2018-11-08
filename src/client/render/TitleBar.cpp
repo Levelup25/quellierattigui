@@ -11,7 +11,7 @@ TitleBar::TitleBar() {
   add(pcloseBtn);
 }
 
-void TitleBar::updateSizeParent() {
+void TitleBar::reactEditSizeParent() {
   auto parentWidth = getParent()->getSize().x;
   setSize({parentWidth, 30});
   float closePadR = 5;
