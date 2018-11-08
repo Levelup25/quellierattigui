@@ -61,6 +61,7 @@ void Render::display() {
 
         if (state->isFighting()) {
             chars = state->getFight()->getFightingCharacters();
+            if (maincharacter == nullptr)maincharacter = state->getMainCharacter();
         } else {
             chars = state->getMainCharacters();
             maincharacter = state->getMainCharacter();
@@ -135,9 +136,26 @@ void Render::display() {
             }
         }
 
+        zone.setOutlineThickness(-2);
+        if (state->isFighting()) {
+            zone.setOutlineColor(Color::Blue);
+            for (c : state->getFight()->getTeam(0)->getCharacters()) {
+                zone.setPosition(
+                        Vector2f(c->getI() * l, c->getJ() * h));
+
+                window.draw(zone);
+            }
+            zone.setOutlineColor(Color::Red);
+            for (c : state->getFight()->getTeam(1)->getCharacters()) {
+                zone.setPosition(
+                        Vector2f(c->getI() * l, c->getJ() * h));
+
+                window.draw(zone);
+            }
+        }
+
         zone.setPosition(
                 Vector2f(maincharacter->getI() * l, maincharacter->getJ() * h));
-        zone.setOutlineThickness(-2);
         zone.setOutlineColor(Color::White);
         window.draw(zone);
         zone.setOutlineThickness(-1);
@@ -166,13 +184,8 @@ void Render::display() {
                     }
                 } else if (event.mouseButton.button == sf::Mouse::Left) {
                     if (state->etatCombat == 0) {
-                        if (state->isFighting() && state->getMainTeam()->getCharacter(X, Y) != nullptr) {
-                            maincharacter = state->getMainTeam()->getCharacter(X, Y);
-                            abilityNumber = 0;
-                        } else {
-                            if (!state->isFighting())engine->clearCommands();
-                            engine->addCommand(new MoveCommands(state, engine, maincharacter, X, Y));
-                        }
+                        if (!state->isFighting())engine->clearCommands();
+                        engine->addCommand(new MoveCommands(state, engine, maincharacter, X, Y));
                     } else if (state->etatCombat == 1) {
                         engine->addCommand(new AttackCommand(state, maincharacter,{X, Y}, abilityNumber));
                     }
@@ -190,7 +203,7 @@ void Render::display() {
                 } else if (event.key.code == sf::Keyboard::Return) {
                     state->getFight()->endTurn();
                     state->getFight()->endTurn();
-                    state->etatCombat = 0;
+                    //state->etatCombat = 0;
                 }
             }
         }

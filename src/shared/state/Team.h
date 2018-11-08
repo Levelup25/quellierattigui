@@ -34,6 +34,7 @@ namespace state {
     Character* getCharacter (std::size_t i, std::size_t j);
     std::vector<Character*> getCharacters ();
     void swapCharacters (std::size_t i1, std::size_t i2);
+    void swapCharacters (Character* c1, Character* c2);
     std::string getName ();
     Inventory* getInventory ();
     bool isAlive ();

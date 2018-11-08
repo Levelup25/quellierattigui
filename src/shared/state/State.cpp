@@ -136,7 +136,7 @@ void State::delCharacter(size_t i, size_t j) {
         for (auto c = characters.begin(); c != characters.end(); ++c) {
             if ((*c)->getI() == i && (*c)->getJ() == j) {
                 grid[i][j]->setContent(nothing);
-                characters.erase(c);
+                (*t)->delCharacter(*c);
                 return;
             }
         }
@@ -218,8 +218,8 @@ void State::delTeam(Team* team) {
     for (auto t = teams.begin(); t != teams.end(); ++t) {
         if ((*t) == team) {
             teams.erase(t);
-            delete team;
-            team = nullptr;
+            //            delete team;
+            //            team = nullptr;
             return;
         }
     }
@@ -299,18 +299,13 @@ void State::deploy() {
 
 void State::endFight() {
     if (!fight->getTeam(0)->isAlive()) {
-        for (auto c : fight->getTeam(1)->getCharacters()) {
-            grid[c->getI()][c->getJ()]->setContent(nothing);
-        }
         this->delTeam(fight->getTeam(0));
-        delete fight;
+        //        delete fight;
         fight = nullptr;
-    } else if (!fight->getTeam(1)->isAlive()) {
-        for (auto c : fight->getTeam(0)->getCharacters()) {
-            grid[c->getI()][c->getJ()]->setContent(nothing);
-        }
+    }
+    if (!fight->getTeam(1)->isAlive()) {
         this->delTeam(fight->getTeam(1));
-        delete fight;
+        //        delete fight;
         fight = nullptr;
     }
 }

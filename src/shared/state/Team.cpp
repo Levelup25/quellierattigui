@@ -16,8 +16,8 @@ void Team::delCharacter(Character* character) {
     for (auto c = characters.begin(); c != characters.end(); c++) {
         if (*c == character) {
             characters.erase(c);
-            delete character;
-            character = nullptr;
+            //            delete character;
+            //            character = nullptr;
             return;
         }
     }
@@ -44,6 +44,15 @@ vector<Character*> Team::getCharacters() {
 
 void Team::swapCharacters(size_t i1, size_t i2) {
     iter_swap(characters.begin() + i1, characters.begin() + i2);
+}
+
+void Team::swapCharacters(Character* c1, Character* c2) {
+    auto i1 = characters.begin(), i2 = characters.begin();
+    for (auto c = characters.begin(); c != characters.end(); c++) {
+        if (*c == c1) i1 = c;
+        else if (*c == c2) i2 = c;
+    }
+    iter_swap(i1, i2);
 }
 
 string Team::getName() {

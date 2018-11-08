@@ -48,7 +48,11 @@ void AttackCommand::execute() {
             if (c != nullptr) {
                 c->removePv(ability->getDamage());
                 if (c->getPv() == 0) {
-                    state->getCell(position[0], position[1])->setContent(nothing);
+                    //                    Team* t = state->getTeam(c);
+                    //                    if (t->getCharacters().size() > 1) {
+                    //                        if (c != t->getMainCharacter()) t->swapCharacters(c, t->getMainCharacter());
+                    //                        else t->swapCharacters(0, 1);
+                    //                    }
                     state->delCharacter(c);
                 }
             }

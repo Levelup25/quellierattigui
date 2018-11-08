@@ -130,7 +130,7 @@ int main(int argc, char* argv[]) {
             State* state = new State();
 
             for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 5; j++) {
+                for (int j = 0; j < 3; j++) {
                     state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4), rand() % 12, rand() % 12);
                     Character* c = state->getCharacters().back();
                     c->setPm(2 + rand() % 5);
@@ -146,6 +146,7 @@ int main(int argc, char* argv[]) {
                     int r = rand() % 4;
                     for (int k = 0; k < r; k++) {
                         Ability* a = new Ability();
+                        int r1 = 1 + rand() % 2, r2 = rand() % 3;
                         a->setTarget((ZoneType) (rand() % 3), r1, r1 + rand() % 5);
                         a->setEffect((ZoneType) (rand() % 3), r2, r2 + rand() % 5);
                         a->setPa(1 + rand() % 2);
@@ -158,7 +159,7 @@ int main(int argc, char* argv[]) {
             Render* render = new Render(state, engine);
 
             cout << "Cliquez pour vous déplacer" << endl;
-            cout << "Se déplacer au bord de l'écran change la vue" << endl;
+            cout << "Se déplacer au bord de l'écran change la vue sauf si un obstacle bloque" << endl;
             cout << "Cliquez sur un personnage pour se battre" << endl;
             cout << "Appuyez sur M pour se déplacer" << endl;
             cout << "Cliquez droit pour choisir le personnage" << endl;
