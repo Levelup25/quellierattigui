@@ -174,7 +174,7 @@ int main(int argc, char* argv[]) {
             thread t2([engine, &end]() {
                 sf::Clock clock;
                 while (1) {
-                    if (clock.getElapsedTime().asSeconds() >= 0.1) {
+                    if (clock.getElapsedTime().asSeconds() >= 1.0 / 30) {
                         engine->runCommand();
                                 clock.restart();
                     }

@@ -66,7 +66,7 @@ void MoveCommands::execute() {
     path.erase(path.begin());
     if ((int) state->getCell(i, j)->getContent() > 0 && path.size() > 0) path.pop_back();
 
-    float step = 1.0 / 4;
+    float step = 1.0 / 12;
 
     if (path.size() > 0 && (!state->isFighting() || (state->isFighting() && state->getFight()->getTurn() % 2 == 1 && path.size() <= character->getPm()))) {
         if (state->isFighting()) character->removePm(path.size());
