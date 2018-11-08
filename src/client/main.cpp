@@ -20,6 +20,7 @@ using namespace engine;
 #include "string.h"
 
 int main(int argc, char* argv[]) {
+    srand(time(NULL));
     for (int i = 1; i < argc; i++) {
         // Livrable 1.1
         if (strcmp(argv[i], "hello") == 0) {
@@ -116,19 +117,17 @@ int main(int argc, char* argv[]) {
         }// Livrable 2.1
         else if (strcmp(argv[i], "render") == 0) {
             State* state = new State();
-            for (int i = 0; i < 10; i++) {
-                state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4), rand() % state->getI(), rand() % state->getJ());
-                for (int j = 0; j < 1; j++) {
-                    state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4), state->getI(), state->getJ());
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4), rand() % 12, rand() % 12);
                 }
             }
-
-            Render* render = new Render(state, new Engine);
+            Engine* engine = new Engine();
+            Render* render = new Render(state, engine);
             render->display();
         }// Livrable 2.2
         else if (strcmp(argv[i], "engine") == 0) {
             State* state = new State();
-
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4), rand() % 12, rand() % 12);
@@ -158,26 +157,29 @@ int main(int argc, char* argv[]) {
             Engine* engine = new Engine();
             Render* render = new Render(state, engine);
 
-            cout << "Cliquez pour vous déplacer" << endl;
+            cout << "Clic gauche : déplacement/attaque" << endl;
             cout << "Se déplacer au bord de l'écran change la vue sauf si un obstacle bloque" << endl;
-            cout << "Cliquez sur un personnage pour se battre" << endl;
-            cout << "Appuyez sur M pour se déplacer" << endl;
-            cout << "Cliquez droit pour choisir le personnage" << endl;
-            cout << "Appuyez sur A pour attaquer" << endl;
-            cout << "Cliquez sur gauche ou droite pour changer de capacité" << endl;
-            cout << "Appuyez sur Entrée pour passer son tour" << endl;
+            cout << "Cliquez sur un personnage pour se battre. Dans ce cas : " << endl;
+            cout << "M : déplacement" << endl;
+            cout << "A : attaque" << endl;
+            cout << "Clic droit : choix personnage" << endl;
+            cout << "<- ou -> : choix capacité" << endl;
+            cout << "Entrée : passer le tour" << endl;
 
-            thread t1([engine]() {
+            int end = 0;
+            thread t1([render, &end]() {
+                render->display();
+                end = 1;
+            });
+            thread t2([engine, &end]() {
                 sf::Clock clock;
                 while (1) {
                     if (clock.getElapsedTime().asSeconds() >= 0.1) {
                         engine->runCommand();
                                 clock.restart();
                     }
-                }
-            });
-            thread t2([render]() {
-                render->display();
+                    if (end) break;
+                    }
             });
             t1.join();
             t2.join();

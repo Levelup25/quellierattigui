@@ -14,7 +14,6 @@ State::State(size_t i, size_t j) {
     I = i;
     J = j;
 
-    srand(time(NULL));
     vector<ElementType> vector{wind, fire, earth, water};
     random_shuffle(vector.begin(), vector.end());
     vector.push_back(neutral);
@@ -40,15 +39,15 @@ State::State(size_t i, size_t j) {
             }
             if (r >= (int) vector.size() * p) {
                 if (k >= I / 4 && k < 3 * I / 4 && l >= J / 4 && l < 3 * J / 4) {
-                    cell->setElement(neutral);
+                    cell->setElement(vector[4]);
                 } else if (k < I / 2 && l < J / 2) {
-                    cell->setElement(water);
+                    cell->setElement(vector[3]);
                 } else if (k < I / 2 && l >= J / 2) {
-                    cell->setElement(earth);
+                    cell->setElement(vector[2]);
                 } else if (k >= I / 2 && l < J / 2) {
-                    cell->setElement(fire);
+                    cell->setElement(vector[1]);
                 } else {
-                    cell->setElement(wind);
+                    cell->setElement(vector[0]);
                 }
             }
             grid[k][l] = cell;

@@ -139,14 +139,14 @@ void Render::display() {
         zone.setOutlineThickness(-2);
         if (state->isFighting()) {
             zone.setOutlineColor(Color::Blue);
-            for (c : state->getFight()->getTeam(0)->getCharacters()) {
+            for (auto c : state->getFight()->getTeam(0)->getCharacters()) {
                 zone.setPosition(
                         Vector2f(c->getI() * l, c->getJ() * h));
 
                 window.draw(zone);
             }
             zone.setOutlineColor(Color::Red);
-            for (c : state->getFight()->getTeam(1)->getCharacters()) {
+            for (auto c : state->getFight()->getTeam(1)->getCharacters()) {
                 zone.setPosition(
                         Vector2f(c->getI() * l, c->getJ() * h));
 
