@@ -137,12 +137,20 @@ int main(int argc, char* argv[]) {
                     c->setPv(1 + rand() % 4);
                     c->setPa(2 + rand() % 3);
                     Weapon* w = new Weapon();
+                    c->setWeapon(w);
                     Ability* a = w->getAbilities()[0];
                     int r1 = 1 + rand() % 2, r2 = rand() % 3;
                     a->setTarget((ZoneType) (rand() % 3), r1, r1 + rand() % 5);
                     a->setEffect((ZoneType) (rand() % 3), r2, r2 + rand() % 5);
                     a->setPa(1 + rand() % 2);
-                    c->setWeapon(w);
+                    int r = rand() % 4;
+                    for (int k = 0; k < r; k++) {
+                        Ability* a = new Ability();
+                        a->setTarget((ZoneType) (rand() % 3), r1, r1 + rand() % 5);
+                        a->setEffect((ZoneType) (rand() % 3), r2, r2 + rand() % 5);
+                        a->setPa(1 + rand() % 2);
+                        w->addAbility(a);
+                    }
                 }
             }
 
@@ -153,9 +161,10 @@ int main(int argc, char* argv[]) {
             cout << "Se déplacer au bord de l'écran change la vue" << endl;
             cout << "Cliquez sur un personnage pour se battre" << endl;
             cout << "Appuyez sur M pour se déplacer" << endl;
+            cout << "Cliquez droit pour choisir le personnage" << endl;
             cout << "Appuyez sur A pour attaquer" << endl;
+            cout << "Cliquez sur gauche ou droite pour changer de capacité" << endl;
             cout << "Appuyez sur Entrée pour passer son tour" << endl;
-            cout << "Pendant le tour adverse vous ne pouvez rien faire à part passer le tour" << endl;
 
             thread t1([engine]() {
                 sf::Clock clock;

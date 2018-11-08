@@ -22,6 +22,10 @@ void Engine::runCommands() {
     commands.clear();
 }
 
+void Engine::clearCommands() {
+    commands.clear();
+}
+
 size_t Engine::getSize() {
     return commands.size();
 }

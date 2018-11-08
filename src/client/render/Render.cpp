@@ -54,6 +54,8 @@ void Render::display() {
     vector<vector<int>> targets;
     vector<vector<int>> effects;
 
+    int abilityNumber = 0;
+
     while (window.isOpen()) {
         window.clear();
 
@@ -62,6 +64,7 @@ void Render::display() {
         } else {
             chars = state->getMainCharacters();
             maincharacter = state->getMainCharacter();
+            abilityNumber = 0;
         }
 
         x = maincharacter->getI();
@@ -100,7 +103,7 @@ void Render::display() {
                     window.draw(zone);
                 }
             } else if (state->etatCombat == 1) {
-                AttackCommand* atkcmd = new AttackCommand(state, maincharacter,{X, Y});
+                AttackCommand* atkcmd = new AttackCommand(state, maincharacter,{X, Y}, abilityNumber);
                 atkcmd->setZones();
                 targets = atkcmd->getZone(0);
                 zone.setFillColor(Color(0, 0, 255, 128));
@@ -157,19 +160,30 @@ void Render::display() {
             if (event.type == sf::Event::MouseButtonPressed) {
                 int X = xv + event.mouseButton.x / l, Y = yv + event.mouseButton.y / h;
                 if (event.mouseButton.button == sf::Mouse::Right) {
-                    if (state->isFighting() && state->getMainTeam()->getCharacter(X, Y) != nullptr) maincharacter = state->getMainTeam()->getCharacter(X, Y);
+                    if (state->isFighting() && state->getMainTeam()->getCharacter(X, Y) != nullptr) {
+                        maincharacter = state->getMainTeam()->getCharacter(X, Y);
+                        abilityNumber = 0;
+                    }
                 } else if (event.mouseButton.button == sf::Mouse::Left) {
                     if (state->etatCombat == 0) {
-                        if (state->isFighting() && state->getMainTeam()->getCharacter(X, Y) != nullptr) maincharacter = state->getMainTeam()->getCharacter(X, Y);
-                        else engine->addCommand(new MoveCommands(state, engine, maincharacter, X, Y));
+                        if (state->isFighting() && state->getMainTeam()->getCharacter(X, Y) != nullptr) {
+                            maincharacter = state->getMainTeam()->getCharacter(X, Y);
+                            abilityNumber = 0;
+                        } else {
+                            if (!state->isFighting())engine->clearCommands();
+                            engine->addCommand(new MoveCommands(state, engine, maincharacter, X, Y));
+                        }
                     } else if (state->etatCombat == 1) {
-                        engine->addCommand(new AttackCommand(state, maincharacter,{X, Y}));
-                        //if (state->isFighting() && state->getMainTeam()->getCharacter(X, Y) != nullptr) maincharacter = state->getMainTeam()->getCharacter(X, Y);
+                        engine->addCommand(new AttackCommand(state, maincharacter,{X, Y}, abilityNumber));
                     }
                 }
             }
             if (event.type == sf::Event::KeyPressed && state->isFighting()) {
-                if (event.key.code == sf::Keyboard::M) {
+                if (event.key.code == sf::Keyboard::Left) {
+                    abilityNumber = (abilityNumber - 1) % maincharacter->getWeapon()->getAbilities().size();
+                } else if (event.key.code == sf::Keyboard::Right) {
+                    abilityNumber = (abilityNumber + 1) % maincharacter->getWeapon()->getAbilities().size();
+                } else if (event.key.code == sf::Keyboard::M) {
                     state->etatCombat = 0;
                 } else if (event.key.code == sf::Keyboard::A) {
                     state->etatCombat = 1;
