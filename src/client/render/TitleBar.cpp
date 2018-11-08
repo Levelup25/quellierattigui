@@ -1,13 +1,21 @@
 #include "TitleBar.h"
 #include <iostream>
+#include "TitleBarButton.h"
 
 using namespace render;
 using namespace std;
 
 TitleBar::TitleBar() {
-  cout << "titleBar init" << endl;
+  recshape.setFillColor(sf::Color::Blue);
+  pcloseBtn = new TitleBarButton();
+  add(pcloseBtn);
+}
 
-  auto borderRecshape = pborder->getRecshape();
-  borderRecshape.setFillColor(sf::Color::Blue);
-  pborder->setRecshape(borderRecshape);
+void TitleBar::updateSizeParent() {
+  auto parentWidth = getParent()->getSize().x;
+  setSize({parentWidth, 30});
+  float closePadR = 5;
+  auto closeBtnSize = pcloseBtn->getSize().x;
+  auto closeBtnX = getSize().x - closeBtnSize - closePadR;
+  pcloseBtn->setPos({closeBtnX, 5});
 }

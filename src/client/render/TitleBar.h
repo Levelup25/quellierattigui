@@ -3,33 +3,32 @@
 #define RENDER__TITLEBAR__H
 
 #include <string>
-#include <vector>
 
 namespace render {
   class TitleBarButton;
-  class ElementComposite;
+  class Rectangle;
 }
 
-#include "ElementComposite.h"
+#include "Rectangle.h"
 #include "TitleBarButton.h"
 
 namespace render {
 
   /// class TitleBar - 
-  class TitleBar : public render::ElementComposite {
+  class TitleBar : public render::Rectangle {
     // Associations
     // Attributes
+  public:
+    TitleBarButton* pcloseBtn;
   protected:
     std::string title;
-    std::vector<TitleBarButton*> buttons;
     // Operations
   public:
     TitleBar ();
+    void updateSizeParent ();
     // Setters and Getters
     const std::string& getTitle() const;
     void setTitle(const std::string& title);
-    const std::vector<TitleBarButton*>& getButtons() const;
-    void setButtons(const std::vector<TitleBarButton*>& buttons);
   };
 
 };

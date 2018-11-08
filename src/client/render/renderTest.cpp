@@ -8,21 +8,47 @@ using namespace render;
 using namespace std;
 
 void testRender() {
+  testRenderPosition();
+}
+
+void testRenderPosition() {
   sf::RenderWindow window(sf::VideoMode(700, 700), "Render Test");
-  auto wm = WindowManager();
-  auto w1 = Window();
-  wm.add(&w1);
-  w1.setPos({50, 50});
 
-  cout << "wm : " << wm.posToStr(wm.getAbsPos()) << endl;
-  cout << "w1 : " << wm.posToStr(w1.getAbsPos()) << endl;
+  Rectangle root;
+  sf::Vector2f windowSizef = {(float)window.getSize().x,
+                              (float)window.getSize().y};
+  root.setSize(windowSizef);
+  root.recshape.setFillColor(sf::Color::Black);
 
-  auto w1border = *w1.pborder;
-  auto w1bar = *w1.ptitleBar;
-  auto w1barBorder = *w1bar.pborder;
-  cout << "w1 border : " << wm.posToStr(w1border.getAbsPos()) << endl;
-  cout << "w1 bar : " << wm.posToStr(w1bar.getAbsPos()) << endl;
-  cout << "w1 bar border : " << wm.posToStr(w1barBorder.getAbsPos()) << endl;
+  Rectangle r1, r2, r3;
+  root.add(&r1);
+  root.add(&r2);
+  root.add(&r3);
+  r1.setPos({10, 20});
+  r1.setSize({200, 100});
+  r2.setPos({250, 15});
+  r2.setSize({400, 300});
+  r1.setSize({200, 100});
+  r3.setPos({10, -50});
+  r3.setSize({400, 40});
+
+  Rectangle r2_1, r2_2;
+  r2.add(&r2_1);
+  r2.add(&r2_2);
+  r2_1.recshape.setFillColor(sf::Color::Red);
+  r2_2.recshape.setFillColor(sf::Color::Red);
+  r2_1.setPos({10, 20});
+  r2_1.setSize({40, 20});
+  r2_2.setPos({80, 30});
+  r2_2.setSize({200, 200});
+
+  Rectangle r2_2_1;
+  r2_2.add(&r2_2_1);
+  r2_2_1.recshape.setFillColor(sf::Color::Green);
+  r2_2_1.setPos({-55, -55});
+  r2_2_1.setSize({50, 50});
+
+  root.printTreeView();
 
   // window loop
   while (window.isOpen()) {
@@ -33,11 +59,10 @@ void testRender() {
 
       auto posMouseBuff = sf::Mouse::getPosition(window);
       sf::Vector2f posMouse{(float)posMouseBuff.x, (float)posMouseBuff.y};
-      wm.receiveEvent(event, posMouse);
     }
 
     window.clear();
-    window.draw(wm);
+    window.draw(root);
     window.display();
   }
 }

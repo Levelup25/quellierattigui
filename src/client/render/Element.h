@@ -3,8 +3,12 @@
 #define RENDER__ELEMENT__H
 
 #include <SFML/Graphics.hpp>
+#include <vector>
 #include <string>
 
+namespace render {
+  class Element;
+};
 namespace sf {
   class Drawable;
 }
@@ -15,22 +19,35 @@ namespace render {
   /// class Element - 
   class Element : public sf::Drawable {
     // Attributes
-  protected:
-    sf::Vector2f posParent;
+  private:
+    Element* pparent     = nullptr;
+    std::vector<Element*> pchildren;
+    unsigned int depth     = 0;
     sf::Vector2f pos;
+    sf::Vector2f size;
     // Operations
   public:
     Element ();
-    virtual void receiveEvent (sf::Event event, sf::Vector2f posMouse);
-    sf::Vector2f getAbsPos () const;
+    virtual void setPos (const sf::Vector2f pos);
+    const sf::Vector2f getPos () const;
+    const sf::Vector2f getAbsPos () const;
     std::string posToStr (sf::Vector2f pos) const;
-    virtual void updatePos ();
+    virtual void setSize (const sf::Vector2f size);
+    const sf::Vector2f getSize () const;
+    void notifyPos ();
+    void notifySize ();
+    void notifyEvent (sf::Event event, sf::Vector2f posMouse);
+    virtual void updatePosParent ();
+    virtual void updateSizeParent ();
+    virtual void updateEvent (sf::Event event, sf::Vector2f posMouse);
+    void add (Element* pchild);
+    void remove (Element* pchild);
+    void setParent (Element* pparent);
+    const Element* getParent () const;
+    unsigned int getDepth () const;
+    void printTreeView () const;
     virtual void draw (sf::RenderTarget& target, sf::RenderStates states) const;
     // Setters and Getters
-    const sf::Vector2f& getPosParent() const;
-    void setPosParent(const sf::Vector2f& posParent);
-    const sf::Vector2f& getPos() const;
-    void setPos(const sf::Vector2f& pos);
   };
 
 };

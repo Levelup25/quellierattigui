@@ -6,16 +6,16 @@
 namespace render {
   class TitleBar;
   class Element;
-  class ElementComposite;
+  class Rectangle;
 }
 
-#include "ElementComposite.h"
+#include "Rectangle.h"
 #include "TitleBar.h"
 
 namespace render {
 
   /// class Window - 
-  class Window : public render::ElementComposite {
+  class Window : public render::Rectangle {
     // Associations
     // Attributes
   public:

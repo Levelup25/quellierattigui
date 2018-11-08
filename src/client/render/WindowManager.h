@@ -6,22 +6,22 @@
 
 namespace render {
   class Inventory;
-  class ElementComposite;
+  class Rectangle;
 }
 
-#include "ElementComposite.h"
+#include "Rectangle.h"
 
 namespace render {
 
   /// class WindowManager - 
-  class WindowManager : public render::ElementComposite {
+  class WindowManager : public render::Rectangle {
     // Attributes
   protected:
     Inventory* inventory;
     // Operations
   public:
     WindowManager ();
-    void receiveEvent (sf::Event event, sf::Vector2f posMouse);
+    void updateEvent (sf::Event event, sf::Vector2f posMouse);
   private:
     void toggleInventory ();
     // Setters and Getters

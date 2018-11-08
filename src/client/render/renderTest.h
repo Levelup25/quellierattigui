@@ -5,5 +5,5 @@
 #include <fstream>
 #include <iostream>
 
-bool posInRec(sf::Vector2f pos, sf::RectangleShape rec);
 void testRender();
+void testRenderPosition();
