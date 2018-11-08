@@ -175,16 +175,10 @@ Le détail des attributs et opérations des différentes classes est présenté 
 
 \subsubsection{State}
 \begin{itemize}
-\item L'état possède un pointeur sur la carte du monde qui contient toutes les information lié au terrain et à la position des personnages
+\item L'état possède une matrice de pointeurs de cellules qui contiennent toutes les information liées au terrain et à la position des personnages
+\item Il possède aussi toutes les équipes de personnages, ainsi que les quêtes et le combat éventuel qui se déroule.
 \item L'heure correspondant au nombre de fronts d'horloge, ainsi que la vitesse à laquelle le jeu est actualisé permet d'associer un temps à chaque état du jeu
-\item Un booléen indique si le joueur est en train de combattre ou non, et un autre indique si l'inventaire est ouvert
-\end{itemize}
-
-\subsubsection{World}
-\begin{itemize}
-\item Le monde possède un nombre prédéfini de lignes et de colonnes pour la carte
-\item Il possède aussi un tableau à 2 dimensions de toutes les cellules du jeu
-\item La liste des personnages est aussi stocké
+\item Un booléen indique si l'inventaire est ouvert
 \end{itemize}
 
 \subsubsection{Cell}
@@ -194,7 +188,7 @@ Le détail des attributs et opérations des différentes classes est présenté 
 
 \subsubsection{Character}
 \begin{itemize}
-\item Les coordonnées du personnage
+\item Les coordonnées du personnage et la direction dans laquelle il se tourne
 \item Le personnage a un nom et appartient à une race qui sera utile par la suite pour les quêtes notamment
 \item Il possède également des attributs utiles au combat lui permettant de se déplacer, d'attaquer et de pouvoir encaisser des attaques
 \item Chaque personnage possède enfin une arme lui permettant d'effectuer diverses actions
@@ -202,7 +196,8 @@ Le détail des attributs et opérations des différentes classes est présenté 
 
 \subsubsection{Team}
 \begin{itemize}
-\item L'équipe comprend l'ensemble des personnages aptes au combat. Seul un combattant représente l'équipe hors combat lors du déplacement sur la carte du monde, et seul un nombre limité de personnages peuvent combattre simultanément
+\item L'équipe a un nom
+\item Elle comprend l'ensemble des personnages aptes au combat. Seul un combattant représente l'équipe hors combat lors du déplacement sur la carte du monde, et seul un nombre limité de personnages peuvent combattre simultanément
 \item L'équipe stocke également l'inventaire des objets récupérés, pouvant être affectées aux différents personnages de l'équipe
 \end{itemize}
 
@@ -230,7 +225,6 @@ Le détail des attributs et opérations des différentes classes est présenté 
 \begin{itemize}
 \item Le combat enregistre le nombre de tours passés afin de définir la prochaine équipe à jouer
 \item Il possède les différentes équipes se battant afin que chaque membre de l'équipe puisse se déployer avant de commencer
-\item Il possède également des quêtes permettant de gagner des récompenses en cas de réussite
 \end{itemize}
 
 \subsubsection{MainQuest}
@@ -242,7 +236,7 @@ Le détail des attributs et opérations des différentes classes est présenté 
 \subsection{Conception Logiciel}
 Le diagramme des classes pour les états est présenté en Figure 8 : 
 \begin{itemize}
-\item Les classes en vert contiennent les information globales sur le déroulement du jeu et permettent de déterminer l'état actuel du jeu
+\item La classe en vert contient les information globales sur le déroulement du jeu et permettent de déterminer l'état actuel du jeu
 \item Les classes en jaune caractérisent les personnages et le terrain dans lequel ils évoluent
 \item Les classes en bleu déterminent les actions possibles par les différents personnages
 \item Les classes en rouge permettent d'implémenter les phases de combat ainsi que les quêtes, permettant d'obtenir du matériel ou de nouveaux membres d'équipe.
@@ -256,18 +250,18 @@ Le diagramme des classes pour les états est présenté en Figure 8 :
 \end{landscape}
 
 \clearpage
-\section{Règles de changement d'états et moteur de jeu}
+\section{Rendu : Stratégie et Conception}
 
 \subsection{Stratégie de rendu d’un état}
 Le rendu de l'état est possible grâce aux différentes informations récupérées de la classe World, c'est à dire les tuiles et les personnages. Il s'agit donc d'un rendu à 3 couches successives. Toutes les textures sont chargées et découpées afin de renvoyer le sprite correspondant à un personnage donné ou à une cellule du monde donnée (élément et contenu optionnel). Ce sprite est ensuite déplacé au lieu d'en générer un nouveau. Un système de vue centre la fenêtre sur une petite zone autour du personnage principal (encadré d'un carré blanc) et n'actualise l'affichage des sprites sur cette vue uniquement et pas sur le monde entier. Cela évite d'une part de charger des sprites inutilement et d'autre part de créer une carte du monde où les zones pas encore visitées ne seraient pas visibles (ce serait alors une vue du monde en entier).
 
-\clearpage
+
 \subsection{Conception logiciel}
 
  Le diagramme de classes du rendu est présenté en Figure 9 : 
 \begin{itemize}
 \item Les classes en vert sont les gestionnaires des différentes ressources. Elles chargent les différentes textures du jeu lors de l'instanciation en prenant en argument leur résolution et possèdent la méthode getSprite() générant le sprite redimensionné aux dimensions des cellules, compatible avec l'état du monde, dépendant alors de la tuile à afficher (élément + contenu) et du personnage à afficher.
-\item DisplayState réutilise alors les sprites générés pour afficher la carte grâce au RenderWindow de sfml et gère la View correspondante via display().
+\item Render réutilise alors les sprites générés pour afficher la carte grâce au RenderWindow de sfml et gère la View correspondante via display().
 \end{itemize}
 
 Une partie des classes n'a pas pu être représentée sur le dia vu que ces classes présentent des méthodes constantes et que dia ne gère pas ce type de fonctions. En conséquence ces headers ont été rédigés à la main. Les classes qui n'ont pas pu être incluses sont les suivantes:
@@ -275,7 +269,7 @@ Une partie des classes n'a pas pu être représentée sur le dia vu que ces clas
     \item IGWindow\\
     La classe permet d'afficher une fenêtre qu'on peut déplacer et fermer par dessus la vue du monde
     \item IGWindowContainer\\
-    Comme son nom l'indique celle classe contient l'ensemble des fenêtres, lorsque on souhaite ajouter une fenêtre à la vue de notre jeu il faut l'enregistrer au près du gestionnaire de window. Le gestionnaire s'occupe du déplacement et de la fermeture des fenêtres qu'il contrôle.
+    Comme son nom l'indique celle classe contient l'ensemble des fenêtres, lorsque on souhaite ajouter une fenêtre à la vue de notre jeu il faut l'enregistrer auprès du gestionnaire de window. Le gestionnaire s'occupe du déplacement et de la fermeture des fenêtres qu'il contrôle.
     \item UIInventory\\
     La classe permet d'afficher l'inventaire d'une team. La classe hérite de IGWindow, il est donc possible de déplacer et fermer la fenêtre.
 \end{itemize}
@@ -293,7 +287,41 @@ Une partie des classes n'a pas pu être représentée sur le dia vu que ces clas
     \end{figure}
 \end{landscape}
 
+\section{Règles de changement d'états et moteur de jeu}
 
+\subsection{Horloge globale}
+	Les commandes sont exécutées à une fréquence de 30 Hz et chaque animation de déplacement est constitué d'une étape de changement de direction ainsi que de 12 étapes de déplacement pur séparés en 4 sprites différents.
+
+
+\subsection{Changements extérieurs}
+	Les changements extérieurs sont le déplacement du personnage, que ce soit en combat ou non, ainsi que les phases d'attaque en combat.
+
+
+\subsection{Changements autonomes}
+	Les changements autonomes sont le changement de direction du personnage lors de son déplacement, ainsi que le démarrage de la phase de combat permettant de déployer tous les personnages de chaque équipe si un ennemi est rencontré lors de la phase d'exploration.
+
+\subsection{Conception logiciel}
+
+Le diagramme des classes pour le moteur du jeu est présenté en Figure 11. Le moteur de jeu repose sur le pattern Command et permet la mise en oeuvre différée des commandes modifiant l'état du jeu.
+
+\textbf{Classes Command} Ces classes représentent les commandes exécutées par le moteur. 
+\begin{itemize}
+\item MoveCommands permet de générer l'ensemble des commandes individuelles MoveCommand et DirectionCommand afin de créer une animation de déplacement en utilisant un pathfinding A* (rapide mais ne générant pas nécessairement le chemin le plus optimal) et FightCommant en cas de rencontre avec un ennemi, ce qui lance la phase de combat.
+\item AttackCommand permet aux différents personnages d'attaquer avec leurs capacités et ainsi d'infliger des dégâts à différentes cibles.
+\end{itemize}
+
+
+\textbf{Engine} Le moteur exécute les commandes dans l'ordre d'apparition
+
+
+\begin{landscape}
+    \begin{figure}[p]
+        \includegraphics[width=0.9\paperheight]{engine.png}
+        \caption{\label{uml:engine}Diagramme des classes du moteur.}
+    \end{figure}
+\end{landscape}
+
+\clearpage
 \section{Intelligence Artificielle}
 
 \subsection{Stratégies}
