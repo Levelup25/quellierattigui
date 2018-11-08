@@ -5,7 +5,7 @@ using namespace render;
 using namespace std;
 
 Element::Element() {
-  pos = {0, 0};
+  posRelative = {0, 0};
   size = {10, 10};
 };
 
@@ -17,11 +17,11 @@ void Element::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 void Element::updateEvent(sf::Event event, sf::Vector2f posMouse){};
 
-const sf::Vector2f Element::getPos() const {
-  return pos;
+const sf::Vector2f Element::getPosRelative() const {
+  return posRelative;
 }
-void Element::setPos(const sf::Vector2f pos) {
-  this->pos = pos;
+void Element::setPosRelative(const sf::Vector2f pos) {
+  this->posRelative = pos;
   notifyPos();
 }
 
@@ -30,21 +30,21 @@ const sf::Vector2f Element::getAbsPos() const {
     float x, y;
     auto parentPos = pparent->getAbsPos();
     auto parentSize = pparent->getSize();
-    if (pos.x > 0)
-      x = parentPos.x + pos.x;
+    if (posRelative.x >= 0)
+      x = parentPos.x + posRelative.x;
     else
-      x = parentPos.x + parentSize.x + pos.x;
+      x = parentPos.x + parentSize.x + posRelative.x;
 
-    if (pos.y > 0)
-      y = parentPos.y + pos.y;
+    if (posRelative.y >= 0)
+      y = parentPos.y + posRelative.y;
     else
-      y = parentPos.y + parentSize.y + pos.y;
+      y = parentPos.y + parentSize.y + posRelative.y;
 
     return sf::Vector2f({x, y});
   }
 
   else
-    return pos;
+    return posRelative;
 }
 
 std::string Element::posToStr(sf::Vector2f pos) const {
@@ -86,12 +86,20 @@ void Element::notifySize() {
   }
 }
 
-void Element::updatePosParent() {}
-void Element::updateSizeParent() {}
+void Element::updatePosParent() {
+  for (auto pchild : pchildren) {
+    pchild->updatePosParent();
+  }
+}
+void Element::updateSizeParent() {
+  for (auto pchild : pchildren) {
+    pchild->updateSizeParent();
+  }
+}
 
 void Element::setParent(Element* pparent) {
   this->pparent = pparent;
-  depth = pparent->depth + 1;
+  updateDepth();
   updatePosParent();
   updateSizeParent();
 }
@@ -99,16 +107,29 @@ const Element* Element::getParent() const {
   return pparent;
 }
 
+void Element::updateDepth() {
+  if (pparent == nullptr)
+    depth = 0;
+  else
+    depth = pparent->getDepth() + 1;
+
+  for (auto pchild : pchildren) {
+    pchild->updateDepth();
+  }
+}
+
 unsigned int Element::getDepth() const {
   return depth;
 }
 
 void Element::printTreeView() const {
-  cout << string(depth, ' ') + string(depth, ' ');
+  auto classname = typeid(*this).name();
+  auto sep = string(depth, ' ');
+  cout << sep;
   cout << posToStr(getAbsPos()) << " ";
-  cout << posToStr(pos) << " ";
+  cout << posToStr(posRelative) << " ";
   cout << posToStr(size) << " ";
-  cout << this << endl;
+  cout << classname << endl;
   for (auto pchild : pchildren) {
     pchild->printTreeView();
   }

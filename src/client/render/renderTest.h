@@ -6,4 +6,5 @@
 #include <iostream>
 
 void testRender();
-void testRenderPosition();
+void testPosition();
+void testDisplayWindow();

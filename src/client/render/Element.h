@@ -23,13 +23,14 @@ namespace render {
     Element* pparent     = nullptr;
     std::vector<Element*> pchildren;
     unsigned int depth     = 0;
-    sf::Vector2f pos;
+    sf::Vector2f posRelative;
     sf::Vector2f size;
     // Operations
   public:
     Element ();
-    virtual void setPos (const sf::Vector2f pos);
-    const sf::Vector2f getPos () const;
+    virtual void draw (sf::RenderTarget& target, sf::RenderStates states) const;
+    virtual void setPosRelative (const sf::Vector2f pos);
+    const sf::Vector2f getPosRelative () const;
     const sf::Vector2f getAbsPos () const;
     std::string posToStr (sf::Vector2f pos) const;
     virtual void setSize (const sf::Vector2f size);
@@ -46,7 +47,8 @@ namespace render {
     const Element* getParent () const;
     unsigned int getDepth () const;
     void printTreeView () const;
-    virtual void draw (sf::RenderTarget& target, sf::RenderStates states) const;
+  private:
+    void updateDepth ();
     // Setters and Getters
   };
 

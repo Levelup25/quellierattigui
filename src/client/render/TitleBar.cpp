@@ -17,5 +17,5 @@ void TitleBar::updateSizeParent() {
   float closePadR = 5;
   auto closeBtnSize = pcloseBtn->getSize().x;
   auto closeBtnX = getSize().x - closeBtnSize - closePadR;
-  pcloseBtn->setPos({closeBtnX, 5});
+  pcloseBtn->setPosRelative({closeBtnX, 5});
 }
