@@ -17,7 +17,7 @@ void testPosition() {
   Rectangle root;
   sf::Vector2f windowSizef = {(float)window.getSize().x,
                               (float)window.getSize().y};
-  root.setSize(windowSizef);
+  root.setSizeRelative({windowSizef.x, windowSizef.y});
   root.recshape.setFillColor(sf::Color::Black);
 
   Rectangle r1, r2, r3;
@@ -25,12 +25,12 @@ void testPosition() {
   root.add(&r2);
   root.add(&r3);
   r1.setPosRelative({10, 20});
-  r1.setSize({200, 100});
+  r1.setSizeRelative({200, 100});
   r2.setPosRelative({250, 15});
-  r2.setSize({400, 300});
-  r1.setSize({200, 100});
+  r2.setSizeRelative({400, 300});
+  r1.setSizeRelative({200, 100});
   r3.setPosRelative({10, -50});
-  r3.setSize({400, 40});
+  r3.setSizeRelative({400, 40});
 
   Rectangle r2_1, r2_2;
   r2.add(&r2_1);
@@ -38,15 +38,15 @@ void testPosition() {
   r2_1.recshape.setFillColor(sf::Color::Red);
   r2_2.recshape.setFillColor(sf::Color::Red);
   r2_1.setPosRelative({10, 20});
-  r2_1.setSize({40, 20});
+  r2_1.setSizeRelative({40, 20});
   r2_2.setPosRelative({80, 30});
-  r2_2.setSize({200, 200});
+  r2_2.setSizeRelative({200, 200});
 
   Rectangle r2_2_1;
   r2_2.add(&r2_2_1);
   r2_2_1.recshape.setFillColor(sf::Color::Green);
   r2_2_1.setPosRelative({-55, -55});
-  r2_2_1.setSize({50, 50});
+  r2_2_1.setSizeRelative({50, 50});
 
   root.printTreeView();
 
@@ -73,7 +73,7 @@ void testDisplayWindow() {
   Rectangle root;
   sf::Vector2f windowSizef = {(float)window.getSize().x,
                               (float)window.getSize().y};
-  root.setSize(windowSizef);
+  root.setSizeRelative({windowSizef.x, windowSizef.y});
   root.recshape.setFillColor(sf::Color::Black);
 
   Window win;

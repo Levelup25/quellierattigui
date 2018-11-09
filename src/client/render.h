@@ -2,6 +2,8 @@
 #ifndef __RENDER__H
 #define __RENDER__H
 
+#include "render/Relatif.h"
+#include "render/Relatif2.h"
 #include "render/Element.h"
 #include "render/Sprite.h"
 #include "render/ContentSprite.h"

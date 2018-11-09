@@ -10,5 +10,5 @@ Window::Window() {
   // pcontent = new Rectangle();
   add(ptitleBar);
   // add(pcontent);
-  setSize({100, 100});
+  setSizeRelative({100, 100});
 }

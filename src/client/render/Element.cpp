@@ -6,7 +6,7 @@ using namespace std;
 
 Element::Element() {
   posRelative = {0, 0};
-  size = {10, 10};
+  sizeRelative = {10, 10};
 };
 
 void Element::draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -17,29 +17,29 @@ void Element::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 void Element::reactEvent(sf::Event event, sf::Vector2f posMouse){};
 
-const sf::Vector2f Element::getPosRelative() const {
+const Relatif2 Element::getPosRelative() const {
   return posRelative;
 }
-void Element::setPosRelative(const sf::Vector2f pos) {
+void Element::setPosRelative(const Relatif2 pos) {
   this->posRelative = pos;
   updatePosAbs();
   notifyEditPosAbs();
 }
 
 const sf::Vector2f Element::getPosAbs() const {
-  return posAbs;
+  return posAbsCache;
 }
 
 std::string Element::posToStr(sf::Vector2f pos) const {
   return "(" + to_string((int)pos.x) + ", " + to_string((int)pos.y) + ")";
 }
 
-const sf::Vector2f Element::getSize() const {
-  return size;
+const sf::Vector2f Element::getSizeAbs() const {
+  return sizeAbsCache;
 }
 
-void Element::setSize(const sf::Vector2f size) {
-  this->size = size;
+void Element::setSizeRelative(const Relatif2 sizeRelative) {
+  this->sizeRelative = sizeRelative;
   notifyEditSize();
 }
 
@@ -78,7 +78,6 @@ void Element::reactEditSizeParent() {}
 void Element::setParent(Element* pparent) {
   this->pparent = pparent;
   updateDepth();
-  updatePosAbs();
   reactEditPosAbsParent();
   reactEditSizeParent();
 }
@@ -88,9 +87,9 @@ const Element* Element::getParent() const {
 
 void Element::updateDepth() {
   if (pparent == nullptr)
-    depth = 0;
+    depthCache = 0;
   else
-    depth = pparent->getDepth() + 1;
+    depthCache = pparent->getDepth() + 1;
 
   for (auto pchild : pchildren) {
     pchild->updateDepth();
@@ -98,44 +97,51 @@ void Element::updateDepth() {
 }
 
 unsigned int Element::getDepth() const {
-  return depth;
+  return depthCache;
 }
 
 void Element::printTreeView() const {
   auto classname = typeid(*this).name();
-  auto sep = string(depth, ' ');
+  auto sep = string(depthCache, ' ');
   cout << sep;
   cout << posToStr(getPosAbs()) << " ";
-  cout << posToStr(posRelative) << " ";
-  cout << posToStr(size) << " ";
+  cout << (std::string)posRelative << " ";
+  cout << posToStr(getSizeAbs()) << " ";
   cout << classname << endl;
   for (auto pchild : pchildren) {
     pchild->printTreeView();
   }
-  if (depth == 0)
+  if (depthCache == 0)
     cout << endl;
 }
 
 void Element::updatePosAbs() {
+  float x, y;
   if (pparent) {
-    float x, y;
     auto parentPos = pparent->getPosAbs();
-    auto parentSize = pparent->getSize();
-    if (posRelative.x >= 0)
-      x = parentPos.x + posRelative.x;
-    else
-      x = parentPos.x + parentSize.x + posRelative.x;
-
-    if (posRelative.y >= 0)
-      y = parentPos.y + posRelative.y;
-    else
-      y = parentPos.y + parentSize.y + posRelative.y;
-
-    posAbs = {x, y};
+    auto parentSize = pparent->getSizeAbs();
+    x = computeCoord(posRelative.x, parentPos.x, parentSize.x);
+    y = computeCoord(posRelative.y, parentPos.y, parentSize.y);
+  } else {
+    x = posRelative.x.getOffset();
+    y = posRelative.y.getOffset();
   }
-
-  else
-    posAbs = posRelative;
+  posAbsCache = {x, y};
 
   notifyEditPosAbs();
+}
+
+float Element::computeCoord(Relatif rel,
+                            float parentCoordAbs,
+                            float parentLengthAbs) {
+  float f;
+  if (rel.getComputeMethod() == 0) {
+    float offsetx = rel.getOffset();
+    if (offsetx >= 0)
+      f = parentCoordAbs + offsetx;
+    else
+      f = parentCoordAbs + parentLengthAbs + offsetx;
+  }
+
+  return f;
 }

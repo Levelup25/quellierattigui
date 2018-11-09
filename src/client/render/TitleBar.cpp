@@ -12,10 +12,10 @@ TitleBar::TitleBar() {
 }
 
 void TitleBar::reactEditSizeParent() {
-  auto parentWidth = getParent()->getSize().x;
-  setSize({parentWidth, 30});
+  auto parentWidth = getParent()->getSizeAbs().x;
+  setSizeRelative({parentWidth, 30});
   float closePadR = 5;
-  auto closeBtnSize = pcloseBtn->getSize().x;
-  auto closeBtnX = getSize().x - closeBtnSize - closePadR;
+  auto closeBtnSize = pcloseBtn->getSizeAbs().x;
+  auto closeBtnX = getSizeAbs().x - closeBtnSize - closePadR;
   pcloseBtn->setPosRelative({closeBtnX, 5});
 }

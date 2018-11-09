@@ -5,5 +5,5 @@ using namespace render;
 using namespace std;
 
 TitleBarButton::TitleBarButton() {
-  setSize({20, 20});
+  setSizeRelative({20, 20});
 }

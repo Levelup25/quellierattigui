@@ -10,11 +10,6 @@ Rectangle::Rectangle() {
   recshape.setFillColor(sf::Color::White);
 }
 
-void Rectangle::setSize(const sf::Vector2f size) {
-  Element::setSize(size);
-  recshape.setSize(size);
-}
-
 // const sf::RectangleShape& Rectangle::getRecshape() const {
 //   return recshape;
 // }
@@ -31,4 +26,9 @@ void Rectangle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 void Rectangle::updatePosAbs() {
   Element::updatePosAbs();
   recshape.setPosition(getPosAbs());
+}
+
+void Rectangle::updateSizeAbs() {
+  Element::updateSizeAbs();
+  recshape.setSize(getSizeAbs());
 }

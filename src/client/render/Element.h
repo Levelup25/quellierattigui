@@ -8,48 +8,57 @@
 
 namespace render {
   class Element;
+  class Relatif2;
+  class Relatif;
 };
 namespace sf {
   class Drawable;
 }
 
+#include "Relatif2.h"
+#include "Relatif.h"
 
 namespace render {
 
   /// class Element - 
   class Element : public sf::Drawable {
+    // Associations
     // Attributes
-  public:
-    sf::Vector2f posAbs;
   private:
     Element* pparent     = nullptr;
     std::vector<Element*> pchildren;
-    unsigned int depth     = 0;
-    sf::Vector2f posRelative;
-    sf::Vector2f size;
+    unsigned int depthCache     = 0;
+    Relatif2 posRelative;
+    sf::Vector2f posAbsCache;
+    Relatif2 sizeRelative;
+    sf::Vector2f sizeAbsCache;
     // Operations
   public:
     Element ();
     virtual void draw (sf::RenderTarget& target, sf::RenderStates states) const;
-    virtual void setPosRelative (const sf::Vector2f pos);
-    const sf::Vector2f getPosRelative () const;
-    const sf::Vector2f getPosAbs () const;
-    std::string posToStr (sf::Vector2f pos) const;
-    virtual void setSize (const sf::Vector2f size);
-    const sf::Vector2f getSize () const;
-    void notifyEditPosAbs ();
-    void notifyEditSize ();
-    void notifyEvent (sf::Event event, sf::Vector2f posMouse);
+    const Relatif2 getPosRelative () const;
+    virtual void setPosRelative (Relatif2 posRelatif);
     virtual void updatePosAbs ();
+    const sf::Vector2f getPosAbs () const;
     virtual void reactEditPosAbsParent ();
+    void notifyEditPosAbs ();
+    Relatif2 getSizeRelative ();
+    void setSizeRelative (Relatif2 sizeRelatif);
+    virtual void updateSizeAbs ();
+    const sf::Vector2f getSizeAbs () const;
+    void notifyEditSize ();
     virtual void reactEditSizeParent ();
+    void notifyEvent (sf::Event event, sf::Vector2f posMouse);
     virtual void reactEvent (sf::Event event, sf::Vector2f posMouse);
+    const Element* getParent () const;
+    void setParent (Element* pparent);
     void add (Element* pchild);
     void remove (Element* pchild);
-    void setParent (Element* pparent);
-    const Element* getParent () const;
     unsigned int getDepth () const;
     void printTreeView () const;
+    std::string posToStr (sf::Vector2f pos) const;
+    float computeCoord (Relatif rel, float parentCoordAbs, float parentLengthAbs);
+    float computeLength (Relatif rel, float parentSizeAbs);
   private:
     void updateDepth ();
     // Setters and Getters
