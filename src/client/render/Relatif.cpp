@@ -55,19 +55,24 @@ float Relatif::getPercent() const {
 std::string Relatif::getAlignement() const {
   return alignement;
 }
-
-Relatif::operator string() const {
-  switch (computeMethod) {
+namespace render {
+std::ostream& operator<<(std::ostream& os, const Relatif& rel) {
+  switch (rel.getComputeMethod()) {
     case ComputeMethodType::pixel:
-      return to_string((int)pixel);
+      os << rel.getPixel();
+      break;
 
     case ComputeMethodType::percent:
-      return to_string((int)percent) + "%";
+      os << rel.getPercent() << "%";
+      break;
 
     case ComputeMethodType::alignement:
-      return alignement;
+      os << rel.getAlignement();
+      break;
 
     default:
-      return "?";
+      break;
   }
+  return os;
 }
+}  // namespace render

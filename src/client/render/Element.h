@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>
+#include <ostream>
 
 namespace render {
   class Element;
@@ -42,7 +43,7 @@ namespace render {
     const sf::Vector2f getPosAbs () const;
     virtual void reactEditPosAbsParent ();
     void notifyEditPosAbs ();
-    Relatif2 getSizeRelative ();
+    const Relatif2 getSizeRelative () const;
     void setSizeRelative (Relatif2 sizeRelatif);
     virtual void updateSizeAbs ();
     const sf::Vector2f getSizeAbs () const;
@@ -57,7 +58,8 @@ namespace render {
     unsigned int getDepth () const;
     std::string posToStr (sf::Vector2f pos) const;
     std::string getTreeView () const;
-    operator std::string () const;
+    friend std::ostream& operator<< (std::ostream& os, const Element& el);
+    friend std::ostream& operator<< (std::ostream& os, const sf::Vector2f& vec);
   private:
     void updateDepth ();
     float computeCoord (Relatif rel, float parentCoordAbs, float parentLengthAbs, float lengthAbs);

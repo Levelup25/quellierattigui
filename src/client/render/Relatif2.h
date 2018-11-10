@@ -2,9 +2,11 @@
 #ifndef RENDER__RELATIF2__H
 #define RENDER__RELATIF2__H
 
+#include <ostream>
 
 namespace render {
   class Relatif;
+  class Relatif2;
 }
 
 #include "Relatif.h"
@@ -22,7 +24,7 @@ namespace render {
   public:
     Relatif2 ();
     Relatif2 (Relatif x, Relatif y);
-    operator std::string () const;
+    friend std::ostream& operator<< (std::ostream& os, const Relatif2& rel2);
     // Setters and Getters
   };
 

@@ -35,6 +35,10 @@ const sf::Vector2f Element::getSizeAbs() const {
   return sizeAbsCache;
 }
 
+const Relatif2 Element::getSizeRelative() const {
+  return sizeRelative;
+}
+
 void Element::setSizeRelative(const Relatif2 sizeRelative) {
   this->sizeRelative = sizeRelative;
   updateSizeAbs();
@@ -100,42 +104,41 @@ unsigned int Element::getDepth() const {
   return depthCache;
 }
 
-std::string Element::posToStr(sf::Vector2f pos) const {
-  std::stringstream stream;
-  stream << "(";
-  stream << std::setw(3) << pos.x;
-  stream << ", ";
-  stream << std::setw(3) << pos.y;
-  stream << ")";
-  return stream.str();
+namespace render {
+std::ostream& operator<<(std::ostream& os, const sf::Vector2f& vec) {
+  os << "(";
+  os << std::setw(3) << vec.x;
+  os << ", ";
+  os << std::setw(3) << vec.y;
+  os << ")";
+  return os;
 }
 
-Element::operator string() const {
-  std::stringstream stream;
-  auto classname = typeid(*this).name();
-  auto sep = string(depthCache * 4, ' ');
+std::ostream& operator<<(std::ostream& os, const Element& el) {
+  auto classname = typeid(el).name();
+  auto sep = string(el.getDepth() * 4, ' ');
 
-  stream << sep;
-  stream << classname << endl;
+  os << sep;
+  os << classname << endl;
 
-  stream << sep;
-  stream << "pos:  ";
-  stream << "Abs";
-  stream << posToStr(getPosAbs()) << ",";
-  stream << "Rel";
-  stream << (std::string)posRelative << endl;
+  os << sep;
+  os << "pos:  ";
+  os << "Abs";
+  os << el.getPosAbs() << ",";
+  os << "Rel";
+  os << el.getPosRelative() << endl;
 
-  stream << sep;
-  stream << "size: ";
-  stream << "Abs" << posToStr(getSizeAbs()) << ",";
-  stream << "Rel" << (std::string)sizeRelative << endl;
-  return stream.str();
+  os << sep;
+  os << "size: ";
+  os << "Abs" << el.getSizeAbs() << ",";
+  os << "Rel" << el.getSizeRelative() << endl;
+  return os;
 }
+}  // namespace render
 
 std::string Element::getTreeView() const {
   std::stringstream stream;
-  string thisStr = *this;
-  stream << thisStr;
+  stream << *this;
 
   if (!pchildren.empty())
     stream << endl;

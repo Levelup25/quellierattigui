@@ -3,6 +3,11 @@
 #define RENDER__RELATIF__H
 
 #include <string>
+#include <ostream>
+
+namespace render {
+  class Relatif;
+}
 
 #include "ComputeMethodType.h"
 
@@ -28,7 +33,7 @@ namespace render {
     float getPixel () const;
     float getPercent () const;
     std::string getAlignement () const;
-    operator std::string () const;
+    friend std::ostream& operator<< (std::ostream& os, const Relatif& rel);
     // Setters and Getters
   };
 
