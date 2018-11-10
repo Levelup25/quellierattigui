@@ -25,7 +25,6 @@ namespace render {
     // Operations
   public:
     TitleBar ();
-    void reactEditSizeParent ();
     // Setters and Getters
     const std::string& getTitle() const;
     void setTitle(const std::string& title);

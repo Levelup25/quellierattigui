@@ -6,17 +6,32 @@ using namespace std;
 
 Relatif::Relatif() {}
 
+Relatif::Relatif(int pixel) {
+  *this = pixel;
+}
 Relatif::Relatif(float pixel) {
   *this = pixel;
+}
+
+Relatif::Relatif(const char* c) {
+  *this = c;
 }
 
 Relatif::Relatif(std::string str) {
   *this = str;
 }
 
+void Relatif::operator=(int pixel) {
+  *this = (float)pixel;
+}
+
 void Relatif::operator=(float pixel) {
   this->pixel = pixel;
   computeMethod = ComputeMethodType::pixel;
+}
+
+void Relatif::operator=(const char* c) {
+  *this = string(c);
 }
 
 void Relatif::operator=(std::string str) {

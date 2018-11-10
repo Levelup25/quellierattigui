@@ -41,15 +41,15 @@ void testPosition() {
   r2.setPosRelative({250, 15});
   r2.setSizeRelative({400, 300});
   r1.setSizeRelative({200, 100});
-  r3.setPosRelative({10, (string) "60%"});
-  r3.setSizeRelative({(string) "70%", 40});
+  r3.setPosRelative({10, "60%"});
+  r3.setSizeRelative({"70%", 40});
 
   Rectangle r2_1, r2_2;
   r2.add(&r2_1);
   r2.add(&r2_2);
   r2_1.recshape.setFillColor(sf::Color::Red);
   r2_2.recshape.setFillColor(sf::Color::Red);
-  r2_1.setPosRelative({(string) "-20%", (string) "m"});
+  r2_1.setPosRelative({"-20%", "m"});
   r2_1.setSizeRelative({40, 20});
   r2_2.setPosRelative({80, 30});
   r2_2.setSizeRelative({200, 200});

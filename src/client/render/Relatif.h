@@ -25,15 +25,19 @@ namespace render {
     // Operations
   public:
     Relatif ();
+    Relatif (int pixel);
     Relatif (float pixel);
     Relatif (std::string str);
+    void operator= (int pixel);
     void operator= (float pixel);
+    void operator= (const char* c);
     void operator= (std::string str);
     ComputeMethodType getComputeMethod () const;
     float getPixel () const;
     float getPercent () const;
     std::string getAlignement () const;
     friend std::ostream& operator<< (std::ostream& os, const Relatif& rel);
+    Relatif (const char* c);
     // Setters and Getters
   };
 
