@@ -26,6 +26,16 @@ void Relatif::operator=(std::string str) {
     if (last == "%") {
       computeMethod = ComputeMethodType::percent;
       percent = (float)atof(numberStr.c_str());
+      return;
+    }
+  }
+
+  else if (str.size() == 1) {
+    string usablechar = "lrtbm";
+    if (usablechar.find(str) != std::string::npos) {
+      computeMethod = ComputeMethodType::alignement;
+      alignement = str;
+      return;
     }
   }
 }

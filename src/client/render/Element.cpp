@@ -185,33 +185,42 @@ float Element::computeCoord(Relatif rel,
                             float parentCoordAbs,
                             float parentLengthAbs,
                             float lengthAbs) {
-  float f;
+  float f = parentCoordAbs;
   float pixel = rel.getPixel();
-
   switch (rel.getComputeMethod()) {
     case ComputeMethodType::pixel: {
       if (!pparent)
-        return pixel >= 0 ? pixel : 0;
-      return f = parentCoordAbs + pixel + (pixel < 0 ? parentLengthAbs : 0);
+        f += pixel >= 0 ? pixel : 0;
+      else
+        f += pixel + (pixel < 0 ? parentLengthAbs : 0);
     }
 
     case ComputeMethodType::percent:
-      return pparent ? rel.getPercent() / 100 * parentLengthAbs : 0;
+      if (!pparent)
+        f += pixel >= 0 ? pixel : 0;
+      else {
+        auto percent = rel.getPercent();
+        f += percent / 100 * parentLengthAbs;
+        f += (percent < 0 ? parentLengthAbs : 0);
+      }
 
     case ComputeMethodType::alignement: {
       if (!pparent)
-        return 0;
+        break;
 
       auto ali = rel.getAlignement();
       if (ali == "t" || ali == "l")
-        return parentCoordAbs;
-      if (ali == "b" || ali == "r")
-        return parentCoordAbs + parentLengthAbs - lengthAbs;
+        break;
+      else if (ali == "b" || ali == "r")
+        f += parentLengthAbs - lengthAbs;
+      else if (ali == "m")
+        f += parentLengthAbs / 2 - lengthAbs / 2;
     }
 
     default:
-      return 0;
+      break;
   }
+  return f;
 }
 
 float Element::computeLength(Relatif rel, float parentLengthAbs) {

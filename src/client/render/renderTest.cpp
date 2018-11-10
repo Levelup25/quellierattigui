@@ -37,7 +37,7 @@ void testPosition() {
   r2.add(&r2_2);
   r2_1.recshape.setFillColor(sf::Color::Red);
   r2_2.recshape.setFillColor(sf::Color::Red);
-  r2_1.setPosRelative({10, 20});
+  r2_1.setPosRelative({(string) "-20%", (string) "m"});
   r2_1.setSizeRelative({40, 20});
   r2_2.setPosRelative({80, 30});
   r2_2.setSizeRelative({200, 200});
