@@ -19,3 +19,12 @@ Window::Window() {
   pcontent->setSizeRelative({"100%", -TitleBarSize.y});
   add(pcontent);
 }
+
+void Window::reactEvent(sf::Event event, sf::Vector2f posMouse) {
+  auto pclose = ptitleBar->pcloseBtn;
+  if (pclose->isInside(posMouse)) {
+    pclose->recshape.setFillColor(sf::Color::Red);
+  } else {
+    pclose->recshape.setFillColor(sf::Color::White);
+  }
+}

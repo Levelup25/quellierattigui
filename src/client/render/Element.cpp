@@ -17,7 +17,15 @@ void Element::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   }
 };
 
-void Element::reactEvent(sf::Event event, sf::Vector2f posMouse){};
+void Element::reactEvent(sf::Event event, sf::Vector2f posMouse) {
+  notifyEvent(event, posMouse);
+};
+
+void Element::notifyEvent(sf::Event event, sf::Vector2f posMouse) {
+  for (auto pchild : pchildren) {
+    pchild->reactEvent(event, posMouse);
+  }
+}
 
 const Relatif2 Element::getPosRelative() const {
   return posRelative;
@@ -251,4 +259,11 @@ float Element::computeLength(Relatif rel, float parentLengthAbs) {
     default:
       return 0;
   }
+}
+
+bool Element::isInside(sf::Vector2f posAbs) {
+  return posAbsCache.x <= posAbs.x &&
+         posAbs.x <= posAbsCache.x + sizeAbsCache.x &&
+         posAbsCache.y <= posAbs.y &&
+         posAbs.y <= posAbsCache.y + sizeAbsCache.y;
 }

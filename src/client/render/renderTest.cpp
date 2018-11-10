@@ -69,8 +69,9 @@ void testPosition() {
       if (event.type == sf::Event::Closed)
         window.close();
 
-      auto posMouseBuff = sf::Mouse::getPosition(window);
-      sf::Vector2f posMouse{(float)posMouseBuff.x, (float)posMouseBuff.y};
+      auto posMouseTemp = sf::Mouse::getPosition(window);
+      sf::Vector2f posMouse{(float)posMouseTemp.x, (float)posMouseTemp.y};
+      root.reactEvent(event, posMouse);
     }
 
     window.clear();
@@ -101,8 +102,9 @@ void testDisplayWindow() {
       if (event.type == sf::Event::Closed)
         window.close();
 
-      auto posMouseBuff = sf::Mouse::getPosition(window);
-      sf::Vector2f posMouse{(float)posMouseBuff.x, (float)posMouseBuff.y};
+      auto posMouseTemp = sf::Mouse::getPosition(window);
+      sf::Vector2f posMouse{(float)posMouseTemp.x, (float)posMouseTemp.y};
+      root.reactEvent(event, posMouse);
     }
 
     window.clear();

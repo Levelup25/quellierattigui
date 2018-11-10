@@ -2,6 +2,7 @@
 #ifndef RENDER__WINDOW__H
 #define RENDER__WINDOW__H
 
+#include <SFML/Graphics.hpp>
 
 namespace render {
   class TitleBar;
@@ -21,11 +22,10 @@ namespace render {
   public:
     TitleBar* ptitleBar;
     Element* pcontent;
-    bool wantToClose     = false;
     // Operations
   public:
     Window ();
-    bool getWantToClose ();
+    void reactEvent (sf::Event event, sf::Vector2f posMouse);
     // Setters and Getters
   };
 

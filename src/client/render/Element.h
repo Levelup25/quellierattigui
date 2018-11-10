@@ -60,6 +60,7 @@ namespace render {
     std::string getTreeView () const;
     friend std::ostream& operator<< (std::ostream& os, const Element& el);
     friend std::ostream& operator<< (std::ostream& os, const sf::Vector2f& vec);
+    bool isInside (sf::Vector2f posAbs);
   private:
     void updateDepth ();
     float computeCoord (Relatif rel, float parentCoordAbs, float parentLengthAbs, float lengthAbs);
