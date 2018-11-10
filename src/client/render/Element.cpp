@@ -230,20 +230,25 @@ float Element::computeCoord(Relatif rel,
 }
 
 float Element::computeLength(Relatif rel, float parentLengthAbs) {
-  float f;
   switch (rel.getComputeMethod()) {
-    case ComputeMethodType::pixel:
-      return rel.getPixel();
-
-    case ComputeMethodType::percent:
-      if (pparent)
-        return parentLengthAbs * rel.getPercent() / 100;
+    case ComputeMethodType::pixel: {
+      float pixel = rel.getPixel();
+      if (!pparent)
+        return pixel >= 0 ? pixel : 0;
       else
+        return pixel + (pixel < 0 ? parentLengthAbs : 0);
+    }
+
+    case ComputeMethodType::percent: {
+      if (pparent) {
+        float f = parentLengthAbs * rel.getPercent() / 100;
+        f += (percent < 0 ? parentLengthAbs : 0);
+        return f;
+      } else
         return 0;
+    }
 
     default:
       return 0;
   }
-
-  return f;
 }
