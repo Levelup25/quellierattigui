@@ -8,7 +8,7 @@ using namespace render;
 using namespace std;
 
 void testRender() {
-  testDisplayWindow();
+  testPosition();
 }
 
 void testPosition() {
@@ -29,8 +29,8 @@ void testPosition() {
   r2.setPosRelative({250, 15});
   r2.setSizeRelative({400, 300});
   r1.setSizeRelative({200, 100});
-  r3.setPosRelative({10, -50});
-  r3.setSizeRelative({400, 40});
+  r3.setPosRelative({10, (string) "60%"});
+  r3.setSizeRelative({(string) "70%", 40});
 
   Rectangle r2_1, r2_2;
   r2.add(&r2_1);
@@ -48,7 +48,7 @@ void testPosition() {
   r2_2_1.setPosRelative({-55, -55});
   r2_2_1.setSizeRelative({50, 50});
 
-  root.printTreeView();
+  cout << root.getTreeView();
 
   // window loop
   while (window.isOpen()) {
@@ -80,7 +80,7 @@ void testDisplayWindow() {
   root.add(&win);
   win.setPosRelative({50, 50});
 
-  root.printTreeView();
+  cout << root.getTreeView();
 
   // window loop
   while (window.isOpen()) {

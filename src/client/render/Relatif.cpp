@@ -6,26 +6,58 @@ using namespace std;
 
 Relatif::Relatif() {}
 
-Relatif::Relatif(int offset) {
-  *this = offset;
-}
-
-Relatif::Relatif(float offset) {
-  *this = offset;
+Relatif::Relatif(float pixel) {
+  *this = pixel;
 }
 
 Relatif::Relatif(std::string str) {
   *this = str;
 }
 
-void Relatif::operator=(int offset) {
-  this->offset = offset;
-  computeMethod = 0;
+void Relatif::operator=(float pixel) {
+  this->pixel = pixel;
+  computeMethod = ComputeMethodType::pixel;
 }
 
-void Relatif::operator=(float offset) {
-  this->offset = offset;
-  computeMethod = 0;
+void Relatif::operator=(std::string str) {
+  if (str.size() > 1) {
+    auto last = str.substr(str.size() - 1);
+    auto numberStr = str.substr(0, str.size() - 1);
+    if (last == "%") {
+      computeMethod = ComputeMethodType::percent;
+      percent = (float)atof(numberStr.c_str());
+    }
+  }
 }
 
-void Relatif::operator=(std::string str) {}
+ComputeMethodType Relatif::getComputeMethod() const {
+  return computeMethod;
+}
+
+float Relatif::getPixel() const {
+  return pixel;
+}
+
+float Relatif::getPercent() const {
+  return percent;
+}
+
+std::string Relatif::getAlignement() const {
+  return alignement;
+}
+
+Relatif::operator string() const {
+  switch (computeMethod) {
+    case ComputeMethodType::pixel:
+      return to_string((int)pixel);
+
+    case ComputeMethodType::percent:
+      return to_string((int)percent) + "%";
+
+    case ComputeMethodType::alignement:
+      return alignement;
+
+    default:
+      return "?";
+  }
+}

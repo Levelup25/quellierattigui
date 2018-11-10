@@ -1,5 +1,7 @@
 #include "Element.h"
+#include <iomanip>
 #include <iostream>
+#include <sstream>
 
 using namespace render;
 using namespace std;
@@ -23,15 +25,10 @@ const Relatif2 Element::getPosRelative() const {
 void Element::setPosRelative(const Relatif2 pos) {
   this->posRelative = pos;
   updatePosAbs();
-  notifyEditPosAbs();
 }
 
 const sf::Vector2f Element::getPosAbs() const {
   return posAbsCache;
-}
-
-std::string Element::posToStr(sf::Vector2f pos) const {
-  return "(" + to_string((int)pos.x) + ", " + to_string((int)pos.y) + ")";
 }
 
 const sf::Vector2f Element::getSizeAbs() const {
@@ -40,7 +37,7 @@ const sf::Vector2f Element::getSizeAbs() const {
 
 void Element::setSizeRelative(const Relatif2 sizeRelative) {
   this->sizeRelative = sizeRelative;
-  notifyEditSize();
+  updateSizeAbs();
 }
 
 void Element::add(Element* pchild) {
@@ -63,9 +60,9 @@ void Element::notifyEditPosAbs() {
     pchild->reactEditPosAbsParent();
   }
 }
-void Element::notifyEditSize() {
+void Element::notifyEditSizeAbs() {
   for (auto pchild : pchildren) {
-    pchild->reactEditSizeParent();
+    pchild->reactEditSizeAbsParent();
   }
 }
 
@@ -73,13 +70,16 @@ void Element::reactEditPosAbsParent() {
   updatePosAbs();
 }
 
-void Element::reactEditSizeParent() {}
+void Element::reactEditSizeAbsParent() {
+  updatePosAbs();
+  updateSizeAbs();
+}
 
 void Element::setParent(Element* pparent) {
   this->pparent = pparent;
   updateDepth();
   reactEditPosAbsParent();
-  reactEditSizeParent();
+  reactEditSizeAbsParent();
 }
 const Element* Element::getParent() const {
   return pparent;
@@ -100,47 +100,134 @@ unsigned int Element::getDepth() const {
   return depthCache;
 }
 
-void Element::printTreeView() const {
+std::string Element::posToStr(sf::Vector2f pos) const {
+  std::stringstream stream;
+  stream << "(";
+  stream << std::setw(3) << pos.x;
+  stream << ", ";
+  stream << std::setw(3) << pos.y;
+  stream << ")";
+  return stream.str();
+}
+
+Element::operator string() const {
+  std::stringstream stream;
   auto classname = typeid(*this).name();
-  auto sep = string(depthCache, ' ');
-  cout << sep;
-  cout << posToStr(getPosAbs()) << " ";
-  cout << (std::string)posRelative << " ";
-  cout << posToStr(getSizeAbs()) << " ";
-  cout << classname << endl;
+  auto sep = string(depthCache * 4, ' ');
+
+  stream << sep;
+  stream << classname << endl;
+
+  stream << sep;
+  stream << "pos:  ";
+  stream << "Abs";
+  stream << posToStr(getPosAbs()) << ",";
+  stream << "Rel";
+  stream << (std::string)posRelative << endl;
+
+  stream << sep;
+  stream << "size: ";
+  stream << "Abs" << posToStr(getSizeAbs()) << ",";
+  stream << "Rel" << (std::string)sizeRelative << endl;
+  return stream.str();
+}
+
+std::string Element::getTreeView() const {
+  std::stringstream stream;
+  string thisStr = *this;
+  stream << thisStr;
+
+  if (!pchildren.empty())
+    stream << endl;
+
+  size_t count = 0;
   for (auto pchild : pchildren) {
-    pchild->printTreeView();
+    stream << pchild->getTreeView();
+    count++;
+    if (count != pchildren.size())
+      stream << endl;
   }
   if (depthCache == 0)
-    cout << endl;
+    stream << endl;
+
+  return stream.str();
 }
 
 void Element::updatePosAbs() {
-  float x, y;
-  if (pparent) {
-    auto parentPos = pparent->getPosAbs();
-    auto parentSize = pparent->getSizeAbs();
-    x = computeCoord(posRelative.x, parentPos.x, parentSize.x);
-    y = computeCoord(posRelative.y, parentPos.y, parentSize.y);
-  } else {
-    x = posRelative.x.getOffset();
-    y = posRelative.y.getOffset();
+  sf::Vector2f parentPosAbs, parentSizeAbs;
+  parentPosAbs = pparent ? pparent->getPosAbs() : sf::Vector2f{0, 0};
+  parentSizeAbs = pparent ? pparent->getSizeAbs() : sf::Vector2f{0, 0};
+  float x = computeCoord(posRelative.x, parentPosAbs.x, parentSizeAbs.x,
+                         sizeAbsCache.x);
+  float y = computeCoord(posRelative.y, parentPosAbs.y, parentSizeAbs.y,
+                         sizeAbsCache.x);
+  sf::Vector2f posAbsNew = {x, y};
+  if (posAbsCache != posAbsNew) {
+    posAbsCache = posAbsNew;
+    notifyEditPosAbs();
   }
-  posAbsCache = {x, y};
+}
 
-  notifyEditPosAbs();
+void Element::updateSizeAbs() {
+  sf::Vector2f parentSizeAbs;
+  parentSizeAbs = pparent ? pparent->getSizeAbs() : sf::Vector2f{0, 0};
+  float x = computeLength(sizeRelative.x, parentSizeAbs.x);
+  float y = computeLength(sizeRelative.y, parentSizeAbs.y);
+  sf::Vector2f sizeAbsNew = {x, y};
+  if (sizeAbsCache != sizeAbsNew) {
+    sizeAbsCache = sizeAbsNew;
+    notifyEditSizeAbs();
+    updatePosAbs();
+  }
 }
 
 float Element::computeCoord(Relatif rel,
                             float parentCoordAbs,
-                            float parentLengthAbs) {
+                            float parentLengthAbs,
+                            float lengthAbs) {
   float f;
-  if (rel.getComputeMethod() == 0) {
-    float offsetx = rel.getOffset();
-    if (offsetx >= 0)
-      f = parentCoordAbs + offsetx;
-    else
-      f = parentCoordAbs + parentLengthAbs + offsetx;
+  float pixel = rel.getPixel();
+
+  switch (rel.getComputeMethod()) {
+    case ComputeMethodType::pixel: {
+      if (!pparent)
+        return pixel >= 0 ? pixel : 0;
+      return f = parentCoordAbs + pixel + (pixel < 0 ? parentLengthAbs : 0);
+    }
+
+    case ComputeMethodType::percent:
+      return pparent ? rel.getPercent() / 100 * parentLengthAbs : 0;
+
+    case ComputeMethodType::alignement: {
+      if (!pparent)
+        return 0;
+
+      auto ali = rel.getAlignement();
+      if (ali == "t" || ali == "l")
+        return parentCoordAbs;
+      if (ali == "b" || ali == "r")
+        return parentCoordAbs + parentLengthAbs - lengthAbs;
+    }
+
+    default:
+      return 0;
+  }
+}
+
+float Element::computeLength(Relatif rel, float parentLengthAbs) {
+  float f;
+  switch (rel.getComputeMethod()) {
+    case ComputeMethodType::pixel:
+      return rel.getPixel();
+
+    case ComputeMethodType::percent:
+      if (pparent)
+        return parentLengthAbs * rel.getPercent() / 100;
+      else
+        return 0;
+
+    default:
+      return 0;
   }
 
   return f;

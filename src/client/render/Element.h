@@ -46,8 +46,8 @@ namespace render {
     void setSizeRelative (Relatif2 sizeRelatif);
     virtual void updateSizeAbs ();
     const sf::Vector2f getSizeAbs () const;
-    void notifyEditSize ();
-    virtual void reactEditSizeParent ();
+    void notifyEditSizeAbs ();
+    virtual void reactEditSizeAbsParent ();
     void notifyEvent (sf::Event event, sf::Vector2f posMouse);
     virtual void reactEvent (sf::Event event, sf::Vector2f posMouse);
     const Element* getParent () const;
@@ -55,12 +55,13 @@ namespace render {
     void add (Element* pchild);
     void remove (Element* pchild);
     unsigned int getDepth () const;
-    void printTreeView () const;
     std::string posToStr (sf::Vector2f pos) const;
-    float computeCoord (Relatif rel, float parentCoordAbs, float parentLengthAbs);
-    float computeLength (Relatif rel, float parentSizeAbs);
+    std::string getTreeView () const;
+    operator std::string () const;
   private:
     void updateDepth ();
+    float computeCoord (Relatif rel, float parentCoordAbs, float parentLengthAbs, float lengthAbs);
+    float computeLength (Relatif rel, float parentLengthAbs);
     // Setters and Getters
   };
 

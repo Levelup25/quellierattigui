@@ -4,29 +4,31 @@
 
 #include <string>
 
+#include "ComputeMethodType.h"
+
 namespace render {
 
   /// class Relatif - 
   class Relatif {
+    // Associations
     // Attributes
   private:
-    int computeMethod     = 0;
-    float offset     = 0;
+    ComputeMethodType computeMethod     = ComputeMethodType::pixel;
+    float pixel     = 0;
     float percent     = 0;
     std::string alignement;
     // Operations
   public:
     Relatif ();
-    Relatif (int offset);
-    Relatif (float offset);
+    Relatif (float pixel);
     Relatif (std::string str);
-    void operator= (int offset);
-    void operator= (float offset);
+    void operator= (float pixel);
     void operator= (std::string str);
-    int getComputeMethod () const;
-    float getOffset () const;
+    ComputeMethodType getComputeMethod () const;
+    float getPixel () const;
     float getPercent () const;
     std::string getAlignement () const;
+    operator std::string () const;
     // Setters and Getters
   };
 
