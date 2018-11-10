@@ -139,6 +139,8 @@ int main(int argc, char* argv[]) {
                     c->setWeapon(w);
                     Ability* a = w->getAbilities()[0];
                     int r1 = 1 + rand() % 2, r2 = rand() % 3;
+                    a->setElement((ElementType) (rand() % 5));
+                    a->setLv(1 + rand() % 3);
                     a->setTarget((ZoneType) (rand() % 3), r1, r1 + rand() % 5);
                     a->setEffect((ZoneType) (rand() % 3), r2, r2 + rand() % 5);
                     a->setPa(1 + rand() % 2);
@@ -146,6 +148,8 @@ int main(int argc, char* argv[]) {
                     for (int k = 0; k < r; k++) {
                         Ability* a = new Ability();
                         int r1 = 1 + rand() % 2, r2 = rand() % 3;
+                        a->setElement((ElementType) (rand() % 5));
+                        a->setLv(1 + rand() % 3);
                         a->setTarget((ZoneType) (rand() % 3), r1, r1 + rand() % 5);
                         a->setEffect((ZoneType) (rand() % 3), r2, r2 + rand() % 5);
                         a->setPa(1 + rand() % 2);
@@ -157,29 +161,28 @@ int main(int argc, char* argv[]) {
             Engine* engine = new Engine();
             Render* render = new Render(state, engine);
 
-            cout << "Clic gauche : déplacement/attaque" << endl;
+            cout << "Clic gauche : déplacement" << endl;
+            cout << "Clic droit : choix personnage" << endl;
             cout << "Se déplacer au bord de l'écran change la vue sauf si un obstacle bloque" << endl;
             cout << "Cliquez sur un personnage pour se battre. Dans ce cas : " << endl;
-            cout << "M : déplacement" << endl;
-            cout << "A : attaque" << endl;
+            cout << "Clic gauche sur la carte : déplacement" << endl;
+            cout << "Clic gauche sur une capacité, puis sur la zone bleue : attaque" << endl;
             cout << "Clic droit : choix personnage" << endl;
-            cout << "<- ou -> : choix capacité" << endl;
-            cout << "Entrée : passer le tour" << endl;
+            cout << "Entrée : passer le tour et actualiser pa et pm" << endl;
 
-            int end = 0;
+            bool end = false;
             thread t1([render, &end]() {
                 render->display();
-                end = 1;
+                end = true;
             });
             thread t2([engine, &end]() {
                 sf::Clock clock;
-                while (1) {
+                while (!end) {
                     if (clock.getElapsedTime().asSeconds() >= 1.0 / 30) {
                         engine->runCommand();
                                 clock.restart();
                     }
-                    if (end) break;
-                    }
+                }
             });
             t1.join();
             t2.join();

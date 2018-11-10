@@ -11,11 +11,9 @@ namespace state {
   class Fight;
   class Cell;
   class Character;
-  class Observable;
 }
 
 #include "Direction.h"
-#include "Observable.h"
 #include "Fight.h"
 #include "Team.h"
 #include "Cell.h"
@@ -24,7 +22,7 @@ namespace state {
 namespace state {
 
   /// class State - 
-  class State : public state::Observable {
+  class State {
     // Associations
     // Attributes
   public:
