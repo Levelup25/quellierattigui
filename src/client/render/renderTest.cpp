@@ -8,7 +8,19 @@ using namespace render;
 using namespace std;
 
 void testRender() {
-  testPosition();
+  int i = 1;
+  switch (i) {
+    case 0:
+      testPosition();
+      break;
+
+    case 1:
+      testDisplayWindow();
+      break;
+
+    default:
+      break;
+  }
 }
 
 void testPosition() {
