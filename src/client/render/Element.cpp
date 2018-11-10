@@ -195,7 +195,8 @@ float Element::computeCoord(Relatif rel,
       if (!pparent)
         f += pixel >= 0 ? pixel : 0;
       else
-        f += pixel + (pixel < 0 ? parentLengthAbs : 0);
+        f += pixel + (pixel < 0 ? parentLengthAbs - lengthAbs : 0);
+      break;
     }
 
     case ComputeMethodType::percent:
@@ -204,8 +205,9 @@ float Element::computeCoord(Relatif rel,
       else {
         auto percent = rel.getPercent();
         f += percent / 100 * parentLengthAbs;
-        f += (percent < 0 ? parentLengthAbs : 0);
+        f += (percent < 0 ? parentLengthAbs - lengthAbs : 0);
       }
+      break;
 
     case ComputeMethodType::alignement: {
       if (!pparent)
@@ -218,6 +220,7 @@ float Element::computeCoord(Relatif rel,
         f += parentLengthAbs - lengthAbs;
       else if (ali == "m")
         f += parentLengthAbs / 2 - lengthAbs / 2;
+      break;
     }
 
     default:
