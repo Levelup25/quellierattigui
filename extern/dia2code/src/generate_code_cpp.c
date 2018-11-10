@@ -696,6 +696,7 @@ struct stdlib_includes {
    int sfmlGraphics;
    int jsoncpp;
    int astar;
+   int ostream;
 };
 
 void print_include_stdlib(struct stdlib_includes* si,char* name) {
@@ -727,6 +728,10 @@ void print_include_stdlib(struct stdlib_includes* si,char* name) {
        if (!si->vector && strstr(name,"std::vector")) {
            print ("#include <vector>\n");
            si->vector = 1;
+       }
+       if (!si->ostream && strstr(name,"std::ostream")) {
+           print ("#include <ostream>\n");
+           si->ostream = 1;
        }
        if (!si->map && strstr(name,"std::map")) {
            print ("#include <map>\n");
