@@ -4,10 +4,10 @@ using namespace std;
 using namespace sf;
 using namespace render;
 
-CharacterSprite::CharacterSprite(string filename, int l, int h) {
+CharacterSprite::CharacterSprite(int l, int h) {
     this->l = l;
     this->h = h;
-    texture.loadFromFile(filename);
+    texture.loadFromFile("res/persos.png");
     sprite.setTexture(texture);
 }
 

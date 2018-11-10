@@ -16,11 +16,6 @@
 #include "state/Team.h"
 #include "state/Fight.h"
 #include "state/MainQuest.h"
-#include "state/StateEvent.h"
-#include "state/EventType.h"
-#include "state/Event.h"
-#include "state/Observer.h"
-#include "state/Observable.h"
 #include "state/State.h"
 #include "state/KillQuest.h"
 #endif

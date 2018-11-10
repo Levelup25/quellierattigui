@@ -3,8 +3,9 @@
 using namespace std;
 using namespace state;
 
-Ability::Ability(std::string name, unsigned int pa, int damage, ElementType element, int damageReduce, int cooldown, ZoneType targetType, int targetMin, int targetMax, ZoneType effectType, int effectMin, int effectMax) {
+Ability::Ability(std::string name, unsigned int lv, unsigned int pa, int damage, ElementType element, int damageReduce, int cooldown, ZoneType targetType, int targetMin, int targetMax, ZoneType effectType, int effectMin, int effectMax) {
     this->name = name;
+    this->lv = lv;
     this->pa = pa;
     this->damage = damage;
     this->element = element;
@@ -91,4 +92,20 @@ void Ability::setDamage(int dmg) {
 
 void Ability::setPa(unsigned int pa) {
     this->pa = pa;
+}
+
+void Ability::setLv(unsigned int lv) {
+    this->lv = lv;
+}
+
+unsigned int Ability::getLv() {
+    return lv;
+}
+
+void Ability::setElement(ElementType element) {
+    this->element = element;
+}
+
+ElementType Ability::getElement() {
+    return element;
 }

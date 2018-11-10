@@ -18,11 +18,17 @@ Render::Render(State* state, Engine* engine) {
 
 void Render::display() {
     vector<vector < Cell*>> grid = state->getGrid();
-    int nb = 3, l = 34 * nb, h = 24 * nb, l2 = 32, h2 = 32;
+    int nb = 2, N = state->getI(), M = state->getJ(), l = 34 * nb, h = 24 * nb, l2 = 32, h2 = 32;
 
-    RenderWindow window(VideoMode(n * l, m * h), "Jeu");
+    RenderWindow window(VideoMode(n*l, m * h * 5 / 4), "Jeu");
+    window.setFramerateLimit(60);
     View view;
-    view.setSize(Vector2f(n * l, m * h));
+    view.setSize(Vector2f(n*l, m * h));
+    View view2;
+    view2.setSize(Vector2f(n*l, m * h / 4));
+    view2.setCenter(sf::Vector2f(N * l + n * l / 2, M * h + m * h / 4 / 2));
+    view.setViewport(sf::FloatRect(0, 0, 1, 4.0 / 5));
+    view2.setViewport(sf::FloatRect(0, 4.0 / 5, 1, 1.0 / 5));
 
     // UIInventory
     IGWindowContainer wcontainer;
@@ -43,7 +49,8 @@ void Render::display() {
     Sprite sprite;
     TileSprite tiles(l, h, nb);
     ContentSprite contents(l, h);
-    CharacterSprite persos("res/persos.png", l2, h2);
+    AttackSprite attacks(3 * l, 3 * h);
+    CharacterSprite persos(l2, h2);
 
     RectangleShape zone(Vector2f(l, h));
     zone.setFillColor(Color::Transparent);
@@ -55,6 +62,9 @@ void Render::display() {
     vector<vector<int>> effects;
 
     int abilityNumber = 0;
+
+    RectangleShape r(Vector2f(n * l / 4, m * h / 4));
+    r.setFillColor(Color::Black);
 
     while (window.isOpen()) {
         window.clear();
@@ -68,12 +78,14 @@ void Render::display() {
             abilityNumber = 0;
         }
 
+        vector<Ability*> abs = maincharacter->getWeapon()->getAbilities();
         x = maincharacter->getI();
         y = maincharacter->getJ();
         xv = (x / n) * n;
         yv = (y / m) * m;
         view.setCenter(sf::Vector2f(xv * l + n * l / 2, yv * h + m * h / 2));
         window.setView(view);
+
         for (unsigned int j = yv; j < yv + m; j++) {
             for (unsigned int i = xv; i < xv + n; i++) {
                 ElementType element = grid[i][j]->getElement();
@@ -94,7 +106,7 @@ void Render::display() {
         }
 
         if (state->isFighting() && state->getFight()->getTurn() % 2 == 1) {
-            auto posMouseBuff = sf::Mouse::getPosition(window);
+            auto posMouseBuff = window.mapPixelToCoords(sf::Mouse::getPosition(window));
             int X = xv + posMouseBuff.x / l, Y = yv + posMouseBuff.y / h;
             if (state->etatCombat == 0) {
                 moves = (new MoveCommands(state, engine, maincharacter, X, Y))->getPath();
@@ -112,11 +124,13 @@ void Render::display() {
                     zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
                     window.draw(zone);
                 }
-                effects = atkcmd->getZone(1);
-                zone.setFillColor(Color(255, 0, 0, 128));
-                for (vector<int> coord : effects) {
-                    zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
-                    window.draw(zone);
+                if (Y < m) {
+                    effects = atkcmd->getZone(1);
+                    zone.setFillColor(Color(255, 0, 0, 128));
+                    for (vector<int> coord : effects) {
+                        zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
+                        window.draw(zone);
+                    }
                 }
             }
             zone.setFillColor(Color::Transparent);
@@ -183,28 +197,51 @@ void Render::display() {
                         abilityNumber = 0;
                     }
                 } else if (event.mouseButton.button == sf::Mouse::Left) {
-                    if (state->etatCombat == 0) {
-                        if (!state->isFighting())engine->clearCommands();
-                        engine->addCommand(new MoveCommands(state, engine, maincharacter, X, Y));
-                    } else if (state->etatCombat == 1) {
-                        engine->addCommand(new AttackCommand(state, maincharacter,{X, Y}, abilityNumber));
+                    if (Y >= m) {
+                        if (X <= 3 * abs.size()) {
+                            if (X / 3 != abilityNumber || state->etatCombat == 0) {
+                                abilityNumber = X / 3;
+                                state->etatCombat = 1;
+                            } else state->etatCombat = 0;
+                        }
+                    } else {
+                        if (state->etatCombat == 0) {
+                            if (!state->isFighting())engine->clearCommands();
+                            engine->addCommand(new MoveCommands(state, engine, maincharacter, X, Y));
+                        } else if (state->etatCombat == 1) {
+                            engine->addCommand(new AttackCommand(state, maincharacter,{X, Y}, abilityNumber));
+                            state->etatCombat = 0;
+                        }
                     }
                 }
             }
             if (event.type == sf::Event::KeyPressed && state->isFighting()) {
-                if (event.key.code == sf::Keyboard::Left) {
-                    abilityNumber = (abilityNumber - 1) % maincharacter->getWeapon()->getAbilities().size();
-                } else if (event.key.code == sf::Keyboard::Right) {
-                    abilityNumber = (abilityNumber + 1) % maincharacter->getWeapon()->getAbilities().size();
-                } else if (event.key.code == sf::Keyboard::M) {
+                if (event.key.code == sf::Keyboard::Return) {
+                    state->getFight()->endTurn();
+                    state->getFight()->endTurn();
                     state->etatCombat = 0;
-                } else if (event.key.code == sf::Keyboard::A) {
-                    state->etatCombat = 1;
-                } else if (event.key.code == sf::Keyboard::Return) {
-                    state->getFight()->endTurn();
-                    state->getFight()->endTurn();
-                    //state->etatCombat = 0;
                 }
+                //                else if (event.key.code == sf::Keyboard::Left) {
+                //                    abilityNumber = (abilityNumber - 1) % maincharacter->getWeapon()->getAbilities().size();
+                //                } else if (event.key.code == sf::Keyboard::Right) {
+                //                    abilityNumber = (abilityNumber + 1) % maincharacter->getWeapon()->getAbilities().size();
+                //                } else if (event.key.code == sf::Keyboard::M) {
+                //                    state->etatCombat = 0;
+                //                } else if (event.key.code == sf::Keyboard::A) {
+                //                    state->etatCombat = 1;
+                //                }
+            }
+        }
+
+        window.setView(view2);
+        for (int i = 0; i < 4; i++) {
+            if (i < abs.size()) {
+                sprite = attacks.getSprite((int) abs[i]->getElement(), abs[i]->getLv());
+                sprite.setPosition(Vector2f(N * l + i * n * l / 4, M * h));
+                window.draw(sprite);
+            } else {
+                r.setPosition(Vector2f(N * l + i * n * l / 4, M * h));
+                window.draw(r);
             }
         }
 
