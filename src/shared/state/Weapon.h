@@ -23,11 +23,12 @@ namespace state {
     // Attributes
   private:
     std::string name;
-    std::vector<Ability*> abilities;
     ElementType element;
+    std::vector<Ability*> abilities;
     // Operations
   public:
     Weapon (ElementType element = neutral, std::string name = "", std::vector<Ability*> abilities = {new Ability()});
+    Weapon (int id);
     void addAbility (Ability* ability);
     void delAbility (Ability* ability);
     Ability* getAbility (std::size_t i);

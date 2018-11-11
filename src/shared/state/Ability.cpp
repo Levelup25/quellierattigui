@@ -1,4 +1,7 @@
 #include "Ability.h"
+#include <fstream>
+#include <sstream>
+#include <iterator>
 
 using namespace std;
 using namespace state;
@@ -17,6 +20,34 @@ Ability::Ability(std::string name, unsigned int lv, unsigned int pa, int damage,
     this->effectType = effectType;
     this->effectMin = effectMin;
     this->effectMax = effectMax;
+}
+
+Ability::Ability(int id) {
+    string line;
+    ifstream file("res/abilities.txt");
+
+    if (file.is_open()) {
+        while (!file.eof()) {
+            for (int i = 0; i <= id; i++)getline(file, line);
+            istringstream iss(line);
+            vector<std::string> results(istream_iterator<string>{iss},
+            istream_iterator<string>());
+            this->name = results[1];
+            this->pa = atoi(results[2].c_str());
+            this->damage = atoi(results[3].c_str());
+            this->element = (ElementType) atoi(results[4].c_str());
+            this->damageReduce = atoi(results[5].c_str());
+            this->cooldownInitial = atoi(results[6].c_str());
+            this->targetType = (ZoneType) atoi(results[7].c_str());
+            this->targetMin = atoi(results[8].c_str());
+            this->targetMax = atoi(results[9].c_str());
+            this->effectType = (ZoneType) atoi(results[10].c_str());
+            this->effectMin = atoi(results[11].c_str());
+            this->effectMax = atoi(results[12].c_str());
+            break;
+        }
+        file.close();
+    }
 }
 
 vector<vector<int>> Ability::getZone(vector<int> position, ZoneType zone, int min, int max) {
@@ -94,8 +125,12 @@ void Ability::setPa(unsigned int pa) {
     this->pa = pa;
 }
 
-void Ability::setLv(unsigned int lv) {
-    this->lv = lv;
+void Ability::addLv() {
+    lv += 1;
+    pa += 1;
+    damage += 1;
+    targetMax += 1;
+    effectMax += 1;
 }
 
 unsigned int Ability::getLv() {

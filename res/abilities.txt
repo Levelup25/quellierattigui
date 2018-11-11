@@ -1,0 +1,6 @@
+id nom pa dmg element dmg_rdc cooldown target min max effect min max
+1 dague 1 2 0 100 0 1 1 1 1 0 0
+2 blizzard 1 1 1 100 0 1 1 3 0 0 1
+3 rocher 1 1 2 100 0 1 1 3 2 0 1
+4 explosion 1 1 3 100 0 0 1 2 0 0 1
+5 vent 1 1 4 100 0 2 1 3 1 0 1
