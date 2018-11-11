@@ -2,6 +2,7 @@
 #ifndef RENDER__RELATIF2__H
 #define RENDER__RELATIF2__H
 
+#include <SFML/Graphics.hpp>
 #include <ostream>
 
 namespace render {
@@ -24,6 +25,7 @@ namespace render {
   public:
     Relatif2 ();
     Relatif2 (Relatif x, Relatif y);
+    Relatif2 (sf::Vector2f pos);
     friend std::ostream& operator<< (std::ostream& os, const Relatif2& rel2);
     // Setters and Getters
   };

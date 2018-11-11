@@ -49,8 +49,8 @@ namespace render {
     const sf::Vector2f getSizeAbs () const;
     void notifyEditSizeAbs ();
     virtual void reactEditSizeAbsParent ();
-    void notifyEvent (sf::Event event, sf::Vector2f posMouse);
-    virtual void reactEvent (sf::Event event, sf::Vector2f posMouse);
+    void notifyEvent (sf::Event event, sf::Vector2f mousePosAbs);
+    virtual void reactEvent (sf::Event event, sf::Vector2f mousePosAbs);
     const Element* getParent () const;
     void setParent (Element* pparent);
     void add (Element* pchild);

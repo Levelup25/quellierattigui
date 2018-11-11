@@ -17,13 +17,13 @@ void Element::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   }
 };
 
-void Element::reactEvent(sf::Event event, sf::Vector2f posMouse) {
-  notifyEvent(event, posMouse);
+void Element::reactEvent(sf::Event event, sf::Vector2f mousePosAbs) {
+  notifyEvent(event, mousePosAbs);
 };
 
-void Element::notifyEvent(sf::Event event, sf::Vector2f posMouse) {
+void Element::notifyEvent(sf::Event event, sf::Vector2f mousePosAbs) {
   for (auto pchild : pchildren) {
-    pchild->reactEvent(event, posMouse);
+    pchild->reactEvent(event, mousePosAbs);
   }
 }
 

@@ -6,7 +6,7 @@ using namespace render;
 
 WindowManager::WindowManager() {}
 
-void WindowManager::reactEvent(sf::Event event, sf::Vector2f posMouse) {
+void WindowManager::reactEvent(sf::Event event, sf::Vector2f mousePosAbs) {
   if (event.type == sf::Event::KeyPressed) {
     if (event.key.code == sf::Keyboard::I) {
       toggleInventory();

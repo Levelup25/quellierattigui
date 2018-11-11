@@ -11,6 +11,10 @@ Relatif2::Relatif2(Relatif x, Relatif y) {
   this->x = x;
   this->y = y;
 }
+Relatif2::Relatif2(sf::Vector2f pos) {
+  this->x = pos.x;
+  this->y = pos.y;
+}
 
 namespace render {
 std::ostream& operator<<(std::ostream& os, const Relatif2& rel2) {
