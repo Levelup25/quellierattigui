@@ -25,6 +25,8 @@ namespace render {
   class Element : public sf::Drawable {
     // Associations
     // Attributes
+  public:
+    bool waitingDestruction     = false;
   private:
     Element* pparent     = nullptr;
     std::vector<Element*> pchildren;
@@ -38,6 +40,7 @@ namespace render {
     // Operations
   public:
     Element ();
+    ~Element ();
     virtual void draw (sf::RenderTarget& target, sf::RenderStates states) const;
     const Relatif2 getPosRelative () const;
     virtual void setPosRelative (Relatif2 posRelatif);
@@ -53,7 +56,7 @@ namespace render {
     virtual void reactEditSizeAbsParent ();
     void notifyEvent (sf::Event event, sf::Vector2f mousePosAbs);
     virtual void reactEvent (sf::Event event, sf::Vector2f mousePosAbs);
-    const Element* getParent () const;
+    Element* getParent () const;
     void setParent (Element* pparent);
     void add (Element* pchild);
     void remove (Element* pchild);
@@ -64,10 +67,13 @@ namespace render {
     friend std::ostream& operator<< (std::ostream& os, const sf::Vector2f& vec);
     bool isInside (sf::Vector2f posAbs);
     int getId ();
+    bool getWaitingDestruction ();
   private:
     void updateDepth ();
     float computeCoord (Relatif rel, float parentCoordAbs, float parentLengthAbs, float lengthAbs);
     float computeLength (Relatif rel, float parentLengthAbs);
+  protected:
+    void setWaitingDestruction (bool b);
     // Setters and Getters
   };
 

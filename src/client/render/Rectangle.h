@@ -20,6 +20,7 @@ namespace render {
     // Operations
   public:
     Rectangle ();
+    ~Rectangle ();
     void draw (sf::RenderTarget& target, sf::RenderStates states) const;
     void updatePosAbs ();
     void updateSizeAbs ();

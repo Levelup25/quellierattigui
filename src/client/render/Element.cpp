@@ -21,6 +21,12 @@ Element::Element() {
   }
 };
 
+Element::~Element() {
+  for (auto pchild : pchildren) {
+    pchild->~Element();
+  }
+}
+
 void Element::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   for (auto pchild : pchildren) {
     target.draw(*pchild);
@@ -32,8 +38,17 @@ void Element::reactEvent(sf::Event event, sf::Vector2f mousePosAbs) {
 };
 
 void Element::notifyEvent(sf::Event event, sf::Vector2f mousePosAbs) {
-  for (auto pchild : pchildren) {
-    pchild->reactEvent(event, mousePosAbs);
+  auto it = pchildren.begin();
+  while (it != pchildren.end()) {
+    auto pchild = *it;
+    if (pchild->waitingDestruction) {
+      it = pchildren.erase(it);
+      pchild->setParent(nullptr);
+      pchild->~Element();
+    } else {
+      pchild->reactEvent(event, mousePosAbs);
+      it++;
+    }
   }
 }
 
@@ -106,7 +121,7 @@ void Element::setParent(Element* pparent) {
   reactEditPosAbsParent();
   reactEditSizeAbsParent();
 }
-const Element* Element::getParent() const {
+Element* Element::getParent() const {
   return pparent;
 }
 
@@ -306,4 +321,12 @@ bool Element::isInside(sf::Vector2f posAbs) {
 
 int Element::getId() {
   return id;
+}
+
+bool Element::getWaitingDestruction() {
+  return waitingDestruction;
+}
+
+void Element::setWaitingDestruction(bool b) {
+  waitingDestruction = b;
 }

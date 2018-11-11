@@ -10,6 +10,8 @@ Rectangle::Rectangle() {
   recshape.setFillColor(sf::Color::White);
 }
 
+Rectangle::~Rectangle() {}
+
 // const sf::RectangleShape& Rectangle::getRecshape() const {
 //   return recshape;
 // }

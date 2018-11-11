@@ -26,6 +26,10 @@ void Window::reactEvent(sf::Event event, sf::Vector2f mousePosAbs) {
   auto mouseOverClose = pclose->isInside(mousePosAbs);
   if (mouseOverClose) {
     pclose->recshape.setFillColor(sf::Color::Red);
+    if (event.type == sf::Event::MouseButtonPressed &&
+        event.mouseButton.button == sf::Mouse::Left) {
+      setWaitingDestruction(true);
+    }
   } else {
     pclose->recshape.setFillColor(sf::Color::White);
   }
