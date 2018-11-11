@@ -86,14 +86,17 @@ void Character::removeWeapon() {
 
 void Character::setPv(unsigned int pv) {
     pvMax = pv;
+    pvCurrent = pv;
 }
 
 void Character::setPm(unsigned int pm) {
     pmMax = pm;
+    pmCurrent = pm;
 }
 
 void Character::setPa(unsigned int pa) {
     paMax = pa;
+    paCurrent = pa;
 }
 
 unsigned int Character::getPv() {

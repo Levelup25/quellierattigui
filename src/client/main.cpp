@@ -175,6 +175,9 @@ int main(int argc, char* argv[]) {
             cout << "Clic gauche sur une capacité, puis sur la zone bleue : attaque" << endl;
             cout << "Clic droit : choix personnage" << endl;
             cout << "Entrée : passer le tour et actualiser pa et pm" << endl;
+            cout << "Les informations sur le personnage actif sont affichés à gauche" << endl;
+            cout << "Les informations sur la capacité sont affichés à droite" << endl;
+            cout << "Pointer un personnage affiche également ses informations à droite" << endl;
 
             bool end = false;
             thread t1([render, &end]() {
