@@ -35,22 +35,16 @@ void Window::reactEvent(sf::Event event, sf::Vector2f mousePosAbs) {
   if (isDraging) {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
       auto ppos = getParent()->getPosAbs();
-      auto psize = getParent()->getSizeAbs();
-      auto osize = getSizeAbs();
-      auto posRelLimit = ppos + psize - osize;
       sf::Vector2f posRelativNew = (mousePosAbs - mouseOffset) - ppos;
-      posRelativNew.x = posRelativNew.x <= 0 ? 0 : posRelativNew.x;
-      posRelativNew.y = posRelativNew.y <= 0 ? 0 : posRelativNew.y;
-      posRelativNew.x =
-          posRelativNew.x >= posRelLimit.x ? posRelLimit.x : posRelativNew.x;
-      posRelativNew.y =
-          posRelativNew.y >= posRelLimit.y ? posRelLimit.y : posRelativNew.y;
+      posRelativNew.x = posRelativNew.x < 0 ? 0 : posRelativNew.x;
+      posRelativNew.y = posRelativNew.y < 0 ? 0 : posRelativNew.y;
       setPosRelative(posRelativNew);
     } else {
       isDraging = false;
     }
   } else if (event.type == sf::Event::MouseButtonPressed &&
-             event.mouseButton.button == sf::Mouse::Left && !isDraging) {
+             event.mouseButton.button == sf::Mouse::Left && !isDraging &&
+             !mouseOverClose) {
     isDraging = true;
     mouseOffset = mousePosAbs - getPosAbs();
   }

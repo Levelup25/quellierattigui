@@ -3,12 +3,22 @@
 #include <iostream>
 #include <sstream>
 
+#define DEBUGING 0
+#define IDDEBUG -1
+
 using namespace render;
 using namespace std;
+
+int Element::created = 0;
 
 Element::Element() {
   posRelative = {0, 0};
   sizeRelative = {10, 10};
+  Element::created++;
+  id = created;
+  if (DEBUGING && (IDDEBUG == -1 || getId() == IDDEBUG)) {
+    cout << ">>>create: " << id << endl;
+  }
 };
 
 void Element::draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -89,6 +99,9 @@ void Element::reactEditSizeAbsParent() {
 
 void Element::setParent(Element* pparent) {
   this->pparent = pparent;
+  if (DEBUGING && (IDDEBUG == -1 || getId() == IDDEBUG)) {
+    cout << ">>>edit parent: " << pparent->getId() << "<-" << getId() << endl;
+  }
   updateDepth();
   reactEditPosAbsParent();
   reactEditSizeAbsParent();
@@ -127,7 +140,9 @@ std::ostream& operator<<(std::ostream& os, const Element& el) {
   auto sep = string(el.getDepth() * 4, ' ');
 
   os << sep;
-  os << classname << endl;
+  os << classname;
+  os << std::setw(3) << el.id;
+  os << endl;
 
   os << sep;
   os << "pos:  ";
@@ -171,10 +186,15 @@ void Element::updatePosAbs() {
   float x = computeCoord(posRelative.x, parentPosAbs.x, parentSizeAbs.x,
                          sizeAbsCache.x);
   float y = computeCoord(posRelative.y, parentPosAbs.y, parentSizeAbs.y,
-                         sizeAbsCache.x);
+                         sizeAbsCache.y);
   sf::Vector2f posAbsNew = {x, y};
+
   if (posAbsCache != posAbsNew) {
     posAbsCache = posAbsNew;
+    if (DEBUGING && (IDDEBUG == -1 || getId() == IDDEBUG)) {
+      cout << ">>>updatePosAbs " << id << endl;
+      cout << (*this) << endl;
+    }
     notifyEditPosAbs();
   }
 }
@@ -185,8 +205,13 @@ void Element::updateSizeAbs() {
   float x = computeLength(sizeRelative.x, parentSizeAbs.x);
   float y = computeLength(sizeRelative.y, parentSizeAbs.y);
   sf::Vector2f sizeAbsNew = {x, y};
+
   if (sizeAbsCache != sizeAbsNew) {
     sizeAbsCache = sizeAbsNew;
+    if (DEBUGING && (IDDEBUG == -1 || getId() == IDDEBUG)) {
+      cout << ">>>updateSizeAbs " << id << endl;
+      cout << (*this) << endl;
+    }
     notifyEditSizeAbs();
     updatePosAbs();
   }
@@ -200,10 +225,17 @@ float Element::computeCoord(Relatif rel,
   float pixel = rel.getPixel();
   switch (rel.getComputeMethod()) {
     case ComputeMethodType::pixel: {
-      if (!pparent)
-        f += pixel >= 0 ? pixel : 0;
-      else
-        f += pixel + (pixel < 0 ? parentLengthAbs - lengthAbs : 0);
+      f += pixel;
+      if (pparent) {
+        float flimit = parentCoordAbs + parentLengthAbs - lengthAbs;
+        if (DEBUGING && (IDDEBUG == -1 || getId() == IDDEBUG))
+          cout << "flimit = " << flimit << " = " << parentCoordAbs << " + "
+               << parentLengthAbs << "-" << lengthAbs << endl;
+
+        f += (pixel < 0 ? parentLengthAbs - lengthAbs : 0);
+        f = f > flimit ? flimit : f;
+      }
+      f = f < 0 ? 0 : f;
       break;
     }
 
@@ -238,27 +270,31 @@ float Element::computeCoord(Relatif rel,
 }
 
 float Element::computeLength(Relatif rel, float parentLengthAbs) {
+  float f;
   switch (rel.getComputeMethod()) {
     case ComputeMethodType::pixel: {
       float pixel = rel.getPixel();
       if (!pparent)
-        return pixel >= 0 ? pixel : 0;
+        f = pixel >= 0 ? pixel : 0;
       else
-        return pixel + (pixel < 0 ? parentLengthAbs : 0);
+        f = pixel + (pixel < 0 ? parentLengthAbs : 0);
+      break;
     }
 
     case ComputeMethodType::percent: {
       if (pparent) {
-        float f = parentLengthAbs * rel.getPercent() / 100;
+        f = parentLengthAbs * rel.getPercent() / 100;
         f += (percent < 0 ? parentLengthAbs : 0);
-        return f;
       } else
-        return 0;
+        f = 0;
+      break;
     }
 
     default:
-      return 0;
+      f = 0;
+      break;
   }
+  return f;
 }
 
 bool Element::isInside(sf::Vector2f posAbs) {
@@ -266,4 +302,8 @@ bool Element::isInside(sf::Vector2f posAbs) {
          posAbs.x <= posAbsCache.x + sizeAbsCache.x &&
          posAbsCache.y <= posAbs.y &&
          posAbs.y <= posAbsCache.y + sizeAbsCache.y;
+}
+
+int Element::getId() {
+  return id;
 }

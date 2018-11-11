@@ -33,6 +33,8 @@ namespace render {
     sf::Vector2f posAbsCache;
     Relatif2 sizeRelative;
     sf::Vector2f sizeAbsCache;
+    static int created;
+    int id;
     // Operations
   public:
     Element ();
@@ -61,6 +63,7 @@ namespace render {
     friend std::ostream& operator<< (std::ostream& os, const Element& el);
     friend std::ostream& operator<< (std::ostream& os, const sf::Vector2f& vec);
     bool isInside (sf::Vector2f posAbs);
+    int getId ();
   private:
     void updateDepth ();
     float computeCoord (Relatif rel, float parentCoordAbs, float parentLengthAbs, float lengthAbs);
