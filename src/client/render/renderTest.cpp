@@ -33,6 +33,9 @@ void testPosition() {
   root.recshape.setFillColor(sf::Color::Black);
 
   Rectangle *pr1, *pr2, *pr3;
+  pr1 = new Rectangle;
+  pr2 = new Rectangle;
+  pr3 = new Rectangle;
   root.add(pr1);
   root.add(pr2);
   root.add(pr3);
@@ -45,6 +48,8 @@ void testPosition() {
   pr3->setSizeRelative({"70%", 40});
 
   Rectangle *pr2_1, *pr2_2;
+  pr2_1 = new Rectangle;
+  pr2_2 = new Rectangle;
   pr2->add(pr2_1);
   pr2->add(pr2_2);
   pr1->recshape.setFillColor(sf::Color::Red);
@@ -55,6 +60,7 @@ void testPosition() {
   pr2->setSizeRelative({200, 200});
 
   Rectangle* pr2_2_1;
+  pr2_2_1 = new Rectangle;
   pr2->add(pr2_2_1);
   pr1->recshape.setFillColor(sf::Color::Green);
   pr1->setPosRelative({-55, -55});
@@ -84,7 +90,7 @@ void testPosition() {
 void testDisplayWindow() {
   sf::RenderWindow window(sf::VideoMode(700, 700), "Render Test");
 
-  Rectangle root;
+  WindowManager root;
   sf::Vector2f windowSizef = {(float)window.getSize().x,
                               (float)window.getSize().y};
   root.setSizeRelative({windowSizef.x, windowSizef.y});
@@ -93,8 +99,6 @@ void testDisplayWindow() {
   auto pwin = new Window();
   root.add(pwin);
   pwin->setPosRelative({50, 50});
-
-  cout << root.getTreeView();
 
   // window loop
   while (window.isOpen()) {

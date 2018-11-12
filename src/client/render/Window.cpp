@@ -7,49 +7,70 @@ using namespace std;
 
 Window::Window() {
   setSizeRelative({100, 100});
-  ptitleBar = new TitleBar();
+  ptitleBar = new Rectangle();
+  ptitle = new Text();
+  pcloseBtn = new Rectangle();
+  pcontent = new Rectangle();
   add(ptitleBar);
-
-  auto prec = new Rectangle();
-  prec->recshape.setFillColor(sf::Color(5));
-  pcontent = prec;
-
-  auto TitleBarSize = ptitleBar->getSizeAbs();
-  pcontent->setPosRelative({0, TitleBarSize.y});
-  pcontent->setSizeRelative({"100%", -TitleBarSize.y});
   add(pcontent);
+  ptitleBar->add(ptitle);
+  ptitleBar->add(pcloseBtn);
+
+  float titleBarHeight = 30;
+  pcontent->setPosRelative({0, titleBarHeight});
+  pcontent->setSizeRelative({"100%", -titleBarHeight});
+
+  ptitleBar->recshape.setFillColor(sf::Color::Blue);
+  ptitleBar->setSizeRelative({"100%", titleBarHeight});
+
+  pcloseBtn->setPosRelative({-5, -5});
+  pcloseBtn->setSizeRelative({20, 20});
+
+  ptitle->text.setString("Window");
+  ptitle->setPosRelative({5, 5});
+  ptitle->text.setColor(sf::Color::White);
+  ptitle->text.setCharacterSize(16);
 }
 
-void Window::reactEvent(sf::Event event, sf::Vector2f mousePosAbs) {
-  // todo move to init witdh function pointer
-  auto pclose = ptitleBar->pcloseBtn;
-  auto mouseOverClose = pclose->isInside(mousePosAbs);
-  if (mouseOverClose) {
-    pclose->recshape.setFillColor(sf::Color::Red);
-    if (event.type == sf::Event::MouseButtonPressed &&
-        event.mouseButton.button == sf::Mouse::Left) {
-      setWaitingDestruction(true);
-    }
-  } else {
-    pclose->recshape.setFillColor(sf::Color::White);
-  }
-
-  static sf::Vector2f mouseOffset = {0, 0};
-  static bool isDraging = false;
-  if (isDraging) {
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-      auto ppos = getParent()->getPosAbs();
-      sf::Vector2f posRelativNew = (mousePosAbs - mouseOffset) - ppos;
-      posRelativNew.x = posRelativNew.x < 0 ? 0 : posRelativNew.x;
-      posRelativNew.y = posRelativNew.y < 0 ? 0 : posRelativNew.y;
-      setPosRelative(posRelativNew);
+bool Window::reactEvent(sf::Event event, sf::Vector2f mousePosAbs) {
+  if (isInside(mousePosAbs)) {
+    auto mouseOverClose = pcloseBtn->isInside(mousePosAbs);
+    if (mouseOverClose) {
+      pcloseBtn->recshape.setFillColor(sf::Color::Red);
+      if (event.type == sf::Event::MouseButtonPressed &&
+          event.mouseButton.button == sf::Mouse::Left) {
+        setWaitingDestruction(true);
+      }
     } else {
-      isDraging = false;
+      pcloseBtn->recshape.setFillColor(sf::Color::White);
     }
-  } else if (event.type == sf::Event::MouseButtonPressed &&
-             event.mouseButton.button == sf::Mouse::Left && !isDraging &&
-             !mouseOverClose) {
-    isDraging = true;
-    mouseOffset = mousePosAbs - getPosAbs();
+
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+      getParent()->moveAtTop(this);
+    }
+
+    if (ptitleBar->isInside(mousePosAbs)) {
+      if (isDraging) {
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+          auto ppos = getParent()->getPosAbs();
+          sf::Vector2f posRelativNew = (mousePosAbs - mouseOffset) - ppos;
+          posRelativNew.x = posRelativNew.x < 0 ? 0 : posRelativNew.x;
+          posRelativNew.y = posRelativNew.y < 0 ? 0 : posRelativNew.y;
+          setPosRelative(posRelativNew);
+        } else {
+          isDraging = false;
+        }
+      } else if (event.type == sf::Event::MouseButtonPressed &&
+                 event.mouseButton.button == sf::Mouse::Left && !isDraging &&
+                 !mouseOverClose) {
+        isDraging = true;
+        mouseOffset = mousePosAbs - getPosAbs();
+      }
+    }
+    notifyEvent(event, mousePosAbs);
+    return true;
+  } else {
+    notifyEvent(event, mousePosAbs);
+    return false;
   }
 }

@@ -1,19 +1,28 @@
 #include "WindowManager.h"
 #include <iostream>
+#include "Window.h"
 
 using namespace std;
 using namespace render;
 
 WindowManager::WindowManager() {}
 
-void WindowManager::reactEvent(sf::Event event, sf::Vector2f mousePosAbs) {
+bool WindowManager::reactEvent(sf::Event event, sf::Vector2f mousePosAbs) {
   if (event.type == sf::Event::KeyPressed) {
     if (event.key.code == sf::Keyboard::I) {
       toggleInventory();
     } else if (event.key.code == sf::Keyboard::T) {
       cout << "the T key was pressed" << endl;
+    } else if (event.key.code == sf::Keyboard::N) {
+      auto pw = new Window();
+      add(pw);
+      pw->setPosRelative({10, 10});
+    } else if (event.key.code == sf::Keyboard::D) {
+      cout << getTreeView();
     }
   }
+  notifyEvent(event, mousePosAbs);
+  return true;
 }
 
 void WindowManager::toggleInventory() {

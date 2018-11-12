@@ -55,7 +55,7 @@ namespace render {
     void notifyEditSizeAbs ();
     virtual void reactEditSizeAbsParent ();
     void notifyEvent (sf::Event event, sf::Vector2f mousePosAbs);
-    virtual void reactEvent (sf::Event event, sf::Vector2f mousePosAbs);
+    virtual bool reactEvent (sf::Event event, sf::Vector2f mousePosAbs);
     Element* getParent () const;
     void setParent (Element* pparent);
     void add (Element* pchild);
@@ -68,6 +68,7 @@ namespace render {
     bool isInside (sf::Vector2f posAbs);
     int getId ();
     bool getWaitingDestruction ();
+    void moveAtTop (Element* pchild);
   private:
     void updateDepth ();
     float computeCoord (Relatif rel, float parentCoordAbs, float parentLengthAbs, float lengthAbs);

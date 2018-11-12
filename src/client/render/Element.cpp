@@ -28,16 +28,19 @@ Element::~Element() {
 }
 
 void Element::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-  for (auto pchild : pchildren) {
+  for (int i = pchildren.size(); i-- > 0;) {
+    auto pchild = pchildren[i];
     target.draw(*pchild);
   }
 };
 
-void Element::reactEvent(sf::Event event, sf::Vector2f mousePosAbs) {
+bool Element::reactEvent(sf::Event event, sf::Vector2f mousePosAbs) {
   notifyEvent(event, mousePosAbs);
+  return false;
 };
 
 void Element::notifyEvent(sf::Event event, sf::Vector2f mousePosAbs) {
+  bool stopEventPropagation = false;
   auto it = pchildren.begin();
   while (it != pchildren.end()) {
     auto pchild = *it;
@@ -45,8 +48,10 @@ void Element::notifyEvent(sf::Event event, sf::Vector2f mousePosAbs) {
       it = pchildren.erase(it);
       pchild->setParent(nullptr);
       pchild->~Element();
+    } else if (!stopEventPropagation) {
+      stopEventPropagation = pchild->reactEvent(event, mousePosAbs);
+      it++;
     } else {
-      pchild->reactEvent(event, mousePosAbs);
       it++;
     }
   }
@@ -329,4 +334,11 @@ bool Element::getWaitingDestruction() {
 
 void Element::setWaitingDestruction(bool b) {
   waitingDestruction = b;
+}
+
+void Element::moveAtTop(Element* pchild) {
+  auto it = std::find(pchildren.begin(), pchildren.end(), pchild);
+  if (it == pchildren.end())
+    return;
+  rotate(pchildren.begin(), it, it + 1);
 }

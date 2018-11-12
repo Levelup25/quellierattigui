@@ -13,10 +13,7 @@
 #include "render/Render.h"
 #include "render/Rectangle.h"
 #include "render/WindowManager.h"
-#include "render/Button.h"
-#include "render/TitleBarButton.h"
-#include "render/TitleBar.h"
+#include "render/Text.h"
 #include "render/Window.h"
 #include "render/Inventory.h"
-#include "render/Text.h"
 #endif

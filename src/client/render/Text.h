@@ -17,10 +17,16 @@ namespace render {
     // Attributes
   public:
     sf::Text text;
+    static sf::Font roboto;
+  private:
+    static bool robotoLoaded;
     // Operations
   public:
     Text ();
+    ~Text ();
     void draw (sf::RenderTarget& target, sf::RenderStates states) const;
+    void updatePosAbs ();
+    void updateSizeAbs ();
     // Setters and Getters
   };
 

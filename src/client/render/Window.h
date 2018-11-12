@@ -5,13 +5,12 @@
 #include <SFML/Graphics.hpp>
 
 namespace render {
-  class TitleBar;
-  class Element;
   class Rectangle;
+  class Text;
 }
 
 #include "Rectangle.h"
-#include "TitleBar.h"
+#include "Text.h"
 
 namespace render {
 
@@ -20,12 +19,17 @@ namespace render {
     // Associations
     // Attributes
   public:
-    TitleBar* ptitleBar;
-    Element* pcontent;
+    Rectangle* ptitleBar;
+    Text* ptitle;
+    Rectangle* pcloseBtn;
+    Rectangle* pcontent;
+  private:
+    sf::Vector2f mouseOffset;
+    bool isDraging     = false;
     // Operations
   public:
     Window ();
-    void reactEvent (sf::Event event, sf::Vector2f mousePosAbs);
+    bool reactEvent (sf::Event event, sf::Vector2f mousePosAbs);
     // Setters and Getters
   };
 
