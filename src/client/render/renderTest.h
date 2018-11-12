@@ -4,8 +4,18 @@
 #include <SFML/Graphics.hpp>
 #include <fstream>
 #include <iostream>
+#include <thread>
+#include "Element.h"
+#include "Rectangle.h"
+#include "Window.h"
+#include "WindowManager.h"
+
+using namespace render;
+using namespace std;
 
 void testRender();
-void testPosition();
-void testPosition2();
-void testDisplayWindow();
+void createWindowWith(Element* root);
+Element* buildRootWindow();
+Element* buildRootTestRectangle();
+Element* buildRootWebpageStyle();
+Element* buildRootSprite();
