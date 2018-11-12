@@ -3,6 +3,7 @@
 #define RENDER__TEXT__H
 
 #include <SFML/Graphics.hpp>
+#include <string>
 
 namespace render {
   class Element;
@@ -27,6 +28,7 @@ namespace render {
     void draw (sf::RenderTarget& target, sf::RenderStates states) const;
     void updatePosAbs ();
     void updateSizeAbs ();
+    void setString (std::string str);
     // Setters and Getters
   };
 

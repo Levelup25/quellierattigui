@@ -32,4 +32,12 @@ void Text::updatePosAbs() {
   text.setPosition(getPosAbs());
 }
 
-void Text::updateSizeAbs() {}
+void Text::updateSizeAbs() {
+  Element::updateSizeAbs();
+}
+
+void Text::setString(std::string str) {
+  text.setString(str);
+  auto localBound = text.getLocalBounds();
+  setSizeRelative({localBound.width, localBound.height});
+}

@@ -7,4 +7,5 @@
 
 void testRender();
 void testPosition();
+void testPosition2();
 void testDisplayWindow();

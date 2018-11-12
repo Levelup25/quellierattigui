@@ -18,6 +18,10 @@ void testRender() {
       testDisplayWindow();
       break;
 
+    case 2:
+      testPosition2();
+      break;
+
     default:
       break;
   }
@@ -72,6 +76,58 @@ void testPosition() {
   pr2_2_1->setSizeRelative({50, 50});
 
   cout << root.getTreeView();
+
+  // window loop
+  while (window.isOpen()) {
+    sf::Event event;
+    while (window.pollEvent(event)) {
+      if (event.type == sf::Event::Closed)
+        window.close();
+
+      auto mousePosAbsTemp = sf::Mouse::getPosition(window);
+      sf::Vector2f mousePosAbs{(float)mousePosAbsTemp.x,
+                               (float)mousePosAbsTemp.y};
+      root.reactEvent(event, mousePosAbs);
+    }
+
+    window.clear();
+    window.draw(root);
+    window.display();
+  }
+}
+
+void testPosition2() {
+  sf::RenderWindow window(sf::VideoMode(700, 700), "Render Test");
+
+  WindowManager root;
+  sf::Vector2f windowSizef = {(float)window.getSize().x,
+                              (float)window.getSize().y};
+  root.setSizeRelative({windowSizef.x, windowSizef.y});
+  root.recshape.setFillColor(sf::Color::Black);
+
+  auto pheader = new Rectangle(), pfooter = new Rectangle(),
+       prightContent = new Rectangle(), plateralMenuLeft = new Rectangle();
+
+  root.add(pheader);
+  root.add(pfooter);
+  root.add(plateralMenuLeft);
+  root.add(prightContent);
+
+  pheader->setSizeRelative({"100%", 50});
+
+  pfooter->setSizeRelative({"100%", 50});
+  pfooter->setPosRelative({0, "b"});
+
+  plateralMenuLeft->setSizeRelative({"30%", -100});
+  plateralMenuLeft->setPosRelative({0, 50});
+
+  prightContent->setSizeRelative({"80%", -100});
+  prightContent->setPosRelative({"30%", 50});
+
+  auto ptitle = new Text();
+  pheader->add(ptitle);
+  ptitle->setString("Le Titre");
+  ptitle->setPosRelative({"m", "m"});
 
   // window loop
   while (window.isOpen()) {
