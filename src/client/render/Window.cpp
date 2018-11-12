@@ -1,12 +1,13 @@
 #include "Window.h"
 #include <iostream>
+#include <sstream>
 #include "Rectangle.h"
 
 using namespace render;
 using namespace std;
 
 Window::Window() {
-  setSizeRelative({100, 100});
+  setSizeRelative({200, 100});
   ptitleBar = new Rectangle();
   ptitle = new Text();
   pcloseBtn = new Rectangle();
@@ -26,7 +27,7 @@ Window::Window() {
   pcloseBtn->setPosRelative({-5, -5});
   pcloseBtn->setSizeRelative({20, 20});
 
-  ptitle->text.setString("Window");
+  ptitle->text.setString("Window " + to_string(getId()));
   ptitle->setPosRelative({5, 5});
   ptitle->text.setColor(sf::Color::White);
   ptitle->text.setCharacterSize(16);
