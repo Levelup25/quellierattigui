@@ -29,7 +29,7 @@ namespace render {
     // Operations
   public:
     Window ();
-    bool reactEvent (sf::Event event, sf::Vector2f mousePosAbs);
+    void processEvent (sf::Event event, sf::Vector2f mousePosAbs);
     // Setters and Getters
   };
 

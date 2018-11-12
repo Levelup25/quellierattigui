@@ -21,7 +21,7 @@ namespace render {
     // Operations
   public:
     WindowManager ();
-    bool reactEvent (sf::Event event, sf::Vector2f posMouse);
+    void processEvent (sf::Event event, sf::Vector2f posMouse);
   private:
     void toggleInventory ();
     // Setters and Getters

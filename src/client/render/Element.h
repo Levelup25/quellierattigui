@@ -37,6 +37,7 @@ namespace render {
     sf::Vector2f sizeAbsCache;
     static int created;
     int id;
+    bool mouseOverCache;
     // Operations
   public:
     Element ();
@@ -55,7 +56,7 @@ namespace render {
     void notifyEditSizeAbs ();
     virtual void reactEditSizeAbsParent ();
     void notifyEvent (sf::Event event, sf::Vector2f mousePosAbs);
-    virtual bool reactEvent (sf::Event event, sf::Vector2f mousePosAbs);
+    void reactEvent (sf::Event event, sf::Vector2f mousePosAbs);
     Element* getParent () const;
     void setParent (Element* pparent);
     void add (Element* pchild);
@@ -69,12 +70,16 @@ namespace render {
     int getId ();
     bool getWaitingDestruction ();
     void moveAtTop (Element* pchild);
+    bool getMouseOver ();
+    void setMouseOver (bool b);
+    bool getMouseInChildren (sf::Vector2f mousePos);
   private:
     void updateDepth ();
     float computeCoord (Relatif rel, float parentCoordAbs, float parentLengthAbs, float lengthAbs);
     float computeLength (Relatif rel, float parentLengthAbs);
   protected:
     void setWaitingDestruction (bool b);
+    virtual void processEvent (sf::Event event, sf::Vector2f mousePos);
     // Setters and Getters
   };
 

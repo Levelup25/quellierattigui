@@ -34,24 +34,40 @@ void Element::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   }
 };
 
-bool Element::reactEvent(sf::Event event, sf::Vector2f mousePosAbs) {
+void Element::reactEvent(sf::Event event, sf::Vector2f mousePosAbs) {
+  if (!pparent) {
+    mouseOverCache = isInside(mousePosAbs) && !getMouseInChildren(mousePosAbs);
+  }
+  if (mouseOverCache && event.type == sf::Event::KeyPressed &&
+      event.key.code == sf::Keyboard::D) {
+    cout << ">>>Debug" << endl;
+    cout << *this << endl;
+  }
+  processEvent(event, mousePosAbs);
   notifyEvent(event, mousePosAbs);
-  return false;
 };
 
 void Element::notifyEvent(sf::Event event, sf::Vector2f mousePosAbs) {
-  bool stopEventPropagation = false;
   auto it = pchildren.begin();
+  auto itFirstChildWidthMouseOver = pchildren.end();
   while (it != pchildren.end()) {
     auto pchild = *it;
     if (pchild->waitingDestruction) {
+      if (itFirstChildWidthMouseOver == pchildren.end())
+        itFirstChildWidthMouseOver--;
       it = pchildren.erase(it);
       pchild->setParent(nullptr);
       pchild->~Element();
-    } else if (!stopEventPropagation) {
-      stopEventPropagation = pchild->reactEvent(event, mousePosAbs);
-      it++;
     } else {
+      if (it > itFirstChildWidthMouseOver) {
+        pchild->setMouseOver(false);
+      } else if (pchild->isInside(mousePosAbs)) {
+        itFirstChildWidthMouseOver = it;
+        pchild->setMouseOver(true && !pchild->getMouseInChildren(mousePosAbs));
+      } else {
+        pchild->setMouseOver(false);
+      }
+      pchild->reactEvent(event, mousePosAbs);
       it++;
     }
   }
@@ -164,17 +180,28 @@ std::ostream& operator<<(std::ostream& os, const Element& el) {
   os << std::setw(3) << el.id;
   os << endl;
 
-  os << sep;
-  os << "pos:  ";
-  os << "Abs";
-  os << el.getPosAbs() << ",";
-  os << "Rel";
-  os << el.getPosRelative() << endl;
+  if (el.pparent) {
+    os << sep;
+    os << "parent abs:  ";
+    os << el.pparent->getPosAbs();
+    os << " ";
+    os << el.pparent->getSizeAbs();
+    os << endl;
+
+    os << sep;
+    os << "*this rel:   ";
+    os << el.getPosRelative();
+    os << " ";
+    os << el.getSizeRelative();
+    os << endl;
+  }
 
   os << sep;
-  os << "size: ";
-  os << "Abs" << el.getSizeAbs() << ",";
-  os << "Rel" << el.getSizeRelative() << endl;
+  os << "*this abs:   ";
+  os << el.getPosAbs();
+  os << " ";
+  os << el.getSizeAbs();
+  os << endl;
   return os;
 }
 }  // namespace render
@@ -342,3 +369,17 @@ void Element::moveAtTop(Element* pchild) {
     return;
   rotate(pchildren.begin(), it, it + 1);
 }
+
+void Element::setMouseOver(bool b) {
+  this->mouseOverCache = b;
+}
+
+bool Element::getMouseInChildren(sf::Vector2f MousePos) {
+  for (auto pchild : pchildren) {
+    if (pchild->isInside(MousePos))
+      return true;
+  }
+  return false;
+}
+
+void Element::processEvent(sf::Event event, sf::Vector2f mousePosAbs) {}

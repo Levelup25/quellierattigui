@@ -33,7 +33,7 @@ Window::Window() {
   ptitle->text.setCharacterSize(16);
 }
 
-bool Window::reactEvent(sf::Event event, sf::Vector2f mousePosAbs) {
+void Window::processEvent(sf::Event event, sf::Vector2f mousePosAbs) {
   if (isInside(mousePosAbs)) {
     auto mouseOverClose = pcloseBtn->isInside(mousePosAbs);
     if (mouseOverClose) {
@@ -68,10 +68,5 @@ bool Window::reactEvent(sf::Event event, sf::Vector2f mousePosAbs) {
         mouseOffset = mousePosAbs - getPosAbs();
       }
     }
-    notifyEvent(event, mousePosAbs);
-    return true;
-  } else {
-    notifyEvent(event, mousePosAbs);
-    return false;
   }
 }
