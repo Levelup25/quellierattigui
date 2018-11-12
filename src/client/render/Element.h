@@ -70,9 +70,11 @@ namespace render {
     int getId ();
     bool getWaitingDestruction ();
     void moveAtTop (Element* pchild);
-    bool getMouseOver ();
-    void setMouseOver (bool b);
-    bool getMouseInChildren (sf::Vector2f mousePos);
+    bool getMouseOver () const;
+    void setMouseOver (bool b, sf::Vector2f mousePosAbs);
+    bool getMouseInChildren (sf::Vector2f mousePos) const;
+    void closeChildrenWaiting ();
+    void updateChildrenMouseOver (sf::Vector2f mousePosAbs);
   private:
     void updateDepth ();
     float computeCoord (Relatif rel, float parentCoordAbs, float parentLengthAbs, float lengthAbs);
