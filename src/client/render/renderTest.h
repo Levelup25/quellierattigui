@@ -4,7 +4,20 @@
 #include <SFML/Graphics.hpp>
 #include <fstream>
 #include <iostream>
+#include <thread>
+#include "Element.h"
+#include "Rectangle.h"
+#include "Sprite.h"
+#include "TileSprite.h"
+#include "Window.h"
+#include "WindowManager.h"
 
-bool posInRec(sf::Vector2f pos, sf::RectangleShape rec);
+using namespace render;
+using namespace std;
+
 void testRender();
-void testRender2();
+void createWindowWith(Element* root);
+Element* buildRootWindow();
+Element* buildRootTestRectangle();
+Element* buildRootWebpageStyle();
+Element* buildRootSprite();

@@ -4,3 +4,4 @@ bin
 nbproject
 .vscode
 gmon.out
+*.autosave
