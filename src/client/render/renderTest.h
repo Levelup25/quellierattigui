@@ -7,6 +7,8 @@
 #include <thread>
 #include "Element.h"
 #include "Rectangle.h"
+#include "Sprite.h"
+#include "TileSprite.h"
 #include "Window.h"
 #include "WindowManager.h"
 

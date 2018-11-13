@@ -27,7 +27,6 @@ namespace render {
     ~Text ();
     void draw (sf::RenderTarget& target, sf::RenderStates states) const;
     void updatePosAbs ();
-    void updateSizeAbs ();
     void setString (std::string str);
     // Setters and Getters
   };

@@ -20,7 +20,10 @@ namespace render {
     // Operations
   public:
     Sprite ();
+    ~Sprite ();
     void draw (sf::RenderTarget& target, sf::RenderStates states) const;
+    void updatePosAbs ();
+    void updateSizeFromTextureRect ();
     // Setters and Getters
   };
 

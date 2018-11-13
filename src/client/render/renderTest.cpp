@@ -1,22 +1,23 @@
 #include "renderTest.h"
 
 void testRender() {
-  int i = 2;
+  int i = 3;
+
   Element* proot;
   switch (i) {
-    case 1:
+    case 0:
       proot = buildRootTestRectangle();
       break;
 
-    case 1 << 1:
+    case 1:
       proot = buildRootWindow();
       break;
 
-    case 1 << 2:
+    case 2:
       proot = buildRootWebpageStyle();
       break;
 
-    case 1 << 3:
+    case 3:
       proot = buildRootSprite();
       break;
 
@@ -142,10 +143,64 @@ Element* buildRootWindow() {
   return root;
 }
 
+Sprite* getSprite(int id) {
+  static sf::Texture TextureStone, TextureWater;
+  static bool TextureStoneInit = false, TextureWaterInit = false;
+  static int width = 34, heigth = 24, nbRepeat = 3;
+  static sf::IntRect area(0, 0, width, heigth);
+
+  Sprite* psprite = new Sprite();
+  if (id == 55) {  // stone
+    if (!TextureStoneInit) {
+      auto filename =
+          "res/tileset/isometric_pixel_flat_00" + to_string(id) + ".png";
+      TextureStone.loadFromFile(filename, area);
+      TextureStone.setRepeated(true);
+      TextureStoneInit = true;
+    }
+    psprite->sprite.setTexture(TextureStone);
+  }
+
+  else if (id == 28) {
+    if (!TextureWaterInit) {
+      auto filename =
+          "res/tileset/isometric_pixel_flat_00" + to_string(id) + ".png";
+      TextureWater.loadFromFile(filename, area);
+      TextureStone.setRepeated(true);
+      TextureWaterInit = true;
+    }
+    psprite->sprite.setTexture(TextureWater);
+  }
+
+  sf::IntRect textRect(0, 0, width * nbRepeat, heigth * nbRepeat);
+  psprite->sprite.setTextureRect(textRect);
+  psprite->updateSizeFromTextureRect();
+  return psprite;
+}
+
 Element* buildRootSprite() {
   auto root = new WindowManager();
   sf::Vector2f windowSizef = {700, 700};
   root->setSizeRelative({windowSizef.x, windowSizef.y});
   root->recshape.setFillColor(sf::Color::Black);
+
+  auto pwin = new Window();
+  root->add(pwin);
+  pwin->setPosRelative({50, 50});
+  pwin->setSizeRelative({500, 300});
+  pwin->pcontent->recshape.setFillColor(sf::Color(50, 50, 50));
+
+  auto pspriteStone = getSprite(55);
+  if (pspriteStone) {
+    pwin->pcontent->add(pspriteStone);
+    pspriteStone->setPosRelative({0, 0});
+  }
+
+  auto pspriteWater = getSprite(28);
+  if (pspriteWater) {
+    pwin->pcontent->add(pspriteWater);
+    pspriteWater->setPosRelative({200, 100});
+  }
+
   return root;
 }
