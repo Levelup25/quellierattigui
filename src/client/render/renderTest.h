@@ -5,14 +5,17 @@
 #include <fstream>
 #include <iostream>
 #include <thread>
+#include "../../shared/state/ElementType.h"
 #include "Element.h"
 #include "Rectangle.h"
 #include "Sprite.h"
+#include "SpriteGeneratorById.h"
 #include "TileSprite.h"
 #include "Window.h"
 #include "WindowManager.h"
 
 using namespace render;
+using namespace state;
 using namespace std;
 
 void testRender();

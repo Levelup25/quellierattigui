@@ -18,4 +18,5 @@
 #include "render/Window.h"
 #include "render/Inventory.h"
 #include "render/View.h"
+#include "render/SpriteGeneratorById.h"
 #endif

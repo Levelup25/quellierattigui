@@ -18,6 +18,15 @@ void Sprite::updatePosAbs() {
   sprite.setPosition(getPosAbs());
 }
 
+void Sprite::updateSizeAbs() {
+  Element::updateSizeAbs();
+  sf::IntRect rec;
+  auto size = getSizeAbs();
+  rec.width = size.x;
+  rec.height = size.y;
+  sprite.setTextureRect(rec);
+}
+
 void Sprite::updateSizeFromTextureRect() {
   sf::IntRect r = sprite.getTextureRect();
   setSizeRelative({r.width, r.height});

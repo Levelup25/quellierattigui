@@ -24,6 +24,7 @@ namespace render {
     void draw (sf::RenderTarget& target, sf::RenderStates states) const;
     void updatePosAbs ();
     void updateSizeFromTextureRect ();
+    void updateSizeAbs ();
     // Setters and Getters
   };
 
