@@ -1,7 +1,7 @@
 #include "renderTest.h"
 
 void testRender() {
-  int i = 3;
+  int i = 2;
 
   Element* proot;
   switch (i) {
@@ -57,7 +57,6 @@ void createWindowWith(Element* root) {
 Element* buildRootTestRectangle() {
   auto root = new WindowManager();
   root->setSizeRelative({700, 700});
-  root->recshape.setFillColor(sf::Color::Black);
 
   Rectangle *pr1, *pr2, *pr3;
   pr1 = new Rectangle;
@@ -103,7 +102,6 @@ Element* buildRootTestRectangle() {
 Element* buildRootWebpageStyle() {
   auto root = new WindowManager();
   root->setSizeRelative({700, 700});
-  root->recshape.setFillColor(sf::Color::Black);
 
   auto pheader = new Rectangle(), pfooter = new Rectangle(),
        prightContent = new Rectangle(), plateralMenuLeft = new Rectangle();
@@ -135,7 +133,6 @@ Element* buildRootWindow() {
   auto root = new WindowManager();
   sf::Vector2f windowSizef = {700, 700};
   root->setSizeRelative({windowSizef.x, windowSizef.y});
-  root->recshape.setFillColor(sf::Color::Black);
 
   auto pwin = new Window();
   root->add(pwin);
@@ -182,13 +179,15 @@ Element* buildRootSprite() {
   auto root = new WindowManager();
   sf::Vector2f windowSizef = {700, 700};
   root->setSizeRelative({windowSizef.x, windowSizef.y});
-  root->recshape.setFillColor(sf::Color::Black);
 
   auto pwin = new Window();
   root->add(pwin);
   pwin->setPosRelative({50, 50});
   pwin->setSizeRelative({500, 300});
   pwin->pcontent->recshape.setFillColor(sf::Color(50, 50, 50));
+
+  pwin->pcontent->add(new Window());
+  pwin->pcontent->add(new Window());
 
   auto pspriteStone = getSprite(55);
   if (pspriteStone) {

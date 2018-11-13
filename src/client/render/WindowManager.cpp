@@ -5,7 +5,9 @@
 using namespace std;
 using namespace render;
 
-WindowManager::WindowManager() {}
+WindowManager::WindowManager() {
+  recshape.setFillColor(sf::Color::Transparent);
+}
 
 void WindowManager::processEvent(sf::Event event, sf::Vector2f mousePosAbs) {
   if (event.type == sf::Event::KeyPressed) {

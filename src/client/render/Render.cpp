@@ -1,6 +1,10 @@
 #include "Render.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "View.h"
+#include "Window.h"
+#include "WindowManager.h"
+#include "renderTest.h"
 
 using namespace std;
 using namespace sf;
@@ -20,12 +24,18 @@ void Render::display() {
 
   RenderWindow window(VideoMode(n * l, m * h * 7 / 6), "Jeu");
   window.setFramerateLimit(60);
-  View view;
-  view.setSize(Vector2f(n * l, m * h));
-  View view2;
+
+  render::View worldView;
+  worldView.setSizeRelative(sf::Vector2f({n * l, m * h}));
+
+  auto pwm = buildRootSprite();
+  pwm->setSizeRelative({"100%", "100%"});
+  worldView.add(pwm);
+
+  sf::View view2;
   view2.setSize(Vector2f(n * l, m * h / 6));
   view2.setCenter(sf::Vector2f(N * l + n * l / 2, M * h + m * h / 6 / 2));
-  view.setViewport(sf::FloatRect(0, 0, 1, 6.0 / 7));
+  worldView.view.setViewport(sf::FloatRect(0, 0, 1, 6.0 / 7));
   view2.setViewport(sf::FloatRect(0, 6.0 / 7, 1, 1.0 / 7));
 
   Character* maincharacter = state->getMainCharacter();
@@ -38,7 +48,7 @@ void Render::display() {
   yv = (y / m) * m;
   Vector2f posView = {xv * l, yv * h};
 
-  Sprite sprite;
+  sf::Sprite sprite;
   TileSprite tiles(l, h, nb);
   ContentSprite contents(l, h);
   AttackSprite attacks(2 * l, 2 * h);
@@ -58,7 +68,7 @@ void Render::display() {
   RectangleShape r(Vector2f(n * l / 6, m * h / 6));
   r.setFillColor(Color::Black);
 
-  Text text;
+  sf::Text text;
   Font font;
   font.loadFromFile("res/font/roboto/Roboto-Regular.ttf");
   text.setFont(font);
@@ -82,8 +92,8 @@ void Render::display() {
     y = maincharacter->getJ();
     xv = (x / n) * n;
     yv = (y / m) * m;
-    view.setCenter(sf::Vector2f(xv * l + n * l / 2, yv * h + m * h / 2));
-    window.setView(view);
+    worldView.setPosRelative(sf::Vector2f(xv * l, yv * h));
+    window.setView(worldView.view);
     auto posMouseBuff = window.mapPixelToCoords(sf::Mouse::getPosition(window));
     int X = xv + posMouseBuff.x / l, Y = yv + posMouseBuff.y / h;
 
@@ -184,6 +194,7 @@ void Render::display() {
 
       posView = {xv * l, yv * h};
       Vector2f posMouse{(float)posMouseBuff.x, (float)posMouseBuff.y};
+      worldView.reactEvent(event, posMouse);
 
       if (event.type == sf::Event::MouseButtonPressed) {
         int X = xv + event.mouseButton.x / l, Y = yv + event.mouseButton.y / h;
@@ -236,6 +247,8 @@ void Render::display() {
         //                }
       }
     }
+
+    window.draw(worldView);
 
     window.setView(view2);
     for (int i = 0; i < 5; i++) {
