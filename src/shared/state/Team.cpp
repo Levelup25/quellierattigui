@@ -38,8 +38,13 @@ Character* Team::getCharacter(size_t i, size_t j) {
     return nullptr;
 }
 
-vector<Character*> Team::getCharacters() {
-    return characters;
+vector<Character*> Team::getCharacters(int i) {
+    if (i < 0 || i >= characters.size())return characters;
+    else {
+        vector<Character*> v;
+        for (auto c = characters.begin(); c != characters.begin() + i; c++) v.push_back(*c);
+        return v;
+    }
 }
 
 void Team::swapCharacters(size_t i1, size_t i2) {
@@ -61,11 +66,4 @@ string Team::getName() {
 
 Inventory* Team::getInventory() {
     return inventory;
-}
-
-bool Team::isAlive() {
-    for (auto c : characters) {
-        if (c->getPv() > 0) return true;
-    }
-    return false;
 }

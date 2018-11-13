@@ -14,6 +14,8 @@ MoveCommands::MoveCommands(State* state, Engine* engine, Character* character, s
     this->character = character;
     this->i = i;
     this->j = j;
+    n = state->getN();
+    m = state->getM();
     generator.setWorldSize({n, m});
 }
 
@@ -68,7 +70,7 @@ void MoveCommands::execute() {
 
     float step = 1.0 / 12;
 
-    if (path.size() > 0 && (!state->isFighting() || (state->isFighting() && state->getFight()->getTurn() % 2 == 1 && path.size() <= character->getPm()))) {
+    if (path.size() > 0 && (!state->isFighting() || (state->isFighting() && path.size() <= character->getPm()))) {
         if (state->isFighting()) character->removePm(path.size());
         for (auto coord = path.begin(); coord != path.end(); coord++) {
             float k = (*coord).x + xv, l = (*coord).y + yv;

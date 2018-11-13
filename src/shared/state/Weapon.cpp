@@ -56,3 +56,7 @@ vector<Ability*> Weapon::getAbilities() {
 string Weapon::getName() {
     return name;
 }
+
+ElementType Weapon::getElement() {
+    return element;
+}

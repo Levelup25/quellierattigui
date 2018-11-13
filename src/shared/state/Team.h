@@ -32,12 +32,11 @@ namespace state {
     Character* getMainCharacter ();
     Character* getCharacter (std::size_t i);
     Character* getCharacter (std::size_t i, std::size_t j);
-    std::vector<Character*> getCharacters ();
+    std::vector<Character*> getCharacters (int i = -1);
     void swapCharacters (std::size_t i1, std::size_t i2);
     void swapCharacters (Character* c1, Character* c2);
     std::string getName ();
     Inventory* getInventory ();
-    bool isAlive ();
     // Setters and Getters
   };
 

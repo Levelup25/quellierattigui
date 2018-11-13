@@ -45,6 +45,8 @@ namespace state {
     State (std::size_t I = 144, std::size_t J = 144);
     std::size_t getI ();
     std::size_t getJ ();
+    std::size_t getN ();
+    std::size_t getM ();
     std::vector<std::vector<Cell*>> getGrid ();
     Cell* getCell (std::size_t i, std::size_t j);
     void setCell (std::size_t i, std::size_t j, Cell* cell);
@@ -69,7 +71,7 @@ namespace state {
     bool isFighting ();
     Fight* getFight ();
     void setFight (Fight* fight);
-    void deploy ();
+    void deploy (int nb = -1);
     void endFight ();
     // Setters and Getters
     int getEpoch() const;

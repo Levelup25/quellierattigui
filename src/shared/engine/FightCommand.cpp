@@ -12,6 +12,6 @@ FightCommand::FightCommand(State* state, Team* att, Team* def) {
 }
 
 void FightCommand::execute() {
-    state->setFight(new Fight(att, def));
+    state->setFight(new Fight(att, def, 3));
     state->deploy();
 }
