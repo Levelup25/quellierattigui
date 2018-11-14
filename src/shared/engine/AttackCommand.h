@@ -5,6 +5,9 @@
 #include <vector>
 #include <stdlib.h>
 
+namespace engine {
+  class Engine;
+};
 namespace state {
   class Ability;
   class State;
@@ -15,6 +18,7 @@ namespace engine {
 }
 
 #include "Command.h"
+#include "Engine.h"
 #include "state/Ability.h"
 
 namespace engine {
@@ -24,6 +28,7 @@ namespace engine {
     // Associations
     // Attributes
   private:
+    Engine* engine;
     int abilityNumber;
     std::vector<int> position;
     std::vector<std::vector<int>> targets;
@@ -31,7 +36,7 @@ namespace engine {
     state::Ability* ability;
     // Operations
   public:
-    AttackCommand (state::State* state, state::Character* character, std::vector<int> position, int abilityNumber = 0);
+    AttackCommand (state::State* state, Engine* engine, state::Character* character, std::vector<int> position, int abilityNumber = 0);
     void setZones ();
     std::vector<std::vector<int>> getZone (std::size_t i);
     void execute ();

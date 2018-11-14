@@ -2,8 +2,8 @@
 #ifndef STATE__STATE__H
 #define STATE__STATE__H
 
-#include <stdlib.h>
 #include <vector>
+#include <stdlib.h>
 
 namespace state {
   class Team;
@@ -28,6 +28,7 @@ namespace state {
   public:
     int etatCombat     = 0;
     bool isInventoryOpened     = false;
+    std::vector<std::vector<int>> animations;
   private:
     std::size_t I     = 144;
     std::size_t J     = 144;

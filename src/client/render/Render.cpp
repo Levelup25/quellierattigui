@@ -24,9 +24,12 @@ Render::Render(State* state, Engine* engine) {
 
 void Render::display() {
     SpriteGenerator::init();
+
     vector<vector < Cell*>> grid = state->getGrid();
     int nb = 2, N = state->getI(), M = state->getJ(), l = 34 * nb, h = 24 * nb,
             l2 = 32, h2 = 32;
+
+    AttackSprite attacks(l, h);
 
     RandomAI* ai = new RandomAI(state, engine);
 
@@ -38,7 +41,7 @@ void Render::display() {
 
     auto pwm = buildRootSprite();
     pwm->setSizeRelative({"100%", "100%"});
-    worldView.add(pwm);
+    //worldView.add(pwm);
 
     sf::View view2;
     view2.setSize(Vector2f(n * l, m * h / 6));
@@ -111,6 +114,7 @@ void Render::display() {
         }
 
         vector<Ability*> abs = maincharacter->getWeapon()->getAbilities();
+        Ability* a = abs[abilityNumber];
         x = maincharacter->getI();
         y = maincharacter->getJ();
         xv = (x / n) * n;
@@ -152,7 +156,7 @@ void Render::display() {
                 }
             } else if (state->etatCombat == 1) {
                 AttackCommand* atkcmd =
-                        new AttackCommand(state, maincharacter,{X, Y}, abilityNumber);
+                        new AttackCommand(state, engine, maincharacter,{X, Y}, abilityNumber);
                 atkcmd->setZones();
                 targets = atkcmd->getZone(0);
                 zone.setFillColor(Color(0, 0, 255, 128));
@@ -251,8 +255,9 @@ void Render::display() {
                             engine->addCommand(
                                     new MoveCommands(state, engine, maincharacter, X, Y));
                         } else if (state->etatCombat == 1) {
-                            engine->addCommand(new AttackCommand(state, maincharacter,{X, Y},
+                            engine->addCommand(new AttackCommand(state, engine, maincharacter,{X, Y},
                             abilityNumber));
+                            Ability* ability = maincharacter->getWeapon()->getAbility(abilityNumber);
                             state->etatCombat = 0;
                         }
                     }
@@ -266,6 +271,12 @@ void Render::display() {
                     engine->addCommand(new FightCommand(state, nullptr, nullptr));
                 }
             }
+        }
+
+        for (auto animation : state->animations) {
+            sprite = attacks.getSprite(animation[2], animation[3], animation[4]); //direction element lv
+            sprite.setPosition(Vector2f(animation[0] * l, animation[1] * h));
+            window.draw(sprite);
         }
 
         window.draw(worldView);
@@ -289,7 +300,6 @@ void Render::display() {
         text.setColor(colors[maincharacter->getWeapon()->getElement()]);
         window.draw(text);
 
-        Ability* a = abs[abilityNumber];
         text.setString("pa : " + to_string(a->getPa()) +
                 " atk : " + to_string(a->getDamage()));
         text.setPosition(Vector2f((N + n - 2) * l, M * h));

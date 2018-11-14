@@ -105,6 +105,20 @@ void Ability::setEffect(ZoneType effectZone, int min, int max, int reduce) {
     damageReduce = reduce;
 }
 
+vector<int> Ability::getTarget() {
+    return
+    {
+        (int) targetType, targetMin, targetMax
+    };
+}
+
+vector<int> Ability::getEffect() {
+    return
+    {
+        (int) effectType, effectMin, effectMax, damageReduce
+    };
+}
+
 int Ability::getDamage() {
     return damage;
 }

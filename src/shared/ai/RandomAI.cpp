@@ -42,7 +42,7 @@ void RandomAI::run(Character* character) {
             pa -= a->getPa();
             targets = a->getTargetZone({X, Y});
             zones = a->getEffectZone(targets[rand() % targets.size()]);
-            engine->addCommand(new AttackCommand(state, character, zones[rand() % zones.size()], ind));
+            engine->addCommand(new AttackCommand(state, engine, character, zones[rand() % zones.size()], ind));
         }
     } while (possible.size() > 0);
 }

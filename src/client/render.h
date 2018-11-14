@@ -2,6 +2,7 @@
 #ifndef __RENDER__H
 #define __RENDER__H
 
+#include "render/AttackSprite.h"
 #include "render/AbilitySprite.h"
 #include "render/ContentSprite.h"
 #include "render/CharacterSprite.h"

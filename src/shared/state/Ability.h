@@ -38,6 +38,8 @@ namespace state {
     void setCooldown (int initial);
     void setTarget (ZoneType targetZone, int min, int max);
     void setEffect (ZoneType effectZone, int min, int max, int reduce = 100);
+    std::vector<int> getTarget ();
+    std::vector<int> getEffect ();
     int getDamage ();
     unsigned int getPa ();
     std::string getName ();
