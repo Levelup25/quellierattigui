@@ -9,6 +9,7 @@ namespace state {
 };
 namespace engine {
   class Engine;
+  class FightCommand;
   class AttackCommand;
   class MoveCommands;
 };
@@ -19,6 +20,7 @@ namespace render {
   class TileSprite;
 }
 
+#include "engine/FightCommand.h"
 #include "engine/AttackCommand.h"
 #include "engine/MoveCommands.h"
 #include "AbilitySprite.h"

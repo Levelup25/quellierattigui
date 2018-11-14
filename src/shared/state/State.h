@@ -43,6 +43,7 @@ namespace state {
     // Operations
   public:
     State (std::size_t I = 144, std::size_t J = 144);
+    void resetContents ();
     std::size_t getI ();
     std::size_t getJ ();
     std::size_t getN ();
