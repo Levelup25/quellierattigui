@@ -47,14 +47,14 @@ void AttackCommand::execute() {
             Character* c = state->getCharacter(effect[0], effect[1]);
             if (c != nullptr) {
                 c->removePv(ability->getDamage());
-                if (c->getPv() == 0) {
-                    //                    Team* t = state->getTeam(c);
-                    //                    if (t->getCharacters().size() > 1) {
-                    //                        if (c != t->getMainCharacter()) t->swapCharacters(c, t->getMainCharacter());
-                    //                        else t->swapCharacters(0, 1);
-                    //                    }
-                    state->delCharacter(c);
-                }
+                if (c->getPv() <= 0) state->getCell(c->getI(), c->getJ())->setContent(nothing);
+                //                    Team* t = state->getTeam(c);
+                //                    if (t->getCharacters().size() > 1) {
+                //                        if (c != t->getMainCharacter()) t->swapCharacters(c, t->getMainCharacter());
+                //                        else t->swapCharacters(0, 1);
+                //                    }
+                // state->delCharacter(c);
+                //}
             }
         }
         state->endFight();

@@ -5,6 +5,7 @@
 #include "View.h"
 #include "Window.h"
 #include "WindowManager.h"
+#include "ai/RandomAI.h"
 #include "renderTest.h"
 
 using namespace std;
@@ -12,18 +13,22 @@ using namespace sf;
 using namespace state;
 using namespace render;
 using namespace engine;
+using namespace ai;
 
 Render::Render(State* state, Engine* engine) {
   this->state = state;
   this->engine = engine;
+  n = state->getN();
+  m = state->getM();
 }
 
 void Render::display() {
   SpriteGenerator::init();
-
   vector<vector<Cell*>> grid = state->getGrid();
   int nb = 2, N = state->getI(), M = state->getJ(), l = 34 * nb, h = 24 * nb,
       l2 = 32, h2 = 32;
+
+  RandomAI* ai = new RandomAI(state, engine);
 
   RenderWindow window(VideoMode(n * l, m * h * 7 / 6), "Jeu");
   window.setFramerateLimit(60);
@@ -52,7 +57,7 @@ void Render::display() {
   Vector2f posView = {xv * l, yv * h};
 
   sf::Sprite sprite;
-  // TileSprite tiles(l, h, nb);
+
   std::vector<SpriteGeneratorById*> TileGenerators = {
       SpriteGenerator::Tile::pdefault, SpriteGenerator::Tile::palt1,
       SpriteGenerator::Tile::palt2};
@@ -60,7 +65,7 @@ void Render::display() {
   auto TileGenerator = TileGenerators[offsetTileGenerator];
 
   ContentSprite contents(l, h);
-  AttackSprite attacks(2 * l, 2 * h);
+  AbilitySprite abilities(2 * l, 2 * h);
   CharacterSprite persos(l2, h2);
 
   RectangleShape zone(Vector2f(l, h));
@@ -82,15 +87,23 @@ void Render::display() {
   font.loadFromFile("res/font/roboto/Roboto-Regular.ttf");
   text.setFont(font);
   text.setCharacterSize(24);
-  text.setColor(sf::Color::White);
+  vector<Color> colors = {Color::White, Color::Blue, Color::Green, Color::Red,
+                          Color::Yellow};
 
   while (window.isOpen()) {
     window.clear();
 
     if (state->isFighting()) {
-      chars = state->getFight()->getFightingCharacters();
-      if (maincharacter == nullptr)
-        maincharacter = state->getMainCharacter();
+      Fight* fight = state->getFight();
+      chars = fight->getFightingCharacters();
+      if (maincharacter->getPv() <= 0) {
+        for (c : fight->getFightingCharacters(0)) {
+          if (c->getPv() > 0) {
+            maincharacter = c;
+            break;
+          }
+        }
+      }
     } else {
       chars = state->getMainCharacters();
       maincharacter = state->getMainCharacter();
@@ -111,7 +124,6 @@ void Render::display() {
         ElementType element = grid[i][j]->getElement();
         ContentType content = grid[i][j]->getContent();
 
-        // sprite = tiles.getSprite((int)element);
         sprite = TileGenerator->getSpriteRepeated((int)element, {2, 2});
         sprite.setPosition(Vector2f(i * l, j * h));
         window.draw(sprite);
@@ -174,13 +186,13 @@ void Render::display() {
     zone.setOutlineThickness(-2);
     if (state->isFighting()) {
       zone.setOutlineColor(Color::Blue);
-      for (auto c : state->getFight()->getTeam(0)->getCharacters()) {
+      for (auto c : state->getFight()->getFightingCharacters(0)) {
         zone.setPosition(Vector2f(c->getI() * l, c->getJ() * h));
 
         window.draw(zone);
       }
       zone.setOutlineColor(Color::Red);
-      for (auto c : state->getFight()->getTeam(1)->getCharacters()) {
+      for (auto c : state->getFight()->getFightingCharacters(1)) {
         zone.setPosition(Vector2f(c->getI() * l, c->getJ() * h));
 
         window.draw(zone);
@@ -208,6 +220,7 @@ void Render::display() {
         offsetTileGenerator %= TileGenerators.size();
         TileGenerator = TileGenerators[offsetTileGenerator];
       }
+
       posView = {xv * l, yv * h};
       Vector2f posMouse{(float)posMouseBuff.x, (float)posMouseBuff.y};
       worldView.reactEvent(event, posMouse);
@@ -216,7 +229,8 @@ void Render::display() {
         int X = xv + event.mouseButton.x / l, Y = yv + event.mouseButton.y / h;
         if (event.mouseButton.button == sf::Mouse::Right) {
           if (state->isFighting() &&
-              state->getMainTeam()->getCharacter(X, Y) != nullptr) {
+              state->getMainTeam()->getCharacter(X, Y) != nullptr &&
+              state->getCharacter(X, Y)->getPv() > 0) {
             maincharacter = state->getMainTeam()->getCharacter(X, Y);
             abilityNumber = 0;
           }
@@ -247,20 +261,11 @@ void Render::display() {
       if (event.type == sf::Event::KeyPressed && state->isFighting()) {
         if (event.key.code == sf::Keyboard::Return) {
           state->getFight()->endTurn();
+          for (auto c : state->getFight()->getFightingCharacters(1))
+            ai->run(c);
           state->getFight()->endTurn();
           state->etatCombat = 0;
         }
-        //                else if (event.key.code == sf::Keyboard::Left) {
-        //                    abilityNumber = (abilityNumber - 1) %
-        //                    maincharacter->getWeapon()->getAbilities().size();
-        //                } else if (event.key.code == sf::Keyboard::Right) {
-        //                    abilityNumber = (abilityNumber + 1) %
-        //                    maincharacter->getWeapon()->getAbilities().size();
-        //                } else if (event.key.code == sf::Keyboard::M) {
-        //                    state->etatCombat = 0;
-        //                } else if (event.key.code == sf::Keyboard::A) {
-        //                    state->etatCombat = 1;
-        //                }
       }
     }
 
@@ -269,8 +274,8 @@ void Render::display() {
     window.setView(view2);
     for (int i = 0; i < 5; i++) {
       if ((i - 1) < abs.size() && i > 0) {
-        sprite = attacks.getSprite((int)abs[i - 1]->getElement(),
-                                   abs[i - 1]->getLv());
+        sprite = abilities.getSprite((int)abs[i - 1]->getElement(),
+                                     abs[i - 1]->getLv());
         sprite.setPosition(Vector2f(N * l + i * n * l / 6, M * h));
         window.draw(sprite);
       } else {
@@ -282,18 +287,25 @@ void Render::display() {
                    " pa : " + to_string(maincharacter->getPa()) +
                    "\npm : " + to_string(maincharacter->getPm()));
     text.setPosition(Vector2f(N * l, M * h));
+    text.setColor(colors[maincharacter->getWeapon()->getElement()]);
     window.draw(text);
-    if (state->getCharacter(X, Y) != nullptr) {
-      Character* c = state->getCharacter(X, Y);
-      text.setString("pa : " + to_string(abs[abilityNumber]->getPa()) +
-                     " atk : " + to_string(abs[abilityNumber]->getDamage()) +
-                     "\npv : " + to_string(c->getPv()) + " pa : " +
-                     to_string(c->getPa()) + "\npm : " + to_string(c->getPm()));
-    } else
-      text.setString("pa : " + to_string(abs[abilityNumber]->getPa()) +
-                     " atk : " + to_string(abs[abilityNumber]->getDamage()));
+
+    Ability* a = abs[abilityNumber];
+    text.setString("pa : " + to_string(a->getPa()) +
+                   " atk : " + to_string(a->getDamage()));
     text.setPosition(Vector2f((N + n - 2) * l, M * h));
+    text.setColor(colors[a->getElement()]);
     window.draw(text);
+
+    if (state->getCharacter(X, Y) != nullptr &&
+        state->getCharacter(X, Y)->getPv() > 0) {
+      Character* c = state->getCharacter(X, Y);
+      text.setString("\npv : " + to_string(c->getPv()) + " pa : " +
+                     to_string(c->getPa()) + "\npm : " + to_string(c->getPm()));
+      text.setPosition(Vector2f((N + n - 2) * l, M * h));
+      text.setColor(colors[c->getWeapon()->getElement()]);
+      window.draw(text);
+    }
 
     // end the current frame
     window.display();

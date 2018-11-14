@@ -34,6 +34,7 @@ namespace state {
     Ability* getAbility (std::size_t i);
     std::vector<Ability*> getAbilities ();
     std::string getName ();
+    ElementType getElement ();
     // Setters and Getters
   };
 

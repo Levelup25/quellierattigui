@@ -3,13 +3,18 @@
 using namespace std;
 using namespace state;
 
-Fight::Fight(Team* main, Team* opponent) {
+Fight::Fight(Team* main, Team* opponent, int nb) {
     this->main = main;
     this->opponent = opponent;
+    this->nb = nb;
 }
 
 int Fight::getTurn() {
     return turn;
+}
+
+int Fight::getNb() {
+    return nb;
 }
 
 Team* Fight::getTeam(size_t i) {
@@ -27,19 +32,23 @@ vector<Team*> Fight::getTeams() {
     };
 }
 
-std::vector<Character*> Fight::getFightingCharacters() {
+std::vector<Character*> Fight::getFightingCharacters(int i) {
     std::vector<Character*> chars;
-    for (auto c : main->getCharacters()) {
-        chars.push_back(c);
+    if (i != 1) {
+        for (auto c : main->getCharacters(nb)) {
+            if (c->getPv() > 0)chars.push_back(c);
+        }
     }
-    for (auto c : opponent->getCharacters()) {
-        chars.push_back(c);
+    if (i != 0) {
+        for (auto c : opponent->getCharacters(nb)) {
+            if (c->getPv() > 0)chars.push_back(c);
+        }
     }
     return chars;
 }
 
 void Fight::endTurn() {
-    for (auto c : this->getTeam(turn % 2)->getCharacters()) {
+    for (auto c : this->getFightingCharacters(turn % 2)) {
         c->resetPm();
         c->resetPa();
     }

@@ -63,6 +63,14 @@ size_t State::getJ() {
     return J;
 }
 
+size_t State::getN() {
+    return n;
+}
+
+size_t State::getM() {
+    return m;
+}
+
 vector<vector<Cell*>> State::getGrid() {
     return grid;
 }
@@ -256,21 +264,21 @@ bool State::isFighting() {
     return fight != nullptr;
 }
 
-void State::deploy() {
-    for (auto c : fight->getTeam(0)->getCharacters()) {
+void State::deploy(int nb) {
+    for (auto c : fight->getTeam(0)->getCharacters(nb)) {
         c->resetPm();
         c->resetPa();
         c->resetPv();
     }
 
-    Team* team1 = fight->getTeams()[0];
-    Team* team2 = fight->getTeams()[1];
+    Team* team1 = fight->getTeam(0);
+    Team* team2 = fight->getTeam(1);
     int i0 = team2->getMainCharacter()->getI(), j0 = team2->getMainCharacter()->getJ();
     int xv = (i0 / n) * n, yv = (j0 / m) * m;
 
     if (this->isFighting()) {
-        int i, j;
-        for (auto mainchars : team1->getCharacters()) {
+        int i, j, nb = fight->getNb();
+        for (auto mainchars : team1->getCharacters(nb)) {
             do {
                 i = xv + n / 6 + rand() % (2 * n / 3);
                 j = yv + 2 * m / 3 + rand() % (m / 4);
@@ -278,7 +286,7 @@ void State::deploy() {
             this->moveCharacter(mainchars, i, j);
             mainchars->setDirection(north);
         }
-        for (auto oppchars : team2->getCharacters()) {
+        for (auto oppchars : team2->getCharacters(nb)) {
             do {
                 i = xv + n / 6 + rand() % (2 * n / 3);
                 j = yv + m / 12 + rand() % (m / 4);
@@ -297,13 +305,18 @@ void State::deploy() {
 }
 
 void State::endFight() {
-    if (!fight->getTeam(0)->isAlive()) {
-        this->delTeam(fight->getTeam(0));
+    if (fight->getFightingCharacters(0).size() == 0) {
+        Team* team = fight->getTeam(0);
+        for (c : team->getCharacters(fight->getNb())) this->delCharacter(c);
+        if (team->getCharacters().size() == 0)this->delTeam(team);
         //        delete fight;
         fight = nullptr;
     }
-    if (!fight->getTeam(1)->isAlive()) {
-        this->delTeam(fight->getTeam(1));
+    if (fight->getFightingCharacters(1).size() == 0) {
+        Team* team = fight->getTeam(1);
+        //for (c : team->getCharacters(fight->getNb())) this->delCharacter(c);
+        //if (team->getCharacters().size() == 0)
+        this->delTeam(team);
         //        delete fight;
         fight = nullptr;
     }

@@ -19,15 +19,17 @@ namespace state {
     // Attributes
   private:
     int turn     = 1;
+    int nb;
     Team* main;
     Team* opponent;
     // Operations
   public:
-    Fight (Team* main, Team* opponent);
+    Fight (Team* main, Team* opponent, int nb = -1);
     int getTurn ();
+    int getNb ();
     Team* getTeam (std::size_t i);
     std::vector<Team*> getTeams ();
-    std::vector<Character*> getFightingCharacters ();
+    std::vector<Character*> getFightingCharacters (int i = -1);
     void endTurn ();
     // Setters and Getters
   };
