@@ -1,6 +1,7 @@
 #include "Render.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "SpriteGenerator.h"
 #include "View.h"
 #include "Window.h"
 #include "WindowManager.h"
@@ -18,6 +19,8 @@ Render::Render(State* state, Engine* engine) {
 }
 
 void Render::display() {
+  SpriteGenerator::init();
+
   vector<vector<Cell*>> grid = state->getGrid();
   int nb = 2, N = state->getI(), M = state->getJ(), l = 34 * nb, h = 24 * nb,
       l2 = 32, h2 = 32;
@@ -49,7 +52,13 @@ void Render::display() {
   Vector2f posView = {xv * l, yv * h};
 
   sf::Sprite sprite;
-  TileSprite tiles(l, h, nb);
+  // TileSprite tiles(l, h, nb);
+  std::vector<SpriteGeneratorById*> TileGenerators = {
+      SpriteGenerator::Tile::pdefault, SpriteGenerator::Tile::palt1,
+      SpriteGenerator::Tile::palt2};
+  size_t offsetTileGenerator = 0;
+  auto TileGenerator = TileGenerators[offsetTileGenerator];
+
   ContentSprite contents(l, h);
   AttackSprite attacks(2 * l, 2 * h);
   CharacterSprite persos(l2, h2);
@@ -102,7 +111,8 @@ void Render::display() {
         ElementType element = grid[i][j]->getElement();
         ContentType content = grid[i][j]->getContent();
 
-        sprite = tiles.getSprite((int)element);
+        // sprite = tiles.getSprite((int)element);
+        sprite = TileGenerator->getSpriteRepeated((int)element, {2, 2});
         sprite.setPosition(Vector2f(i * l, j * h));
         window.draw(sprite);
 
@@ -192,6 +202,12 @@ void Render::display() {
       if (event.type == sf::Event::Closed)
         window.close();
 
+      if (event.type == sf::Event::KeyPressed &&
+          event.key.code == sf::Keyboard::Add) {
+        offsetTileGenerator += 1;
+        offsetTileGenerator %= TileGenerators.size();
+        TileGenerator = TileGenerators[offsetTileGenerator];
+      }
       posView = {xv * l, yv * h};
       Vector2f posMouse{(float)posMouseBuff.x, (float)posMouseBuff.y};
       worldView.reactEvent(event, posMouse);
