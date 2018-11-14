@@ -97,7 +97,7 @@ void Render::display() {
       Fight* fight = state->getFight();
       chars = fight->getFightingCharacters();
       if (maincharacter->getPv() <= 0) {
-        for (c : fight->getFightingCharacters(0)) {
+        for (auto c : fight->getFightingCharacters(0)) {
           if (c->getPv() > 0) {
             maincharacter = c;
             break;

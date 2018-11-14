@@ -37,8 +37,8 @@ namespace render {
   private:
     state::State* state;
     engine::Engine* engine;
-    std::size_t n;
-    std::size_t m;
+    std::size_t n     = 12;
+    std::size_t m     = 12;
     // Operations
   public:
     Render (state::State* state, engine::Engine* engine);
