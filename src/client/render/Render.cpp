@@ -257,7 +257,6 @@ void Render::display() {
                         } else if (state->etatCombat == 1) {
                             engine->addCommand(new AttackCommand(state, engine, maincharacter,{X, Y},
                             abilityNumber));
-                            Ability* ability = maincharacter->getWeapon()->getAbility(abilityNumber);
                             state->etatCombat = 0;
                         }
                     }
@@ -266,9 +265,9 @@ void Render::display() {
             if (event.type == sf::Event::KeyPressed && state->isFighting()) {
                 if (event.key.code == sf::Keyboard::Return) {
                     engine->addCommand(new FightCommand(state, nullptr, nullptr));
-                    for (auto c : state->getFight()->getFightingCharacters(1))
-                        ai->run(c);
-                    engine->addCommand(new FightCommand(state, nullptr, nullptr));
+                    //                    for (auto c : state->getFight()->getFightingCharacters(1))
+                    //                        ai->run(c);
+                    //                    engine->addCommand(new FightCommand(state, nullptr, nullptr));
                 }
             }
         }
@@ -307,12 +306,14 @@ void Render::display() {
         window.draw(text);
 
         Character* c = state->getCharacter(X, Y);
-        if (c != nullptr && c->getPv() > 0) {
-            text.setString("\npv : " + to_string(c->getPv()) + " pa : " +
-                    to_string(c->getPa()) + "\npm : " + to_string(c->getPm()));
-            text.setPosition(Vector2f((N + n - 2) * l, M * h));
-            text.setColor(colors[c->getWeapon()->getElement()]);
-            window.draw(text);
+        for (auto ch : chars) {
+            if (c == ch) {
+                text.setString("\npv : " + to_string(c->getPv()) + " pa : " +
+                        to_string(c->getPa()) + "\npm : " + to_string(c->getPm()));
+                text.setPosition(Vector2f((N + n - 2) * l, M * h));
+                text.setColor(colors[c->getWeapon()->getElement()]);
+                window.draw(text);
+            }
         }
 
         // end the current frame

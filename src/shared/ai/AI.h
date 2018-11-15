@@ -2,6 +2,7 @@
 #ifndef AI__AI__H
 #define AI__AI__H
 
+#include <vector>
 
 namespace state {
   class State;
@@ -33,6 +34,8 @@ namespace ai {
     // Operations
   public:
     virtual void run (state::Character* character) = 0;
+  protected:
+    std::vector<engine::Command*> listCommands (state::Character* character);
     // Setters and Getters
     const state::State*& getState() const;
     void setState(const state::State*& state);

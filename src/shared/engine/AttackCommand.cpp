@@ -16,14 +16,21 @@ AttackCommand::AttackCommand(State* state, Engine* engine, Character* character,
 }
 
 void AttackCommand::setZones() {
+    int n = state->getN(), m = state->getM();
     ability = character->getWeapon()->getAbility(abilityNumber);
     if (ability->getPa() <= character->getPa()) {
         int i0 = character->getI(), j0 = character->getJ();
         int i = position[0], j = position[1];
         targets = ability->getTargetZone({i0, j0});
+        for (auto target = targets.end() - 1; target >= targets.begin(); target--) {
+            if ((*target)[0] / n != i0 / n || (*target)[1] / m != j0 / m) targets.erase(target);
+        }
         for (auto coord : targets) {
             if (coord[0] == i && coord[1] == j) {
                 effects = ability->getEffectZone({i, j});
+                for (auto effect = effects.end() - 1; effect >= effects.begin(); effect--) {
+                    if ((*effect)[0] / n != i0 / n || (*effect)[1] / m != j0 / m) effects.erase(effect);
+                }
                 return;
             }
         }
@@ -63,6 +70,7 @@ void AttackCommand::execute() {
         vector<int> v2{
             direction
         };
+
         for (int i = 0; i <= pas; i++) {
             v = {
                 {

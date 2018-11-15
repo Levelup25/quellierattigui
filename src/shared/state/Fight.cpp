@@ -48,7 +48,7 @@ std::vector<Character*> Fight::getFightingCharacters(int i) {
 }
 
 void Fight::endTurn() {
-    for (auto c : this->getFightingCharacters(turn % 2)) {
+    for (auto c : this->getFightingCharacters()) {
         c->resetPm();
         c->resetPa();
     }
