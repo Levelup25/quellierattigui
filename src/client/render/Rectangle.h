@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 namespace render {
+  class Rectangle;
   class Element;
 }
 
@@ -20,10 +21,13 @@ namespace render {
     // Operations
   public:
     Rectangle ();
+    Rectangle (const Rectangle& obj);
     ~Rectangle ();
+    Rectangle& operator= (const Rectangle& rec);
     void draw (sf::RenderTarget& target, sf::RenderStates states) const;
     void updatePosAbs ();
     void updateSizeAbs ();
+    virtual Element* getCopy () const;
     // Setters and Getters
   };
 

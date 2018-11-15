@@ -42,6 +42,8 @@ namespace render {
   public:
     Element ();
     ~Element ();
+    Element (const Element& obj);
+    virtual Element& operator= (const Element& obj);
     virtual void draw (sf::RenderTarget& target, sf::RenderStates states) const;
     const Relatif2 getPosRelative () const;
     virtual void setPosRelative (Relatif2 posRelatif);
@@ -67,14 +69,16 @@ namespace render {
     friend std::ostream& operator<< (std::ostream& os, const Element& el);
     friend std::ostream& operator<< (std::ostream& os, const sf::Vector2f& vec);
     bool isInside (sf::Vector2f posAbs);
-    int getId ();
-    bool getWaitingDestruction ();
+    int getId () const;
+    bool getWaitingDestruction () const;
     void moveAtTop (Element* pchild);
     bool getMouseOver () const;
     void setMouseOver (bool b, sf::Vector2f mousePosAbs);
     bool getMouseInChildren (sf::Vector2f mousePos) const;
     void closeChildrenWaiting ();
     void updateChildrenMouseOver (sf::Vector2f mousePosAbs);
+    std::vector<Element*> getChildren () const;
+    virtual Element* getCopy () const;
   private:
     void updateDepth ();
     float computeCoord (Relatif rel, float parentCoordAbs, float parentLengthAbs, float lengthAbs);

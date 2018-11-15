@@ -19,8 +19,9 @@ using namespace state;
 using namespace std;
 
 void testRender();
-void createWindowWith(Element* root);
-Element* buildRootWindow();
-Element* buildRootTestRectangle();
-Element* buildRootWebpageStyle();
-Element* buildRootSprite();
+void createWindowWith(Element root);
+Element buildRootWindow();
+Element buildRootTestRectangle();
+Element buildRootWebpageStyle();
+Element buildRootSprite();
+Element testCopy();

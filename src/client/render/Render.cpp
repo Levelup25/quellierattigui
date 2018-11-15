@@ -36,7 +36,8 @@ void Render::display() {
   render::View worldView;
   worldView.setSizeRelative(sf::Vector2f({n * l, m * h}));
 
-  auto pwm = buildRootSprite();
+  auto pwm = new Element();
+  *pwm = buildRootSprite();
   pwm->setSizeRelative({"100%", "100%"});
   worldView.add(pwm);
 

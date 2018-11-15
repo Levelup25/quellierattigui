@@ -10,7 +10,20 @@ Rectangle::Rectangle() {
   recshape.setFillColor(sf::Color::White);
 }
 
+Rectangle::Rectangle(const Rectangle& obj) : Element::Element(obj) {
+  *this = obj;
+}
+
+Rectangle& Rectangle::operator=(const Rectangle& rec) {
+  recshape = rec.recshape;
+  return *this;
+}
+
 Rectangle::~Rectangle() {}
+
+Element* Rectangle::getCopy() const {
+  return new Rectangle(*this);
+}
 
 void Rectangle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   target.draw(recshape);
