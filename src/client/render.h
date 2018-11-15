@@ -8,6 +8,7 @@
 #include "render/CharacterSprite.h"
 #include "render/TileSprite.h"
 #include "render/Render.h"
+#include "render/SpriteGeneratorById.h"
 #include "render/ComputeMethodType.h"
 #include "render/Relatif.h"
 #include "render/Relatif2.h"
@@ -19,5 +20,4 @@
 #include "render/Window.h"
 #include "render/Inventory.h"
 #include "render/View.h"
-#include "render/SpriteGeneratorById.h"
 #endif
