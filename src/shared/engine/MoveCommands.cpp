@@ -20,6 +20,7 @@ MoveCommands::MoveCommands(State* state, Engine* engine, Character* character, s
 }
 
 void MoveCommands::setGenerator() {
+    state->resetContents();
     int i0 = character->getI(), j0 = character->getJ();
     int xv = (i0 / n) * n, yv = (j0 / m) * m;
     generator.clearCollisions();

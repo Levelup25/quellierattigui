@@ -9,18 +9,22 @@ namespace state {
 };
 namespace engine {
   class Engine;
+  class FightCommand;
   class AttackCommand;
   class MoveCommands;
 };
 namespace render {
+  class AttackSprite;
   class AbilitySprite;
   class ContentSprite;
   class CharacterSprite;
   class TileSprite;
 }
 
+#include "engine/FightCommand.h"
 #include "engine/AttackCommand.h"
 #include "engine/MoveCommands.h"
+#include "AttackSprite.h"
 #include "AbilitySprite.h"
 #include "engine/Engine.h"
 #include "ContentSprite.h"

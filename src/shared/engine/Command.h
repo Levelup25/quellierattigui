@@ -22,7 +22,6 @@ namespace engine {
     state::Character* character;
     // Operations
   public:
-    virtual ~Command ();
     virtual void execute () = 0;
     // Setters and Getters
     const state::State*& getState() const;

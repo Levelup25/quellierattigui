@@ -8,14 +8,16 @@
 
 #include "render/renderTest.h"
 
-#include "engine.h"
-#include "render.h"
 #include "state.h"
+#include "render.h"
+#include "engine.h"
+#include "ai.h"
 
 using namespace std;
 using namespace state;
 using namespace render;
 using namespace engine;
+using namespace ai;
 
 #include "string.h"
 
@@ -210,6 +212,77 @@ int main(int argc, char* argv[]) {
             t2.join();
         }// Livrable 2.final
         else if (strcmp(argv[i], "random_ai") == 0) {
+            State* state = new State();
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 4; j++) {
+                    state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4),
+                            rand() % 12, rand() % 12);
+                    Character* c = state->getCharacters().back();
+                    c->setPm(2 + rand() % 5);
+                    c->setPv(1 + rand() % 4);
+                    c->setPa(3 + rand() % 2);
+                    Weapon* w = new Weapon(1 + rand() % 18);
+                    c->setWeapon(w);
+                    for (auto a : w->getAbilities()) {
+                        int r3 = rand() % 3;
+                        for (int i = 0; i < r3; i++)
+                            a->addLv();
+                    }
+                }
+            }
+
+            Engine* engine = new Engine();
+            Render* render = new Render(state, engine);
+            RandomAI* ai = new RandomAI(state, engine);
+
+            cout << "Clic gauche : déplacement" << endl;
+            cout << "Clic droit : choix personnage" << endl;
+            cout << "Se déplacer au bord de l'écran change la vue sauf si un "
+                    "obstacle bloque"
+                    << endl;
+            cout << "Cliquez sur un personnage pour se battre. Dans ce cas : "
+                    << endl;
+            cout << "Clic gauche sur la carte : déplacement" << endl;
+            cout << "Clic gauche sur une capacité, puis sur la zone bleue : attaque"
+                    << endl;
+            cout << "Clic droit : choix personnage" << endl;
+            cout << "Entrée : passer le tour et actualiser pa et pm" << endl;
+            cout << "Les informations sur le personnage actif sont affichés à gauche"
+                    << endl;
+            cout << "Les informations sur la capacité sont affichés à droite" << endl;
+            cout
+                    << "Pointer un personnage affiche également ses informations à droite"
+                    << endl;
+
+            bool end = false;
+            thread t1([render, &end]() {
+                render->display();
+                end = true;
+            });
+            thread t2([engine, &end]() {
+                sf::Clock clock;
+                while (!end) {
+                    if (clock.getElapsedTime().asSeconds() >= 1.0 / 30) {
+                        engine->runCommand();
+                                clock.restart();
+                    }
+                }
+            });
+            thread t3([ai, state, engine, &end]() {
+                sf::Clock clock;
+                while (!end) {
+                    if (clock.getElapsedTime().asSeconds() >= 1.0 / 30) {
+                        if (state->isFighting() && state->getFight()->getTurn() % 2 == 0 && engine->getSize() == 0) {
+                            for (auto c : state->getFight()->getFightingCharacters(1))ai->run(c);
+                                    engine->addCommand(new FightCommand(state, nullptr, nullptr));
+                            }
+                        clock.restart();
+                    }
+                }
+            });
+            t1.join();
+            t2.join();
+            t3.join();
         }// Livrable 3.1
         else if (strcmp(argv[i], "heuristic_ai") == 0) {
         }// Livrable 3.final

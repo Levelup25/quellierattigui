@@ -11,6 +11,7 @@ void Engine::addCommand(Command* command) {
 void Engine::runCommand() {
     if (commands.size() > 0) {
         commands[0]->execute();
+        delete commands[0];
         commands.erase(commands.begin());
     }
 }
@@ -18,6 +19,7 @@ void Engine::runCommand() {
 void Engine::runCommands() {
     for (auto cmd = commands.begin(); cmd != commands.end(); ++cmd) {
         (*cmd)->execute();
+        delete (*cmd);
     }
     commands.clear();
 }
