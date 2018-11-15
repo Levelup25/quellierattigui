@@ -166,6 +166,12 @@
             \caption{Exemple d'obstacles}
         \end{figure}
 
+\begin{figure}[ht]
+        \centering
+        \includegraphics[width=\textwidth]{fx.png}
+        \caption{Exemple animations attaques}
+    \end{figure}
+
 \clearpage
 \section{Description et conception des états}
 
@@ -234,7 +240,7 @@ Le détail des attributs et opérations des différentes classes est présenté 
 
 
 \subsection{Conception Logiciel}
-Le diagramme des classes pour les états est présenté en Figure 8 : 
+Le diagramme des classes pour les états est présenté en Figure~\ref{uml:state} : 
 \begin{itemize}
 \item La classe en vert contient les information globales sur le déroulement du jeu et permettent de déterminer l'état actuel du jeu
 \item Les classes en jaune caractérisent les personnages et le terrain dans lequel ils évoluent
@@ -245,7 +251,7 @@ Le diagramme des classes pour les états est présenté en Figure 8 :
 \begin{landscape}
     \begin{figure}[p]
     \includegraphics[width=0.9\paperheight]{state.png}
-        \caption{\label{uml:render}Diagramme des classes de rendu.} 
+        \caption{\label{uml:state}Diagramme des classes d'état.} 
     \end{figure}
 \end{landscape}
 
@@ -258,7 +264,7 @@ Le rendu de l'état est possible grâce aux différentes informations récupér�
 
 \subsection{Conception logiciel}
 
- Le diagramme de classes du rendu est présenté en Figure 9 : 
+ Le diagramme de classes du rendu est présenté en Figure~\ref{uml:render} : 
 \begin{itemize}
 \item Les classes en vert sont les gestionnaires des différentes ressources. Elles chargent les différentes textures du jeu lors de l'instanciation en prenant en argument leur résolution et possèdent la méthode getSprite() générant le sprite redimensionné aux dimensions des cellules, compatible avec l'état du monde, dépendant alors de la tuile à afficher (élément + contenu) et du personnage à afficher.
 \item Render réutilise alors les sprites générés pour afficher la carte grâce au RenderWindow de sfml et gère la View correspondante via display().
@@ -283,7 +289,7 @@ Une partie des classes n'a pas pu être représentée sur le dia vu que ces clas
 \begin{landscape}
     \begin{figure}[p]
         \includegraphics[width=0.9\paperheight]{render.png}
-        \caption{\label{uml:engine}Diagramme des classes de rendu.}
+        \caption{\label{uml:render}Diagramme des classes de rendu.}
     \end{figure}
 \end{landscape}
 
@@ -298,16 +304,16 @@ Une partie des classes n'a pas pu être représentée sur le dia vu que ces clas
 
 
 \subsection{Changements autonomes}
-	Les changements autonomes sont le changement de direction du personnage lors de son déplacement, ainsi que le démarrage de la phase de combat permettant de déployer tous les personnages de chaque équipe si un ennemi est rencontré lors de la phase d'exploration.
+	Les changements autonomes sont le changement de direction du personnage lors de son déplacement, l'affichage des sprites fx lors de l'attaque ainsi que le démarrage de la phase de combat permettant de déployer tous les personnages de chaque équipe si un ennemi est rencontré lors de la phase d'exploration.
 
 \subsection{Conception logiciel}
 
-Le diagramme des classes pour le moteur du jeu est présenté en Figure 11. Le moteur de jeu repose sur le pattern Command et permet la mise en oeuvre différée des commandes modifiant l'état du jeu.
+Le diagramme des classes pour le moteur du jeu est présenté en Figure~\ref{uml:engine}. Le moteur de jeu repose sur le pattern Command et permet la mise en oeuvre différée des commandes modifiant l'état du jeu.
 
 \textbf{Classes Command} Ces classes représentent les commandes exécutées par le moteur. 
 \begin{itemize}
 \item MoveCommands permet de générer l'ensemble des commandes individuelles MoveCommand et DirectionCommand afin de créer une animation de déplacement en utilisant un pathfinding A* (rapide mais ne générant pas nécessairement le chemin le plus optimal) et FightCommant en cas de rencontre avec un ennemi, ce qui lance la phase de combat.
-\item AttackCommand permet aux différents personnages d'attaquer avec leurs capacités et ainsi d'infliger des dégâts à différentes cibles.
+\item AttackCommand permet aux différents personnages d'attaquer avec leurs capacités et ainsi d'infliger des dégâts à différentes cibles et génère des commandes AnimationCommand pour générer les animations s'attaque.
 \end{itemize}
 
 
@@ -325,17 +331,26 @@ Le diagramme des classes pour le moteur du jeu est présenté en Figure 11. Le m
 \section{Intelligence Artificielle}
 
 \subsection{Stratégies}
+\subsubsection{Intelligence aléatoire}
+
+L'IA execute des commandes aléatoires parmi le mouvement et l'attaque, s'il lui reste assez de pa/pm.
 
 \clearpage
 \subsection{Conception logiciel}
+Le diagramme de classes pour l'intelligence artificielle est présentée en figure~\ref{uml:ai}
+
+\textbf{Classes AI} Les classes filles s'organisent selon un pattern strategy : 
+\begin{itemize}
+\item RandomIA : IA aléatoire
+\end{itemize}
 
 
-%\begin{landscape}
-%\begin{figure}[p]
-%\includegraphics[width=0.9\paperheight]{ai.pdf}
-%\caption{\label{uml:ai}Diagramme des classes d'intelligence artificielle.} 
-%\end{figure}
-%\end{landscape}
+\begin{landscape}
+    \begin{figure}[p]
+        \includegraphics[width=0.9\paperheight]{ai.png}
+        \caption{\label{uml:ai}Diagramme des classes d'intelligence artificielle.}
+    \end{figure}
+\end{landscape}
 
 
 \section{Modularisation}
