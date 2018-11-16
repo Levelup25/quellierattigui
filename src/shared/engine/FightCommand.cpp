@@ -23,5 +23,6 @@ void FightCommand::execute() {
         state->getFight()->endTurn();
         state->etatCombat = 0;
         cout << "fight4" << endl;
+
     }
 }

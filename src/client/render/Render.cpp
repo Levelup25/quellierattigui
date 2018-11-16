@@ -231,6 +231,7 @@ void Render::display() {
             if (event.type == sf::Event::MouseButtonPressed) {
                 int X = xv + event.mouseButton.x / l, Y = yv + event.mouseButton.y / h;
                 if (event.mouseButton.button == sf::Mouse::Right) {
+                    state->etatCombat = 0;
                     if (state->isFighting() &&
                             state->getMainTeam()->getCharacter(X, Y) != nullptr &&
                             state->getCharacter(X, Y)->getPv() > 0) {
@@ -319,6 +320,13 @@ void Render::display() {
             }
         }
 
+        for (int b = 0; b < 12; b++) {
+            for (int a = 0; a < 12; a++) {
+                cout << state->getCell(a, b)->getContent() << " ";
+            }
+            cout << endl;
+        }
+        cout << endl;
         // end the current frame
         window.display();
     }

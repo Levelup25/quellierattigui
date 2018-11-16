@@ -1,6 +1,6 @@
 #include "AttackCommand.h"
 #include "AnimationCommand.h"
-#include <math.h>
+#include "FightCommand.h"
 #include <iostream>
 
 using namespace std;
@@ -23,13 +23,13 @@ void AttackCommand::setZones() {
         int i = position[0], j = position[1];
         targets = ability->getTargetZone({i0, j0});
         for (auto target = targets.end() - 1; target >= targets.begin(); target--) {
-            if ((*target)[0] / n != i0 / n || (*target)[1] / m != j0 / m) targets.erase(target);
+            if ((*target)[0] / n != i0 / n || (*target)[0] < 0 || (*target)[1] / m != j0 / m || (*target)[1] < 0) targets.erase(target);
         }
         for (auto coord : targets) {
             if (coord[0] == i && coord[1] == j) {
                 effects = ability->getEffectZone({i, j});
                 for (auto effect = effects.end() - 1; effect >= effects.begin(); effect--) {
-                    if ((*effect)[0] / n != i0 / n || (*effect)[1] / m != j0 / m) effects.erase(effect);
+                    if ((*effect)[0] / n != i0 / n || (*effect)[0] < 0 || (*effect)[1] / m != j0 / m || (*effect)[1] < 0) effects.erase(effect);
                 }
                 return;
             }
@@ -117,5 +117,6 @@ void AttackCommand::execute() {
         engine->addCommand(new AnimationCommand(state, v, v2, ability->getElement(), ability->getLv()));
         state->endFight();
         if (!state->isFighting()) state->etatCombat = 0;
+        //engine->addCommand(new FightCommand(state, nullptr, nullptr));
     }
 }
