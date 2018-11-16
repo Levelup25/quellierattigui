@@ -269,15 +269,18 @@ int main(int argc, char* argv[]) {
                 }
             });
             thread t3([ai, state, engine, &end]() {
-                sf::Clock clock;
+                //sf::Clock clock;
                 while (!end) {
-                    if (clock.getElapsedTime().asSeconds() >= 1.0 / 30) {
-                        if (state->isFighting() && state->getFight()->getTurn() % 2 == 0 && engine->getSize() == 0) {
-                            for (auto c : state->getFight()->getFightingCharacters(1))ai->run(c);
-                                    engine->addCommand(new FightCommand(state, nullptr, nullptr));
-                            }
-                        clock.restart();
+                    //if (clock.getElapsedTime().asSeconds() >= 1.0 / 30) {
+                    if (state->isFighting() && state->getFight()->getTurn() % 2 == 0 && engine->getSize() == 0) {
+                        vector<Character*> vect = state->getFight()->getFightingCharacters(1);
+                        for (auto c : vect) {
+                            ai->run(c);
+                        }
+                        if (state->getFight()->getFightingCharacters(1).size() > 0)engine->addCommand(new FightCommand(state, nullptr, nullptr));
                     }
+                    //                        clock.restart();
+                    //                    }
                 }
             });
             t1.join();
