@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 namespace render {
+  class Sprite;
   class Element;
 }
 
@@ -20,6 +21,9 @@ namespace render {
     // Operations
   public:
     Sprite ();
+    Sprite (const Sprite& sprite);
+    Sprite& operator= (const Sprite& sprite);
+    Element* getCopy () const;
     ~Sprite ();
     void draw (sf::RenderTarget& target, sf::RenderStates states) const;
     void updatePosAbs ();

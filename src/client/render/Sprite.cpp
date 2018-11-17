@@ -6,6 +6,19 @@ using namespace std;
 
 Sprite::Sprite() {}
 
+Sprite::Sprite(const Sprite& sprite) : Element(sprite) {
+  *this = sprite;
+}
+
+Sprite& Sprite::operator=(const Sprite& sprite) {
+  this->sprite = sprite.sprite;
+  return *this;
+}
+
+Element* Sprite::getCopy() const {
+  return new Sprite(*this);
+}
+
 Sprite::~Sprite() {}
 
 void Sprite::draw(sf::RenderTarget& target, sf::RenderStates states) const {
