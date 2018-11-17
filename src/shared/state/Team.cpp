@@ -16,8 +16,8 @@ void Team::delCharacter(Character* character) {
     for (auto c = characters.begin(); c != characters.end(); c++) {
         if (*c == character) {
             characters.erase(c);
-            //            delete character;
-            //            character = nullptr;
+            delete character;
+            character = nullptr;
             return;
         }
     }

@@ -148,27 +148,6 @@ int main(int argc, char* argv[]) {
                         for (int i = 0; i < r3; i++)
                             a->addLv();
                     }
-                    //                    Ability* a = w->getAbilities()[0];
-                    //                    int r1 = 1 + rand() % 2, r2 = rand() % 3;
-                    //                    a->setElement((ElementType) (rand() % 5));
-                    //                    int r3 = rand() % 3;
-                    //                    for (int i = 0; i < r3; i++)a->addLv();
-                    //                    a->setTarget((ZoneType) (rand() % 3), r1, r1 +
-                    //                    rand() % 5); a->setEffect((ZoneType) (rand() %
-                    //                    3), r2, r2 + rand() % 5); a->setPa(1 + rand() %
-                    //                    2); int r = rand() % 4; for (int k = 0; k < r;
-                    //                    k++) {
-                    //                        Ability* a = new Ability();
-                    //                        int r1 = 1 + rand() % 2, r2 = rand() % 3;
-                    //                        a->setElement((ElementType) (rand() % 5));
-                    //                        int r3 = rand() % 3;
-                    //                        for (int i = 0; i < r3; i++)a->addLv();
-                    //                        a->setTarget((ZoneType) (rand() % 3), r1, r1
-                    //                        + rand() % 5); a->setEffect((ZoneType)
-                    //                        (rand() % 3), r2, r2 + rand() % 5);
-                    //                        a->setPa(1 + rand() % 2);
-                    //                        w->addAbility(a);
-                    //                    }
                 }
             }
 
@@ -185,7 +164,7 @@ int main(int argc, char* argv[]) {
             cout << "Clic gauche sur la carte : déplacement" << endl;
             cout << "Clic gauche sur une capacité, puis sur la zone bleue : attaque"
                     << endl;
-            cout << "Clic droit : choix personnage" << endl;
+            cout << "Clic droit : choix personnage ou annulation d'attaque" << endl;
             cout << "Entrée : passer le tour et actualiser pa et pm" << endl;
             cout << "Les informations sur le personnage actif sont affichés à gauche"
                     << endl;
@@ -215,8 +194,8 @@ int main(int argc, char* argv[]) {
             State* state = new State();
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 4; j++) {
-                    state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4),
-                            rand() % 12, rand() % 12);
+                    state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4), 12 +
+                            rand() % 12, 12 + rand() % 12);
                     Character* c = state->getCharacters().back();
                     c->setPm(2 + rand() % 5);
                     c->setPv(1 + rand() % 4);
@@ -245,7 +224,7 @@ int main(int argc, char* argv[]) {
             cout << "Clic gauche sur la carte : déplacement" << endl;
             cout << "Clic gauche sur une capacité, puis sur la zone bleue : attaque"
                     << endl;
-            cout << "Clic droit : choix personnage" << endl;
+            cout << "Clic droit : choix personnage ou annulation d'attaque" << endl;
             cout << "Entrée : passer le tour et actualiser pa et pm" << endl;
             cout << "Les informations sur le personnage actif sont affichés à gauche"
                     << endl;
@@ -269,18 +248,14 @@ int main(int argc, char* argv[]) {
                 }
             });
             thread t3([ai, state, engine, &end]() {
-                //sf::Clock clock;
                 while (!end) {
-                    //if (clock.getElapsedTime().asSeconds() >= 1.0 / 30) {
-                    if (state->isFighting() && state->getFight()->getTurn() % 2 == 0 && engine->getSize() == 0) {
+                    if (engine->getSize() == 0 && state->isFighting() && state->getFight()->getTurn() % 2 == 0) {
                         vector<Character*> vect = state->getFight()->getFightingCharacters(1);
                         for (auto c : vect) {
                             ai->run(c);
                         }
                         if (state->getFight()->getFightingCharacters(1).size() > 0)engine->addCommand(new FightCommand(state, nullptr, nullptr));
                     }
-                    //                        clock.restart();
-                    //                    }
                 }
             });
             t1.join();

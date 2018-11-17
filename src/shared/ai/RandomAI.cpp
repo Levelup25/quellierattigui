@@ -14,16 +14,13 @@ RandomAI::RandomAI(State* state, Engine* engine) {
 }
 
 void RandomAI::run(Character* character) {
+
     vector<Command*> commands = this->listCommands(character);
     while (commands.size() > 0 && character->getPv() > 0) {
-        cout << "ia" << endl;
         engine->addCommand(commands[rand() % commands.size()]);
         state->resetContents();
-        cout << "ia2" << endl;
         while (engine->getSize() != 0);
-        cout << "ia3" << endl;
         commands = this->listCommands(character);
-        cout << "ia4" << endl;
     }
     //    int n = state->getN(), m = state->getM(), X = character->getI(), Y = character->getJ(), pm = character->getPm(), pa = character->getPa();
     //    int r1, r2;

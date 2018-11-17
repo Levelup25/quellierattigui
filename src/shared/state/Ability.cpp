@@ -63,13 +63,13 @@ vector<vector<int>> Ability::getZone(vector<int> position, ZoneType zone, int mi
                     zones.push_back({i + k - l, j - l});
                     zones.push_back({i + l, j + k - l});
                 }
-            } else if (zone == line) {
+            } else if (zone == line || zone == star) {
                 zones.push_back({i, j - k});
                 zones.push_back({i - k, j});
                 zones.push_back({i + k, j});
                 zones.push_back({i, j + k});
 
-            } else if (zone == diag) {
+            } else if (zone == diag || zone == star) {
                 zones.push_back({i - k, j - k});
                 zones.push_back({i - k, j + k});
                 zones.push_back({i + k, j - k});
