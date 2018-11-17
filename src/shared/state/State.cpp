@@ -23,7 +23,7 @@ State::State(size_t i, size_t j) {
     for (size_t k = 0; k < I; k++) {
         grid[k].resize(J);
         for (size_t l = 0; l < J; l++) {
-            Cell* cell = new Cell();
+            Cell *cell = new Cell();
             r = rand() % 100;
             r2 = rand() % 100;
             cell->setContent(nothing);
@@ -56,10 +56,17 @@ State::State(size_t i, size_t j) {
 }
 
 void State::resetContents() {
-    int i0 = (this->getMainCharacters()[0]->getI() / n) * n, j0 = (this->getMainCharacters()[0]->getJ() / m) * m;
-    for (int i = i0; i < i0 + n; i++) for (int j = j0; j < j0 + m; j++) if (grid[i][j]->getContent() == perso) grid[i][j]->setContent(nothing);
-    if (!this->isFighting())for (auto c : this->getMainCharacters()) grid[c->getI()][c->getJ()]->setContent(perso);
-    else for (auto c : this->getFight()->getFightingCharacters()) grid[c->getI()][c->getJ()]->setContent(perso);
+    int i0 = ((int) this->getMainCharacters()[0]->getI() / n) * n, j0 = ((int) this->getMainCharacters()[0]->getJ() / m) * m;
+    for (int i = i0; i < i0 + n; i++)
+        for (int j = j0; j < j0 + m; j++)
+            if (grid[i][j]->getContent() == perso)
+                grid[i][j]->setContent(nothing);
+    if (!this->isFighting())
+        for (auto c : this->getMainCharacters())
+            grid[c->getI()][c->getJ()]->setContent(perso);
+    else
+        for (auto c : this->getFight()->getFightingCharacters())
+            grid[c->getI()][c->getJ()]->setContent(perso);
 }
 
 size_t State::getI() {
@@ -78,21 +85,21 @@ size_t State::getM() {
     return m;
 }
 
-vector<vector<Cell*>> State::getGrid() {
+vector<vector<Cell *>> State::getGrid() {
     return grid;
 }
 
-Cell* State::getCell(size_t i, size_t j) {
+Cell *State::getCell(size_t i, size_t j) {
     return grid[i][j];
 }
 
-void State::setCell(size_t i, size_t j, Cell* cell) {
+void State::setCell(size_t i, size_t j, Cell *cell) {
     grid[i][j] = cell;
 }
 
 void State::addCharacter() {
-    Team* team = new Team();
-    Character* character = new Character();
+    Team *team = new Team();
+    Character *character = new Character();
     team->addCharacter(character);
     teams.push_back(team);
 }
@@ -102,9 +109,9 @@ void State::addCharacter(size_t iteam,
         Direction direction,
         size_t i,
         size_t j) {
-    Character* character = new Character(id);
+    Character *character = new Character(id);
     character->setDirection(direction);
-    Team* team;
+    Team *team;
     while (teams.size() < iteam + 1) {
         team = new Team();
         teams.push_back(team);
@@ -112,7 +119,7 @@ void State::addCharacter(size_t iteam,
     this->addCharacter(character, teams[iteam], i, j);
 }
 
-void State::addCharacter(Character* character, Team* team, size_t i, size_t j) {
+void State::addCharacter(Character *character, Team *team, size_t i, size_t j) {
     size_t i2 = i, j2 = j;
     while (grid[i2][j2]->getContent() != nothing) {
         i2++;
@@ -141,18 +148,17 @@ void State::addCharacter(Character* character, Team* team, size_t i, size_t j) {
         grid[i2][j2]->setContent((ContentType) 1);
 }
 
-void State::moveCharacter(Character* character, float i, float j) {
+void State::moveCharacter(Character *character, float i, float j) {
     float i0 = character->getI(), j0 = character->getJ();
     grid[(int) i0][(int) j0]->setContent(nothing);
     character->setI(i);
     character->setJ(j);
     grid[(int) i][(int) j]->setContent(perso);
-    //this->resetContents();
 }
 
 void State::delCharacter(size_t i, size_t j) {
     for (auto t = teams.begin(); t != teams.end(); ++t) {
-        vector<Character*> characters = (*t)->getCharacters();
+        vector<Character *> characters = (*t)->getCharacters();
         for (auto c = characters.begin(); c != characters.end(); ++c) {
             if ((*c)->getI() == i && (*c)->getJ() == j) {
                 grid[i][j]->setContent(nothing);
@@ -163,9 +169,9 @@ void State::delCharacter(size_t i, size_t j) {
     }
 }
 
-void State::delCharacter(Character* character) {
+void State::delCharacter(Character *character) {
     for (auto t = teams.begin(); t != teams.end(); ++t) {
-        vector<Character*> characters = (*t)->getCharacters();
+        vector<Character *> characters = (*t)->getCharacters();
         for (auto c = characters.begin(); c != characters.end(); ++c) {
             if (*c == character) {
                 grid[character->getI()][character->getJ()]->setContent(nothing);
@@ -176,9 +182,9 @@ void State::delCharacter(Character* character) {
     }
 }
 
-Character* State::getCharacter(size_t i, size_t j) {
+Character *State::getCharacter(size_t i, size_t j) {
     for (auto t = teams.begin(); t != teams.end(); ++t) {
-        vector<Character*> characters = (*t)->getCharacters();
+        vector<Character *> characters = (*t)->getCharacters();
         for (auto c = characters.begin(); c != characters.end(); ++c) {
             if ((*c)->getI() == i && (*c)->getJ() == j)
                 return *c;
@@ -187,18 +193,18 @@ Character* State::getCharacter(size_t i, size_t j) {
     return nullptr;
 }
 
-vector<Character*> State::getMainCharacters() {
-    vector<Character*> chars;
+vector<Character *> State::getMainCharacters() {
+    vector<Character *> chars;
     for (auto t = teams.begin(); t != teams.end(); ++t) {
         chars.push_back((*t)->getMainCharacter());
     }
     return chars;
 }
 
-vector<Character*> State::getCharacters() {
-    vector<Character*> chars;
+vector<Character *> State::getCharacters() {
+    vector<Character *> chars;
     for (auto t = teams.begin(); t != teams.end(); ++t) {
-        vector<Character*> characters = (*t)->getCharacters();
+        vector<Character *> characters = (*t)->getCharacters();
         for (auto c = characters.begin(); c != characters.end(); ++c) {
             chars.push_back(*c);
         }
@@ -206,13 +212,13 @@ vector<Character*> State::getCharacters() {
     return chars;
 }
 
-vector<Team*> State::getTeams() {
+vector<Team *> State::getTeams() {
     return teams;
 }
 
-Team* State::getTeam(Character* character) {
+Team *State::getTeam(Character *character) {
     for (auto t = teams.begin(); t != teams.end(); ++t) {
-        vector<Character*> characters = (*t)->getCharacters();
+        vector<Character *> characters = (*t)->getCharacters();
         for (auto c = characters.begin(); c != characters.end(); ++c) {
             if ((*c) == character)
                 return *t;
@@ -222,19 +228,19 @@ Team* State::getTeam(Character* character) {
 }
 
 void State::addTeam() {
-    Team* team = new Team();
+    Team *team = new Team();
     teams.push_back(team);
 }
 
-void State::addTeam(Team* team) {
+void State::addTeam(Team *team) {
     teams.push_back(team);
 }
 
-Team* State::getMainTeam() {
+Team *State::getMainTeam() {
     return teams[0];
 }
 
-void State::delTeam(Team* team) {
+void State::delTeam(Team *team) {
     for (auto t = teams.begin(); t != teams.end(); ++t) {
         if ((*t) == team) {
             teams.erase(t);
@@ -245,7 +251,7 @@ void State::delTeam(Team* team) {
     }
 }
 
-Character* State::getMainCharacter() {
+Character *State::getMainCharacter() {
     return teams[0]->getMainCharacter();
 }
 
@@ -265,11 +271,11 @@ void State::setEpochRate(int epochRate) {
     this->epochRate = epochRate;
 }
 
-Fight* State::getFight() {
+Fight *State::getFight() {
     return fight;
 }
 
-void State::setFight(Fight* fight) {
+void State::setFight(Fight *fight) {
     this->fight = fight;
 }
 
@@ -278,14 +284,15 @@ bool State::isFighting() {
 }
 
 void State::deploy(int nb) {
+
     for (auto c : fight->getTeam(0)->getCharacters(nb)) {
         c->resetPm();
         c->resetPa();
         c->resetPv();
     }
 
-    Team* team1 = fight->getTeam(0);
-    Team* team2 = fight->getTeam(1);
+    Team *team1 = fight->getTeam(0);
+    Team *team2 = fight->getTeam(1);
     int i0 = team2->getMainCharacter()->getI(),
             j0 = team2->getMainCharacter()->getJ();
     int xv = (i0 / n) * n, yv = (j0 / m) * m;
@@ -321,18 +328,21 @@ void State::deploy(int nb) {
 
 void State::endFight() {
     if (fight->getFightingCharacters(0).size() == 0) {
-        Team* team = fight->getTeam(0);
-        for (auto c : team->getCharacters(fight->getNb())) this->delCharacter(c);
-        if (team->getCharacters().size() == 0)this->delTeam(team);
+        Team *team = fight->getTeam(0);
+        for (auto c : team->getCharacters(fight->getNb()))
+            this->delCharacter(c);
+        if (team->getCharacters().size() == 0)
+            this->delTeam(team);
         delete fight;
         fight = nullptr;
     }
     if (fight->getFightingCharacters(1).size() == 0) {
-        Team* team = fight->getTeam(1);
+        Team *team = fight->getTeam(1);
         //for (c : team->getCharacters(fight->getNb())) this->delCharacter(c);
         //if (team->getCharacters().size() == 0)
         this->delTeam(team);
         delete fight;
         fight = nullptr;
     }
+    this->resetContents();
 }
