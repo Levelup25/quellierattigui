@@ -23,14 +23,8 @@ Element::Element() {
   }
 };
 
-Element::Element(const Element& obj) {
-  id = Element::created++;
-
+Element::Element(const Element& obj) : Element() {
   *this = obj;
-
-  if (DEBUGING && (IDDEBUG == -1 || getId() == IDDEBUG)) {
-    cout << ">>>create: " << id << endl;
-  }
 }
 
 Element& Element::operator=(const Element& obj) {
@@ -43,7 +37,6 @@ Element& Element::operator=(const Element& obj) {
   mouseOverCache = obj.getMouseOver();
 
   pchildren = {};
-  int i = 0;
   for (auto pchildObj : obj.getChildren()) {
     Element* pchild = pchildObj->getCopy();
     pchild->setParent(this);

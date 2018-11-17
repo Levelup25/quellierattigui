@@ -12,6 +12,7 @@ Window::Window() {
   ptitle = new Text();
   pcloseBtn = new Rectangle();
   pcontent = new Rectangle();
+
   add(ptitleBar);
   add(pcontent);
   ptitleBar->add(ptitle);
@@ -24,13 +25,30 @@ Window::Window() {
   ptitleBar->recshape.setFillColor(sf::Color::Blue);
   ptitleBar->setSizeRelative({"100%", titleBarHeight});
 
-  pcloseBtn->setPosRelative({-5, -5});
-  pcloseBtn->setSizeRelative({20, 20});
-
   ptitle->text.setString("Window " + to_string(getId()));
   ptitle->setPosRelative({5, 5});
   ptitle->text.setColor(sf::Color::White);
   ptitle->text.setCharacterSize(16);
+
+  pcloseBtn->setPosRelative({-5, -5});
+  pcloseBtn->setSizeRelative({20, 20});
+}
+
+Window::Window(const Window& win) : Rectangle(win) {
+  *this = win;
+}
+
+Window& Window::operator=(const Window& win) {
+  // WARNING: What happend if this elements switch pos?
+  ptitleBar = static_cast<Rectangle*>(getChildren()[0]);
+  pcontent = static_cast<Rectangle*>(getChildren()[1]);
+  ptitle = static_cast<Text*>(ptitleBar->getChildren()[0]);
+  pcloseBtn = static_cast<Rectangle*>(ptitleBar->getChildren()[1]);
+  return *this;
+}
+
+Element* Window::getCopy() const {
+  return new Window(*this);
 }
 
 void Window::processEvent(sf::Event event, sf::Vector2f mousePosAbs) {

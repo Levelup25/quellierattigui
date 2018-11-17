@@ -22,6 +22,19 @@ Text::Text() {
 
 Text::~Text() {}
 
+Text::Text(const Text& obj) : Element::Element(obj) {
+  *this = obj;
+}
+
+Element* Text::getCopy() const {
+  return new Text(*this);
+}
+
+Text& Text::operator=(const Text& obj) {
+  text = obj.text;
+  return *this;
+}
+
 void Text::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   target.draw(text);
   Element::draw(target, states);

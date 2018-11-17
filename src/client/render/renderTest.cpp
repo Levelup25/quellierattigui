@@ -4,42 +4,43 @@ void testRender() {
   int i = 3;
 
   // cout << "create root renderTest" << endl;
-  Element root;
+  Element* proot;
   // cout << endl;
 
   switch (i) {
     case 0:
-      root = buildRootTestRectangle();
+      proot = buildRootTestRectangle();
       break;
 
     case 1:
-      root = buildRootWindow();
+      proot = buildRootWindow();
       break;
 
     case 2:
-      root = buildRootWebpageStyle();
+      proot = buildRootWebpageStyle();
       break;
 
     case 3:
-      root = buildRootSprite();
+      proot = buildRootSprite();
       break;
 
     case 4:
-      root = testCopy();
+      proot = testCopy();
       break;
 
     default:
-      root = WindowManager();
+      proot = new WindowManager();
       break;
   }
-  createWindowWith(root);
+  createWindowWith(proot);
+  delete proot;
 }
 
-void createWindowWith(Element root) {
-  auto size = root.getSizeAbs();
-  cout << root.getTreeView() << endl;
+void createWindowWith(Element* proot) {
+  auto size = proot->getSizeAbs();
+  cout << proot->getTreeView() << endl;
 
-  // auto pchildren = root.getChildren();
+  // auto pchildren = proot->getChildren();
   // Rectangle* prec = dynamic_cast<Rectangle*>(pchildren[0]);
   // auto test = prec->recshape.getSize();
   // cout << test.x << " " << test.y << endl;
@@ -57,16 +58,16 @@ void createWindowWith(Element root) {
       auto mousePosAbsTemp = sf::Mouse::getPosition(window);
       sf::Vector2f mousePosAbs{(float)mousePosAbsTemp.x,
                                (float)mousePosAbsTemp.y};
-      root.reactEvent(event, mousePosAbs);
+      proot->reactEvent(event, mousePosAbs);
     }
 
     window.clear();
-    window.draw(root);
+    window.draw(*proot);
     window.display();
   }
 }
 
-Element buildRootTestRectangle() {
+Element* buildRootTestRectangle() {
   WindowManager root;
   root.setSizeRelative({700, 700});
 
@@ -108,10 +109,10 @@ Element buildRootTestRectangle() {
   pr2_2_1->recshape.setFillColor(sf::Color::Green);
   pr2_2_1->setPosRelative({-55, -55});
   pr2_2_1->setSizeRelative({50, 50});
-  return root;
+  return root.getCopy();
 }
 
-Element buildRootWebpageStyle() {
+Element* buildRootWebpageStyle() {
   WindowManager root;
   root.setSizeRelative({700, 700});
 
@@ -138,10 +139,10 @@ Element buildRootWebpageStyle() {
   pheader->add(ptitle);
   ptitle->setString("Le Titre");
   ptitle->setPosRelative({"m", "m"});
-  return root;
+  return root.getCopy();
 }
 
-Element buildRootWindow() {
+Element* buildRootWindow() {
   WindowManager root;
   sf::Vector2f windowSizef = {700, 700};
   root.setSizeRelative({windowSizef.x, windowSizef.y});
@@ -149,7 +150,20 @@ Element buildRootWindow() {
   auto pwin = new Window();
   root.add(pwin);
   pwin->setPosRelative({50, 50});
-  return root;
+
+  Window* pwin2 = static_cast<Window*>(pwin->getCopy());
+  root.add(pwin2);
+
+  cout << pwin2->getTreeView() << endl;
+  pwin2->ptitleBar->recshape.setFillColor(sf::Color::Cyan);
+  cout << "title bar color ok" << endl;
+  pwin2->ptitle->text.setString("Win 2");
+  cout << "title text ok" << endl;
+  pwin2->pcloseBtn->recshape.setFillColor(sf::Color::Cyan);
+  cout << "close btn color ok" << endl;
+  pwin2->setPosRelative({400, 50});
+
+  return root.getCopy();
 }
 
 Sprite* getSprite(int id) {
@@ -187,7 +201,7 @@ Sprite* getSprite(int id) {
   return psprite;
 }
 
-Element buildRootSprite() {
+Element* buildRootSprite() {
   WindowManager root;
   sf::Vector2f windowSizef = {700, 700};
   root.setSizeRelative({windowSizef.x, windowSizef.y});
@@ -211,10 +225,14 @@ Element buildRootSprite() {
     pspriteWater->setPosRelative({200, 100});
   }
 
-  return root;
+  Element copy = root;
+  cout << copy.getTreeView();
+  cout << endl;
+
+  return root.getCopy();
 }
 
-Element testCopy() {
+Element* testCopy() {
   cout << "create root" << endl;
   Element root;  // 0
   cout << endl;
@@ -235,6 +253,7 @@ Element testCopy() {
   cout << endl;
 
   psquare2->setPosRelative({100, 100});
+  psquare2->recshape.setFillColor(sf::Color::Blue);
 
   cout << "create square3" << endl;
   psquare3 = new Rectangle();  // id = 4
@@ -251,18 +270,22 @@ Element testCopy() {
   root.add(psquare3);
   root.add(psquare1->getCopy());
 
-  Element t;
-  t.setSizeRelative({42, 42});
-  root.add(t.getCopy());
+  Element& square4 = *(psquare2->getCopy());
+  square4.setPosRelative({300, 300});
+  square4.setSizeRelative({42, 42});
+  root.add(square4.getCopy());
 
   cout << root.getTreeView();
 
   cout << "copy = root" << endl;
-  Element copy = root;
+  Element* copy = root.getCopy();
   cout << endl;
 
-  cout << copy.getTreeView();
+  cout << copy->getTreeView();
   cout << endl;
+
+  Rectangle* r = static_cast<Rectangle*>(copy->getChildren()[0]);
+  r->recshape.setFillColor(sf::Color::Green);
 
   return copy;
 }

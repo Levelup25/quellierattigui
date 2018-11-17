@@ -6,6 +6,7 @@
 #include <string>
 
 namespace render {
+  class Text;
   class Element;
 }
 
@@ -25,9 +26,12 @@ namespace render {
   public:
     Text ();
     ~Text ();
+    Text (const Text& obj);
+    Text& operator= (const Text& obj);
     void draw (sf::RenderTarget& target, sf::RenderStates states) const;
     void updatePosAbs ();
     void setString (std::string str);
+    virtual Element* getCopy () const;
     // Setters and Getters
   };
 

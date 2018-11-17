@@ -7,6 +7,8 @@
 namespace render {
   class Rectangle;
   class Text;
+  class Window;
+  class Element;
 }
 
 #include "Rectangle.h"
@@ -30,6 +32,9 @@ namespace render {
   public:
     Window ();
     void processEvent (sf::Event event, sf::Vector2f mousePosAbs);
+    Window (const Window& win);
+    Window& operator= (const Window& win);
+    Element* getCopy () const;
     // Setters and Getters
   };
 
