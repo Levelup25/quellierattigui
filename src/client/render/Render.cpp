@@ -320,13 +320,14 @@ void Render::display() {
             }
         }
 
-        for (int b = 0; b < 12; b++) {
-            for (int a = 0; a < 12; a++) {
-                cout << state->getCell(a, b)->getContent() << " ";
-            }
-            cout << endl;
-        }
-        cout << endl;
+        //        for (int b = yv; b < yv + m; b++) {
+        //            for (int a = xv; a < xv + n; a++) {
+        //                cout << state->getCell(a, b)->getContent() << " ";
+        //            }
+        //            cout << endl;
+        //        }
+        //        cout << endl;
+
         // end the current frame
         window.display();
     }

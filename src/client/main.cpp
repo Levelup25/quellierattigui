@@ -185,7 +185,7 @@ int main(int argc, char* argv[]) {
             cout << "Clic gauche sur la carte : déplacement" << endl;
             cout << "Clic gauche sur une capacité, puis sur la zone bleue : attaque"
                     << endl;
-            cout << "Clic droit : choix personnage" << endl;
+            cout << "Clic droit : choix personnage ou annulation d'attaque" << endl;
             cout << "Entrée : passer le tour et actualiser pa et pm" << endl;
             cout << "Les informations sur le personnage actif sont affichés à gauche"
                     << endl;
@@ -245,7 +245,7 @@ int main(int argc, char* argv[]) {
             cout << "Clic gauche sur la carte : déplacement" << endl;
             cout << "Clic gauche sur une capacité, puis sur la zone bleue : attaque"
                     << endl;
-            cout << "Clic droit : choix personnage" << endl;
+            cout << "Clic droit : choix personnage ou annulation d'attaque" << endl;
             cout << "Entrée : passer le tour et actualiser pa et pm" << endl;
             cout << "Les informations sur le personnage actif sont affichés à gauche"
                     << endl;
@@ -269,18 +269,14 @@ int main(int argc, char* argv[]) {
                 }
             });
             thread t3([ai, state, engine, &end]() {
-                //sf::Clock clock;
                 while (!end) {
-                    //if (clock.getElapsedTime().asSeconds() >= 1.0 / 30) {
-                    if (state->isFighting() && state->getFight()->getTurn() % 2 == 0 && engine->getSize() == 0) {
+                    if (engine->getSize() == 0 && state->isFighting() && state->getFight()->getTurn() % 2 == 0) {
                         vector<Character*> vect = state->getFight()->getFightingCharacters(1);
                         for (auto c : vect) {
                             ai->run(c);
                         }
                         if (state->getFight()->getFightingCharacters(1).size() > 0)engine->addCommand(new FightCommand(state, nullptr, nullptr));
                     }
-                    //                        clock.restart();
-                    //                    }
                 }
             });
             t1.join();

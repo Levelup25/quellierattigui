@@ -324,7 +324,7 @@ void State::endFight() {
         Team* team = fight->getTeam(0);
         for (auto c : team->getCharacters(fight->getNb())) this->delCharacter(c);
         if (team->getCharacters().size() == 0)this->delTeam(team);
-        //        delete fight;
+        delete fight;
         fight = nullptr;
     }
     if (fight->getFightingCharacters(1).size() == 0) {
@@ -332,7 +332,7 @@ void State::endFight() {
         //for (c : team->getCharacters(fight->getNb())) this->delCharacter(c);
         //if (team->getCharacters().size() == 0)
         this->delTeam(team);
-        //        delete fight;
+        delete fight;
         fight = nullptr;
     }
 }
