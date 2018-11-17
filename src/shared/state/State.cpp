@@ -244,8 +244,8 @@ void State::delTeam(Team *team) {
     for (auto t = teams.begin(); t != teams.end(); ++t) {
         if ((*t) == team) {
             teams.erase(t);
-            //            delete team;
-            //            team = nullptr;
+            delete team;
+            team = nullptr;
             return;
         }
     }
@@ -335,6 +335,7 @@ void State::endFight() {
             this->delTeam(team);
         delete fight;
         fight = nullptr;
+        this->resetContents();
     }
     if (fight->getFightingCharacters(1).size() == 0) {
         Team *team = fight->getTeam(1);
@@ -343,6 +344,6 @@ void State::endFight() {
         this->delTeam(team);
         delete fight;
         fight = nullptr;
+        this->resetContents();
     }
-    this->resetContents();
 }

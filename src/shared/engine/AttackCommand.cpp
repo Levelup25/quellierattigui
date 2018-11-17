@@ -29,7 +29,7 @@ void AttackCommand::setZones() {
             if (coord[0] == i && coord[1] == j) {
                 effects = ability->getEffectZone({i, j});
                 for (auto effect = effects.end() - 1; effect >= effects.begin(); effect--) {
-                    if ((*effect)[0] / n != i0 / n || (*effect)[0] < 0 || (*effect)[1] / m != j0 / m || (*effect)[1] < 0) effects.erase(effect);
+                    if ((*effect)[0] / n != i / n || (*effect)[0] < 0 || (*effect)[1] / m != j / m || (*effect)[1] < 0) effects.erase(effect);
                 }
                 return;
             }

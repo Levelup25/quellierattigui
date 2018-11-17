@@ -148,27 +148,6 @@ int main(int argc, char* argv[]) {
                         for (int i = 0; i < r3; i++)
                             a->addLv();
                     }
-                    //                    Ability* a = w->getAbilities()[0];
-                    //                    int r1 = 1 + rand() % 2, r2 = rand() % 3;
-                    //                    a->setElement((ElementType) (rand() % 5));
-                    //                    int r3 = rand() % 3;
-                    //                    for (int i = 0; i < r3; i++)a->addLv();
-                    //                    a->setTarget((ZoneType) (rand() % 3), r1, r1 +
-                    //                    rand() % 5); a->setEffect((ZoneType) (rand() %
-                    //                    3), r2, r2 + rand() % 5); a->setPa(1 + rand() %
-                    //                    2); int r = rand() % 4; for (int k = 0; k < r;
-                    //                    k++) {
-                    //                        Ability* a = new Ability();
-                    //                        int r1 = 1 + rand() % 2, r2 = rand() % 3;
-                    //                        a->setElement((ElementType) (rand() % 5));
-                    //                        int r3 = rand() % 3;
-                    //                        for (int i = 0; i < r3; i++)a->addLv();
-                    //                        a->setTarget((ZoneType) (rand() % 3), r1, r1
-                    //                        + rand() % 5); a->setEffect((ZoneType)
-                    //                        (rand() % 3), r2, r2 + rand() % 5);
-                    //                        a->setPa(1 + rand() % 2);
-                    //                        w->addAbility(a);
-                    //                    }
                 }
             }
 
@@ -215,8 +194,8 @@ int main(int argc, char* argv[]) {
             State* state = new State();
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 4; j++) {
-                    state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4),
-                            rand() % 12, rand() % 12);
+                    state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4), 12 +
+                            rand() % 12, 12 + rand() % 12);
                     Character* c = state->getCharacters().back();
                     c->setPm(2 + rand() % 5);
                     c->setPv(1 + rand() % 4);

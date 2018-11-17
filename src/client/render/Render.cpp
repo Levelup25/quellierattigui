@@ -100,12 +100,13 @@ void Render::display() {
             Fight* fight = state->getFight();
             chars = fight->getFightingCharacters();
             if (maincharacter->getPv() <= 0) {
-                for (auto c : fight->getFightingCharacters(0)) {
-                    if (c->getPv() > 0) {
-                        maincharacter = c;
-                        break;
-                    }
-                }
+                maincharacter = fight->getFightingCharacters(0)[0];
+                //                for (auto c : fight->getFightingCharacters(0)) {
+                //                    if (c->getPv() > 0) {
+                //                        maincharacter = c;
+                //                        break;
+                //                    }
+                //                }
             }
         } else {
             chars = state->getMainCharacters();
@@ -120,7 +121,7 @@ void Render::display() {
         yv = (y / m) * m;
         worldView.setPosRelative(sf::Vector2f(xv * l, yv * h));
         window.setView(worldView.view);
-        auto posMouseBuff = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+        auto posMouseBuff = sf::Mouse::getPosition(window);
         int X = xv + posMouseBuff.x / l, Y = yv + posMouseBuff.y / h;
 
         for (unsigned int j = yv; j < yv + m; j++) {
@@ -146,8 +147,7 @@ void Render::display() {
 
         if (state->isFighting() && state->getFight()->getTurn() % 2 == 1) {
             if (state->etatCombat == 0) {
-                moves =
-                        (new MoveCommands(state, engine, maincharacter, X, Y))->getPath();
+                moves = (new MoveCommands(state, engine, maincharacter, X, Y))->getPath();
                 zone.setFillColor(Color(0, 255, 0, 128));
                 for (vector<int> coord : moves) {
                     zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
@@ -162,13 +162,11 @@ void Render::display() {
                     zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
                     window.draw(zone);
                 }
-                if (Y < m) {
-                    effects = atkcmd->getZone(1);
-                    zone.setFillColor(Color(255, 0, 0, 128));
-                    for (vector<int> coord : effects) {
-                        zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
-                        window.draw(zone);
-                    }
+                effects = atkcmd->getZone(1);
+                zone.setFillColor(Color(255, 0, 0, 128));
+                for (vector<int> coord : effects) {
+                    zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
+                    window.draw(zone);
                 }
             }
             zone.setFillColor(Color::Transparent);
