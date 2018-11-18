@@ -42,5 +42,14 @@ void Sprite::updateSizeAbs() {
 
 void Sprite::updateSizeFromTextureRect() {
   sf::IntRect r = sprite.getTextureRect();
-  setSizeRelative({r.width, r.height});
+  sf::Vector2f scale = sprite.getScale();
+  setSizeRelative({r.width * scale.x, r.height * scale.y});
+}
+
+std::ostream& operator<<(std::ostream& os, const Sprite& sprite) {
+  os << (Element)sprite;
+  auto sep = string(sprite.getDepth() * 4, ' ');
+  os << sep;
+  os << "&Texture: " << sprite.sprite.getTexture() << endl;
+  return os;
 }

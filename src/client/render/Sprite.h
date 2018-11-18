@@ -3,6 +3,7 @@
 #define RENDER__SPRITE__H
 
 #include <SFML/Graphics.hpp>
+#include <ostream>
 
 namespace render {
   class Sprite;
@@ -29,6 +30,7 @@ namespace render {
     void updatePosAbs ();
     void updateSizeFromTextureRect ();
     void updateSizeAbs ();
+    friend std::ostream& operator<< (std::ostream& os, const Sprite& sprite);
     // Setters and Getters
   };
 

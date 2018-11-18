@@ -9,6 +9,7 @@
 #include "Element.h"
 #include "Rectangle.h"
 #include "Sprite.h"
+#include "SpriteGenerator.h"
 #include "SpriteGeneratorById.h"
 #include "TileSprite.h"
 #include "Window.h"
@@ -25,3 +26,11 @@ Element* buildRootTestRectangle();
 Element* buildRootWebpageStyle();
 Element* buildRootSprite();
 Element* testCopy();
+Element* CharacterSheet();
+Element* CharacterStats();
+Element* StatLine(std::string statName,
+                  Sprite statIcon,
+                  int statValueCurrent,
+                  int statValueMax);
+SpriteGeneratorById IconGeneratorDefault();
+Element* testIconGenerator();

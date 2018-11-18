@@ -16,17 +16,24 @@ const sf::Texture* SpriteGeneratorById::getTexture(int id) {
   }
 
   sf::Texture t;
-  if (!t.loadFromFile(mapIdFile[id], mapIdRect[id])) {
+  if (mapIdRect.find(id) == mapIdRect.end()) {
+    if (!t.loadFromFile(mapIdFile[id])) {
+      cout << "error creating texture" << endl;
+    }
+  } else {
+    if (!t.loadFromFile(mapIdFile[id], mapIdRect[id])) {
+      cout << "error creating texture" << endl;
+    }
   }
-  t.setRepeated(true);
+
+  t.setRepeated(false);
   mapIdTextureLoaded[id] = t;
   return &mapIdTextureLoaded[id];
 }
 
 sf::Sprite SpriteGeneratorById::getSpriteUnit(int id) {
   auto pt = getTexture(id);
-  sf::Sprite s;
-  s.setTexture(*pt);
+  sf::Sprite s(*pt);
   return s;
 }
 
@@ -49,11 +56,10 @@ sf::Sprite SpriteGeneratorById::getSprite(int id, sf::Vector2i size) {
 
 sf::Sprite SpriteGeneratorById::ResizeByScaling(sf::Sprite sprite,
                                                 sf::Vector2i size) {
-  auto textureRect = sprite.getTextureRect();
+  volatile auto textureRect = sprite.getTextureRect();
   sf::Vector2f sizeOriginal(
       {(float)textureRect.width, (float)textureRect.height});
   sf::Vector2f scale({size.x / sizeOriginal.x, size.y / sizeOriginal.y});
-  sf::Sprite spriteNew = sprite;
-  spriteNew.setScale(scale);
-  return spriteNew;
+  sprite.setScale(scale);
+  return sprite;
 }

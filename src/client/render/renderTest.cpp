@@ -1,7 +1,9 @@
 #include "renderTest.h"
 
 void testRender() {
-  int i = 3;
+  SpriteGenerator::init();
+
+  int i = 5;
 
   // cout << "create root renderTest" << endl;
   Element* proot;
@@ -28,26 +30,33 @@ void testRender() {
       proot = testCopy();
       break;
 
+    case 5:
+      proot = CharacterStats();
+      break;
+
+    case 6:
+      proot = testIconGenerator();
+      break;
+
     default:
       proot = new WindowManager();
       break;
   }
+
+  cout << proot->getTreeView() << endl;
+  SpriteGenerator::Icon::pdefault->getSpriteUnit(0);
+
   createWindowWith(proot);
   delete proot;
 }
 
 void createWindowWith(Element* proot) {
   auto size = proot->getSizeAbs();
-  cout << proot->getTreeView() << endl;
-
-  // auto pchildren = proot->getChildren();
-  // Rectangle* prec = dynamic_cast<Rectangle*>(pchildren[0]);
-  // auto test = prec->recshape.getSize();
-  // cout << test.x << " " << test.y << endl;
 
   sf::RenderWindow window(
       sf::VideoMode({(unsigned int)size.x, (unsigned int)size.y}),
       "Render Test");
+
   // window loop
   while (window.isOpen()) {
     sf::Event event;
@@ -288,4 +297,134 @@ Element* testCopy() {
   r->recshape.setFillColor(sf::Color::Green);
 
   return copy;
+}
+
+Element* CharacterSheet() {
+  Window CharacterSheet;
+  CharacterSheet.ptitle->setString("Fiche de personnage");
+
+  Text CharacterName;
+  Sprite CharacterSprite;
+  Element* CharacterStats;
+
+  return CharacterSheet.getCopy();
+}
+
+Element* testIconGenerator() {
+  Element root;
+  root.setSizeRelative({1000, 1000});
+
+  SpriteGeneratorById* iconGenerator = SpriteGenerator::Icon::pdefault;
+
+  // Create icons
+  Sprite iconpv, iconpa, iconpm;
+  iconpv.sprite = iconGenerator->getSpriteUnit(IconType::pv);
+  iconpa.sprite = iconGenerator->getSpriteUnit(IconType::pa);
+  iconpm.sprite = iconGenerator->getSpriteUnit(IconType::pm);
+
+  volatile auto test1 = iconpv.sprite.getScale();
+  volatile auto test2 = iconpv.sprite.getTextureRect();
+  volatile auto test3 = iconpv.sprite.getGlobalBounds();
+
+  iconpv.updateSizeFromTextureRect();
+  iconpa.updateSizeFromTextureRect();
+  iconpm.updateSizeFromTextureRect();
+
+  // place icon and add to root
+  auto children = {iconpv, iconpa, iconpm};
+  int y = 0;
+  for (auto child : children) {
+    child.setPosRelative({0, y});
+    root.add(child.getCopy());
+    y += child.getSizeAbs().y;
+  }
+
+  return root.getCopy();
+}
+
+Element* CharacterStats() {
+  Rectangle container;
+
+  container.recshape.setFillColor(sf::Color::White);
+
+  // get generator of icons
+  SpriteGeneratorById* iconGenerator = SpriteGenerator::Icon::pdefault;
+
+  // load icons with generator
+  Sprite iconpv, iconpa, iconpm;
+  iconpv.sprite = iconGenerator->getSprite(IconType::pv, {20, 20});
+  iconpa.sprite = iconGenerator->getSprite(IconType::pa, {20, 20});
+  iconpm.sprite = iconGenerator->getSprite(IconType::pm, {20, 20});
+
+  // test
+  cout << "texture: " << iconpv.sprite.getTexture() << endl;
+
+  // Create lines
+  Element *linepv, *linepa, *linepm;
+  linepv = StatLine("pv", iconpv, 20, 30);
+  linepa = StatLine("pa", iconpa, 3, 6);
+  linepm = StatLine("pm", iconpm, 2, 3);
+
+  // get line stat properties
+  int lineWith = linepv->getSizeAbs().x;
+  int lineHeight = linepv->getSizeAbs().y;
+
+  // place lines
+  int y = 0;
+  linepv->setPosRelative({0, y});
+  y += lineHeight;
+  linepa->setPosRelative({0, y});
+  y += lineHeight;
+  linepm->setPosRelative({0, y});
+  y += lineHeight;
+
+  // add lines to parent
+  container.add(linepv);
+  container.add(linepa);
+  container.add(linepm);
+
+  // adjust parent size
+  container.setSizeRelative({lineWith, y});
+
+  return container.getCopy();
+}
+
+Element* StatLine(std::string statName,
+                  Sprite statIcon,
+                  int statValueCurrent,
+                  int statValueMax) {
+  // Assume that icon size is 20*20
+
+  Element line;
+  Text statNameText, statValues;
+
+  // set size of sub element
+  int nameWidth = 25, iconWidth = 20, valueWidth = 65;
+  statNameText.setSizeRelative({nameWidth, iconWidth});
+  statIcon.setSizeRelative({iconWidth, iconWidth});
+  statValues.setSizeRelative({valueWidth, iconWidth});
+
+  // set properties of element
+  statNameText.setString(statName);
+  statValues.setString(to_string(statValueCurrent) + "/" +
+                       to_string(statValueMax));
+
+  // place element
+  int x = 0, sepx = 10;
+  statNameText.setPosRelative({x, 0});
+  x += nameWidth + sepx;
+  statIcon.setPosRelative({x, 5});
+  x += iconWidth + sepx;
+  statValues.setPosRelative({x, 0});
+  x += valueWidth;
+
+  // add element to parent
+  line.add(statNameText.getCopy());
+  line.add(statIcon.getCopy());
+  line.add(statValues.getCopy());
+
+  // adjust parent size
+  line.setSizeRelative({x, iconWidth + 10});
+
+  return line.getCopy();
 }
