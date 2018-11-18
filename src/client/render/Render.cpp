@@ -29,9 +29,7 @@ void Render::display() {
   int nb = 2, N = state->getI(), M = state->getJ(), l = 34 * nb, h = 24 * nb,
       l2 = 32, h2 = 32;
 
-  AttackSprite attacks(l, h);
-
-  RenderWindow window(VideoMode(n * l, m * h * 7 / 6), "Jeu");
+    RenderWindow window(VideoMode(n * l, m * h * 7 / 6), "Jeu", Style::Titlebar | Style::Close);
   window.setFramerateLimit(60);
 
   render::View worldView;
@@ -66,6 +64,7 @@ void Render::display() {
   size_t offsetTileGenerator = 0;
   auto TileGenerator = TileGenerators[offsetTileGenerator];
 
+    AttackSprite attacks(l, h);
   ContentSprite contents(l, h);
   AbilitySprite abilities(2 * l, 2 * h);
   CharacterSprite persos(l2, h2);
