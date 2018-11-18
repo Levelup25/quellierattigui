@@ -26,7 +26,7 @@ const sf::Texture* SpriteGeneratorById::getTexture(int id) {
     }
   }
 
-  t.setRepeated(false);
+  t.setRepeated(true);
   mapIdTextureLoaded[id] = t;
   return &mapIdTextureLoaded[id];
 }
