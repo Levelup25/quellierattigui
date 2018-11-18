@@ -3,7 +3,7 @@
 void testRender() {
   SpriteGenerator::init();
 
-  int i = 5;
+  int i = 7;
 
   // cout << "create root renderTest" << endl;
   Element* proot;
@@ -36,6 +36,10 @@ void testRender() {
 
     case 6:
       proot = testIconGenerator();
+      break;
+
+    case 7:
+      proot = testCharacterSheet();
       break;
 
     default:
@@ -299,15 +303,57 @@ Element* testCopy() {
   return copy;
 }
 
+Element* testCharacterSheet() {
+  WindowManager root;
+  root.setSizeRelative({700, 700});
+
+  auto pchar1 = CharacterSheet();
+  auto pchar2 = CharacterSheet();
+
+  pchar2->setPosRelative({300, 20});
+
+  root.add(pchar1);
+  root.add(pchar2);
+  return root.getCopy();
+}
+
 Element* CharacterSheet() {
-  Window CharacterSheet;
-  CharacterSheet.ptitle->setString("Fiche de personnage");
+  Window charSheet;
+  charSheet.ptitle->setString("");
+  charSheet.pcontent->recshape.setFillColor(sf::Color::White);
 
-  Text CharacterName;
-  Sprite CharacterSprite;
-  Element* CharacterStats;
+  // create subelement/children
+  Text* CharacterName = new Text();
+  Sprite* charSprite = new Sprite();
+  Element* charStat = CharacterStats();
 
-  return CharacterSheet.getCopy();
+  // config children
+  CharacterName->setString("Dark knight");
+  CharacterSprite* spriteGen = new CharacterSprite(32, 32);
+  charSprite->sprite = spriteGen->getSprite();
+  charSprite->updateSizeFromTextureRect();
+
+  // place children
+  std::vector<Element*> children = {CharacterName, charSprite, charStat};
+  int spacepx = 20;
+  int y = 0;
+  for (size_t i = 0; i < children.size(); i++) {
+    auto pchild = children[i];
+    pchild->setPosRelative({"m", y});
+    charSheet.pcontent->add(pchild);
+    y += pchild->getSizeAbs().y;
+    if (i != children.size() - 1)
+      y += spacepx;
+  }
+
+  charSheet.pcontent->setSizeRelative({150, y});
+  int winWidth, winHeight;
+  winWidth = charSheet.pcontent->getSizeAbs().x;
+  winHeight =
+      charSheet.ptitleBar->getSizeAbs().y + charSheet.pcontent->getSizeAbs().y;
+  charSheet.setSizeRelative({winWidth, winHeight});
+
+  return charSheet.getCopy();
 }
 
 Element* testIconGenerator() {
@@ -321,10 +367,6 @@ Element* testIconGenerator() {
   iconpv.sprite = iconGenerator->getSpriteUnit(IconType::pv);
   iconpa.sprite = iconGenerator->getSpriteUnit(IconType::pa);
   iconpm.sprite = iconGenerator->getSpriteUnit(IconType::pm);
-
-  volatile auto test1 = iconpv.sprite.getScale();
-  volatile auto test2 = iconpv.sprite.getTextureRect();
-  volatile auto test3 = iconpv.sprite.getGlobalBounds();
 
   iconpv.updateSizeFromTextureRect();
   iconpa.updateSizeFromTextureRect();
@@ -346,6 +388,7 @@ Element* CharacterStats() {
   Rectangle container;
 
   container.recshape.setFillColor(sf::Color::White);
+  container.recshape.setOutlineThickness(0);
 
   // get generator of icons
   SpriteGeneratorById* iconGenerator = SpriteGenerator::Icon::pdefault;
@@ -355,9 +398,6 @@ Element* CharacterStats() {
   iconpv.sprite = iconGenerator->getSprite(IconType::pv, {20, 20});
   iconpa.sprite = iconGenerator->getSprite(IconType::pa, {20, 20});
   iconpm.sprite = iconGenerator->getSprite(IconType::pm, {20, 20});
-
-  // test
-  cout << "texture: " << iconpv.sprite.getTexture() << endl;
 
   // Create lines
   Element *linepv, *linepa, *linepm;

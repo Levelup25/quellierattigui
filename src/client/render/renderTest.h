@@ -6,6 +6,7 @@
 #include <iostream>
 #include <thread>
 #include "../../shared/state/ElementType.h"
+#include "CharacterSprite.h"
 #include "Element.h"
 #include "Rectangle.h"
 #include "Sprite.h"
@@ -29,8 +30,9 @@ Element* testCopy();
 Element* CharacterSheet();
 Element* CharacterStats();
 Element* StatLine(std::string statName,
-                  Sprite statIcon,
+                  render::Sprite statIcon,
                   int statValueCurrent,
                   int statValueMax);
 SpriteGeneratorById IconGeneratorDefault();
 Element* testIconGenerator();
+Element* testCharacterSheet();
