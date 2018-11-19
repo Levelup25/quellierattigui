@@ -29,7 +29,8 @@ void Render::display() {
   int nb = 2, N = state->getI(), M = state->getJ(), l = 34 * nb, h = 24 * nb,
       l2 = 32, h2 = 32;
 
-    RenderWindow window(VideoMode(n * l, m * h * 7 / 6), "Jeu", Style::Titlebar | Style::Close);
+  RenderWindow window(VideoMode(n * l, m * h * 7 / 6), "Jeu",
+                      Style::Titlebar | Style::Close);
   window.setFramerateLimit(60);
 
   render::View worldView;
@@ -64,7 +65,7 @@ void Render::display() {
   size_t offsetTileGenerator = 0;
   auto TileGenerator = TileGenerators[offsetTileGenerator];
 
-    AttackSprite attacks(l, h);
+  AttackSprite attacks(l, h);
   ContentSprite contents(l, h);
   AbilitySprite abilities(2 * l, 2 * h);
   CharacterSprite persos(l2, h2);
@@ -98,13 +99,13 @@ void Render::display() {
       Fight* fight = state->getFight();
       chars = fight->getFightingCharacters();
       if (maincharacter->getPv() <= 0) {
-                maincharacter = fight->getFightingCharacters(0)[0];
-                //                for (auto c : fight->getFightingCharacters(0)) {
-                //                    if (c->getPv() > 0) {
-                //                        maincharacter = c;
-                //                        break;
-                //                    }
-                //                }
+        maincharacter = fight->getFightingCharacters(0)[0];
+        //                for (auto c : fight->getFightingCharacters(0)) {
+        //                    if (c->getPv() > 0) {
+        //                        maincharacter = c;
+        //                        break;
+        //                    }
+        //                }
       }
     } else {
       chars = state->getMainCharacters();
@@ -119,7 +120,7 @@ void Render::display() {
     yv = (y / m) * m;
     worldView.setPosRelative(sf::Vector2f(xv * l, yv * h));
     window.setView(worldView.view);
-        auto posMouseBuff = sf::Mouse::getPosition(window);
+    auto posMouseBuff = sf::Mouse::getPosition(window);
     int X = xv + posMouseBuff.x / l, Y = yv + posMouseBuff.y / h;
 
     for (unsigned int j = yv; j < yv + m; j++) {
@@ -143,7 +144,8 @@ void Render::display() {
 
     if (state->isFighting() && state->getFight()->getTurn() % 2 == 1) {
       if (state->etatCombat == 0) {
-                moves = (new MoveCommands(state, engine, maincharacter, X, Y))->getPath();
+        moves =
+            (new MoveCommands(state, engine, maincharacter, X, Y))->getPath();
         zone.setFillColor(Color(0, 255, 0, 128));
         for (vector<int> coord : moves) {
           zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
@@ -159,13 +161,13 @@ void Render::display() {
           zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
           window.draw(zone);
         }
-          effects = atkcmd->getZone(1);
-          zone.setFillColor(Color(255, 0, 0, 128));
-          for (vector<int> coord : effects) {
-            zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
-            window.draw(zone);
-          }
+        effects = atkcmd->getZone(1);
+        zone.setFillColor(Color(255, 0, 0, 128));
+        for (vector<int> coord : effects) {
+          zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
+          window.draw(zone);
         }
+      }
       zone.setFillColor(Color::Transparent);
     }
 
@@ -226,7 +228,7 @@ void Render::display() {
       if (event.type == sf::Event::MouseButtonPressed) {
         int X = xv + event.mouseButton.x / l, Y = yv + event.mouseButton.y / h;
         if (event.mouseButton.button == sf::Mouse::Right) {
-                    state->etatCombat = 0;
+          state->etatCombat = 0;
           if (state->isFighting() &&
               state->getMainTeam()->getCharacter(X, Y) != nullptr &&
               state->getCharacter(X, Y)->getPv() > 0) {
@@ -317,13 +319,13 @@ void Render::display() {
       }
     }
 
-        //        for (int b = yv; b < yv + m; b++) {
-        //            for (int a = xv; a < xv + n; a++) {
-        //                cout << state->getCell(a, b)->getContent() << " ";
-        //            }
-        //            cout << endl;
-        //        }
-        //        cout << endl;
+    //        for (int b = yv; b < yv + m; b++) {
+    //            for (int a = xv; a < xv + n; a++) {
+    //                cout << state->getCell(a, b)->getContent() << " ";
+    //            }
+    //            cout << endl;
+    //        }
+    //        cout << endl;
 
     // end the current frame
     window.display();

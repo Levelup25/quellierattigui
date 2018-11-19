@@ -15,6 +15,8 @@
 #include "TileSprite.h"
 #include "Window.h"
 #include "WindowManager.h"
+#include "customElements/CharacterSheet.h"
+#include "customElements/CharacterStat.h"
 
 using namespace render;
 using namespace state;
@@ -27,12 +29,5 @@ Element* buildRootTestRectangle();
 Element* buildRootWebpageStyle();
 Element* buildRootSprite();
 Element* testCopy();
-Element* CharacterSheet();
-Element* CharacterStats();
-Element* StatLine(std::string statName,
-                  render::Sprite statIcon,
-                  int statValueCurrent,
-                  int statValueMax);
-SpriteGeneratorById IconGeneratorDefault();
 Element* testIconGenerator();
 Element* testCharacterSheet();
