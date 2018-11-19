@@ -5,7 +5,7 @@
 
 namespace render {
 
-Element* CharacterStats();
+Element* CharacterStats(state::Character* pcharacter = nullptr);
 Element* StatLine(std::string statName,
                   render::Sprite statIcon,
                   int statValueCurrent,

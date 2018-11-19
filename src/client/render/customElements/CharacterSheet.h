@@ -5,7 +5,7 @@
 #include "CustomElement.h"
 
 namespace render {
-Element* CharacterSheet();
+Element* CharacterSheet(state::Character* pcharacter = nullptr);
 }
 
 #endif

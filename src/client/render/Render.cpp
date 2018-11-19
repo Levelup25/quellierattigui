@@ -98,10 +98,10 @@ void Render::display() {
     if (state->isFighting()) {
       Fight* fight = state->getFight();
       chars = fight->getFightingCharacters();
-      if (maincharacter->getPv() <= 0) {
+      if (maincharacter->getPvCurrent() <= 0) {
         maincharacter = fight->getFightingCharacters(0)[0];
         //                for (auto c : fight->getFightingCharacters(0)) {
-        //                    if (c->getPv() > 0) {
+        //                    if (c->getPvCurrent() > 0) {
         //                        maincharacter = c;
         //                        break;
         //                    }
@@ -231,7 +231,7 @@ void Render::display() {
           state->etatCombat = 0;
           if (state->isFighting() &&
               state->getMainTeam()->getCharacter(X, Y) != nullptr &&
-              state->getCharacter(X, Y)->getPv() > 0) {
+              state->getCharacter(X, Y)->getPvCurrent() > 0) {
             maincharacter = state->getMainTeam()->getCharacter(X, Y);
             abilityNumber = 0;
           }
@@ -294,9 +294,9 @@ void Render::display() {
         window.draw(r);
       }
     }
-    text.setString("pv : " + to_string(maincharacter->getPv()) +
-                   " pa : " + to_string(maincharacter->getPa()) +
-                   "\npm : " + to_string(maincharacter->getPm()));
+    text.setString("pv : " + to_string(maincharacter->getPvCurrent()) +
+                   " pa : " + to_string(maincharacter->getPaCurrent()) +
+                   "\npm : " + to_string(maincharacter->getPmCurrent()));
     text.setPosition(Vector2f(N * l, M * h));
     text.setColor(colors[maincharacter->getWeapon()->getElement()]);
     window.draw(text);
@@ -310,9 +310,9 @@ void Render::display() {
     Character* c = state->getCharacter(X, Y);
     for (auto ch : chars) {
       if (c == ch) {
-        text.setString("\npv : " + to_string(c->getPv()) +
-                       " pa : " + to_string(c->getPa()) +
-                       "\npm : " + to_string(c->getPm()));
+        text.setString("\npv : " + to_string(c->getPvCurrent()) +
+                       " pa : " + to_string(c->getPaCurrent()) +
+                       "\npm : " + to_string(c->getPmCurrent()));
         text.setPosition(Vector2f((N + n - 2) * l, M * h));
         text.setColor(colors[c->getWeapon()->getElement()]);
         window.draw(text);

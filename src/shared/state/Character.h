@@ -54,9 +54,12 @@ namespace state {
     void setPv (unsigned int pv);
     void setPm (unsigned int pm);
     void setPa (unsigned int pa);
-    unsigned int getPv ();
-    unsigned int getPm ();
-    unsigned int getPa ();
+    unsigned int getPvCurrent ();
+    unsigned int getPvMax ();
+    unsigned int getPmCurrent ();
+    unsigned int getPmMax ();
+    unsigned int getPaCurrent ();
+    unsigned int getPaMax ();
     void resetPv ();
     void resetPm ();
     void resetPa ();

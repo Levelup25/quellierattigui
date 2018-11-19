@@ -34,7 +34,7 @@ void MoveCommands::setGenerator() {
 
 vector<vector<int>> MoveCommands::getPath() {
     vector<vector<int>> coords;
-    if (character->getPm() > 0) {
+    if (character->getPmCurrent() > 0) {
         this->character = character;
         this->setGenerator();
         int i0 = character->getI(), j0 = character->getJ();
@@ -49,7 +49,7 @@ vector<vector<int>> MoveCommands::getPath() {
 
         if (i >= 0 && j >= 0 && i < state->getI() && j < state->getJ() && state->getCell(i, j)->getContent() > 0 && path.size() > 0)
             path.pop_back();
-        if (path.size() <= character->getPm()) for (auto coord : path) coords.push_back({xv + coord.x, yv + coord.y});
+        if (path.size() <= character->getPmCurrent()) for (auto coord : path) coords.push_back({xv + coord.x, yv + coord.y});
     }
     return coords;
 }
@@ -71,7 +71,7 @@ void MoveCommands::execute() {
 
     float step = 1.0 / 12;
 
-    if (path.size() > 0 && (!state->isFighting() || (state->isFighting() && path.size() <= character->getPm()))) {
+    if (path.size() > 0 && (!state->isFighting() || (state->isFighting() && path.size() <= character->getPmCurrent()))) {
         if (state->isFighting())
             character->removePm(path.size());
         for (auto coord = path.begin(); coord != path.end(); coord++) {

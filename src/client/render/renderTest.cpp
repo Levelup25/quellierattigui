@@ -31,6 +31,7 @@ void testRender() {
       break;
 
     case 5:
+      // TODO : replace
       proot = CharacterStats();
       break;
 
@@ -307,13 +308,20 @@ Element* testCharacterSheet() {
   WindowManager root;
   root.setSizeRelative({700, 700});
 
-  auto pchar1 = CharacterSheet();
-  auto pchar2 = CharacterSheet();
+  int x = 0;
+  for (int i = 0; i < 4; i++) {
+    x += 20;
+    int id = rand() % (12 * 4);
+    auto pcharacter = new Character(id, "Perso " + to_string(i));
+    pcharacter->removePv(rand() % pcharacter->getPvCurrent());
+    pcharacter->removePa(rand() % pcharacter->getPaCurrent());
+    pcharacter->removePm(rand() % pcharacter->getPmCurrent());
+    auto pcharacterSheet = CharacterSheet(pcharacter);
+    pcharacterSheet->setPosRelative({x, 20});
+    x += pcharacterSheet->getSizeAbs().x;
+    root.add(pcharacterSheet);
+  }
 
-  pchar2->setPosRelative({300, 20});
-
-  root.add(pchar1);
-  root.add(pchar2);
   return root.getCopy();
 }
 

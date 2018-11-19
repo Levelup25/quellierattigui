@@ -1,7 +1,7 @@
 #include "CharacterStat.h"
 
 namespace render {
-Element* CharacterStats() {
+Element* CharacterStats(state::Character* pcharacter) {
   Rectangle container;
 
   container.recshape.setFillColor(sf::Color::White);
@@ -16,11 +16,18 @@ Element* CharacterStats() {
   iconpa.sprite = iconGenerator->getSprite(IconType::pa, {20, 20});
   iconpm.sprite = iconGenerator->getSprite(IconType::pm, {20, 20});
 
+  if (pcharacter == nullptr) {
+    pcharacter = new state::Character();
+  }
+
   // Create lines
   Element *linepv, *linepa, *linepm;
-  linepv = StatLine("pv", iconpv, 20, 30);
-  linepa = StatLine("pa", iconpa, 3, 6);
-  linepm = StatLine("pm", iconpm, 2, 3);
+  linepv = StatLine("pv", iconpv, pcharacter->getPvCurrent(),
+                    pcharacter->getPvMax());
+  linepa = StatLine("pa", iconpa, pcharacter->getPaCurrent(),
+                    pcharacter->getPaMax());
+  linepm = StatLine("pm", iconpm, pcharacter->getPmCurrent(),
+                    pcharacter->getPmMax());
 
   // get line stat properties
   int lineWith = linepv->getSizeAbs().x;

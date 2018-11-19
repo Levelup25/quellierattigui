@@ -39,13 +39,13 @@ std::vector<Character *> Fight::getFightingCharacters(int i) {
     if (this != nullptr) {
         if (i != 1) {
             for (auto c : main->getCharacters(nb)) {
-                if (c->getPv() > 0)
+                if (c->getPvCurrent() > 0)
                     chars.push_back(c);
             }
         }
         if (i != 0) {
             for (auto c : opponent->getCharacters(nb)) {
-                if (c->getPv() > 0)
+                if (c->getPvCurrent() > 0)
                     chars.push_back(c);
             }
         }

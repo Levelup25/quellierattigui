@@ -2,7 +2,7 @@
 
 namespace render {
 
-Element* CharacterSheet() {
+Element* CharacterSheet(state::Character* pcharacter) {
   Window charSheet;
   charSheet.ptitle->setString("");
   charSheet.pcontent->recshape.setFillColor(sf::Color::White);
@@ -10,12 +10,15 @@ Element* CharacterSheet() {
   // create subelement/children
   Text* CharacterName = new Text();
   Sprite* charSprite = new Sprite();
-  Element* charStat = CharacterStats();
+  if (pcharacter == nullptr)
+    pcharacter = new state::Character();
+  Element* charStat = CharacterStats(pcharacter);
 
   // config children
-  CharacterName->setString("Dark knight");
+  CharacterName->setString(pcharacter->getName());
   CharacterSprite* spriteGen = new CharacterSprite(32, 32);
-  charSprite->sprite = spriteGen->getSprite();
+  volatile auto id = pcharacter->getId();
+  charSprite->sprite = spriteGen->getSprite(id);
   charSprite->updateSizeFromTextureRect();
 
   // place children

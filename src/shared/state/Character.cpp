@@ -3,137 +3,160 @@
 using namespace std;
 using namespace state;
 
-Character::Character(int id, string nom, CharacterType type, int pv, int pa, int pm) {
-    // FIXME : Remplacer i et j par autre chose
-    this->i = 0;
-    this->j = 0;
-    this->id = id;
-    this->direction = (Direction) 0;
-    this->name = nom;
-    this->type = type;
-    this->pvMax = pv;
-    this->pvCurrent = pv;
-    this->paMax = pa;
-    this->paCurrent = pa;
-    this->pmMax = pm;
-    this->pmCurrent = pm;
-    weapon = new Weapon();
+Character::Character(int id,
+                     string nom,
+                     CharacterType type,
+                     int pv,
+                     int pa,
+                     int pm) {
+  // FIXME : Remplacer i et j par autre chose
+  this->i = 0;
+  this->j = 0;
+  this->id = id;
+  this->direction = (Direction)0;
+  this->name = nom;
+  this->type = type;
+  this->pvMax = pv;
+  this->pvCurrent = pv;
+  this->paMax = pa;
+  this->paCurrent = pa;
+  this->pmMax = pm;
+  this->pmCurrent = pm;
+  weapon = new Weapon();
 }
 
 int Character::getId() {
-    return id;
+  return id;
 }
 
 void Character::setId(int id) {
-    this->id = id;
+  this->id = id;
 }
 
 Direction Character::getDirection() {
-    return direction;
+  return direction;
 }
 
 void Character::setDirection(Direction direction) {
-    this->direction = direction;
+  this->direction = direction;
 }
 
 void Character::setDirection(int direction) {
-    this->direction = (Direction) direction;
+  this->direction = (Direction)direction;
 }
 
 float Character::getI() {
-    return i;
+  return i;
 }
 
 float Character::getJ() {
-    return j;
+  return j;
 }
 
 void Character::setI(float i) {
-    this->i = i;
+  this->i = i;
 }
 
 void Character::setJ(float j) {
-    this->j = j;
+  this->j = j;
 }
 
 string Character::getName() {
-    return name;
+  return name;
 }
 
 void Character::setName(string name) {
-    this->name = name;
+  this->name = name;
 }
 
 CharacterType Character::getType() {
-    return type;
+  return type;
 }
 
 void Character::setType() {
-    this->type = type;
+  this->type = type;
 }
 
-Weapon *Character::getWeapon() {
-    return weapon;
+Weapon* Character::getWeapon() {
+  return weapon;
 }
 
-void Character::setWeapon(Weapon *weapon) {
-    this->weapon = weapon;
+void Character::setWeapon(Weapon* weapon) {
+  this->weapon = weapon;
 }
 
 void Character::removeWeapon() {
-    this->weapon = nullptr;
+  this->weapon = nullptr;
 }
 
 void Character::setPv(unsigned int pv) {
-    pvMax = pv;
-    pvCurrent = pv;
+  pvMax = pv;
+  pvCurrent = pv;
 }
 
 void Character::setPm(unsigned int pm) {
-    pmMax = pm;
-    pmCurrent = pm;
+  pmMax = pm;
+  pmCurrent = pm;
 }
 
 void Character::setPa(unsigned int pa) {
-    paMax = pa;
-    paCurrent = pa;
+  paMax = pa;
+  paCurrent = pa;
 }
 
-unsigned int Character::getPv() {
-    return pvCurrent;
+unsigned int Character::getPvCurrent() {
+  return pvCurrent;
 }
 
-unsigned int Character::getPm() {
-    return pmCurrent;
+unsigned int Character::getPmCurrent() {
+  return pmCurrent;
 }
 
-unsigned int Character::getPa() {
-    return paCurrent;
+unsigned int Character::getPaCurrent() {
+  return paCurrent;
+}
+
+unsigned int Character::getPvMax() {
+  return pvMax;
+}
+
+unsigned int Character::getPmMax() {
+  return pmMax;
+}
+
+unsigned int Character::getPaMax() {
+  return paMax;
 }
 
 void Character::resetPv() {
-    pvCurrent = pvMax;
+  pvCurrent = pvMax;
 }
 
 void Character::resetPm() {
-    pmCurrent = pmMax;
+  pmCurrent = pmMax;
 }
 
 void Character::resetPa() {
-    paCurrent = paMax;
+  paCurrent = paMax;
 }
 
 void Character::removePv(int pv) {
-    if (pv >= pvCurrent) pvCurrent = 0;
-    else pvCurrent -= pv;
+  if (pv >= pvCurrent)
+    pvCurrent = 0;
+  else
+    pvCurrent -= pv;
 }
 
 void Character::removePm(int pm) {
-    if (pm >= pmCurrent) pmCurrent = 0;
-    else pmCurrent -= pm;
+  if (pm >= pmCurrent)
+    pmCurrent = 0;
+  else
+    pmCurrent -= pm;
 }
 
 void Character::removePa(int pa) {
-    if (pa >= paCurrent) paCurrent = 0;
-    else paCurrent -= pa;
+  if (pa >= paCurrent)
+    paCurrent = 0;
+  else
+    paCurrent -= pa;
 }
