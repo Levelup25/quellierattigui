@@ -35,7 +35,7 @@ namespace ai {
   public:
     virtual void run (state::Character* character) = 0;
   protected:
-    std::vector<engine::Command*> listCommands (state::Character* character);
+    std::vector<engine::Command*> listCommands (state::Character* character, int type = -1);
     // Setters and Getters
     const state::State*& getState() const;
     void setState(const state::State*& state);

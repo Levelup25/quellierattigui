@@ -4,30 +4,37 @@ using namespace std;
 using namespace state;
 using namespace engine;
 
-void Engine::addCommand(Command* command) {
+void Engine::addCommand(Command *command)
+{
     commands.push_back(command);
 }
 
-void Engine::runCommand() {
-    if (commands.size() > 0) {
+void Engine::runCommand()
+{
+    if (commands.size() > 0)
+    {
         commands[0]->execute();
         delete commands[0];
         commands.erase(commands.begin());
     }
 }
 
-void Engine::runCommands() {
-    for (auto cmd = commands.begin(); cmd != commands.end(); ++cmd) {
+void Engine::runCommands()
+{
+    for (auto cmd = commands.begin(); cmd != commands.end(); ++cmd)
+    {
         (*cmd)->execute();
         delete (*cmd);
     }
     commands.clear();
 }
 
-void Engine::clearCommands() {
+void Engine::clearCommands()
+{
     commands.clear();
 }
 
-size_t Engine::getSize() {
+size_t Engine::getSize()
+{
     return commands.size();
 }

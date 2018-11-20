@@ -19,6 +19,13 @@ MoveCommands::MoveCommands(State *state, Engine *engine, Character *character, s
     generator.setWorldSize({n, m});
 }
 
+vector<int> MoveCommands::getDiff() {
+    return
+    {
+        i - character->getI(), j - character->getJ()
+    };
+}
+
 void MoveCommands::setGenerator() {
     //state->resetContents();
     int i0 = character->getI(), j0 = character->getJ();
@@ -34,23 +41,21 @@ void MoveCommands::setGenerator() {
 
 vector<vector<int>> MoveCommands::getPath() {
     vector<vector<int>> coords;
-    if (character->getPmCurrent() > 0) {
-        this->character = character;
-        this->setGenerator();
-        int i0 = character->getI(), j0 = character->getJ();
-        int xv = (i0 / n) * n, yv = (j0 / m) * m;
-        generator.removeCollision({i0 - xv, j0 - yv});
-        generator.removeCollision({i - xv, j - yv});
-        auto path = generator.findPath({(int) (i - xv), int(j - yv)},
-        {
-            (int) (i0 - xv), (int) (j0 - yv)
-        });
-        path.erase(path.begin());
+    this->character = character;
+    this->setGenerator();
+    int i0 = character->getI(), j0 = character->getJ();
+    int xv = (i0 / n) * n, yv = (j0 / m) * m;
+    generator.removeCollision({i0 - xv, j0 - yv});
+    generator.removeCollision({i - xv, j - yv});
+    auto path = generator.findPath({(int) (i - xv), int(j - yv)},
+    {
+        (int) (i0 - xv), (int) (j0 - yv)
+    });
+    path.erase(path.begin());
 
-        if (i >= 0 && j >= 0 && i < state->getI() && j < state->getJ() && state->getCell(i, j)->getContent() > 0 && path.size() > 0)
-            path.pop_back();
-        if (path.size() <= character->getPmCurrent()) for (auto coord : path) coords.push_back({xv + coord.x, yv + coord.y});
-    }
+    if (state->getCell(i, j)->getContent() > 0 && path.size() > 0)
+        path.pop_back();
+    for (auto coord : path) coords.push_back({xv + coord.x, yv + coord.y});
     return coords;
 }
 
@@ -95,7 +100,7 @@ void MoveCommands::execute() {
     }
     if (state->getCharacter(i, j) != character && (int) state->getCell(i, j)->getContent() == 1 && !state->isFighting())
         engine->addCommand(new FightCommand(state, state->getTeam(character), state->getTeam(state->getCharacter(i, j))));
-    else if (!state->isFighting()) {
+    else if (state->getCell(i, j)->getContent() <= 1 && !state->isFighting()) {
         if (i % n == 0 && i > 0) {
             i--;
             engine->addCommand(new DirectionCommand(character, 1));
