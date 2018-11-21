@@ -27,7 +27,7 @@ vector<Command*> AI::listCommands(Character* character, int type)
                     {
                         MoveCommands* mvcmds =
                                 new MoveCommands(state, engine, character, X + a, Y + b);
-                        if (mvcmds->getPath().size() <= pm)
+                        if ((int) mvcmds->getPath().size() <= pm)
                             commands.push_back(mvcmds);
                     }
                 }
@@ -38,9 +38,9 @@ vector<Command*> AI::listCommands(Character* character, int type)
     {
         vector<Ability*> abilities = character->getWeapon()->getAbilities();
         vector<vector<int>> targets;
-        for (int i = 0; i < abilities.size(); i++)
+        for (unsigned int i = 0; i < abilities.size(); i++)
         {
-            if (pa >= abilities[i]->getPa())
+            if (pa >= (int) abilities[i]->getPa())
             {
                 targets = abilities[i]->getTargetZone({0, 0});
                 for (auto target = targets.end() - 1; target >= targets.begin();

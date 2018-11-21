@@ -39,7 +39,7 @@ Character* Team::getCharacter(size_t i, size_t j) {
 }
 
 vector<Character*> Team::getCharacters(int i) {
-    if (i < 0 || i >= characters.size())return characters;
+    if (i < 0 || i >= (int)characters.size())return characters;
     else {
         vector<Character*> v;
         for (auto c = characters.begin(); c != characters.begin() + i; c++) v.push_back(*c);

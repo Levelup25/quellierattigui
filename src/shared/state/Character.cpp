@@ -141,21 +141,21 @@ void Character::resetPa() {
 }
 
 void Character::removePv(int pv) {
-  if (pv >= pvCurrent)
+  if (pv >= (int)pvCurrent)
     pvCurrent = 0;
   else
     pvCurrent -= pv;
 }
 
 void Character::removePm(int pm) {
-  if (pm >= pmCurrent)
+  if (pm >= (int)pmCurrent)
     pmCurrent = 0;
   else
     pmCurrent -= pm;
 }
 
 void Character::removePa(int pa) {
-  if (pa >= paCurrent)
+  if (pa >= (int)paCurrent)
     paCurrent = 0;
   else
     paCurrent -= pa;

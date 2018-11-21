@@ -28,10 +28,11 @@ void Render::display()
     SpriteGenerator::init();
 
     vector<vector < Cell*>> grid = state->getGrid();
-    int nb = 2, l = 34 * nb, h = 24 * nb, l2 = 32, h2 = 32; //, N = state->getI(), M = state->getJ();
+    int nb = 2, l = 34 * nb, h = 24 * nb, l2 = 32,
+            h2 = 32; //, N = state->getI(), M = state->getJ();
 
     render::View worldView;
-    worldView.setSizeRelative(sf::Vector2f({n * l, m * h}));
+    worldView.setSizeRelative(sf::Vector2f({(float) n * l, (float) m * h}));
 
     auto pwm = new Element();
     // pwm = buildRootSprite();
@@ -39,13 +40,20 @@ void Render::display()
     // worldView.add(pwm);
 
     sf::View abilityView;
-    abilityView.setSize(Vector2f(worldView.getSize().x, worldView.getSize().y / 6));
-    abilityView.setCenter(sf::Vector2f(abilityView.getSize().x / 2, abilityView.getSize().y / 2));
-    worldView.view.setViewport(sf::FloatRect(0, 0, 1, 1 / (1 + abilityView.getSize().y / worldView.getSize().y)));
-    abilityView.setViewport(sf::FloatRect(0, 1 / (1 + abilityView.getSize().y / worldView.getSize().y), 1, 1 / (1 + worldView.getSize().y / abilityView.getSize().y)));
+    abilityView.setSize(
+                        Vector2f(worldView.getSize().x, worldView.getSize().y / 6));
+    abilityView.setCenter(
+                          sf::Vector2f(abilityView.getSize().x / 2, abilityView.getSize().y / 2));
+    worldView.view.setViewport(sf::FloatRect(
+                                             0, 0, 1, 1 / (1 + abilityView.getSize().y / worldView.getSize().y)));
+    abilityView.setViewport(sf::FloatRect(
+                                          0, 1 / (1 + abilityView.getSize().y / worldView.getSize().y), 1,
+                                          1 / (1 + worldView.getSize().y / abilityView.getSize().y)));
 
-    RenderWindow window(VideoMode(worldView.getSize().x, worldView.getSize().y + abilityView.getSize().y), "Jeu",
-                        Style::Titlebar | Style::Close);
+    RenderWindow window(
+                        VideoMode(worldView.getSize().x,
+                                  worldView.getSize().y + abilityView.getSize().y),
+                        "Jeu", Style::Titlebar | Style::Close);
     window.setFramerateLimit(60);
 
     Character* maincharacter = state->getMainCharacter();
@@ -56,7 +64,7 @@ void Render::display()
     y = maincharacter->getJ();
     xv = (x / n) * n;
     yv = (y / m) * m;
-    Vector2f posView = {xv * l, yv * h};
+    Vector2f posView = {(float) xv * l, (float) yv * h};
 
     sf::Sprite sprite;
 
@@ -83,7 +91,8 @@ void Render::display()
 
     int abilityNumber = 0;
 
-    RectangleShape r(Vector2f(abilityView.getSize().x / 6, abilityView.getSize().y));
+    RectangleShape r(
+                     Vector2f(abilityView.getSize().x / 6, abilityView.getSize().y));
     r.setFillColor(Color::Black);
 
     sf::Text text;
@@ -127,11 +136,13 @@ void Render::display()
         yv = (y / m) * m;
         worldView.setPosRelative(sf::Vector2f(xv * l, yv * h));
         window.setView(worldView.view);
-        auto MouseWorldView = window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView());
-        auto MouseAbilityView = window.mapPixelToCoords(sf::Mouse::getPosition(window), abilityView);
+        auto MouseWorldView = window.mapPixelToCoords(
+                                                      sf::Mouse::getPosition(window), window.getView());
+        auto MouseAbilityView =
+                window.mapPixelToCoords(sf::Mouse::getPosition(window), abilityView);
         int X = MouseWorldView.x / l, Y = MouseWorldView.y / h;
         int X2 = floor(MouseAbilityView.x / l), Y2 = floor(MouseAbilityView.y / h);
-        //cout << X2 << " " << Y2 << endl;
+        // cout << X2 << " " << Y2 << endl;
 
         // check all the window's events that were triggered since the last
         // iteration of the loop
@@ -150,13 +161,14 @@ void Render::display()
                 TileGenerator = TileGenerators[offsetTileGenerator];
             }
 
-            posView = {xv * l, yv * h};
+            posView = {(float) xv * l, (float) yv * h};
             Vector2f posMouse{(float) MouseWorldView.x, (float) MouseWorldView.y};
             worldView.reactEvent(event, posMouse);
 
             if (event.type == sf::Event::MouseButtonPressed)
             {
-                //int X = xv + event.mouseButton.x / l, Y = yv + event.mouseButton.y / h;
+                // int X = xv + event.mouseButton.x / l, Y = yv + event.mouseButton.y /
+                // h;
                 if (event.mouseButton.button == sf::Mouse::Right)
                 {
                     state->etatCombat = 0;
@@ -172,7 +184,7 @@ void Render::display()
                 {
                     if (Y2 >= 0)
                     {
-                        if ((X2 / 2 - 1) < abs.size())
+                        if ((X2 / 2 - 1) < (int) abs.size())
                         {
                             if ((X2 / 2 - 1) != abilityNumber || state->etatCombat == 0)
                             {
@@ -332,7 +344,7 @@ void Render::display()
         window.setView(abilityView);
         for (int i = 0; i < 5; i++)
         {
-            if ((i - 1) < abs.size() && i > 0)
+            if ((i - 1) < (int) abs.size() && i > 0)
             {
                 sprite = abilities.getSprite((int) abs[i - 1]->getElement(),
                                              abs[i - 1]->getLv());
