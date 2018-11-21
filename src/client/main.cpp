@@ -21,16 +21,64 @@ using namespace ai;
 
 #include "string.h"
 
+void cout_terminal() {
+    cout << "Clic gauche : déplacement" << endl;
+    cout << "Clic droit : choix personnage" << endl;
+    cout << "Se déplacer au bord de l'écran change la vue sauf si un "
+            "obstacle bloque"
+            << endl;
+    cout << "Cliquez sur un personnage pour se battre. Dans ce cas : "
+            << endl;
+    cout << "Clic gauche sur la carte : déplacement" << endl;
+    cout << "Clic gauche sur une capacité, puis sur la zone bleue : attaque"
+            << endl;
+    cout << "Clic droit : choix personnage ou annulation d'attaque" << endl;
+    cout << "Entrée : passer le tour et actualiser pa et pm" << endl;
+    cout << "Les informations sur le personnage actif sont affichés à gauche"
+            << endl;
+    cout << "Les informations sur la capacité sont affichés à droite" << endl;
+    cout
+            << "Pointer un personnage affiche également ses informations à droite"
+            << endl;
+}
+
+void state_init(State* state) {
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 4; j++) {
+            state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4),
+                    rand() % 12, rand() % 12);
+            Character* c = state->getCharacters().back();
+            c->setPm(2 + rand() % 5);
+            c->setPv(1 + rand() % 4);
+            c->setPa(3 + rand() % 2);
+            Weapon* w = new Weapon(1 + rand() % 18);
+            c->setWeapon(w);
+            for (auto a : w->getAbilities()) {
+                int r3 = rand() % 3;
+                for (int i = 0; i < r3; i++)
+                    a->addLv();
+            }
+        }
+    }
+}
+
 int main(int argc, char* argv[]) {
     srand(time(NULL));
+
+    State* state = new State();
+    state_init(state);
+    Engine* engine = new Engine();
+    Render* render = new Render(state, engine);
+    AI* ai;
+
     for (int i = 1; i < argc; i++) {
         // Livrable 1.1
         if (strcmp(argv[i], "hello") == 0) {
             cout << "Bonjour le monde !" << endl;
-        }// Livrable 1.final
+        }            // Livrable 1.final
         else if (strcmp(argv[i], "state") == 0) {
             cout << "création d'un état" << endl;
-            State* state = new State();
+            state = new State();
 
             cout << "Récupération et modification d'une cellule" << endl;
             cout << "l'élément vaut " << (state->getCell(2, 2))->getElement()
@@ -120,60 +168,12 @@ int main(int argc, char* argv[]) {
 
         }// Livrable 2.1
         else if (strcmp(argv[i], "render") == 0) {
-            State* state = new State();
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
-                    state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4),
-                            rand() % 12, rand() % 12);
-                }
-            }
-            Engine* engine = new Engine();
-            Render* render = new Render(state, engine);
             render->display();
         }// Livrable 2.2
         else if (strcmp(argv[i], "renderTest") == 0) {
             testRender();
         } else if (strcmp(argv[i], "engine") == 0) {
-            State* state = new State();
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 4; j++) {
-                    state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4),
-                            rand() % 12, rand() % 12);
-                    Character* c = state->getCharacters().back();
-                    c->setPm(2 + rand() % 5);
-                    c->setPv(1 + rand() % 4);
-                    c->setPa(3 + rand() % 2);
-                    Weapon* w = new Weapon(1 + rand() % 18);
-                    c->setWeapon(w);
-                    for (auto a : w->getAbilities()) {
-                        int r3 = rand() % 3;
-                        for (int i = 0; i < r3; i++)
-                            a->addLv();
-                    }
-                }
-            }
-
-            Engine* engine = new Engine();
-            Render* render = new Render(state, engine);
-
-            cout << "Clic gauche : déplacement" << endl;
-            cout << "Clic droit : choix personnage" << endl;
-            cout << "Se déplacer au bord de l'écran change la vue sauf si un "
-                    "obstacle bloque"
-                    << endl;
-            cout << "Cliquez sur un personnage pour se battre. Dans ce cas : "
-                    << endl;
-            cout << "Clic gauche sur la carte : déplacement" << endl;
-            cout << "Clic gauche sur une capacité, puis sur la zone bleue : attaque"
-                    << endl;
-            cout << "Clic droit : choix personnage ou annulation d'attaque" << endl;
-            cout << "Entrée : passer le tour et actualiser pa et pm" << endl;
-            cout << "Les informations sur le personnage actif sont affichés à gauche"
-                    << endl;
-            cout << "Les informations sur la capacité sont affichés à droite" << endl;
-            cout
-                    << "Pointer un personnage affiche également ses informations à droite"
-                    << endl;
+            cout_terminal();
 
             bool end = false;
             thread t1([render, &end]() {
@@ -193,47 +193,9 @@ int main(int argc, char* argv[]) {
             t2.join();
         }// Livrable 2.final
         else if (strcmp(argv[i], "random_ai") == 0) {
-            State* state = new State();
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 4; j++) {
-                    state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4),
-                            12 + rand() % 12, 12 + rand() % 12);
-                    Character* c = state->getCharacters().back();
-                    c->setPm(2 + rand() % 5);
-                    c->setPv(1 + rand() % 4);
-                    c->setPa(3 + rand() % 2);
-                    Weapon* w = new Weapon(1 + rand() % 18);
-                    c->setWeapon(w);
-                    for (auto a : w->getAbilities()) {
-                        int r3 = rand() % 3;
-                        for (int i = 0; i < r3; i++)
-                            a->addLv();
-                    }
-                }
-            }
+            ai = new RandomAI(state, engine);
 
-            Engine* engine = new Engine();
-            Render* render = new Render(state, engine);
-            RandomAI* ai = new RandomAI(state, engine);
-
-            cout << "Clic gauche : déplacement" << endl;
-            cout << "Clic droit : choix personnage" << endl;
-            cout << "Se déplacer au bord de l'écran change la vue sauf si un "
-                    "obstacle bloque"
-                    << endl;
-            cout << "Cliquez sur un personnage pour se battre. Dans ce cas : "
-                    << endl;
-            cout << "Clic gauche sur la carte : déplacement" << endl;
-            cout << "Clic gauche sur une capacité, puis sur la zone bleue : attaque"
-                    << endl;
-            cout << "Clic droit : choix personnage ou annulation d'attaque" << endl;
-            cout << "Entrée : passer le tour et actualiser pa et pm" << endl;
-            cout << "Les informations sur le personnage actif sont affichés à gauche"
-                    << endl;
-            cout << "Les informations sur la capacité sont affichés à droite" << endl;
-            cout
-                    << "Pointer un personnage affiche également ses informations à droite"
-                    << endl;
+            cout_terminal();
 
             bool end = false;
             thread t1([render, &end]() {
@@ -265,47 +227,9 @@ int main(int argc, char* argv[]) {
             t3.join();
         }// Livrable 3.1
         else if (strcmp(argv[i], "heuristic_ai") == 0) {
-            State* state = new State();
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 4; j++) {
-                    state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4), 12 +
-                            rand() % 12, 12 + rand() % 12);
-                    Character* c = state->getCharacters().back();
-                    c->setPm(2 + rand() % 5);
-                    c->setPv(1 + rand() % 4);
-                    c->setPa(3 + rand() % 2);
-                    Weapon* w = new Weapon(1 + rand() % 18);
-                    c->setWeapon(w);
-                    for (auto a : w->getAbilities()) {
-                        int r3 = rand() % 3;
-                        for (int i = 0; i < r3; i++)
-                            a->addLv();
-                    }
-                }
-            }
+            ai = new HeuristicAI(state, engine);
 
-            Engine* engine = new Engine();
-            Render* render = new Render(state, engine);
-            HeuristicAI* ai = new HeuristicAI(state, engine);
-
-            cout << "Clic gauche : déplacement" << endl;
-            cout << "Clic droit : choix personnage" << endl;
-            cout << "Se déplacer au bord de l'écran change la vue sauf si un "
-                    "obstacle bloque"
-                    << endl;
-            cout << "Cliquez sur un personnage pour se battre. Dans ce cas : "
-                    << endl;
-            cout << "Clic gauche sur la carte : déplacement" << endl;
-            cout << "Clic gauche sur une capacité, puis sur la zone bleue : attaque"
-                    << endl;
-            cout << "Clic droit : choix personnage ou annulation d'attaque" << endl;
-            cout << "Entrée : passer le tour et actualiser pa et pm" << endl;
-            cout << "Les informations sur le personnage actif sont affichés à gauche"
-                    << endl;
-            cout << "Les informations sur la capacité sont affichés à droite" << endl;
-            cout
-                    << "Pointer un personnage affiche également ses informations à droite"
-                    << endl;
+            cout_terminal();
 
             bool end = false;
             thread t1([render, &end]() {
@@ -328,7 +252,7 @@ int main(int argc, char* argv[]) {
                         for (auto c : vect) {
                             ai->run(c);
                         }
-                        if (state->getFight()->getFightingCharacters(1).size() > 0)engine->addCommand(new FightCommand(state, nullptr, nullptr));
+                        if (state->isFighting() && state->getFight()->getFightingCharacters(1).size() > 0)engine->addCommand(new FightCommand(state, nullptr, nullptr));
                     }
                 }
             });
