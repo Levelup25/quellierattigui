@@ -26,23 +26,21 @@ vector<vector<int>> HeuristicAI::getScore(Character* character) {
         for (auto atk : listatk) {
             int dmg = w->getAbility(static_cast<AttackCommand*> (atk)->getAbilityNumber())->getDamage();
             vector<vector<int>> zone = static_cast<AttackCommand*> (atk)->getZone(1, false);
-            //score[i][j] -= (abs(static_cast<MoveCommands*> (mv)->getDiff()[0]) + abs(static_cast<MoveCommands*> (mv)->getDiff()[1]) + w->getAbility(static_cast<AttackCommand*> (atk)->getAbilityNumber())->getPa());
             for (auto coord : zone) {
                 coord[0] += static_cast<MoveCommands*> (mv)->getDiff()[0];
                 coord[1] += static_cast<MoveCommands*> (mv)->getDiff()[1];
                 for (c0 : chars0) {
                     if (c0->getI() == coord[0] && c0->getJ() == coord[1]) {
-                        score[i][j] += dmg;
-                        if (c0->getPvCurrent() <= dmg)score[i][j] += 1;
+                        score[i][j] += min(dmg - 1, (int) c0->getPvCurrent()) + 1;
                     }
                 }
                 for (c1 : chars1) {
                     if (c1->getI() == coord[0] && c1->getJ() == coord[1]) {
-                        score[i][j] -= dmg;
-                        if (c1->getPvCurrent() <= dmg)score[i][j] -= 1;
+                        score[i][j] -= min(dmg - 1, (int) c1->getPvCurrent()) + 1;
                     }
                 }
             }
+            score[i][j] -= w->getAbility(static_cast<AttackCommand*> (atk)->getAbilityNumber())->getPa();
             if (scoremax <= score[i][j]) {
                 if (scoremax < score[i][j]) {
                     scoremax = score[i][j];
@@ -75,7 +73,7 @@ void HeuristicAI::run(Character* character) {
     vector<vector<int>> score = this->getScore(character);
     int scoremax = score[0][0];
     if (scoremax > 0) {
-        cout << scoremax << endl;
+        //cout << scoremax << endl;
         vector<int> imax = score[1], jmax = score[2];
         int r = rand() % imax.size();
         engine->addCommand(listmv[imax[r]]);
