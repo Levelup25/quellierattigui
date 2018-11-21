@@ -2,7 +2,6 @@
 #ifndef AI__HEURISTICAI__H
 #define AI__HEURISTICAI__H
 
-#include <vector>
 
 namespace state {
   class State;
@@ -15,9 +14,15 @@ namespace state {
 };
 namespace ai {
   class AI;
+};
+namespace engine {
+  class MoveCommands;
+  class AttackCommand;
 }
 
 #include "AI.h"
+#include "engine/MoveCommands.h"
+#include "engine/AttackCommand.h"
 
 namespace ai {
 
@@ -26,7 +31,7 @@ namespace ai {
     // Operations
   public:
     HeuristicAI (state::State* state, engine::Engine* engine);
-    std::vector<std::vector<int>> getScore (state::Character* character);
+    std::tuple<engine::MoveCommands*, engine::AttackCommand*> getBestAction (state::Character* character);
     void run (state::Character* character);
     // Setters and Getters
   };
