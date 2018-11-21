@@ -132,8 +132,9 @@ void Render::display()
         auto MouseWorldView = window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView());
         auto MouseAbilityView = window.mapPixelToCoords(sf::Mouse::getPosition(window), abilityView);
         int X = MouseWorldView.x / l, Y = MouseWorldView.y / h;
-        int X2 = (MouseAbilityView.x - abilityViewoffset.x) / l, Y2 = (MouseAbilityView.y - abilityViewoffset.y) / h - 1;
-        cout << X2 << " " << Y2 << endl;
+        int X2 = floor((MouseAbilityView.x - abilityViewoffset.x) / l), Y2 = floor((MouseAbilityView.y - abilityViewoffset.y) / h);
+        //cout << X2 << " " << Y2 << endl;
+
         // check all the window's events that were triggered since the last
         // iteration of the loop
         sf::Event event;
