@@ -33,7 +33,7 @@ void Sprite::updatePosAbs() {
 
 void Sprite::updateSizeAbs() {
   Element::updateSizeAbs();
-  sf::IntRect rec;
+  sf::IntRect rec = sprite.getTextureRect();
   auto size = getSizeAbs();
   rec.width = size.x;
   rec.height = size.y;

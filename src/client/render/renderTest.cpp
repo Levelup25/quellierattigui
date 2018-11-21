@@ -2,6 +2,7 @@
 
 void testRender() {
   SpriteGenerator::init();
+  srand(time(NULL));
 
   int i = 7;
 
@@ -239,10 +240,6 @@ Element* buildRootSprite() {
     pspriteWater->setPosRelative({200, 100});
   }
 
-  Element copy = root;
-  cout << copy.getTreeView();
-  cout << endl;
-
   return root.getCopy();
 }
 
@@ -311,6 +308,7 @@ Element* testCharacterSheet() {
   int x = 0;
   for (int i = 0; i < 4; i++) {
     x += 20;
+
     int id = rand() % (12 * 4);
     auto pcharacter = new Character(id, "Perso " + to_string(i));
     pcharacter->removePv(rand() % pcharacter->getPvCurrent());

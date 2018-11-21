@@ -18,8 +18,10 @@ Element* CharacterSheet(state::Character* pcharacter) {
   CharacterName->setString(pcharacter->getName());
   CharacterSprite* spriteGen = new CharacterSprite(32, 32);
   volatile auto id = pcharacter->getId();
+  cout << "id: " << id << endl;
   charSprite->sprite = spriteGen->getSprite(id);
-  charSprite->updateSizeFromTextureRect();
+  // charSprite->updateSizeFromTextureRect();
+  charSprite->setSizeRelative({32, 32});
 
   // place children
   std::vector<Element*> children = {CharacterName, charSprite, charStat};
