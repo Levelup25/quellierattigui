@@ -37,7 +37,7 @@ void Render::display() {
     worldView.setSizeRelative(sf::Vector2f({n * l, m * h}));
 
     auto pwm = new Element();
-    pwm = buildRootSprite();
+    //pwm = buildRootSprite();
     pwm->setSizeRelative({"100%", "100%"});
     // worldView.add(pwm);
 
@@ -130,7 +130,8 @@ void Render::display() {
                 ContentType content = grid[i][j]->getContent();
 
                 sprite = TileGenerator->getSpriteRepeated((int) element, {
-                    2, 2});
+                    2, 2
+                });
                 sprite.setPosition(Vector2f(i * l, j * h));
                 window.draw(sprite);
 
