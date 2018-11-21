@@ -47,7 +47,7 @@ void state_init(State* state)
         for (int j = 0; j < 4; j++)
         {
             state->addCharacter(i, rand() % (12 * 4), (Direction) (rand() % 4),
-                                rand() % 12, rand() % 12);
+                                12 + rand() % 12, 12 + rand() % 12);
             Character* c = state->getCharacters().back();
             c->setPm(2 + rand() % 5);
             c->setPv(1 + rand() % 4);

@@ -14,6 +14,7 @@ namespace engine {
   class MoveCommands;
 };
 namespace render {
+  class Sprites;
   class AttackSprite;
   class AbilitySprite;
   class ContentSprite;
@@ -24,6 +25,7 @@ namespace render {
 #include "engine/FightCommand.h"
 #include "engine/AttackCommand.h"
 #include "engine/MoveCommands.h"
+#include "Sprites.h"
 #include "AttackSprite.h"
 #include "AbilitySprite.h"
 #include "engine/Engine.h"

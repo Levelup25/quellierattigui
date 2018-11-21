@@ -28,12 +28,7 @@ void Render::display()
     SpriteGenerator::init();
 
     vector<vector < Cell*>> grid = state->getGrid();
-    int nb = 2, N = state->getI(), M = state->getJ(), l = 34 * nb, h = 24 * nb,
-            l2 = 32, h2 = 32;
-
-    RenderWindow window(VideoMode(n * l, m * h * 7 / 6), "Jeu",
-                        Style::Titlebar | Style::Close);
-    window.setFramerateLimit(60);
+    int nb = 2, l = 34 * nb, h = 24 * nb, l2 = 32, h2 = 32; //, N = state->getI(), M = state->getJ();
 
     render::View worldView;
     worldView.setSizeRelative(sf::Vector2f({n * l, m * h}));
@@ -44,11 +39,14 @@ void Render::display()
     // worldView.add(pwm);
 
     sf::View abilityView;
-    abilityView.setSize(Vector2f(n * l, m * h / 6));
-    abilityView.setCenter(sf::Vector2f(N * l + n * l / 2, M * h + m * h / 6 / 2));
-    sf::Vector2f abilityViewoffset(abilityView.getCenter().x - abilityView.getSize().x / 2, abilityView.getCenter().y - abilityView.getSize().y / 2);
-    worldView.view.setViewport(sf::FloatRect(0, 0, 1, 6.0 / 7));
-    abilityView.setViewport(sf::FloatRect(0, 6.0 / 7, 1, 1.0 / 7));
+    abilityView.setSize(Vector2f(worldView.getSize().x, worldView.getSize().y / 6));
+    abilityView.setCenter(sf::Vector2f(abilityView.getSize().x / 2, abilityView.getSize().y / 2));
+    worldView.view.setViewport(sf::FloatRect(0, 0, 1, 1 / (1 + abilityView.getSize().y / worldView.getSize().y)));
+    abilityView.setViewport(sf::FloatRect(0, 1 / (1 + abilityView.getSize().y / worldView.getSize().y), 1, 1 / (1 + worldView.getSize().y / abilityView.getSize().y)));
+
+    RenderWindow window(VideoMode(worldView.getSize().x, worldView.getSize().y + abilityView.getSize().y), "Jeu",
+                        Style::Titlebar | Style::Close);
+    window.setFramerateLimit(60);
 
     Character* maincharacter = state->getMainCharacter();
     vector<Character*> chars;
@@ -71,7 +69,7 @@ void Render::display()
 
     AttackSprite attacks(l, h);
     ContentSprite contents(l, h);
-    AbilitySprite abilities(2 * l, 2 * h);
+    AbilitySprite abilities(abilityView.getSize().x / 6, abilityView.getSize().y);
     CharacterSprite persos(l2, h2);
 
     RectangleShape zone(Vector2f(l, h));
@@ -85,7 +83,7 @@ void Render::display()
 
     int abilityNumber = 0;
 
-    RectangleShape r(Vector2f(n * l / 6, m * h / 6));
+    RectangleShape r(Vector2f(abilityView.getSize().x / 6, abilityView.getSize().y));
     r.setFillColor(Color::Black);
 
     sf::Text text;
@@ -132,7 +130,7 @@ void Render::display()
         auto MouseWorldView = window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView());
         auto MouseAbilityView = window.mapPixelToCoords(sf::Mouse::getPosition(window), abilityView);
         int X = MouseWorldView.x / l, Y = MouseWorldView.y / h;
-        int X2 = floor((MouseAbilityView.x - abilityViewoffset.x) / l), Y2 = floor((MouseAbilityView.y - abilityViewoffset.y) / h);
+        int X2 = floor(MouseAbilityView.x / l), Y2 = floor(MouseAbilityView.y / h);
         //cout << X2 << " " << Y2 << endl;
 
         // check all the window's events that were triggered since the last
@@ -338,25 +336,25 @@ void Render::display()
             {
                 sprite = abilities.getSprite((int) abs[i - 1]->getElement(),
                                              abs[i - 1]->getLv());
-                sprite.setPosition(Vector2f(N * l + i * n * l / 6, M * h));
+                sprite.setPosition(Vector2f(i * abilityView.getSize().x / 6, 0));
                 window.draw(sprite);
             }
             else
             {
-                r.setPosition(Vector2f(N * l + i * n * l / 6, M * h));
+                r.setPosition(Vector2f(i * abilityView.getSize().x / 6, 0));
                 window.draw(r);
             }
         }
         text.setString("pv : " + to_string(maincharacter->getPvCurrent()) +
                        " pa : " + to_string(maincharacter->getPaCurrent()) +
                        "\npm : " + to_string(maincharacter->getPmCurrent()));
-        text.setPosition(Vector2f(N * l, M * h));
+        text.setPosition(Vector2f(0, 0));
         text.setColor(colors[maincharacter->getWeapon()->getElement()]);
         window.draw(text);
 
         text.setString("pa : " + to_string(a->getPa()) +
                        " atk : " + to_string(a->getDamage()));
-        text.setPosition(Vector2f((N + n - 2) * l, M * h));
+        text.setPosition(Vector2f(abilityView.getSize().x * 5 / 6, 0));
         text.setColor(colors[a->getElement()]);
         window.draw(text);
 
@@ -368,7 +366,7 @@ void Render::display()
                 text.setString("\npv : " + to_string(c->getPvCurrent()) +
                                " pa : " + to_string(c->getPaCurrent()) +
                                "\npm : " + to_string(c->getPmCurrent()));
-                text.setPosition(Vector2f((N + n - 2) * l, M * h));
+                text.setPosition(Vector2f(abilityView.getSize().x * 5 / 6, 0));
                 text.setColor(colors[c->getWeapon()->getElement()]);
                 window.draw(text);
             }
