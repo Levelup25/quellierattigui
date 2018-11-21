@@ -4,4 +4,5 @@
 
 #include "ai/AI.h"
 #include "ai/RandomAI.h"
+#include "ai/HeuristicAI.h"
 #endif
