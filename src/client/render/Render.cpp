@@ -1,11 +1,10 @@
 #include "Render.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "SpriteGenerator.h"
+#include "Sprites.h"
 #include "View.h"
 #include "Window.h"
 #include "WindowManager.h"
-#include "ai/RandomAI.h"
 #include "renderTest.h"
 
 using namespace std;
@@ -13,7 +12,6 @@ using namespace sf;
 using namespace state;
 using namespace render;
 using namespace engine;
-using namespace ai;
 
 Render::Render(State* state, Engine* engine)
 {
@@ -25,11 +23,8 @@ Render::Render(State* state, Engine* engine)
 
 void Render::display()
 {
-    SpriteGenerator::init();
-
     vector<vector < Cell*>> grid = state->getGrid();
-    int nb = 2, l = 34 * nb, h = 24 * nb, l2 = 32,
-            h2 = 32; //, N = state->getI(), M = state->getJ();
+    int nb = 2, l = 34 * nb, h = 24 * nb; //, N = state->getI(), M = state->getJ();
 
     render::View worldView;
     worldView.setSizeRelative(sf::Vector2f({(float) n * l, (float) m * h}));
@@ -67,18 +62,7 @@ void Render::display()
     Vector2f posView = {(float) xv * l, (float) yv * h};
 
     sf::Sprite sprite;
-
-    std::vector<SpriteGeneratorById*> TileGenerators = {
-        SpriteGenerator::Tile::pdefault, SpriteGenerator::Tile::palt1,
-        SpriteGenerator::Tile::palt2
-    };
-    size_t offsetTileGenerator = 0;
-    auto TileGenerator = TileGenerators[offsetTileGenerator];
-
-    AttackSprite attacks(l, h);
-    ContentSprite contents(l, h);
-    AbilitySprite abilities(abilityView.getSize().x / 6, abilityView.getSize().y);
-    CharacterSprite persos(l2, h2);
+    Sprites sprites(nb);
 
     RectangleShape zone(Vector2f(l, h));
     zone.setFillColor(Color::Transparent);
@@ -114,12 +98,6 @@ void Render::display()
             if (maincharacter->getPvCurrent() <= 0)
             {
                 maincharacter = fight->getFightingCharacters(0)[0];
-                //                for (auto c : fight->getFightingCharacters(0)) {
-                //                    if (c->getPvCurrent() > 0) {
-                //                        maincharacter = c;
-                //                        break;
-                //                    }
-                //                }
             }
         }
         else
@@ -142,7 +120,6 @@ void Render::display()
                 window.mapPixelToCoords(sf::Mouse::getPosition(window), abilityView);
         int X = MouseWorldView.x / l, Y = MouseWorldView.y / h;
         int X2 = floor(MouseAbilityView.x / l), Y2 = floor(MouseAbilityView.y / h);
-        // cout << X2 << " " << Y2 << endl;
 
         // check all the window's events that were triggered since the last
         // iteration of the loop
@@ -153,22 +130,12 @@ void Render::display()
             if (event.type == sf::Event::Closed)
                 window.close();
 
-            if (event.type == sf::Event::KeyPressed &&
-                    event.key.code == sf::Keyboard::Add)
-            {
-                offsetTileGenerator += 1;
-                offsetTileGenerator %= TileGenerators.size();
-                TileGenerator = TileGenerators[offsetTileGenerator];
-            }
-
             posView = {(float) xv * l, (float) yv * h};
             Vector2f posMouse{(float) MouseWorldView.x, (float) MouseWorldView.y};
             worldView.reactEvent(event, posMouse);
 
             if (event.type == sf::Event::MouseButtonPressed)
             {
-                // int X = xv + event.mouseButton.x / l, Y = yv + event.mouseButton.y /
-                // h;
                 if (event.mouseButton.button == sf::Mouse::Right)
                 {
                     state->etatCombat = 0;
@@ -219,11 +186,6 @@ void Render::display()
                 if (event.key.code == sf::Keyboard::Return)
                 {
                     engine->addCommand(new FightCommand(state, nullptr, nullptr));
-                    //                    for (auto c :
-                    //                    state->getFight()->getFightingCharacters(1))
-                    //                        ai->run(c);
-                    //                    engine->addCommand(new FightCommand(state,
-                    //                    nullptr, nullptr));
                 }
             }
         }
@@ -235,16 +197,13 @@ void Render::display()
                 ElementType element = grid[i][j]->getElement();
                 ContentType content = grid[i][j]->getContent();
 
-                sprite = TileGenerator->getSpriteRepeated((int) element,
-                {
-                                                          2, 2
-                });
+                sprite = sprites.getTileSprite(l, h, (int) element);
                 sprite.setPosition(Vector2f(i * l, j * h));
                 window.draw(sprite);
 
                 if ((int) content > 1)
                 {
-                    sprite = contents.getSprite((int) content, (int) element);
+                    sprite = sprites.getContentSprite(l, h, (int) content, (int) element);
                     sprite.setPosition(Vector2f(i * l, j * h));
                     window.draw(sprite);
                 }
@@ -299,9 +258,7 @@ void Render::display()
                 int animation = (ic - (int) ic + jc - (int) jc) * 4 - 1;
                 if (animation == -1)
                     animation = 1;
-                sprite = persos.getSprite((*c)->getId(), (int) (*c)->getDirection(),
-                                          animation);
-                sprite.setScale(Vector2f(nb, (float) h / h2));
+                sprite = sprites.getCharacterSprite(l, h, (*c)->getId(), (int) (*c)->getDirection(), animation);
                 sprite.setPosition(Vector2f(l * ic, h * jc));
                 window.draw(sprite);
             }
@@ -333,8 +290,7 @@ void Render::display()
 
         for (auto animation : state->animations)
         {
-            sprite = attacks.getSprite(animation[2], animation[3],
-                                       animation[4]); // direction element lv
+            sprite = sprites.getAttackSprite(l, h, animation[2], animation[3], animation[4]);
             sprite.setPosition(Vector2f(animation[0] * l, animation[1] * h));
             window.draw(sprite);
         }
@@ -346,8 +302,7 @@ void Render::display()
         {
             if ((i - 1) < (int) abs.size() && i > 0)
             {
-                sprite = abilities.getSprite((int) abs[i - 1]->getElement(),
-                                             abs[i - 1]->getLv());
+                sprite = sprites.getAbilitySprite(2 * l, 2 * h, (int) abs[i - 1]->getElement(), abs[i - 1]->getLv());
                 sprite.setPosition(Vector2f(i * abilityView.getSize().x / 6, 0));
                 window.draw(sprite);
             }
