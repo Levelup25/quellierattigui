@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <stdlib.h>
+#include <memory>
 
 namespace state {
   class Team;
@@ -13,8 +14,8 @@ namespace state {
   class Character;
 }
 
-#include "Direction.h"
 #include "Fight.h"
+#include "Direction.h"
 #include "Team.h"
 #include "Cell.h"
 #include "MainQuest.h"
@@ -37,7 +38,7 @@ namespace state {
     std::vector<std::vector<Cell*>> grid;
     std::vector<Team*> teams;
     std::vector<MainQuest*> quests;
-    Fight* fight;
+    std::shared_ptr<Fight> fight;
   protected:
     int epoch     = 0;
     int epochRate     = 0;
@@ -71,8 +72,8 @@ namespace state {
     Team* getMainTeam ();
     Character* getMainCharacter ();
     bool isFighting ();
-    Fight* getFight ();
-    void setFight (Fight* fight);
+    std::shared_ptr<Fight> getFight ();
+    void setFight (std::shared_ptr<Fight> fight);
     void deploy (int nb = -1);
     void endFight ();
     // Setters and Getters

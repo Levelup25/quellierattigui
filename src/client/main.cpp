@@ -138,7 +138,7 @@ int main(int argc, char* argv[])
             villain->setWeapon(weapon2);
 
             cout << "Lancement du combat" << endl;
-            Fight* fight = new Fight(goodGuys, badGuys);
+            shared_ptr<Fight> fight(new Fight(goodGuys, badGuys));
             state->setFight(fight);
             cout << "Le heros " << heros->getName() << " de l'équipe "
                     << goodGuys->getName() << " possède " << heros->getPvCurrent()
