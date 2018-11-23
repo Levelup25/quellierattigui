@@ -39,6 +39,8 @@ Render::Render(State* state, Engine* engine) {
 //}
 
 void Render::display() {
+  SpriteGenerator::init();
+
   vector<vector<Cell*>> grid = state->getGrid();
   int nb = 2, l = 34 * nb,
       h = 24 * nb;  //, N = state->getI(), M = state->getJ();
@@ -47,9 +49,9 @@ void Render::display() {
   worldView.setSizeRelative(sf::Vector2f({(float)n * l, (float)m * h}));
 
   auto pwm = new Element();
-  // pwm = buildRootSprite();
+  pwm = new WindowManager(state);
   pwm->setSizeRelative({"100%", "100%"});
-  // worldView.add(pwm);
+  worldView.add(pwm);
 
   sf::View abilityView;
   abilityView.setSize(

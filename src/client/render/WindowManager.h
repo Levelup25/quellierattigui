@@ -2,31 +2,50 @@
 #ifndef RENDER__WINDOWMANAGER__H
 #define RENDER__WINDOWMANAGER__H
 
+#include <vector>
 #include <SFML/Graphics.hpp>
 
-namespace render {
+namespace state {
+  class State;
   class Inventory;
+  class Character;
+  class Team;
+  class Weapon;
+};
+namespace render {
   class Rectangle;
 }
 
 #include "Rectangle.h"
+#include "state/State.h"
+#include "state/Weapon.h"
+#include "state/Team.h"
+#include "state/Character.h"
+#include "Inventory.h"
 
 namespace render {
 
   /// class WindowManager - 
   class WindowManager : public render::Rectangle {
+    // Associations
     // Attributes
-  protected:
-    Inventory* inventory;
+  public:
+    state::State* state;
+    state::Inventory* playerInv;
+    std::vector<state::Character *> openedChars;
+    std::vector<state::Team*> openedTeams;
+    std::vector<state::Weapon*> openedWeapons;
     // Operations
   public:
     WindowManager ();
+    WindowManager (state::State* state);
     void processEvent (sf::Event event, sf::Vector2f posMouse);
+    bool isMouseOnWin (sf::Vector2f MousePos);
+    void toggleMainCharacter ();
+    void openChar (state::Character* pchar);
   private:
     void toggleInventory ();
     // Setters and Getters
-    const Inventory*& getInventory() const;
-    void setInventory(const Inventory*& inventory);
   };
 
 };
