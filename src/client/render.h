@@ -2,7 +2,6 @@
 #ifndef __RENDER__H
 #define __RENDER__H
 
-#include "render/Render.h"
 #include "render/ComputeMethodType.h"
 #include "render/Relatif.h"
 #include "render/Relatif2.h"
@@ -21,4 +20,5 @@
 #include "render/ContentSprite.h"
 #include "render/AbilitySprite.h"
 #include "render/AttackSprite.h"
+#include "render/Render.h"
 #endif
