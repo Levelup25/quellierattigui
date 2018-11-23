@@ -31,24 +31,25 @@ int getScoreAction(MoveCommands* mv,
   int dmg = weapon.getAbility(atk->getAbilityNumber())->getDamage();
   auto zoneDmg = atk->getZone(1, false);
 
-  cout << "char pos = {" << character.getI() << ", " << character.getJ() << "}"
-       << endl;
   for (auto coord : zoneDmg) {
-    // coord[0] += character.getI();
-    // coord[1] += character.getJ();
-    cout << "coord = {" << coord[0] << ", " << coord[1] << "}" << endl;
+    if (mv != nullptr) {
+      coord[0] += mv->getDiff()[0];
+      coord[1] += mv->getDiff()[1];
+    }
     for (auto pcharacter : myFighters) {
       if (isCharacterAtpos(*pcharacter, coord[0], coord[1])) {
-        score += min(dmg, (int)pcharacter->getPvCurrent() + 1);
+        int pv = pcharacter->getPvCurrent();
+        score += dmg < pv ? dmg : pv + 1;
       }
     }
     for (auto pcharacter : theirFighters) {
       if (isCharacterAtpos(*pcharacter, coord[0], coord[1])) {
-        score -= min(dmg, (int)pcharacter->getPvCurrent() + 1);
+        int pv = pcharacter->getPvCurrent();
+        score -= dmg < pv ? dmg : pv + 1;
       }
     }
     int paCost = weapon.getAbility(atk->getAbilityNumber())->getPa();
-    score -= paCost;
+    // score -= paCost;
   }
   return score;
 }
@@ -80,12 +81,12 @@ std::tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
   int i = 0, j = 0;
   vector<int> imax = {0}, jmax = {0};
 
-  cout << "score = {";
+  // out << "score = {";
   for (auto mv : listmv) {
     for (auto atk : listatk) {
       int score =
           getScoreAction(mv, atk, *character, myFighters, theirFighters);
-      cout << score << ", ";
+      // cout << score << ", ";
 
       if (score > scoreMax) {
         imax.clear();
@@ -102,19 +103,19 @@ std::tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
     j = 0;
     i++;
   }
-  cout << "}" << endl;
-  cout << "scoreMax = " << scoreMax << endl;
+  // cout << "}" << endl;
+  // cout << "scoreMax = " << scoreMax << endl;
   // Choose one of the best action
-  //   cout << "possiblities  = " << listmv.size() * listatk.size()
-  //        << ", mv  = " << listmv.size() << ", atk  = " << listatk.size() <<
-  //        endl;
-  //   cout << "imax size = " << imax.size() << ", jmax size = " << jmax.size()
-  //        << endl;
-
   int r = rand() % imax.size();
-  cout << "r = " << r << endl << endl;
   i = imax[r];
   j = jmax[r];
+  /*
+  cout << "score action "
+       << getScoreAction(listmv[i], listatk[j], *character, myFighters,
+                         theirFighters)
+       << endl
+       << endl;
+       */
   return std::make_tuple(listmv[i], listatk[j]);
 }
 
@@ -127,10 +128,15 @@ void HeuristicAI::run(Character* character) {
   std::tuple<MoveCommands*, AttackCommand*> bestAction =
       this->getBestAction(character);
   MoveCommands* mv = std::get<0>(bestAction);
-  AttackCommand* atk = std::get<1>(bestAction);
 
   if (mv != nullptr)
     engine->addCommand(mv);
+
+  while (engine->getSize() > 0) {
+  }
+
+  bestAction = this->getBestAction(character);
+  AttackCommand* atk = std::get<1>(bestAction);
 
   if (atk != nullptr)
     engine->addCommand(atk);
