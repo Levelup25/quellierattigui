@@ -6,6 +6,7 @@
 #include "View.h"
 #include "Window.h"
 #include "WindowManager.h"
+#include "customElements/CharacterStat.h"
 #include "renderTest.h"
 
 using namespace std;
@@ -45,28 +46,32 @@ void Render::display() {
   int nb = 2, l = 34 * nb,
       h = 24 * nb;  //, N = state->getI(), M = state->getJ();
 
-  render::View worldView;
+  // Create view
+  render::View worldView, abilityView;
   worldView.setSizeRelative(sf::Vector2f({(float)n * l, (float)m * h}));
+  abilityView.setSizeRelative(
+      {worldView.getSizeAbs().x, worldView.getSizeAbs().y / 6});
+  abilityView.view.setCenter(
+      {abilityView.getSizeAbs().x / 2, abilityView.getSizeAbs().y / 2});
 
+  // set view port
+  worldView.view.setViewport(sf::FloatRect(
+      0, 0, 1,
+      1 / (1 + abilityView.getSizeAbs().y / worldView.getSizeAbs().y)));
+  abilityView.view.setViewport(sf::FloatRect(
+      0, 1 / (1 + abilityView.getSizeAbs().y / worldView.getSizeAbs().y), 1,
+      1 / (1 + worldView.getSizeAbs().y / abilityView.getSizeAbs().y)));
+
+  // create windom manager
   auto pwm = new Element();
   pwm = new WindowManager(state);
   pwm->setSizeRelative({"100%", "100%"});
   worldView.add(pwm);
 
-  sf::View abilityView;
-  abilityView.setSize(
-      Vector2f(worldView.view.getSize().x, worldView.view.getSize().y / 6));
-  abilityView.setCenter(
-      sf::Vector2f(abilityView.getSize().x / 2, abilityView.getSize().y / 2));
-  worldView.view.setViewport(sf::FloatRect(
-      0, 0, 1, 1 / (1 + abilityView.getSize().y / worldView.view.getSize().y)));
-  abilityView.setViewport(sf::FloatRect(
-      0, 1 / (1 + abilityView.getSize().y / worldView.view.getSize().y), 1,
-      1 / (1 + worldView.view.getSize().y / abilityView.getSize().y)));
-
+  // Create window
   RenderWindow window(
-      VideoMode(worldView.view.getSize().x,
-                worldView.view.getSize().y + abilityView.getSize().y),
+      VideoMode(worldView.getSizeAbs().x,
+                worldView.getSizeAbs().y + abilityView.getSizeAbs().y),
       "Jeu", Style::Titlebar | Style::Close);
   window.setFramerateLimit(60);
 
@@ -95,7 +100,7 @@ void Render::display() {
   int abilityNumber = 0;
 
   RectangleShape r(
-      Vector2f(abilityView.getSize().x / 6, abilityView.getSize().y));
+      Vector2f(abilityView.getSizeAbs().x / 6, abilityView.getSizeAbs().y));
   r.setFillColor(Color::Black);
 
   sf::Text text;
@@ -130,8 +135,8 @@ void Render::display() {
     window.setView(worldView.view);
     auto MouseWorldView = window.mapPixelToCoords(
         sf::Mouse::getPosition(window), window.getView());
-    auto MouseAbilityView =
-        window.mapPixelToCoords(sf::Mouse::getPosition(window), abilityView);
+    auto MouseAbilityView = window.mapPixelToCoords(
+        sf::Mouse::getPosition(window), abilityView.view);
     int X = MouseWorldView.x / l, Y = MouseWorldView.y / h;
     int X2 = floor(MouseAbilityView.x / l), Y2 = floor(MouseAbilityView.y / h);
 
@@ -282,15 +287,15 @@ void Render::display() {
 
     window.draw(worldView);
 
-    window.setView(abilityView);
+    window.setView(abilityView.view);
     for (int i = 0; i < 5; i++) {
       if ((i - 1) < (int)abs.size() && i > 0) {
         sprite = sprites.getAbilitySprite(
             2 * l, 2 * h, (int)abs[i - 1]->getElement(), abs[i - 1]->getLv());
-        sprite.setPosition(Vector2f(i * abilityView.getSize().x / 6, 0));
+        sprite.setPosition(Vector2f(i * abilityView.getSizeAbs().x / 6, 0));
         window.draw(sprite);
       } else {
-        r.setPosition(Vector2f(i * abilityView.getSize().x / 6, 0));
+        r.setPosition(Vector2f(i * abilityView.getSizeAbs().x / 6, 0));
         window.draw(r);
       }
     }
@@ -299,11 +304,14 @@ void Render::display() {
                    "\npm : " + to_string(maincharacter->getPmCurrent()));
     text.setPosition(Vector2f(0, 0));
     text.setColor(colors[maincharacter->getWeapon()->getElement()]);
+
+    Element* selectedCharStat = CharacterStats(maincharacter);
+
     window.draw(text);
 
     text.setString("pa : " + to_string(a->getPa()) +
                    " atk : " + to_string(a->getDamage()));
-    text.setPosition(Vector2f(abilityView.getSize().x * 5 / 6, 0));
+    text.setPosition(Vector2f(abilityView.getSizeAbs().x * 5 / 6, 0));
     text.setColor(colors[a->getElement()]);
     window.draw(text);
 
@@ -313,7 +321,7 @@ void Render::display() {
         text.setString("\npv : " + to_string(c->getPvCurrent()) +
                        " pa : " + to_string(c->getPaCurrent()) +
                        "\npm : " + to_string(c->getPmCurrent()));
-        text.setPosition(Vector2f(abilityView.getSize().x * 5 / 6, 0));
+        text.setPosition(Vector2f(abilityView.getSizeAbs().x * 5 / 6, 0));
         text.setColor(colors[c->getWeapon()->getElement()]);
         window.draw(text);
       }
