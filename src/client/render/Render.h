@@ -56,6 +56,7 @@ namespace render {
     void drawZones (sf::RenderWindow& window, sf::View& view);
     void drawCharacters (sf::RenderWindow& window, sf::View& view, Sprites& sprites, std::vector<state::Character*> chars);
     void drawAnimations (sf::RenderWindow& window, sf::View& view, Sprites& sprites);
+    void drawInformations (sf::RenderWindow& window, sf::View& view, Sprites& sprites, std::vector<state::Character*> chars);
     void display ();
     // Setters and Getters
   };

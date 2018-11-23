@@ -59,8 +59,8 @@ void Render::drawMap(RenderWindow& window, sf::View& view, Sprites& sprites)
 
 void Render::drawZones(RenderWindow& window, sf::View& view)
 {
-    Vector2f MouseWorldView = window.mapPixelToCoords(sf::Mouse::getPosition(window), view);
-    int X = MouseWorldView.x / l, Y = MouseWorldView.y / h;
+    Vector2f mouse = window.mapPixelToCoords(sf::Mouse::getPosition(window), view);
+    int X = mouse.x / l, Y = mouse.y / h;
     RectangleShape zone(Vector2f(l, h));
     window.setView(view);
     if (state->isFighting() && state->getFight()->getTurn() % 2 == 1)
@@ -154,6 +154,65 @@ void Render::drawAnimations(RenderWindow& window, sf::View& view, Sprites& sprit
         sprite = sprites.getAttackSprite(l, h, animation[2], animation[3], animation[4]);
         sprite.setPosition(Vector2f(animation[0] * l, animation[1] * h));
         window.draw(sprite);
+    }
+}
+
+void Render::drawInformations(RenderWindow& window, sf::View& view, Sprites& sprites, vector<Character*> chars)
+{
+    sf::Sprite sprite;
+    Vector2f mouse = window.mapPixelToCoords(sf::Mouse::getPosition(window), view);
+    int X = mouse.x / l, Y = mouse.y / h;
+    vector<Ability*> abs = selectedcharacter->getWeapon()->getAbilities();
+    Ability* a = abs[abilityNumber];
+    window.setView(view);
+    sf::Text text;
+    Font font;
+    font.loadFromFile("res/font/roboto/Roboto-Regular.ttf");
+    text.setFont(font);
+    text.setCharacterSize(24);
+    RectangleShape r(Vector2f(view.getSize().x / 6, view.getSize().y));
+    r.setFillColor(Color::Black);
+    vector<Color> colors = {Color::White, Color::Blue, Color::Green, Color::Red,
+        Color::Yellow};
+    for (int i = 0; i < 5; i++)
+    {
+        if ((i - 1) < (int) abs.size() && i > 0)
+        {
+            sprite = sprites.getAbilitySprite(2 * l, 2 * h, (int) abs[i - 1]->getElement(), abs[i - 1]->getLv());
+            sprite.setPosition(Vector2f(i * view.getSize().x / 6, 0));
+            window.draw(sprite);
+        }
+        else
+        {
+            r.setPosition(Vector2f(i * view.getSize().x / 6, 0));
+            window.draw(r);
+        }
+    }
+    text.setString("pv : " + to_string(selectedcharacter->getPvCurrent()) +
+                   " pa : " + to_string(selectedcharacter->getPaCurrent()) +
+                   "\npm : " + to_string(selectedcharacter->getPmCurrent()));
+    text.setPosition(Vector2f(0, 0));
+    text.setColor(colors[selectedcharacter->getWeapon()->getElement()]);
+    window.draw(text);
+
+    text.setString("pa : " + to_string(a->getPa()) +
+                   " atk : " + to_string(a->getDamage()));
+    text.setPosition(Vector2f(view.getSize().x * 5 / 6, 0));
+    text.setColor(colors[a->getElement()]);
+    window.draw(text);
+
+    Character* c = state->getCharacter(X, Y);
+    for (auto ch : chars)
+    {
+        if (c == ch)
+        {
+            text.setString("\npv : " + to_string(c->getPvCurrent()) +
+                           " pa : " + to_string(c->getPaCurrent()) +
+                           "\npm : " + to_string(c->getPmCurrent()));
+            text.setPosition(Vector2f(view.getSize().x * 5 / 6, 0));
+            text.setColor(colors[c->getWeapon()->getElement()]);
+            window.draw(text);
+        }
     }
 }
 
@@ -256,7 +315,6 @@ void Render::display()
         int X = MouseWorldView.x / l, Y = MouseWorldView.y / h;
         int X2 = floor(MouseAbilityView.x / l), Y2 = floor(MouseAbilityView.y / h);
 
-
         //check all the window's events that were triggered since the last
         //iteration of the loop
         sf::Event event;
@@ -334,57 +392,9 @@ void Render::display()
 
         this->drawAnimations(window, worldView.view, sprites);
 
+        this->drawInformations(window, abilityView, sprites, chars);
+
         window.draw(worldView);
-
-        window.setView(abilityView);
-        for (int i = 0; i < 5; i++)
-        {
-            if ((i - 1) < (int) abs.size() && i > 0)
-            {
-                sprite = sprites.getAbilitySprite(2 * l, 2 * h, (int) abs[i - 1]->getElement(), abs[i - 1]->getLv());
-                sprite.setPosition(Vector2f(i * abilityView.getSize().x / 6, 0));
-                window.draw(sprite);
-            }
-            else
-            {
-                r.setPosition(Vector2f(i * abilityView.getSize().x / 6, 0));
-                window.draw(r);
-            }
-        }
-        text.setString("pv : " + to_string(selectedcharacter->getPvCurrent()) +
-                       " pa : " + to_string(selectedcharacter->getPaCurrent()) +
-                       "\npm : " + to_string(selectedcharacter->getPmCurrent()));
-        text.setPosition(Vector2f(0, 0));
-        text.setColor(colors[selectedcharacter->getWeapon()->getElement()]);
-        window.draw(text);
-
-        text.setString("pa : " + to_string(a->getPa()) +
-                       " atk : " + to_string(a->getDamage()));
-        text.setPosition(Vector2f(abilityView.getSize().x * 5 / 6, 0));
-        text.setColor(colors[a->getElement()]);
-        window.draw(text);
-
-        Character* c = state->getCharacter(X, Y);
-        for (auto ch : chars)
-        {
-            if (c == ch)
-            {
-                text.setString("\npv : " + to_string(c->getPvCurrent()) +
-                               " pa : " + to_string(c->getPaCurrent()) +
-                               "\npm : " + to_string(c->getPmCurrent()));
-                text.setPosition(Vector2f(abilityView.getSize().x * 5 / 6, 0));
-                text.setColor(colors[c->getWeapon()->getElement()]);
-                window.draw(text);
-            }
-        }
-
-        //        for (int b = yv; b < yv + m; b++) {
-        //            for (int a = xv; a < xv + n; a++) {
-        //                cout << state->getCell(a, b)->getContent() << " ";
-        //            }
-        //            cout << endl;
-        //        }
-        //        cout << endl;
 
         // end the current frame
         window.display();
