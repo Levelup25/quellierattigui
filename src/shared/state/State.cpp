@@ -58,8 +58,8 @@ State::State(size_t i, size_t j) {
 void State::resetContents() {
   int i0 = ((int)this->getMainCharacters()[0]->getI() / n) * n,
       j0 = ((int)this->getMainCharacters()[0]->getJ() / m) * m;
-  for (int i = i0; i < i0 + n; i++)
-    for (int j = j0; j < j0 + m; j++)
+  for (int i = i0; i < i0 + (int)n; i++)
+    for (int j = j0; j < j0 + (int)m; j++)
       if (grid[i][j]->getContent() == perso)
         grid[i][j]->setContent(nothing);
   if (!this->isFighting())

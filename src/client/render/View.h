@@ -23,6 +23,8 @@ namespace render {
     ~View ();
     void updatePosAbs ();
     void updateSizeAbs ();
+    sf::Vector2f getCenter ();
+    sf::Vector2f getSize ();
     // Setters and Getters
   };
 
