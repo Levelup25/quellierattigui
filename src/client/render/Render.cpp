@@ -21,6 +21,23 @@ Render::Render(State* state, Engine* engine)
     m = state->getM();
 }
 
+//void Render::drawCharacters(RenderWindow & window, vector<Character*> chars)
+//{
+//    for (auto c = chars.begin(); c != chars.end(); ++c)
+//    {
+//        float ic = (*c)->getI(), jc = (*c)->getJ();
+//        if (ic >= xv && ic < xv + n && jc >= yv && jc < yv + m)
+//        {
+//            int animation = (ic - (int) ic + jc - (int) jc) * 4 - 1;
+//            if (animation == -1)
+//                animation = 1;
+//            sprite = sprites.getCharacterSprite(l, h, (*c)->getId(), (int) (*c)->getDirection(), animation);
+//            sprite.setPosition(Vector2f(l * ic, h * jc));
+//            window.draw(sprite);
+//        }
+//    }
+//}
+
 void Render::display()
 {
     vector<vector < Cell*>> grid = state->getGrid();
@@ -36,18 +53,18 @@ void Render::display()
 
     sf::View abilityView;
     abilityView.setSize(
-                        Vector2f(worldView.getSize().x, worldView.getSize().y / 6));
+                        Vector2f(worldView.view.getSize().x, worldView.view.getSize().y / 6));
     abilityView.setCenter(
                           sf::Vector2f(abilityView.getSize().x / 2, abilityView.getSize().y / 2));
     worldView.view.setViewport(sf::FloatRect(
-                                             0, 0, 1, 1 / (1 + abilityView.getSize().y / worldView.getSize().y)));
+                                             0, 0, 1, 1 / (1 + abilityView.getSize().y / worldView.view.getSize().y)));
     abilityView.setViewport(sf::FloatRect(
-                                          0, 1 / (1 + abilityView.getSize().y / worldView.getSize().y), 1,
-                                          1 / (1 + worldView.getSize().y / abilityView.getSize().y)));
+                                          0, 1 / (1 + abilityView.getSize().y / worldView.view.getSize().y), 1,
+                                          1 / (1 + worldView.view.getSize().y / abilityView.getSize().y)));
 
     RenderWindow window(
-                        VideoMode(worldView.getSize().x,
-                                  worldView.getSize().y + abilityView.getSize().y),
+                        VideoMode(worldView.view.getSize().x,
+                                  worldView.view.getSize().y + abilityView.getSize().y),
                         "Jeu", Style::Titlebar | Style::Close);
     window.setFramerateLimit(60);
 
@@ -250,6 +267,7 @@ void Render::display()
             zone.setFillColor(Color::Transparent);
         }
 
+        //this->drawCharacters(&window, chars);
         for (auto c = chars.begin(); c != chars.end(); ++c)
         {
             float ic = (*c)->getI(), jc = (*c)->getJ();

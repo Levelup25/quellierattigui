@@ -26,13 +26,3 @@ void View::updateSizeAbs()
     Element::updateSizeAbs();
     view.setSize(getSizeAbs());
 }
-
-sf::Vector2f View::getCenter()
-{
-    return view.getCenter();
-}
-
-sf::Vector2f View::getSize()
-{
-    return view.getSize();
-}

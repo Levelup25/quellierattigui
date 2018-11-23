@@ -3,35 +3,29 @@
 #define RENDER__RENDER__H
 
 #include <stdlib.h>
+#include <SFML/Graphics.hpp>
+#include <vector>
 
 namespace state {
   class State;
 };
 namespace engine {
   class Engine;
+};
+namespace state {
+  class Character;
+};
+namespace engine {
   class FightCommand;
   class AttackCommand;
   class MoveCommands;
-};
-namespace render {
-  class Sprites;
-  class AttackSprite;
-  class AbilitySprite;
-  class ContentSprite;
-  class CharacterSprite;
-  class TileSprite;
 }
 
 #include "engine/FightCommand.h"
 #include "engine/AttackCommand.h"
 #include "engine/MoveCommands.h"
-#include "Sprites.h"
-#include "AttackSprite.h"
-#include "AbilitySprite.h"
+#include "state/Character.h"
 #include "engine/Engine.h"
-#include "ContentSprite.h"
-#include "CharacterSprite.h"
-#include "TileSprite.h"
 #include "state/State.h"
 
 namespace render {
@@ -48,6 +42,7 @@ namespace render {
     // Operations
   public:
     Render (state::State* state, engine::Engine* engine);
+    void drawCharacters (sf::RenderWindow & window, std::vector<state::Character*> chars);
     void display ();
     // Setters and Getters
   };

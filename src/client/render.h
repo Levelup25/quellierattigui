@@ -2,14 +2,7 @@
 #ifndef __RENDER__H
 #define __RENDER__H
 
-#include "render/Sprites.h"
-#include "render/AttackSprite.h"
-#include "render/AbilitySprite.h"
-#include "render/ContentSprite.h"
-#include "render/CharacterSprite.h"
-#include "render/TileSprite.h"
 #include "render/Render.h"
-#include "render/SpriteGeneratorById.h"
 #include "render/ComputeMethodType.h"
 #include "render/Relatif.h"
 #include "render/Relatif2.h"
@@ -21,4 +14,11 @@
 #include "render/Window.h"
 #include "render/Inventory.h"
 #include "render/View.h"
+#include "render/Sprites.h"
+#include "render/SpriteGeneratorById.h"
+#include "render/TileSprite.h"
+#include "render/CharacterSprite.h"
+#include "render/ContentSprite.h"
+#include "render/AbilitySprite.h"
+#include "render/AttackSprite.h"
 #endif
