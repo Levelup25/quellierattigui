@@ -20,22 +20,23 @@ bool isCharacterAtpos(Character c, int i, int j) {
 
 int getScoreAction(MoveCommands* mv,
                    AttackCommand* atk,
-                   Weapon weapon,
+                   Character character,
                    vector<Character*> myFighters,
                    vector<Character*> theirFighters) {
   int score = 0;
 
   if (atk == nullptr)
     return 0;
-
+  Weapon weapon = *(character.getWeapon());
   int dmg = weapon.getAbility(atk->getAbilityNumber())->getDamage();
   auto zoneDmg = atk->getZone(1, false);
 
+  cout << "char pos = {" << character.getI() << ", " << character.getJ() << "}"
+       << endl;
   for (auto coord : zoneDmg) {
-    if (mv != nullptr) {
-      coord[0] += mv->getDiff()[0];
-      coord[1] += mv->getDiff()[1];
-    }
+    // coord[0] += character.getI();
+    // coord[1] += character.getJ();
+    cout << "coord = {" << coord[0] << ", " << coord[1] << "}" << endl;
     for (auto pcharacter : myFighters) {
       if (isCharacterAtpos(*pcharacter, coord[0], coord[1])) {
         score += min(dmg, (int)pcharacter->getPvCurrent() + 1);
@@ -54,8 +55,6 @@ int getScoreAction(MoveCommands* mv,
 
 std::tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
     Character* character) {
-  Weapon* w = character->getWeapon();
-
   // get our and enemy fighters
   vector<Character*> myFighters = state->getFight()->getFightingCharacters(0);
   vector<Character*> theirFighters =
@@ -75,17 +74,18 @@ std::tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
   listmv.insert(listmv.begin(), nullptr);
   listatk.insert(listatk.begin(), nullptr);
 
-  cout << "start searching best score" << endl;
-  int scoreMax =
-      getScoreAction(listmv[0], listatk[0], *w, myFighters, theirFighters);
+  int scoreMax = getScoreAction(listmv[0], listatk[0], *character, myFighters,
+                                theirFighters);
   // search best actions
-  cout << "scoreMax init" << endl;
   int i = 0, j = 0;
   vector<int> imax = {0}, jmax = {0};
 
+  cout << "score = {";
   for (auto mv : listmv) {
     for (auto atk : listatk) {
-      int score = getScoreAction(mv, atk, *w, myFighters, theirFighters);
+      int score =
+          getScoreAction(mv, atk, *character, myFighters, theirFighters);
+      cout << score << ", ";
 
       if (score > scoreMax) {
         imax.clear();
@@ -102,20 +102,19 @@ std::tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
     j = 0;
     i++;
   }
-
-  cout << "end searching best score" << endl;
-
+  cout << "}" << endl;
+  cout << "scoreMax = " << scoreMax << endl;
   // Choose one of the best action
-  cout << "possiblities  = " << listmv.size() * listatk.size()
-       << ", mv  = " << listmv.size() << ", atk  = " << listatk.size() << endl;
-  cout << "imax size = " << imax.size() << ", jmax size = " << jmax.size()
-       << endl;
+  //   cout << "possiblities  = " << listmv.size() * listatk.size()
+  //        << ", mv  = " << listmv.size() << ", atk  = " << listatk.size() <<
+  //        endl;
+  //   cout << "imax size = " << imax.size() << ", jmax size = " << jmax.size()
+  //        << endl;
 
   int r = rand() % imax.size();
-  cout << "r = " << r << endl;
+  cout << "r = " << r << endl << endl;
   i = imax[r];
   j = jmax[r];
-  cout << "return best actions" << endl;
   return std::make_tuple(listmv[i], listatk[j]);
 }
 
@@ -128,15 +127,11 @@ void HeuristicAI::run(Character* character) {
   std::tuple<MoveCommands*, AttackCommand*> bestAction =
       this->getBestAction(character);
   MoveCommands* mv = std::get<0>(bestAction);
+  AttackCommand* atk = std::get<1>(bestAction);
 
   if (mv != nullptr)
     engine->addCommand(mv);
 
-  while (engine->getSize() != 0) {
-  }
-
-  bestAction = this->getBestAction(character);
-  AttackCommand* atk = std::get<1>(bestAction);
   if (atk != nullptr)
     engine->addCommand(atk);
 }
