@@ -15,6 +15,9 @@ namespace engine {
 namespace state {
   class Character;
 };
+namespace render {
+  class Sprites;
+};
 namespace engine {
   class FightCommand;
   class AttackCommand;
@@ -37,12 +40,22 @@ namespace render {
   private:
     state::State* state;
     engine::Engine* engine;
+    int nb;
+    int l;
+    int h;
+    state::Character* selectedcharacter;
+    int abilityNumber     = 0;
+    int xv     = 0;
+    int yv     = 0;
     std::size_t n     = 12;
     std::size_t m     = 12;
     // Operations
   public:
-    Render (state::State* state, engine::Engine* engine);
-    void drawCharacters (sf::RenderWindow & window, std::vector<state::Character*> chars);
+    Render (state::State* state, engine::Engine* engine, int nb = 2, int l = 34, int h = 24);
+    void drawMap (sf::RenderWindow& window, sf::View& view, Sprites& sprites);
+    void drawZones (sf::RenderWindow& window, sf::View& view);
+    void drawCharacters (sf::RenderWindow& window, sf::View& view, Sprites& sprites, std::vector<state::Character*> chars);
+    void drawAnimations (sf::RenderWindow& window, sf::View& view, Sprites& sprites);
     void display ();
     // Setters and Getters
   };
