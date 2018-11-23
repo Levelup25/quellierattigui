@@ -299,15 +299,12 @@ void Render::display() {
         window.draw(r);
       }
     }
-    text.setString("pv : " + to_string(maincharacter->getPvCurrent()) +
-                   " pa : " + to_string(maincharacter->getPaCurrent()) +
-                   "\npm : " + to_string(maincharacter->getPmCurrent()));
-    text.setPosition(Vector2f(0, 0));
-    text.setColor(colors[maincharacter->getWeapon()->getElement()]);
 
     Element* selectedCharStat = CharacterStats(maincharacter);
-
-    window.draw(text);
+    selectedCharStat->setPosRelative({2, 2});
+    abilityView.add(selectedCharStat);
+    window.draw(*selectedCharStat);
+    delete selectedCharStat;
 
     text.setString("pa : " + to_string(a->getPa()) +
                    " atk : " + to_string(a->getDamage()));
