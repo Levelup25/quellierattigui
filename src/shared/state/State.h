@@ -74,7 +74,6 @@ namespace state {
     bool isFighting ();
     std::shared_ptr<Fight> getFight ();
     void setFight (std::shared_ptr<Fight> fight);
-    void deploy (int nb = -1);
     void endFight ();
     // Setters and Getters
     int getEpoch() const;

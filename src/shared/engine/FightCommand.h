@@ -12,13 +12,11 @@ namespace engine {
 }
 
 #include "Command.h"
-#include "state/Team.h"
 
 namespace engine {
 
   /// class FightCommand - 
   class FightCommand : public engine::Command {
-    // Associations
     // Attributes
   private:
     state::Team* att;

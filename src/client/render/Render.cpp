@@ -357,7 +357,10 @@ void Render::display()
                         if (state->etatCombat == 0)
                         {
                             if (!state->isFighting())
+                            {
+                                while (x + y - (int) x - (int) y != 0);
                                 engine->clearCommands();
+                            }
                             engine->addCommand(
                                                new MoveCommands(state, engine, selectedcharacter, X, Y));
                         }
