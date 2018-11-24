@@ -293,6 +293,7 @@ void Render::display()
         {
             chars = state->getMainCharacters();
             selectedcharacter = state->getMainCharacter();
+            abilityNumber = 0;
         }
 
         vector<Ability*> abs = selectedcharacter->getWeapon()->getAbilities();

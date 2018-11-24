@@ -167,7 +167,5 @@ void AttackCommand::execute()
         v.clear();
         engine->addCommand(new AnimationCommand(state, v, v2, ability->getElement(),
                                                 ability->getLv()));
-
-        state->endFight();
     }
 }
