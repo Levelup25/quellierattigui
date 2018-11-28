@@ -50,10 +50,12 @@ vector<Command*> AI::listCommands(Character* character, int type)
                     if ((*target)[0] / n != X / n || (*target)[0] < 0 ||
                             (*target)[1] / m != Y / m || (*target)[1] < 0)
                         targets.erase(target);
+                    (*target)[0] -= X, (*target)[1] -= Y;
                 }
                 for (auto target : targets)
                     commands.push_back(
                                        new AttackCommand(state, engine, character, target, i));
+
             }
         }
     }

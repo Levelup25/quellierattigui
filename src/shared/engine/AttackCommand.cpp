@@ -18,8 +18,8 @@ AttackCommand::AttackCommand(State* state,
     this->character = character;
     this->abilityNumber = abilityNumber;
     this->position = position;
-    position[0] += character->getI();
-    position[0] += character->getJ();
+    //    position[0] += character->getI();
+    //    position[1] += character->getJ();
 }
 
 int AttackCommand::getAbilityNumber()
@@ -36,7 +36,7 @@ void AttackCommand::setZones(bool cut)
     if (ability->getPa() <= character->getPaCurrent())
     {
         int i0 = character->getI(), j0 = character->getJ();
-        int i = position[0], j = position[1];
+        int i = i0 + position[0], j = j0 + position[1];
         targets = ability->getTargetZone({i0, j0});
         if (cut)
         {
@@ -95,8 +95,8 @@ void AttackCommand::execute()
         character->removePa(ability->getPa());
 
         float pas = 12;
-        float I = (position[0] - character->getI()) / pas,
-                J = (position[1] - character->getJ()) / pas;
+        float I = (position[0]) / pas,
+                J = (position[1]) / pas;
         int direction;
         if (I > 0 && J == 0)
             direction = 0;
@@ -130,6 +130,8 @@ void AttackCommand::execute()
         int dist = 1;
         for (auto effect : effects)
         {
+            //            effect[0] -= character->getI();
+            //            effect[1] -= character->getJ();
             if (effect != position)
             {
                 if (abs(effect[0] - position[0]) + abs(effect[1] - position[1]) >
@@ -139,8 +141,8 @@ void AttackCommand::execute()
                     engine->addCommand(new AnimationCommand(
                                                             state, v, v2, ability->getElement(), ability->getLv()));
                 }
-                float I = (effect[0] - position[0]) / pas,
-                        J = (effect[1] - position[1]) / pas;
+                float I = (effect[0] - position[0] - character->getI()) / pas,
+                        J = (effect[1] - position[1] - character->getJ()) / pas;
                 if (I > 0 && J == 0)
                     direction = 0;
                 else if (I == 0 && J < 0)

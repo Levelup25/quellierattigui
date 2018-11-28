@@ -84,7 +84,7 @@ void Render::drawZones(RenderWindow& window, sf::View& view)
         else if (state->etatCombat == 1)
         {
             AttackCommand* atkcmd = new AttackCommand(
-                                                      state, engine, selectedcharacter,{X, Y}, abilityNumber);
+                                                      state, engine, selectedcharacter,{X - selectedcharacter->getI(), Y - selectedcharacter->getJ()}, abilityNumber);
             atkcmd->setZones();
             vector<vector<int>> targets = atkcmd->getZone(0);
             zone.setFillColor(Color(0, 0, 255, 128));
@@ -368,7 +368,7 @@ void Render::display()
                         else if (state->etatCombat == 1)
                         {
                             engine->addCommand(new AttackCommand(
-                                                                 state, engine, selectedcharacter,{X, Y}, abilityNumber));
+                                                                 state, engine, selectedcharacter,{X - x, Y - y}, abilityNumber));
                             state->etatCombat = 0;
                         }
                     }

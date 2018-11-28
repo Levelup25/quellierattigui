@@ -152,7 +152,9 @@ void HeuristicAI::run(Character* character)
     std::tuple<MoveCommands*, AttackCommand*> bestAction =
             this->getBestAction(character);
     MoveCommands* mv = std::get<0>(bestAction);
-    cout << character->getI() + mv->getDiff()[0] << " " << character->getJ() + mv->getDiff()[1] << "\t";
+    //if (mv != nullptr)cout << character->getI() + mv->getDiff()[0] << " " << character->getJ() + mv->getDiff()[1] << "\t";
+    AttackCommand* atk = std::get<1>(bestAction);
+    //if (atk != nullptr)cout << atk->getZone(0)[0][0] << " " << atk->getZone(0)[0][1] << endl;
 
     if (mv != nullptr)
         engine->addCommand(mv);
@@ -160,8 +162,8 @@ void HeuristicAI::run(Character* character)
     while (engine->getSize() > 0);
 
     //bestAction = this->getBestAction(character);
-    AttackCommand* atk = std::get<1>(bestAction);
-    cout << atk->getZone(0)[0][0] << " " << atk->getZone(0)[0][1] << endl;
+    atk = std::get<1>(bestAction);
+    //if (atk != nullptr)cout << atk->getZone(0)[0][0] << " " << atk->getZone(0)[0][1] << endl << endl;
 
     if (atk != nullptr)
         engine->addCommand(atk);
