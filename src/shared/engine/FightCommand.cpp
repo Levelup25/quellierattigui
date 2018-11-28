@@ -58,7 +58,6 @@ void FightCommand::execute() {
     // 1/12 => 1/12
   } else {
     state->getFight()->endTurn();
-    state->endFight();
     state->etatCombat = 0;
   }
 }

@@ -291,8 +291,6 @@ void State::endFight() {
       this->delCharacter(c);
     if (team->getCharacters().size() == 0)
       this->delTeam(team);
-    fight = nullptr;
-    this->resetContents();
   }
 
   if (fight->getFightingCharacters(1).size() == 0) {
@@ -300,6 +298,10 @@ void State::endFight() {
     // for (c : team->getCharacters(fight->getNb())) this->delCharacter(c);
     // if (team->getCharacters().size() == 0)
     this->delTeam(team);
+  }
+
+  if (fight->getFightingCharacters(0).size() == 0 ||
+      fight->getFightingCharacters(1).size() == 0) {
     fight = nullptr;
     this->resetContents();
   }
