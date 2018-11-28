@@ -26,6 +26,7 @@ int AttackCommand::getAbilityNumber() {
 }
 
 // in absolute pos (not relative to character or view)
+
 void AttackCommand::setZones(bool cut) {
   int n = state->getN(), m = state->getM();
   ability = character->getWeapon()->getAbility(abilityNumber);
@@ -137,24 +138,13 @@ void AttackCommand::execute() {
         v.push_back(effect);
         v2.push_back(direction);
       }
-      Character* c = state->getCharacter(effect[0], effect[1]);
-      if (c != nullptr) {
-        c->removePv(ability->getDamage());
-        if (c->getPvCurrent() == 0)
-          state->getCell(c->getI(), c->getJ())->setContent(nothing);
-        //                    Team* t = state->getTeam(c);
-        //                    if (t->getCharacters().size() > 1) {
-        //                        if (c != t->getMainCharacter())
-        //                        t->swapCharacters(c, t->getMainCharacter());
-        //                        else t->swapCharacters(0, 1);
-        //                    }
-        // state->delCharacter(c);
-        //}
-      }
     }
     for (int i = 0; i < 25; i++)
       engine->addCommand(new AnimationCommand(
           state, v, v2, ability->getElement(), ability->getLv()));
+    engine->addCommand(new AnimationCommand(state, v, v2, ability->getElement(),
+                                            ability->getLv(),
+                                            ability->getDamage()));
     v.clear();
     engine->addCommand(new AnimationCommand(state, v, v2, ability->getElement(),
                                             ability->getLv()));
