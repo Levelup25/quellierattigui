@@ -9,4 +9,5 @@
 #include "engine/FightCommand.h"
 #include "engine/AttackCommand.h"
 #include "engine/AnimationCommand.h"
+#include "engine/ClearCommand.h"
 #endif
