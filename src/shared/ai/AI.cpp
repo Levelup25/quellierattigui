@@ -25,9 +25,8 @@ vector<Command*> AI::listCommands(Character* character, int type)
                     if ((a != 0 || b != 0) && (X + a) / n == X / n && X + a >= 0 &&
                             (Y + b) / m == Y / m && Y + b >= 0)
                     {
-                        MoveCommands* mvcmds =
-                                new MoveCommands(state, engine, character, X + a, Y + b);
-                        if ((int) mvcmds->getPath().size() <= pm)
+                        MoveCommands* mvcmds = new MoveCommands(state, engine, character, X + a, Y + b);
+                        if ((int) mvcmds->getPath().size() <= pm && state->getCell(X + a, Y + b)->getContent() == 0)
                             commands.push_back(mvcmds);
                     }
                 }
@@ -42,20 +41,19 @@ vector<Command*> AI::listCommands(Character* character, int type)
         {
             if (pa >= (int) abilities[i]->getPa())
             {
-                targets = abilities[i]->getTargetZone({0, 0});
+                targets = abilities[i]->getTargetZone({X, Y});
                 for (auto target = targets.end() - 1; target >= targets.begin();
                         target--)
                 {
-                    (*target)[0] += X, (*target)[1] += Y;
                     if ((*target)[0] / n != X / n || (*target)[0] < 0 ||
                             (*target)[1] / m != Y / m || (*target)[1] < 0)
                         targets.erase(target);
-                    (*target)[0] -= X, (*target)[1] -= Y;
                 }
                 for (auto target : targets)
-                    commands.push_back(
-                                       new AttackCommand(state, engine, character, target, i));
-
+                {
+                    target[0] -= X, target[1] -= Y;
+                    commands.push_back(new AttackCommand(state, engine, character, target, i));
+                }
             }
         }
     }

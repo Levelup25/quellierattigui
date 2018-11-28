@@ -40,6 +40,5 @@ void AnimationCommand::execute()
             }
         }
     }
-    if (state->isFighting())
-        state->endFight();
+    if (state->isFighting()) state->endFight();
 }

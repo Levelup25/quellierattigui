@@ -94,9 +94,7 @@ void AttackCommand::execute()
     {
         character->removePa(ability->getPa());
 
-        float pas = 12;
-        float I = (position[0]) / pas,
-                J = (position[1]) / pas;
+        int I = position[0], J = position[1];
         int direction;
         if (I > 0 && J == 0)
             direction = 0;
@@ -112,37 +110,35 @@ void AttackCommand::execute()
             direction = 5;
         else if (I < 0 && J < 0)
             direction = 6;
-        else
-            direction = 7; // if (I > 0 && J < 0)
+        else// if (I > 0 && J < 0)
+            direction = 7;
 
         vector<vector<int>> v;
         vector<int> v2{direction};
 
-        for (int i = 0; i <= pas; i++)
+        float nb = max(abs(I), abs(J));
+        for (int i = 1; i <= nb; i++)
         {
             v = {
-                {(int) (character->getI() + I * i), (int) (character->getJ() + J * i)}
+                {(int) (character->getI() + i * I / nb), (int) (character->getJ() + i * J / nb)}
             };
-            engine->addCommand(new AnimationCommand(
-                                                    state, v, v2, ability->getElement(), ability->getLv()));
+            for (int i = 0; i < 5; i++)engine->addCommand(new AnimationCommand(state, v, v2, ability->getElement(), ability->getLv()));
         }
 
         int dist = 1;
         for (auto effect : effects)
         {
-            //            effect[0] -= character->getI();
-            //            effect[1] -= character->getJ();
+            effect[0] -= character->getI();
+            effect[1] -= character->getJ();
             if (effect != position)
             {
-                if (abs(effect[0] - position[0]) + abs(effect[1] - position[1]) >
-                        dist)
+                int I = effect[0] - position[0], J = effect[1] - position[1];
+                if (abs(I) + abs(J) > dist)
                 {
-                    dist = abs(effect[0] - position[0]) + abs(effect[1] - position[1]);
+                    dist = abs(I) + abs(J);
                     engine->addCommand(new AnimationCommand(
                                                             state, v, v2, ability->getElement(), ability->getLv()));
                 }
-                float I = (effect[0] - position[0] - character->getI()) / pas,
-                        J = (effect[1] - position[1] - character->getJ()) / pas;
                 if (I > 0 && J == 0)
                     direction = 0;
                 else if (I == 0 && J < 0)
@@ -157,15 +153,16 @@ void AttackCommand::execute()
                     direction = 5;
                 else if (I < 0 && J < 0)
                     direction = 6;
-                else
+                else// if (I > 0 && J < 0)
                     direction = 7;
+                effect[0] += character->getI();
+                effect[1] += character->getJ();
                 v.push_back(effect);
                 v2.push_back(direction);
             }
         }
         for (int i = 0; i < 25; i++)
-            engine->addCommand(new AnimationCommand(
-                                                    state, v, v2, ability->getElement(), ability->getLv()));
+            engine->addCommand(new AnimationCommand(state, v, v2, ability->getElement(), ability->getLv()));
         engine->addCommand(new AnimationCommand(state, v, v2, ability->getElement(),
                                                 ability->getLv(),
                                                 ability->getDamage()));
