@@ -111,7 +111,10 @@ void MoveCommands::execute()
     }
 
     if (state->getCharacter(i, j) != character && (int) state->getCell(i, j)->getContent() == 1 && !state->isFighting())
+    {
+        while (character == state->getCharacter(i, j));
         engine->addCommand(new FightCommand(state, state->getTeam(character), state->getTeam(state->getCharacter(i, j))));
+    }
     else if (state->getCell(i, j)->getContent() <= 1 && !state->isFighting())
     {
         if (i % n == 0 && i > 0 && state->getCell(i - 1, j)->getContent() == 0)
