@@ -82,11 +82,11 @@ std::tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
   int i = 0, j = 0;
   vector<int> imax = {0}, jmax = {0};
 
-  cout << "score = {";
+  // cout << "score = {";
   for (auto mv : listmv) {
     for (auto atk : listatk) {
       int score = getScoreAction(mv, atk, *character, allies, ennemies);
-      cout << score << ", ";
+      // cout << score << ", ";
 
       if (score > scoreMax) {
         imax.clear();
@@ -103,8 +103,8 @@ std::tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
     j = 0;
     i++;
   }
-  cout << "}" << endl;
-  cout << "scoreMax = " << scoreMax << endl << endl;
+  // cout << "}" << endl;
+  // cout << "scoreMax = " << scoreMax << endl << endl;
 
   // Choose one of the best action
   int r = rand() % imax.size();

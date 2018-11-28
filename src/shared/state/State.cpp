@@ -337,7 +337,8 @@ void State::endFight() {
     fight = nullptr;
     this->resetContents();
   }
-  if (fight->getFightingCharacters(1).size() == 0) {
+
+  else if (fight->getFightingCharacters(1).size() == 0) {
     Team* team = fight->getTeam(1);
     // for (c : team->getCharacters(fight->getNb())) this->delCharacter(c);
     // if (team->getCharacters().size() == 0)

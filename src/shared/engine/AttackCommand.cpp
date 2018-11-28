@@ -158,9 +158,7 @@ void AttackCommand::execute() {
     v.clear();
     engine->addCommand(new AnimationCommand(state, v, v2, ability->getElement(),
                                             ability->getLv()));
-    state->endFight();
-    if (!state->isFighting())
-      state->etatCombat = 0;
-    // engine->addCommand(new FightCommand(state, nullptr, nullptr));
+
+    engine->addCommand(new FightCommand(state, nullptr, nullptr));
   }
 }
