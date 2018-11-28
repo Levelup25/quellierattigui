@@ -16,6 +16,7 @@ RandomAI::RandomAI(State *state, Engine *engine)
 
 void RandomAI::run(Character *character)
 {
+    //
     vector<Command *> commands = this->listCommands(character);
     while (state->isFighting() && commands.size() > 0 && character->getPvCurrent() > 0)
     {

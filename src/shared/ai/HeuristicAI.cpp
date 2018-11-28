@@ -1,5 +1,6 @@
 #include "HeuristicAI.h"
 #include <SFML/Graphics.hpp>
+#include <algorithm>
 #include <iostream>
 #include "engine/AttackCommand.h"
 #include "engine/MoveCommands.h"
@@ -15,16 +16,21 @@ HeuristicAI::HeuristicAI(State* state, Engine* engine)
     this->engine = engine;
 }
 
-bool isCharacterAtpos(Character c, int i, int j)
+bool HeuristicAI::isCharacterAtpos(Character* c, int i, int j)
 {
-    return c.getI() == i && c.getJ() == j;
+    vector<Character*> fighters = state->getFight()->getFightingCharacters();
+    if (find(fighters.begin(), fighters.end(), c) != fighters.end())
+    {
+        return c->getI() == i && c->getJ() == j;
+    }
+    return false;
 }
 
-int getScoreAction(MoveCommands* mv,
-                   AttackCommand* atk,
-                   Character character,
-                   vector<Character*> allies,
-                   vector<Character*> ennemies)
+int HeuristicAI::getScoreAction(MoveCommands* mv,
+                                AttackCommand* atk,
+                                Character* character,
+                                vector<Character*> allies,
+                                vector<Character*> ennemies)
 {
     int score = 0;
     int bonusKillEnemy = 300;
@@ -32,9 +38,9 @@ int getScoreAction(MoveCommands* mv,
 
     if (atk == nullptr)
         return 0;
-    Weapon weapon = *(character.getWeapon());
-    int dmg = weapon.getAbility(atk->getAbilityNumber())->getDamage();
-    auto zoneDmg = atk->getZone(1, false);
+    Weapon* weapon = character->getWeapon();
+    int dmg = weapon->getAbility(atk->getAbilityNumber())->getDamage();
+    auto zoneDmg = atk->getZone(1);
 
     for (auto coord : zoneDmg)
     {
@@ -45,7 +51,7 @@ int getScoreAction(MoveCommands* mv,
         }
         for (auto pcharacter : ennemies)
         {
-            if (isCharacterAtpos(*pcharacter, coord[0], coord[1]))
+            if (isCharacterAtpos(pcharacter, coord[0], coord[1]))
             {
                 int pv = pcharacter->getPvCurrent();
                 score += dmg < pv ? (dmg * 100 / pv) : bonusKillEnemy;
@@ -53,13 +59,13 @@ int getScoreAction(MoveCommands* mv,
         }
         for (auto pcharacter : allies)
         {
-            if (isCharacterAtpos(*pcharacter, coord[0], coord[1]))
+            if (isCharacterAtpos(pcharacter, coord[0], coord[1]))
             {
                 int pv = pcharacter->getPvCurrent();
                 score -= dmg < pv ? (dmg * 100 / pv) : MalusKillAlly;
             }
         }
-        int paCost = weapon.getAbility(atk->getAbilityNumber())->getPa();
+        //int paCost = weapon.getAbility(atk->getAbilityNumber())->getPa();
         // score -= paCost;
     }
     return score;
@@ -84,12 +90,12 @@ std::tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
         listatk.push_back(static_cast<AttackCommand*> (pcommand));
     }
 
-    // complete avec no move et no atk
+    // complete with no move and no atk
     listmv.insert(listmv.begin(), nullptr);
     listatk.insert(listatk.begin(), nullptr);
 
     int scoreMax =
-            getScoreAction(listmv[0], listatk[0], *character, allies, ennemies);
+            getScoreAction(listmv[0], listatk[0], character, allies, ennemies);
     // search best actions
     int i = 0, j = 0;
     vector<int> imax = {0}, jmax = {0};
@@ -99,7 +105,7 @@ std::tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
     {
         for (auto atk : listatk)
         {
-            int score = getScoreAction(mv, atk, *character, allies, ennemies);
+            int score = getScoreAction(mv, atk, character, allies, ennemies);
             // cout << score << ", ";
 
             if (score > scoreMax)
@@ -146,16 +152,16 @@ void HeuristicAI::run(Character* character)
     std::tuple<MoveCommands*, AttackCommand*> bestAction =
             this->getBestAction(character);
     MoveCommands* mv = std::get<0>(bestAction);
+    cout << character->getI() + mv->getDiff()[0] << " " << character->getJ() + mv->getDiff()[1] << "\t";
 
     if (mv != nullptr)
         engine->addCommand(mv);
 
-    while (engine->getSize() > 0)
-    {
-    }
+    while (engine->getSize() > 0);
 
-    bestAction = this->getBestAction(character);
+    //bestAction = this->getBestAction(character);
     AttackCommand* atk = std::get<1>(bestAction);
+    cout << atk->getZone(0)[0][0] << " " << atk->getZone(0)[0][1] << endl;
 
     if (atk != nullptr)
         engine->addCommand(atk);

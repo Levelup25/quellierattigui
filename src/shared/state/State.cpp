@@ -362,7 +362,11 @@ void State::endFight()
         for (auto c : team->getCharacters(fight->getNb()))
             this->delCharacter(c);
         if (team->getCharacters().size() == 0)
+        {
             this->delTeam(team);
+            cout << endl << "Perdu!!!" << endl;
+            exit(0);
+        }
         end = true;
     }
 
