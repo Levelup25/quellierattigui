@@ -15,10 +15,5 @@
 #include "render/View.h"
 #include "render/Sprites.h"
 #include "render/SpriteGeneratorById.h"
-#include "render/TileSprite.h"
-#include "render/CharacterSprite.h"
-#include "render/ContentSprite.h"
-#include "render/AbilitySprite.h"
-#include "render/AttackSprite.h"
 #include "render/Render.h"
 #endif

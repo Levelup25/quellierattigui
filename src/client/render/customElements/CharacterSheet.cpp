@@ -16,10 +16,10 @@ Element* CharacterSheet(state::Character* pcharacter) {
 
   // config children
   CharacterName->setString(pcharacter->getName());
-  CharacterSprite* spriteGen = new CharacterSprite(32, 32);
+  Sprites* spriteGen = new Sprites();
   volatile auto id = pcharacter->getId();
-  cout << "id: " << id << endl;
-  charSprite->sprite = spriteGen->getSprite(id);
+  //cout << "id: " << id << endl;
+  charSprite->sprite = spriteGen->getCharacterSprite(50, 50, id);
   // charSprite->updateSizeFromTextureRect();
   charSprite->setSizeRelative({32, 32});
 

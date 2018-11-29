@@ -1,6 +1,7 @@
 #ifndef CHARACTERSHEET
 #define CHARACTERSHEET 1
 
+#include "../Sprites.h"
 #include "CharacterStat.h"
 #include "CustomElement.h"
 

@@ -9,13 +9,11 @@
 #include <iostream>
 #include <thread>
 #include "../../../shared/state.h"
-#include "../CharacterSprite.h"
 #include "../Element.h"
 #include "../Rectangle.h"
 #include "../Sprite.h"
 #include "../SpriteGenerator.h"
 #include "../SpriteGeneratorById.h"
-#include "../TileSprite.h"
 #include "../Window.h"
 #include "../WindowManager.h"
 

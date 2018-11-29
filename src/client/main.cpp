@@ -38,6 +38,7 @@ void cout_terminal()
     cout << "Les informations sur la capacité sont affichés à droite" << endl;
     cout << "Pointer un personnage affiche également ses informations à droite"
             << endl;
+    cout << "Appuyez sur C pour ouvrir la fiche du personnage" << endl;
 }
 
 void state_init(State* state)

@@ -65,7 +65,7 @@ void Render::drawZones(RenderWindow& window, sf::View& view)
     int X = mouse.x / l, Y = mouse.y / h;
     RectangleShape zone(Vector2f(l, h));
     window.setView(view);
-    if (state->isFighting() && state->getFight()->getTurn() % 2 == 1)
+    if (state->isFighting() && state->getFight()->getTurn() % 2 == 1 && !state->isInventoryOpened)
     {
         if (state->etatCombat == 0)
         {
@@ -83,8 +83,10 @@ void Render::drawZones(RenderWindow& window, sf::View& view)
         }
         else if (state->etatCombat == 1)
         {
-            AttackCommand* atkcmd = new AttackCommand(
-                                                      state, engine, selectedcharacter,{X - selectedcharacter->getI(), Y - selectedcharacter->getJ()}, abilityNumber);
+            AttackCommand* atkcmd =
+                    new AttackCommand(state, engine, selectedcharacter,{X - (int) selectedcharacter->getI(),
+                                      Y - (int) selectedcharacter->getJ()},
+                                      abilityNumber);
             atkcmd->setZones();
             vector<vector<int>> targets = atkcmd->getZone(0);
             zone.setFillColor(Color(0, 0, 255, 128));
@@ -173,7 +175,8 @@ void Render::drawInformations(RenderWindow& window,
                               vector<Character*> chars)
 {
     sf::Sprite sprite;
-    Vector2f mouse = window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView());
+    Vector2f mouse =
+            window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView());
     int X = mouse.x / l, Y = mouse.y / h;
     vector<Ability*> abs = selectedcharacter->getWeapon()->getAbilities();
     Ability* a = abs[abilityNumber];
@@ -250,12 +253,6 @@ void Render::display()
                                                0, 1 / (1 + abilityView.getSizeAbs().y / worldView.getSizeAbs().y), 1,
                                                1 / (1 + worldView.getSizeAbs().y / abilityView.getSizeAbs().y)));
 
-    // create windom manager
-    auto pwm = new Element();
-    // pwm = buildRootSprite();
-    pwm->setSizeRelative({"100%", "100%"});
-    // worldView.add(pwm);
-
     // Create window
     RenderWindow window(
                         VideoMode(worldView.getSizeAbs().x,
@@ -275,6 +272,9 @@ void Render::display()
 
     sf::Sprite sprite;
     Sprites sprites(nb);
+
+    Element* charactersheet = CharacterSheet(selectedcharacter);
+    Character* prev = selectedcharacter;
 
     while (window.isOpen())
     {
@@ -297,7 +297,7 @@ void Render::display()
         }
 
         vector<Ability*> abs = selectedcharacter->getWeapon()->getAbilities();
-        //Ability* a = abs[abilityNumber];
+        // Ability* a = abs[abilityNumber];
         x = selectedcharacter->getI();
         y = selectedcharacter->getJ();
         xv = (x / n) * n;
@@ -337,7 +337,7 @@ void Render::display()
                         abilityNumber = 0;
                     }
                 }
-                else if (event.mouseButton.button == sf::Mouse::Left)
+                else if (event.mouseButton.button == sf::Mouse::Left && !state->isInventoryOpened)
                 {
                     if (Y2 >= 0)
                     {
@@ -359,7 +359,8 @@ void Render::display()
                         {
                             if (!state->isFighting())
                             {
-                                while (x + y - (int) x - (int) y != 0);
+                                while (x + y - (int) x - (int) y != 0)
+                                    ;
                                 engine->clearCommands();
                             }
                             engine->addCommand(
@@ -367,22 +368,34 @@ void Render::display()
                         }
                         else if (state->etatCombat == 1)
                         {
-                            engine->addCommand(new AttackCommand(
-                                                                 state, engine, selectedcharacter,{X - x, Y - y}, abilityNumber));
+                            engine->addCommand(
+                                               new AttackCommand(state, engine, selectedcharacter,{X - (int) x, Y - (int) y}, abilityNumber));
                             state->etatCombat = 0;
                         }
                     }
                 }
             }
-            if (event.type == sf::Event::KeyPressed && state->isFighting() &&
-                    state->getFight()->getTurn() % 2 == 1)
+            if (event.type == sf::Event::KeyPressed)
             {
-                if (event.key.code == sf::Keyboard::Return)
+                if (event.key.code == sf::Keyboard::Return && state->isFighting() &&
+                        state->getFight()->getTurn() % 2 == 1)
                 {
                     engine->addCommand(new FightCommand(state, nullptr, nullptr));
                 }
+
+                else if (event.key.code == sf::Keyboard::C)
+                {
+                    state->isInventoryOpened = 1 - state->isInventoryOpened;
+                    state->etatCombat = 0;
+                    if (state->isInventoryOpened)
+                        worldView.add(charactersheet);
+                    else
+                        worldView.remove(charactersheet);
+                }
             }
         }
+
+        this->drawInformations(window, abilityView.view, sprites, chars);
 
         this->drawMap(window, worldView.view, sprites);
 
@@ -392,7 +405,20 @@ void Render::display()
 
         this->drawAnimations(window, worldView.view, sprites);
 
-        this->drawInformations(window, abilityView.view, sprites, chars);
+        if (prev != selectedcharacter)
+        {
+            Relatif2 v;
+            if (state->isInventoryOpened)
+                v = charactersheet->getPosRelative();
+            worldView.remove(charactersheet);
+            if (state->isInventoryOpened)
+            {
+                charactersheet = CharacterSheet(selectedcharacter);
+                charactersheet->setPosRelative(v);
+                worldView.add(charactersheet);
+            }
+        }
+        prev = selectedcharacter;
 
         window.draw(worldView);
 
