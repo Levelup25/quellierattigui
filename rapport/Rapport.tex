@@ -151,20 +151,17 @@
         \caption{Exemple tileset terrain}
     \end{figure}
     
-   \begin{figure} [ht]
-            \centering
-            \begin{subfigure}
-                \centering
-                \includegraphics[width=.4\linewidth]{trees.png}
-                \caption{Arbres}
-            \end{subfigure}%
-            \begin{subfigure}
-                \centering
-                \includegraphics[width=.4\linewidth]{rocks.png}
-                \caption{Rochers}
-            \end{subfigure}
-            \caption{Exemple d'obstacles}
-        \end{figure}
+    \begin{figure} [ht]
+        \centering
+        \includegraphics[width=.4\linewidth]{trees.png}
+        \caption{Arbres}
+    \end{figure}
+    
+    \begin{figure} [ht]
+        \centering
+        \includegraphics[width=.4\linewidth]{rocks.png}
+        \caption{Rochers}
+    \end{figure}
 
 \begin{figure}[ht]
         \centering
@@ -250,7 +247,8 @@ Le diagramme des classes pour les états est présenté en Figure~\ref{uml:state
 
 \begin{landscape}
     \begin{figure}[p]
-    \includegraphics[width=0.9\paperheight]{state.png}
+        \centering
+        \includegraphics[width=0.9\paperheight,keepaspectratio]{state.png}
         \caption{\label{uml:state}Diagramme des classes d'état.} 
     \end{figure}
 \end{landscape}
@@ -264,20 +262,11 @@ Le rendu de l'état est possible grâce aux différentes informations récupér�
 
 \subsection{Conception logiciel}
 
- Le diagramme de classes du rendu est présenté en Figure~\ref{uml:render} : 
+Le diagramme de classes du rendu est présenté en Figure~\ref{uml:render} : 
 \begin{itemize}
-\item Les classes en vert sont les gestionnaires des différentes ressources. Elles chargent les différentes textures du jeu lors de l'instanciation en prenant en argument leur résolution et possèdent la méthode getSprite() générant le sprite redimensionné aux dimensions des cellules, compatible avec l'état du monde, dépendant alors de la tuile à afficher (élément + contenu) et du personnage à afficher.
-\item Render réutilise alors les sprites générés pour afficher la carte grâce au RenderWindow de sfml et gère la View correspondante via display().
-\end{itemize}
-
-Une partie des classes n'a pas pu être représentée sur le dia vu que ces classes présentent des méthodes constantes et que dia ne gère pas ce type de fonctions. En conséquence ces headers ont été rédigés à la main. Les classes qui n'ont pas pu être incluses sont les suivantes:
-\begin{itemize}
-    \item IGWindow\\
-    La classe permet d'afficher une fenêtre qu'on peut déplacer et fermer par dessus la vue du monde
-    \item IGWindowContainer\\
-    Comme son nom l'indique celle classe contient l'ensemble des fenêtres, lorsque on souhaite ajouter une fenêtre à la vue de notre jeu il faut l'enregistrer auprès du gestionnaire de window. Le gestionnaire s'occupe du déplacement et de la fermeture des fenêtres qu'il contrôle.
-    \item UIInventory\\
-    La classe permet d'afficher l'inventaire d'une team. La classe hérite de IGWindow, il est donc possible de déplacer et fermer la fenêtre.
+\item La classe Sprites est le gestionnaire des différentes ressources. Elle charge les différentes textures du jeu lors de l'instanciation et génère les différents sprites de résolutions paramétrables, compatibles avec l'état du monde, dépendant alors de la tuile à afficher (élément + contenu) et du personnage à afficher. Le SpriteGeneratorById permet de générer les sprites pour les différentes fenêtres d'interface joueur.
+\item Le Render réutilise alors les sprites générés pour afficher la carte grâce au RenderWindow de sfml et gère la View correspondante via display().
+\item L'interface utilisateur est gérée par la classe Element qui genère un ensemble de fenêtres potentiellement imbriquables pouvant contenir du texte ou des sprites, permettant alors de créer plusieurs types de fenêtres selon le besoin. Un Element particulier, le WindowManager permet cette gestion.
 \end{itemize}
 
 \begin{figure}[ht]
@@ -286,12 +275,12 @@ Une partie des classes n'a pas pu être représentée sur le dia vu que ces clas
     \caption{Preview du rendu}
 \end{figure}
 
-\begin{landscape}
+
     \begin{figure}[p]
-        \includegraphics[width=0.9\paperheight]{render.png}
+        \centering
+        \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{render.png}
         \caption{\label{uml:render}Diagramme des classes de rendu.}
     \end{figure}
-\end{landscape}
 
 \section{Règles de changement d'états et moteur de jeu}
 
@@ -312,17 +301,18 @@ Le diagramme des classes pour le moteur du jeu est présenté en Figure~\ref{uml
 
 \textbf{Classes Command} Ces classes représentent les commandes exécutées par le moteur. 
 \begin{itemize}
-\item MoveCommands permet de générer l'ensemble des commandes individuelles MoveCommand et DirectionCommand afin de créer une animation de déplacement en utilisant un pathfinding A* (rapide mais ne générant pas nécessairement le chemin le plus optimal) et FightCommant en cas de rencontre avec un ennemi, ce qui lance la phase de combat.
-\item AttackCommand permet aux différents personnages d'attaquer avec leurs capacités et ainsi d'infliger des dégâts à différentes cibles et génère des commandes AnimationCommand pour générer les animations s'attaque.
+\item MoveCommands permet de générer l'ensemble des commandes individuelles MoveCommand afin de créer une animation de déplacement en utilisant un pathfinding A* (rapide mais ne générant pas nécessairement le chemin le plus optimal) et FightCommand en cas de rencontre avec un ennemi, ce qui lance la phase de combat.
+\item AttackCommand permet aux différents personnages d'attaquer avec leurs capacités et ainsi d'infliger des dégâts à différentes cibles et génère des commandes AnimationCommand pour générer les animations d'attaque.
 \end{itemize}
 
 
-\textbf{Engine} Le moteur exécute les commandes dans l'ordre d'apparition
+\textbf{Engine} Le moteur exécute les commandes dans l'ordre d'apparition.
 
 
 \begin{landscape}
     \begin{figure}[p]
-        \includegraphics[width=0.9\paperheight]{engine.png}
+        \centering
+        \includegraphics[width=0.9\paperheight,keepaspectratio]{engine.png}
         \caption{\label{uml:engine}Diagramme des classes du moteur.}
     \end{figure}
 \end{landscape}
@@ -335,19 +325,26 @@ Le diagramme des classes pour le moteur du jeu est présenté en Figure~\ref{uml
 
 L'IA execute des commandes aléatoires parmi le mouvement et l'attaque, s'il lui reste assez de pa/pm.
 
+\subsubsection{Intelligence basée sur des heuristiques}
+
+L'IA balaye toutes les positions possibles du personnage et pour chaque position va affecter un Score à chaque attaque possible à partir de cette position : pour chaque dégât réellement infligé à un ennemi (respectivement un allié) le score augmente (respectivement diminue) de ce montant (un soin est considéré comme des dégâts négatifs). Si un personnage meurt suite à cette attaque, le score est majoré (respectivement minoré), mais si les dégâts sont beaucoup plus élevés que la vie du personnage, un malus est appliqué pour éviter le gaspillage des ressources. Dans une plus faible proportion, plus l'action coûte de ressources en pa, plus le score diminue, mais plus l'IA se rapproche d'un ennemi, plus le score augmente. Ces différences de score sont minimes devant le score de dégât afin de différencier de manière plus précise des actions de score similaire, et permettent de se rapprocher des ennemis si aucune action n'est possible.
+Une liste de toutes les commandes de même score maximal est établie et une commande aléatoire parmi ces meilleures commandes (déplacement puis attaque) est envoyée au moteur jusqu'à épuisement des pa et pm de chaque joueur (ou la fin du combat).
+
 \clearpage
 \subsection{Conception logiciel}
 Le diagramme de classes pour l'intelligence artificielle est présentée en figure~\ref{uml:ai}
 
 \textbf{Classes AI} Les classes filles s'organisent selon un pattern strategy : 
 \begin{itemize}
-\item RandomIA : IA aléatoire
+\item RandomAI : IA aléatoire
+\item HeuristicAI : IA heuristique
 \end{itemize}
 
 
 \begin{landscape}
     \begin{figure}[p]
-        \includegraphics[width=0.9\paperheight]{ai.png}
+        \centering
+        \includegraphics[width=0.9\paperheight,keepaspectratio]{ai.png}
         \caption{\label{uml:ai}Diagramme des classes d'intelligence artificielle.}
     \end{figure}
 \end{landscape}
