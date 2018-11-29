@@ -1,0 +1,52 @@
+N6render9RectangleE 11 Mouse over
+*this abs:   (  0,   0) (700, 700)
+
+    N6render6WindowE 12
+    parent abs:  (  0,   0) (700, 700)
+    *this rel:   ( 50,  50) (200, 100)
+    *this abs:   ( 50,  50) (200, 100)
+
+        N6render9RectangleE 13
+        parent abs:  ( 50,  50) (200, 100)
+        *this rel:   (  0,   0) (100%,  30)
+        *this abs:   ( 50,  50) (200,  30)
+
+            N6render4TextE 14
+            parent abs:  ( 50,  50) (200,  30)
+            *this rel:   (  5,   5) ( 10,  10)
+            *this abs:   ( 55,  55) ( 10,  10)
+
+            N6render9RectangleE 15
+            parent abs:  ( 50,  50) (200,  30)
+            *this rel:   ( -5,  -5) ( 20,  20)
+            *this abs:   (225,  55) ( 20,  20)
+
+        N6render9RectangleE 16
+        parent abs:  ( 50,  50) (200, 100)
+        *this rel:   (  0,  30) (100%, -30)
+        *this abs:   ( 50,  80) (200,  70)
+
+    N6render6WindowE 17
+    parent abs:  (  0,   0) (700, 700)
+    *this rel:   (400,  50) (200, 100)
+    *this abs:   (400,  50) (200, 100)
+
+        N6render9RectangleE 18
+        parent abs:  (400,  50) (200, 100)
+        *this rel:   (  0,   0) (100%,  30)
+        *this abs:   (400,  50) (200,  30)
+
+            N6render4TextE 19
+            parent abs:  (400,  50) (200,  30)
+            *this rel:   (  5,   5) ( 10,  10)
+            *this abs:   (405,  55) ( 10,  10)
+
+            N6render9RectangleE 20
+            parent abs:  (400,  50) (200,  30)
+            *this rel:   ( -5,  -5) ( 20,  20)
+            *this abs:   (575,  55) ( 20,  20)
+
+        N6render9RectangleE 21
+        parent abs:  (400,  50) (200, 100)
+        *this rel:   (  0,  30) (100%, -30)
+        *this abs:   (400,  80) (200,  70)

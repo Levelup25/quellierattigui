@@ -19,7 +19,9 @@
 \usepackage{pdflscape}
 
 \usepackage{listings}
+\usepackage{caption}
 \usepackage{longtable}
+
 \lstset{literate=
 {é}{{\'e}}1
 {è}{{\`e}}1
@@ -264,24 +266,36 @@ Le rendu de l'état est possible grâce aux différentes informations récupér�
 
 Le diagramme de classes du rendu est présenté en Figure~\ref{uml:render} : 
 \begin{itemize}
-\item La classe Sprites est le gestionnaire des différentes ressources. Elle charge les différentes textures du jeu lors de l'instanciation et génère les différents sprites de résolutions paramétrables, compatibles avec l'état du monde, dépendant alors de la tuile à afficher (élément + contenu) et du personnage à afficher. Le SpriteGeneratorById permet de générer les sprites pour les différentes fenêtres d'interface joueur.
-\item Le Render réutilise alors les sprites générés pour afficher la carte grâce au RenderWindow de sfml et gère la View correspondante via display().
-\item L'interface utilisateur est gérée par la classe Element qui genère un ensemble de fenêtres potentiellement imbriquables pouvant contenir du texte ou des sprites, permettant alors de créer plusieurs types de fenêtres selon le besoin. Un Element particulier, le WindowManager permet cette gestion.
+    \item La classe Sprites est le gestionnaire des différentes ressources. Elle charge les différentes textures du jeu lors de l'instanciation et génère les différents sprites de résolutions paramétrables, compatibles avec l'état du monde, dépendant alors de la tuile à afficher (élément + contenu) et du personnage à afficher. Le SpriteGeneratorById permet de générer les sprites pour les différentes fenêtres d'interface joueur.
+    \item Le Render réutilise alors les sprites générés pour afficher la carte grâce au RenderWindow de sfml et gère la View correspondante via display().
+    \item 
+        l'interface utilisateur se base sur la classe Element. 
+        Cette classe permet de créer des conteneurs pour les objets/éléments sfml (text, sprite et rectangle).
+        la classe éléments applique le design pattern composite, ainsi un élément peut être un "parent" et contenir des éléments "enfants" qui vont automatiquement se positionner et se dimensionner en fonction de la position et taille du parent. 
+        Un éléments parent peut avoir comme enfants d'autre élément parent, ainsi les éléments s'organise selon une structure d'arbre.
+        La classe élement permet également d'encapsulter la gestion des évenements sfml.
+        Voici quelques élements particulier: Window (affiche une fenêtre déplacable et fermable), CharacterStat (affiche les stats d'un perso), CharacterSheet (affiche les informations lié à un personnage)
 \end{itemize}
 
-\begin{figure}[ht]
+\begin{figure}[p]
     \centering
     \includegraphics[width=\textwidth]{render_preview.png}
     \caption{Preview du rendu}
 \end{figure}
 
+\newpage
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{render.png}
+    \caption{\label{uml:render}Diagramme des classes de rendu.}
+\end{figure}
 
-    \begin{figure}[p]
-        \centering
-        \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{render.png}
-        \caption{\label{uml:render}Diagramme des classes de rendu.}
-    \end{figure}
+\newpage
+\begin{minipage}{\linewidth}
+\lstinputlisting[caption={Structure d'abre de Element},captionpos=b,language={}]{res/elementTree.txt}
+\end{minipage}
 
+\newpage
 \section{Règles de changement d'états et moteur de jeu}
 
 \subsection{Horloge globale}
