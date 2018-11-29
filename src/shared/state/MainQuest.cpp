@@ -3,14 +3,12 @@
 using namespace std;
 using namespace state;
 
-MainQuest::~MainQuest() {
-
-}
+MainQuest::~MainQuest() {}
 
 string MainQuest::getDescription() {
-    return description;
+  return description;
 }
 
 bool MainQuest::checkFinished() {
-    return finished;
+  return finished;
 }

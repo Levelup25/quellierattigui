@@ -4,22 +4,22 @@ using namespace std;
 using namespace state;
 
 Cell::Cell(ElementType element, ContentType content) {
-    this->tileElement = element;
-    this->tileContent = content;
+  this->tileElement = element;
+  this->tileContent = content;
 }
 
 void Cell::setElement(ElementType element) {
-    tileElement = element;
+  tileElement = element;
 }
 
 ElementType Cell::getElement() {
-    return tileElement;
+  return tileElement;
 }
 
 void Cell::setContent(ContentType content) {
-    tileContent = content;
+  tileContent = content;
 }
 
 ContentType Cell::getContent() {
-    return tileContent;
+  return tileContent;
 }

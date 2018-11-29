@@ -4,6 +4,4 @@ using namespace std;
 using namespace state;
 using namespace engine;
 
-void Command::execute() {
-
-}
+void Command::execute() {}

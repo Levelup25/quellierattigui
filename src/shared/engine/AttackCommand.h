@@ -18,8 +18,8 @@ namespace engine {
 }
 
 #include "Command.h"
-#include "Engine.h"
 #include "state/Ability.h"
+#include "Engine.h"
 
 namespace engine {
 

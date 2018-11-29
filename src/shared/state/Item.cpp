@@ -3,6 +3,4 @@
 using namespace std;
 using namespace state;
 
-Item::~Item() {
-
-}
+Item::~Item() {}

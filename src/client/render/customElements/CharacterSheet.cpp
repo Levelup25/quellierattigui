@@ -18,7 +18,7 @@ Element* CharacterSheet(state::Character* pcharacter) {
   CharacterName->setString(pcharacter->getName());
   Sprites* spriteGen = new Sprites();
   volatile auto id = pcharacter->getId();
-  //cout << "id: " << id << endl;
+  // cout << "id: " << id << endl;
   charSprite->sprite = spriteGen->getCharacterSprite(50, 50, id);
   // charSprite->updateSizeFromTextureRect();
   charSprite->setSizeRelative({32, 32});
