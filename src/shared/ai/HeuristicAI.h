@@ -13,6 +13,9 @@ namespace engine {
 namespace state {
   class Character;
 };
+namespace ai {
+  class Score;
+};
 namespace engine {
   class MoveCommands;
   class AttackCommand;
@@ -21,6 +24,7 @@ namespace ai {
   class AI;
 }
 
+#include "Score.h"
 #include "AI.h"
 #include "engine/MoveCommands.h"
 #include "engine/AttackCommand.h"
@@ -37,7 +41,7 @@ namespace ai {
     void run (state::Character* character);
   private:
     bool isCharacterAtpos (state::Character* c, int i, int j);
-    int getScoreAction (engine::MoveCommands* mv, engine::AttackCommand* atk, state::Character* character, std::vector<state::Character*> allies, std::vector<state::Character*> ennemies);
+    Score getScoreAction (engine::MoveCommands* mv, engine::AttackCommand* atk, state::Character* character, std::vector<state::Character*> allies, std::vector<state::Character*> ennemies);
     // Setters and Getters
   };
 

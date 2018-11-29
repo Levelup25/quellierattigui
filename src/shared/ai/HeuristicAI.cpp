@@ -10,158 +10,177 @@ using namespace state;
 using namespace engine;
 using namespace ai;
 
-HeuristicAI::HeuristicAI(State* state, Engine* engine)
-{
-    this->state = state;
-    this->engine = engine;
+HeuristicAI::HeuristicAI(State* state, Engine* engine) {
+  this->state = state;
+  this->engine = engine;
 }
 
-bool HeuristicAI::isCharacterAtpos(Character* c, int i, int j)
-{
-    // vector<Character*> fighters = state->getFight()->getFightingCharacters();
-    //if (find(fighters.begin(), fighters.end(), c) != fighters.end())
-    return c->getI() == i && c->getJ() == j;
-    //return false;
+bool HeuristicAI::isCharacterAtpos(Character* c, int i, int j) {
+  // vector<Character*> fighters = state->getFight()->getFightingCharacters();
+  // if (find(fighters.begin(), fighters.end(), c) != fighters.end())
+  return c->getI() == i && c->getJ() == j;
+  // return false;
 }
 
-int HeuristicAI::getScoreAction(MoveCommands* mv,
-                                AttackCommand* atk,
-                                Character* character,
-                                vector<Character*> allies,
-                                vector<Character*> ennemies)
-{
-    int score = 0;
-    int bonusKillEnemy = 300;
-    int MalusKillAlly = 300;
+Score HeuristicAI::getScoreAction(MoveCommands* mv,
+                                  AttackCommand* atk,
+                                  Character* pcharacter,
+                                  vector<Character*> allies,
+                                  vector<Character*> ennemies) {
+  Score score;
 
-    if (atk == nullptr)
-        return 0;
-    Weapon* weapon = character->getWeapon();
+  // score atk
+  if (atk != nullptr) {
+    int bonusKillEnemy = 100;
+    int MalusKillAlly = 200;
+    int bonusHitEnemy = 10;
+    int malusHitAlly = 5;
+    Weapon* weapon = pcharacter->getWeapon();
     int dmg = weapon->getAbility(atk->getAbilityNumber())->getDamage();
     auto zoneDmg = atk->getZone(1);
 
-    for (auto coord : zoneDmg)
-    {
-        if (mv != nullptr)
-        {
-            coord[0] += mv->getDiff()[0];
-            coord[1] += mv->getDiff()[1];
+    // score dmg
+    for (auto coord : zoneDmg) {
+      if (mv != nullptr) {
+        coord[0] += mv->getDiff()[0];
+        coord[1] += mv->getDiff()[1];
+      }
+      for (auto pennemy : ennemies) {
+        if (isCharacterAtpos(pennemy, coord[0], coord[1])) {
+          int pv = pennemy->getPvCurrent();
+          int percent = (100 * dmg / pv);
+          if (percent > 100) {
+            int overkill = percent - 100;
+            percent = 100;
+            score.bonusDmgEnnemy += bonusKillEnemy;
+            score.bonusDmgEnnemy -= overkill;
+          }
+          score.bonusDmgEnnemy += percent + bonusHitEnemy;
         }
-        for (auto pcharacter : ennemies)
-        {
-            if (isCharacterAtpos(pcharacter, coord[0], coord[1]))
-            {
-                int pv = pcharacter->getPvCurrent();
-                score += dmg < pv ? (100 * dmg / pv) : bonusKillEnemy;
-            }
+      }
+
+      for (auto pally : allies) {
+        if (isCharacterAtpos(pally, coord[0], coord[1])) {
+          int pv = pally->getPvCurrent();
+          int percent = (100 * dmg / pv);
+          if (percent > 100) {
+            percent = 100;
+            score.malusDmgAlly += MalusKillAlly;
+          }
+          score.malusDmgAlly += percent + malusHitAlly;
         }
-        for (auto pcharacter : allies)
-        {
-            if (isCharacterAtpos(pcharacter, coord[0], coord[1]))
-            {
-                int pv = pcharacter->getPvCurrent();
-                score -= dmg < pv ? (100 * dmg / pv) : MalusKillAlly;
-            }
-        }
-        score -= 25 * weapon->getAbility(atk->getAbilityNumber())->getPa();
+      }
     }
-    return score;
+
+    // score PA
+    int malusRatioPaUsed = 1;
+    score.malusPaUsed -=
+        malusRatioPaUsed * weapon->getAbility(atk->getAbilityNumber())->getPa();
+  }
+
+  // score PM
+  if (mv != nullptr) {
+    int bonusRatioCloserEnnemy = 2;
+    int malusRatioPmUsed = 1;
+
+    // bonus for getting closer
+    for (auto pennemy : ennemies) {
+      int ie = pennemy->getI(), je = pennemy->getJ();
+      int io = pcharacter->getI(), jo = pcharacter->getJ();
+      int in = io + mv->getDiff()[0], jn = jo + mv->getDiff()[1];
+      int distanceOld = abs(io - ie) + abs(jo - je);
+      int distanceNew = abs(in - ie) + abs(jn - je);
+      int distanceDiff = distanceNew - distanceOld;
+      score.bonusCloser += distanceDiff * bonusRatioCloserEnnemy;
+    }
+    int pmUsed = abs(mv->getDiff()[0]) + abs(mv->getDiff()[1]);
+    score.malusPmUsed -= pmUsed * malusRatioPmUsed;
+  }
+  return score;
 }
 
 std::tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
-                                                                     Character* character)
-{
-    // get our and enemy fighters
-    vector<Character*> allies = state->getFight()->getFightingCharacters(1);
-    vector<Character*> ennemies = state->getFight()->getFightingCharacters(0);
+    Character* character) {
+  // get our and enemy fighters
+  vector<Character*> allies = state->getFight()->getFightingCharacters(1);
+  vector<Character*> ennemies = state->getFight()->getFightingCharacters(0);
 
-    // get possible moves and attacks for the character
-    vector<MoveCommands*> listmv;
-    vector<AttackCommand*> listatk;
-    // complete with no move and no atk
-    listmv.push_back(nullptr);
-    listatk.push_back(nullptr);
+  // get possible moves and attacks for the character
+  vector<MoveCommands*> listmv;
+  vector<AttackCommand*> listatk;
+  // complete with no move and no atk
+  listmv.push_back(nullptr);
+  listatk.push_back(nullptr);
 
-    for (auto pcommand : this->listCommands(character, 0))
-    {
-        listmv.push_back(static_cast<MoveCommands*> (pcommand));
+  for (auto pcommand : this->listCommands(character, 0)) {
+    listmv.push_back(static_cast<MoveCommands*>(pcommand));
+  }
+  for (auto pcommand : this->listCommands(character, 1)) {
+    listatk.push_back(static_cast<AttackCommand*>(pcommand));
+  }
+
+  Score scoreMax =
+      getScoreAction(listmv[0], listatk[0], character, allies, ennemies);
+  // search best actions
+  int i = 0, j = 0;
+  vector<int> imax = {0}, jmax = {0};
+
+  for (auto mv : listmv) {
+    for (auto atk : listatk) {
+      Score score = getScoreAction(mv, atk, character, allies, ennemies);
+
+      if (score.getScore() > scoreMax.getScore()) {
+        imax.clear();
+        jmax.clear();
+        scoreMax = score;
+      }
+
+      if (score.getScore() == scoreMax.getScore()) {
+        imax.push_back(i);
+        jmax.push_back(j);
+      }
+      j++;
     }
-    for (auto pcommand : this->listCommands(character, 1))
-    {
-        listatk.push_back(static_cast<AttackCommand*> (pcommand));
-    }
+    j = 0;
+    i++;
+  }
 
-    int scoreMax =
-            getScoreAction(listmv[0], listatk[0], character, allies, ennemies);
-    // search best actions
-    int i = 0, j = 0;
-    vector<int> imax = {0}, jmax = {0};
-
-    // cout << "score = {";
-    for (auto mv : listmv)
-    {
-        for (auto atk : listatk)
-        {
-            int score = getScoreAction(mv, atk, character, allies, ennemies);
-            //cout << score << ", ";
-
-            if (score > scoreMax)
-            {
-                imax.clear();
-                jmax.clear();
-                scoreMax = score;
-            }
-
-            if (score == scoreMax)
-            {
-                imax.push_back(i);
-                jmax.push_back(j);
-            }
-            j++;
-        }
-        j = 0;
-        i++;
-    }
-    // cout << "}" << endl;
-    //cout << "scoreMax = " << scoreMax << endl << endl;
-
-    // Choose one of the best actions randomly
-    int r = rand() % imax.size();
-    i = imax[r];
-    j = jmax[r];
-    /*
-    cout << "score action "
-         << getScoreAction(listmv[i], listatk[j], *character, allies,
-                           ennemies)
-         << endl
-         << endl;
-     */
-    return std::make_tuple(listmv[i], listatk[j]);
+  // Choose one of the best actions randomly
+  int r = rand() % imax.size();
+  i = imax[r];
+  j = jmax[r];
+  /*
+  cout << "score action "
+       << getScoreAction(listmv[i], listatk[j], *character, allies,
+                         ennemies)
+       << endl
+       << endl;
+   */
+  return std::make_tuple(listmv[i], listatk[j]);
 }
 
-void HeuristicAI::run(Character* character)
-{
-    vector<Command*> listmv = this->listCommands(character, 0);
-    vector<Command*> listatk = this->listCommands(character, 1);
-    MoveCommands* mv;
-    AttackCommand* atk;
-    do
-    {
-        std::tuple<MoveCommands*, AttackCommand*> bestAction = this->getBestAction(character);
-        mv = std::get<0>(bestAction);
-        if (mv != nullptr)
-        {
-            engine->addCommand(mv);
-            while (engine->getSize() != 0);
-            listmv = this->listCommands(character, 0);
-        }
-        atk = std::get<1>(bestAction);
-        if (atk != nullptr)
-        {
-            engine->addCommand(atk);
-            while (engine->getSize() != 0);
-            listatk = this->listCommands(character, 1);
-        }
+void HeuristicAI::run(Character* character) {
+  vector<Command*> listmv = this->listCommands(character, 0);
+  vector<Command*> listatk = this->listCommands(character, 1);
+  MoveCommands* mv;
+  AttackCommand* atk;
+  do {
+    std::tuple<MoveCommands*, AttackCommand*> bestAction =
+        this->getBestAction(character);
+    mv = std::get<0>(bestAction);
+    if (mv != nullptr) {
+      engine->addCommand(mv);
+      while (engine->getSize() != 0)
+        ;
+      listmv = this->listCommands(character, 0);
     }
-    while ((mv != nullptr || atk != nullptr) && state->isFighting() && listmv.size() + listatk.size() > 2 && character->getPvCurrent() > 0);
+    atk = std::get<1>(bestAction);
+    if (atk != nullptr) {
+      engine->addCommand(atk);
+      while (engine->getSize() != 0)
+        ;
+      listatk = this->listCommands(character, 1);
+    }
+  } while ((mv != nullptr || atk != nullptr) && state->isFighting() &&
+           listmv.size() + listatk.size() > 2 && character->getPvCurrent() > 0);
 }
