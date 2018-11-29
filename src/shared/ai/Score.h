@@ -2,6 +2,11 @@
 #ifndef AI__SCORE__H
 #define AI__SCORE__H
 
+#include <ostream>
+
+namespace ai {
+  class Score;
+}
 
 namespace ai {
 
@@ -16,7 +21,8 @@ namespace ai {
     int malusPmUsed     = 0;
     // Operations
   public:
-    int getScore ();
+    int getScore () const;
+    friend std::ostream& operator<< (std::ostream& os, const Score& score);
     // Setters and Getters
   };
 

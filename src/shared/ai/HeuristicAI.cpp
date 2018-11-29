@@ -74,7 +74,7 @@ Score HeuristicAI::getScoreAction(MoveCommands* mv,
 
     // score PA
     int malusRatioPaUsed = 1;
-    score.malusPaUsed -=
+    score.malusPaUsed =
         malusRatioPaUsed * weapon->getAbility(atk->getAbilityNumber())->getPa();
   }
 
@@ -90,11 +90,11 @@ Score HeuristicAI::getScoreAction(MoveCommands* mv,
       int in = io + mv->getDiff()[0], jn = jo + mv->getDiff()[1];
       int distanceOld = abs(io - ie) + abs(jo - je);
       int distanceNew = abs(in - ie) + abs(jn - je);
-      int distanceDiff = distanceNew - distanceOld;
+      int distanceDiff = distanceOld - distanceNew;
       score.bonusCloser += distanceDiff * bonusRatioCloserEnnemy;
     }
     int pmUsed = abs(mv->getDiff()[0]) + abs(mv->getDiff()[1]);
-    score.malusPmUsed -= pmUsed * malusRatioPmUsed;
+    score.malusPmUsed = pmUsed * malusRatioPmUsed;
   }
   return score;
 }
@@ -119,8 +119,9 @@ std::tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
     listatk.push_back(static_cast<AttackCommand*>(pcommand));
   }
 
-  Score scoreMax =
-      getScoreAction(listmv[0], listatk[0], character, allies, ennemies);
+  std::vector<Score> scoresBest = {
+      getScoreAction(listmv[0], listatk[0], character, allies, ennemies)};
+  int scoreMax = scoresBest[0].getScore();
   // search best actions
   int i = 0, j = 0;
   vector<int> imax = {0}, jmax = {0};
@@ -129,15 +130,17 @@ std::tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
     for (auto atk : listatk) {
       Score score = getScoreAction(mv, atk, character, allies, ennemies);
 
-      if (score.getScore() > scoreMax.getScore()) {
+      if (score.getScore() > scoreMax) {
         imax.clear();
         jmax.clear();
-        scoreMax = score;
+        scoresBest.clear();
+        scoreMax = score.getScore();
       }
 
-      if (score.getScore() == scoreMax.getScore()) {
+      if (score.getScore() == scoreMax) {
         imax.push_back(i);
         jmax.push_back(j);
+        scoresBest.push_back(score);
       }
       j++;
     }
@@ -146,9 +149,12 @@ std::tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
   }
 
   // Choose one of the best actions randomly
-  int r = rand() % imax.size();
+  volatile int r = rand() % imax.size();
   i = imax[r];
   j = jmax[r];
+  Score scoreSelected = scoresBest[r];
+
+  cout << scoreSelected << endl;
   /*
   cout << "score action "
        << getScoreAction(listmv[i], listatk[j], *character, allies,
