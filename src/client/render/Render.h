@@ -16,6 +16,7 @@ namespace state {
   class Character;
 };
 namespace render {
+  class View;
   class Sprites;
 };
 namespace engine {
@@ -52,11 +53,11 @@ namespace render {
     // Operations
   public:
     Render (state::State* state, engine::Engine* engine, int nb = 2, int l = 34, int h = 24);
-    void drawMap (sf::RenderWindow& window, sf::View& view, Sprites& sprites);
-    void drawZones (sf::RenderWindow& window, sf::View& view);
-    void drawCharacters (sf::RenderWindow& window, sf::View& view, Sprites& sprites, std::vector<state::Character*> chars);
-    void drawAnimations (sf::RenderWindow& window, sf::View& view, Sprites& sprites);
-    void drawInformations (sf::RenderWindow& window, sf::View& view, Sprites& sprites, std::vector<state::Character*> chars);
+    void drawMap (sf::RenderWindow& window, render::View& v, Sprites& sprites);
+    void drawZones (sf::RenderWindow& window, render::View& v);
+    void drawCharacters (sf::RenderWindow& window, render::View& v, Sprites& sprites, std::vector<state::Character*> chars);
+    void drawAnimations (sf::RenderWindow& window, render::View& v, Sprites& sprites);
+    void drawInformations (sf::RenderWindow& window, render::View& v, Sprites& sprites, std::vector<state::Character*> chars);
     void display ();
     // Setters and Getters
   };

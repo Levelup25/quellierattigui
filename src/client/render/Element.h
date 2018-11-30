@@ -78,6 +78,7 @@ namespace render {
     void closeChildrenWaiting ();
     void updateChildrenMouseOver (sf::Vector2f mousePosAbs);
     std::vector<Element*> getChildren () const;
+    Element* getChild (Element* child);
     virtual Element* getCopy () const;
   private:
     void updateDepth ();

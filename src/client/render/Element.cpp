@@ -150,9 +150,9 @@ void Element::add(Element* pchild) {
 
 void Element::remove(Element* pchild) {
   for (auto it = pchildren.begin(); it != pchildren.end(); it++) {
-    auto p = *it;
-    if (p == pchild) {
+    if (*it == pchild) {
       pchildren.erase(it);
+      pchild = nullptr;
       return;
     }
   }
@@ -441,4 +441,11 @@ bool Element::getMouseOver() const {
 
 std::vector<Element*> Element::getChildren() const {
   return pchildren;
+}
+
+Element* Element::getChild(Element* child) {
+  for (auto children : pchildren)
+    if (children == child)
+      return child;
+  return nullptr;
 }

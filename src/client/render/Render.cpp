@@ -25,7 +25,8 @@ Render::Render(State* state, Engine* engine, int nb, int l, int h) {
   m = state->getM();
 }
 
-void Render::drawMap(RenderWindow& window, sf::View& view, Sprites& sprites) {
+void Render::drawMap(RenderWindow& window, render::View& v, Sprites& sprites) {
+  sf::View view = v.view;
   sf::Sprite sprite;
   RectangleShape zone(Vector2f(l, h));
   zone.setFillColor(Color::Transparent);
@@ -53,14 +54,15 @@ void Render::drawMap(RenderWindow& window, sf::View& view, Sprites& sprites) {
   }
 }
 
-void Render::drawZones(RenderWindow& window, sf::View& view) {
+void Render::drawZones(RenderWindow& window, render::View& v) {
+  sf::View view = v.view;
   Vector2f mouse =
       window.mapPixelToCoords(sf::Mouse::getPosition(window), view);
   int X = mouse.x / l, Y = mouse.y / h;
   RectangleShape zone(Vector2f(l, h));
   window.setView(view);
   if (state->isFighting() && state->getFight()->getTurn() % 2 == 1 &&
-      !state->isInventoryOpened) {
+      v.getChildren().size() == 0) {
     if (state->etatCombat == 0) {
       vector<vector<int>> moves =
           (new MoveCommands(state, engine, selectedcharacter, X, Y))->getPath();
@@ -96,9 +98,10 @@ void Render::drawZones(RenderWindow& window, sf::View& view) {
 }
 
 void Render::drawCharacters(RenderWindow& window,
-                            sf::View& view,
+                            render::View& v,
                             Sprites& sprites,
                             vector<Character*> chars) {
+  sf::View view = v.view;
   sf::Sprite sprite;
   RectangleShape zone(Vector2f(l, h));
   zone.setFillColor(Color::Transparent);
@@ -137,8 +140,9 @@ void Render::drawCharacters(RenderWindow& window,
 }
 
 void Render::drawAnimations(RenderWindow& window,
-                            sf::View& view,
+                            render::View& v,
                             Sprites& sprites) {
+  sf::View view = v.view;
   sf::Sprite sprite;
   window.setView(view);
   for (auto animation : state->animations) {
@@ -150,9 +154,10 @@ void Render::drawAnimations(RenderWindow& window,
 }
 
 void Render::drawInformations(RenderWindow& window,
-                              sf::View& view,
+                              render::View& v,
                               Sprites& sprites,
                               vector<Character*> chars) {
+  sf::View view = v.view;
   sf::Sprite sprite;
   Vector2f mouse =
       window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView());
@@ -247,7 +252,7 @@ void Render::display() {
   sf::Sprite sprite;
   Sprites sprites(nb);
 
-  Element* charactersheet = CharacterSheet(selectedcharacter);
+  Element* csheet = nullptr;
   Character* prev = selectedcharacter;
 
   while (window.isOpen()) {
@@ -301,8 +306,7 @@ void Render::display() {
             selectedcharacter = state->getMainTeam()->getCharacter(X, Y);
             abilityNumber = 0;
           }
-        } else if (event.mouseButton.button == sf::Mouse::Left &&
-                   !state->isInventoryOpened) {
+        } else if (event.mouseButton.button == sf::Mouse::Left) {
           if (Y2 >= 0) {
             if ((X2 / 2 - 1) < (int)abs.size() && (X2 / 2 - 1) >= 0) {
               if ((X2 / 2 - 1) != abilityNumber || state->etatCombat == 0) {
@@ -312,7 +316,7 @@ void Render::display() {
               } else
                 state->etatCombat = 0;
             }
-          } else {
+          } else if (worldView.getChildren().size() == 0) {
             if (state->etatCombat == 0) {
               if (!state->isFighting()) {
                 while (x + y - (int)x - (int)y != 0)
@@ -337,38 +341,36 @@ void Render::display() {
         }
 
         else if (event.key.code == sf::Keyboard::C) {
-          state->isInventoryOpened = 1 - state->isInventoryOpened;
           state->etatCombat = 0;
-          if (state->isInventoryOpened)
-            worldView.add(charactersheet);
-          else
-            worldView.remove(charactersheet);
+          if (!worldView.getChild(csheet)) {
+            csheet = CharacterSheet(selectedcharacter);
+            csheet->setPosRelative({"m", "m"});
+            worldView.add(csheet);
+
+          } else {
+            worldView.remove(csheet);
+            csheet = nullptr;
+          }
         }
       }
     }
+    this->drawInformations(window, abilityView, sprites, chars);
 
-    this->drawInformations(window, abilityView.view, sprites, chars);
+    this->drawMap(window, worldView, sprites);
 
-    this->drawMap(window, worldView.view, sprites);
+    this->drawZones(window, worldView);
 
-    this->drawZones(window, worldView.view);
+    this->drawCharacters(window, worldView, sprites, chars);
 
-    this->drawCharacters(window, worldView.view, sprites, chars);
+    this->drawAnimations(window, worldView, sprites);
 
-    this->drawAnimations(window, worldView.view, sprites);
-
-    if (prev != selectedcharacter) {
-      Relatif2 v;
-      if (state->isInventoryOpened)
-        v = charactersheet->getPosRelative();
-      worldView.remove(charactersheet);
-      if (state->isInventoryOpened) {
-        charactersheet = CharacterSheet(selectedcharacter);
-        charactersheet->setPosRelative(v);
-        worldView.add(charactersheet);
-      }
+    if (prev != selectedcharacter && worldView.getChildren().size() != 0) {
+      worldView.remove(csheet);
+      csheet = CharacterSheet(selectedcharacter);
+      csheet->setPosRelative({"m", "m"});
+      worldView.add(csheet);
+      prev = selectedcharacter;
     }
-    prev = selectedcharacter;
 
     window.draw(worldView);
 
