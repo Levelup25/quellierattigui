@@ -52,20 +52,6 @@ Element* Window::getCopy() const {
 }
 
 void Window::processEvent(sf::Event event, sf::Vector2f mousePosAbs) {
-  for (auto pchild : pcontent->getChildren()) {
-    if (pchild->getLink() != nullptr && pchild->getMouseOver()) {
-      if (event.type == sf::Event::MouseButtonPressed &&
-          event.mouseButton.button == sf::Mouse::Left) {
-        Element* root;
-        do {
-          root = this->getParent();
-        } while (root->getParent() != nullptr);
-        if (!root->getChild(pchild->getLink()))
-          root->add(pchild->getLink());
-      }
-    }
-  }
-
   if (isDraging) {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
       auto ppos = getParent()->getPosAbs();
