@@ -22,6 +22,7 @@ namespace state {
     // Associations
     // Attributes
   private:
+    int id     = 0;
     std::string name;
     ElementType element;
     std::vector<Ability*> abilities;
@@ -35,6 +36,8 @@ namespace state {
     std::vector<Ability*> getAbilities ();
     std::string getName ();
     ElementType getElement ();
+    int getId ();
+    void setId (int id);
     // Setters and Getters
   };
 

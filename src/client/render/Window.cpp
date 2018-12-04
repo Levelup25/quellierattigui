@@ -39,7 +39,7 @@ Window::Window(const Window& win) : Rectangle(win) {
 }
 
 Window& Window::operator=(const Window& win) {
-  // WARNING: What happend if this elements switch pos?
+  // WARNING: What happens if this elements switch pos?
   ptitleBar = static_cast<Rectangle*>(getChildren()[0]);
   pcontent = static_cast<Rectangle*>(getChildren()[1]);
   ptitle = static_cast<Text*>(ptitleBar->getChildren()[0]);
@@ -52,6 +52,20 @@ Element* Window::getCopy() const {
 }
 
 void Window::processEvent(sf::Event event, sf::Vector2f mousePosAbs) {
+  for (auto pchild : pcontent->getChildren()) {
+    if (pchild->getLink() != nullptr && pchild->getMouseOver()) {
+      if (event.type == sf::Event::MouseButtonPressed &&
+          event.mouseButton.button == sf::Mouse::Left) {
+        Element* root;
+        do {
+          root = this->getParent();
+        } while (root->getParent() != nullptr);
+        if (!root->getChild(pchild->getLink()))
+          root->add(pchild->getLink());
+      }
+    }
+  }
+
   if (isDraging) {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
       auto ppos = getParent()->getPosAbs();

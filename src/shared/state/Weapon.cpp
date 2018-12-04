@@ -64,3 +64,11 @@ string Weapon::getName() {
 ElementType Weapon::getElement() {
   return element;
 }
+
+int Weapon::getId() {
+  return id;
+}
+
+void Weapon::setId(int id) {
+  this->id = id;
+}

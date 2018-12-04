@@ -38,6 +38,7 @@ namespace render {
     static int created;
     int id;
     bool mouseOverCache;
+    Element* link     = nullptr;
     // Operations
   public:
     Element ();
@@ -80,6 +81,9 @@ namespace render {
     std::vector<Element*> getChildren () const;
     Element* getChild (Element* child);
     virtual Element* getCopy () const;
+    void setLink (Element* link);
+    Element* getLink ();
+    std::vector<Element*> getLinks ();
   private:
     void updateDepth ();
     float computeCoord (Relatif rel, float parentCoordAbs, float parentLengthAbs, float lengthAbs);

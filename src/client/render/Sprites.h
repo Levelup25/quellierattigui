@@ -22,6 +22,8 @@ namespace render {
     std::vector<std::vector<sf::Sprite>> abilitySprites;
     sf::Texture attackTexture;
     sf::Sprite attackSprite;
+    sf::Texture weaponTexture;
+    sf::Sprite weaponSprite;
     // Operations
   public:
     Sprites (int nb = 2);
@@ -30,6 +32,7 @@ namespace render {
     sf::Sprite getCharacterSprite (int l, int h, int id, int direction = 0, int animation = 1);
     sf::Sprite getAbilitySprite (int l, int h, int element, unsigned int lv);
     sf::Sprite getAttackSprite (int l, int h, int direction, int element, int lv);
+    sf::Sprite getWeaponSprite (int l, int h, int id);
     // Setters and Getters
   };
 

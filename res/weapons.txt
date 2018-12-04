@@ -1,19 +1,19 @@
-id nom element id_capacités(4)
-1 épée_neutre 0 1
-2 épée_d'eau 1 1 2
-3 epée_de_terre 2 1 3
-4 epée_de_feu 3 1 4
-5 epée_d'air 4 1 5
-6 epée_élémentaire 0 2 3 4 5
+id nom element id_capacites(4)
+1 epee_neutre 0 1
+2 epee_d'eau 1 1 2
+3 epee_de_terre 2 1 3
+4 epee_de_feu 3 1 4
+5 epee_d'air 4 1 5
+6 epee_elementaire 0 2 3 4 5
 7 arc_neutre 0 1
 8 arc_d'eau 1 1 2
 9 arc_de_terre 2 1 3
 10 arc_de_feu 3 1 4
 11 arc_d'air 4 1 5
-12 arc_élémentaire 0 2 3 4 5
-13 bâton_neutre 0 1
-14 bâton_d'eau 1 1 2
-15 bâton_de_terre 2 1 3
-16 bâton_de_feu 3 1 4
-17 bâton_d'air 4 1 5
-18 bâton_élémentaire 0 2 3 4 5
+12 arc_elementaire 0 2 3 4 5
+13 baton_neutre 0 1
+14 baton_d'eau 1 1 2
+15 baton_de_terre 2 1 3
+16 baton_de_feu 3 1 4
+17 baton_d'air 4 1 5
+18 baton_elementaire 0 2 3 4 5

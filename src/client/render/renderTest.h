@@ -14,8 +14,8 @@
 #include "Sprites.h"
 #include "Window.h"
 #include "WindowManager.h"
-#include "customElements/CharacterSheet.h"
 #include "customElements/CharacterStat.h"
+#include "customElements/Sheets.h"
 
 using namespace render;
 using namespace state;

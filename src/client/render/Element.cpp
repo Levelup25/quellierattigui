@@ -35,6 +35,7 @@ Element& Element::operator=(const Element& obj) {
   posAbsCache = obj.getPosAbs();
   sizeAbsCache = obj.getSizeAbs();
   mouseOverCache = obj.getMouseOver();
+  link = obj.link;
 
   pchildren = {};
   for (auto pchildObj : obj.getChildren()) {
@@ -69,7 +70,7 @@ void Element::reactEvent(sf::Event event, sf::Vector2f mousePosAbs) {
   }
   if (mouseOverCache && event.type == sf::Event::KeyPressed &&
       event.key.code == sf::Keyboard::D) {
-    cout << ">>>Debug" << endl;
+    cout << ">>>Debug " << this << " " << link << endl;
     cout << *this << endl;
   }
   processEvent(event, mousePosAbs);
@@ -357,6 +358,10 @@ float Element::computeCoord(Relatif rel,
         f += parentLengthAbs - lengthAbs;
       else if (ali == "m")
         f += parentLengthAbs / 2 - lengthAbs / 2;
+      else if (ali == "q")
+        f += parentLengthAbs / 4 - lengthAbs / 2;
+      else if (ali == "3q")
+        f += parentLengthAbs * 3 / 4 - lengthAbs / 2;
       break;
     }
 
@@ -433,7 +438,18 @@ bool Element::getMouseInChildren(sf::Vector2f mousePosAbs) const {
   return false;
 }
 
-void Element::processEvent(sf::Event event, sf::Vector2f mousePosAbs) {}
+void Element::processEvent(sf::Event event, sf::Vector2f mousePosAbs) {
+  if (link != nullptr && this->getMouseOver()) {
+    if (event.type == sf::Event::MouseButtonPressed &&
+        event.mouseButton.button == sf::Mouse::Left) {
+      Element* root = this->getParent();
+      while (root->getParent() != nullptr) {
+        root = root->getParent();
+      }
+      root->add(link);
+    }
+  }
+}
 
 bool Element::getMouseOver() const {
   return mouseOverCache;
@@ -448,4 +464,24 @@ Element* Element::getChild(Element* child) {
     if (children == child)
       return child;
   return nullptr;
+}
+
+void Element::setLink(Element* link) {
+  this->link = link;
+}
+
+Element* Element::getLink() {
+  return link;
+}
+
+vector<Element*> Element::getLinks() {
+  vector<Element*> v;
+  if (this->getLink() != nullptr)
+    v.push_back(link);
+  for (auto child : this->getChildren()) {
+    vector<Element*> v2 = child->getLinks();
+    if (v2.size())
+      v.insert(v.end(), v2.begin(), v2.end());
+  }
+  return v;
 }

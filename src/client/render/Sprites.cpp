@@ -17,6 +17,8 @@ Sprites::Sprites(int nb) {
   abilitySprites.resize(5);
   attackTexture.loadFromFile("res/fx.png");
   attackSprite.setTexture(attackTexture);
+  weaponTexture.loadFromFile("res/weapons.png");
+  weaponSprite.setTexture(weaponTexture);
 
   vector<string> numbers = {"00", "28", "55", "37", "93"};
   for (int i = 0; i < (int)tileTextures.size(); i++) {
@@ -106,4 +108,10 @@ sf::Sprite Sprites::getAttackSprite(int l,
   attackSprite.setScale(Vector2f((float)l / 32, (float)h / 32));
   attackSprite.setColor(colors[element]);
   return attackSprite;
+}
+
+sf::Sprite Sprites::getWeaponSprite(int l, int h, int id) {
+  weaponSprite.setTextureRect(IntRect(32 * (id / 8), 32 * (id % 8), 32, 32));
+  weaponSprite.setScale(Vector2f((float)l / 32, (float)h / 32));
+  return weaponSprite;
 }
