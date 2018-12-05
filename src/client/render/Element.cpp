@@ -123,7 +123,8 @@ const Relatif2 Element::getPosRelative() const {
 }
 
 void Element::setPosRelative(Relatif2 pos) {
-  if (pparent && pos.x.getComputeMethod() != ComputeMethodType::pixel) {
+  if (pparent && (pos.x.getComputeMethod() != ComputeMethodType::pixel ||
+                  pos.y.getComputeMethod() != ComputeMethodType::pixel)) {
     sf::Vector2f parentSizeAbs = pparent->getSizeAbs();
     float x = computeCoord(pos.x, 0, parentSizeAbs.x, sizeAbsCache.x);
     float y = computeCoord(pos.y, 0, parentSizeAbs.y, sizeAbsCache.y);

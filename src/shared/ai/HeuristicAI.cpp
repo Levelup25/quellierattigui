@@ -165,6 +165,12 @@ std::tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
   return std::make_tuple(listmv[i], listatk[j]);
 }
 
+vector<Character*> HeuristicAI::getTurnOrder(vector<Character*> characters) {
+  vector<Character*> v = characters;
+  // random_shuffle(v.begin(), v.end());
+  return v;
+}
+
 void HeuristicAI::run(Character* character) {
   vector<Command*> listmv = this->listCommands(character, 0);
   vector<Command*> listatk = this->listCommands(character, 1);

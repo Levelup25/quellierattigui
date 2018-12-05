@@ -219,7 +219,7 @@ int main(int argc, char* argv[]) {
           if (engine->getSize() == 0 && state->isFighting() &&
               state->getFight()->getTurn() % 2 == 0) {
             vector<Character*> vect =
-                state->getFight()->getFightingCharacters(1);
+                ai->getTurnOrder(state->getFight()->getFightingCharacters(1));
             for (auto c : vect) {
               ai->run(c);
             }
@@ -256,7 +256,7 @@ int main(int argc, char* argv[]) {
           if (engine->getSize() == 0 && state->isFighting() &&
               state->getFight()->getTurn() % 2 == 0) {
             vector<Character*> vect =
-                state->getFight()->getFightingCharacters(1);
+                ai->getTurnOrder(state->getFight()->getFightingCharacters(1));
             for (auto c : vect) {
               ai->run(c);
             }

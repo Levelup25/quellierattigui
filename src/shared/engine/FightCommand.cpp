@@ -13,7 +13,7 @@ FightCommand::FightCommand(State* state, Team* att, Team* def) {
 }
 
 void FightCommand::execute() {
-  if (!state->isFighting() && att != nullptr && def != nullptr) {
+  if (!state->isFighting() && att != def) {
     shared_ptr<Fight> fight(new Fight(att, def, 3));
     state->setFight(fight);
     for (auto c : fight->getTeam(0)->getCharacters(fight->getNb())) {

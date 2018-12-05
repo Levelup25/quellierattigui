@@ -1,4 +1,5 @@
 #include "RandomAI.h"
+#include <algorithm>
 #include <iostream>
 #include "engine/AttackCommand.h"
 #include "engine/MoveCommands.h"
@@ -11,6 +12,12 @@ using namespace ai;
 RandomAI::RandomAI(State* state, Engine* engine) {
   this->state = state;
   this->engine = engine;
+}
+
+vector<Character*> RandomAI::getTurnOrder(vector<Character*> characters) {
+  vector<Character*> v = characters;
+  random_shuffle(v.begin(), v.end());
+  return v;
 }
 
 void RandomAI::run(Character* character) {

@@ -38,6 +38,7 @@ namespace ai {
   public:
     HeuristicAI (state::State* state, engine::Engine* engine);
     std::tuple<engine::MoveCommands*, engine::AttackCommand*> getBestAction (state::Character* character);
+    std::vector<state::Character*> getTurnOrder (std::vector<state::Character*> characters);
     void run (state::Character* character);
   private:
     bool isCharacterAtpos (state::Character* c, int i, int j);

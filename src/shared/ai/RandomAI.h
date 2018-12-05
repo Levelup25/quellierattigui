@@ -2,6 +2,7 @@
 #ifndef AI__RANDOMAI__H
 #define AI__RANDOMAI__H
 
+#include <vector>
 
 namespace state {
   class State;
@@ -25,6 +26,7 @@ namespace ai {
     // Operations
   public:
     RandomAI (state::State* state, engine::Engine* engine);
+    std::vector<state::Character*> getTurnOrder (std::vector<state::Character*> characters);
     void run (state::Character* character);
     // Setters and Getters
   };

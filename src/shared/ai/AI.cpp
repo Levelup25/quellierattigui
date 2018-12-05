@@ -52,4 +52,8 @@ vector<Command*> AI::listCommands(Character* character, int type) {
   return commands;
 }
 
+vector<Character*> AI::getTurnOrder(vector<Character*> characters) {
+  return characters;
+}
+
 void AI::run(Character* character) {}
