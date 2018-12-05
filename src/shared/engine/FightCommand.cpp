@@ -5,11 +5,12 @@ using namespace std;
 using namespace state;
 using namespace engine;
 
-FightCommand::FightCommand(State* state, Team* att, Team* def) {
+FightCommand::FightCommand(State* state, Team* att, Team* def, bool reverse) {
   this->state = state;
   this->character = nullptr;
   this->att = att;
   this->def = def;
+  this->reverse = reverse;
 }
 
 void FightCommand::execute() {

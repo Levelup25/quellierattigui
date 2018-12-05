@@ -20,6 +20,7 @@ namespace engine {
   protected:
     state::State* state;
     state::Character* character;
+    bool reverse;
     // Operations
   public:
     virtual void execute () = 0;
@@ -28,6 +29,8 @@ namespace engine {
     void setState(const state::State*& state);
     const state::Character*& getCharacter() const;
     void setCharacter(const state::Character*& character);
+    bool getReverse() const;
+    void setReverse(bool reverse);
   };
 
 };

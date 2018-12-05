@@ -89,42 +89,42 @@ void Character::removeWeapon() {
   this->weapon = nullptr;
 }
 
-void Character::setPv(unsigned int pv) {
+void Character::setPv(int pv) {
   pvMax = pv;
   pvCurrent = pv;
 }
 
-void Character::setPm(unsigned int pm) {
+void Character::setPm(int pm) {
   pmMax = pm;
   pmCurrent = pm;
 }
 
-void Character::setPa(unsigned int pa) {
+void Character::setPa(int pa) {
   paMax = pa;
   paCurrent = pa;
 }
 
-unsigned int Character::getPvCurrent() {
+int Character::getPvCurrent() {
   return pvCurrent;
 }
 
-unsigned int Character::getPmCurrent() {
+int Character::getPmCurrent() {
   return pmCurrent;
 }
 
-unsigned int Character::getPaCurrent() {
+int Character::getPaCurrent() {
   return paCurrent;
 }
 
-unsigned int Character::getPvMax() {
+int Character::getPvMax() {
   return pvMax;
 }
 
-unsigned int Character::getPmMax() {
+int Character::getPmMax() {
   return pmMax;
 }
 
-unsigned int Character::getPaMax() {
+int Character::getPaMax() {
   return paMax;
 }
 
@@ -141,22 +141,22 @@ void Character::resetPa() {
 }
 
 void Character::removePv(int pv) {
-  if (pv >= (int)pvCurrent)
-    pvCurrent = 0;
-  else
-    pvCurrent -= pv;
+  // if (pv >= pvCurrent)
+  //   pvCurrent = 0;
+  // else
+  pvCurrent -= pv;
 }
 
 void Character::removePm(int pm) {
-  if (pm >= (int)pmCurrent)
-    pmCurrent = 0;
-  else
-    pmCurrent -= pm;
+  // if (pm >= pmCurrent)
+  //   pmCurrent = 0;
+  // else
+  pmCurrent -= pm;
 }
 
 void Character::removePa(int pa) {
-  if (pa >= (int)paCurrent)
-    paCurrent = 0;
-  else
-    paCurrent -= pa;
+  // if (pa >= paCurrent)
+  //   paCurrent = 0;
+  // else
+  paCurrent -= pa;
 }

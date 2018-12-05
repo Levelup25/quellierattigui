@@ -23,7 +23,7 @@ namespace engine {
     float j;
     // Operations
   public:
-    MoveCommand (state::State* state, state::Character* character, float i, float j);
+    MoveCommand (state::State* state, state::Character* character, float i, float j, bool reverse = false);
     void execute ();
     // Setters and Getters
   };

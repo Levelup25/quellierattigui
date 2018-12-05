@@ -67,7 +67,7 @@ void Render::drawZones(RenderWindow& window, render::View& v) {
       vector<vector<int>> moves =
           (new MoveCommands(state, engine, selectedcharacter, X, Y))->getPath();
       zone.setFillColor(Color(0, 255, 0, 128));
-      if (moves.size() <= selectedcharacter->getPmCurrent()) {
+      if ((int)moves.size() <= selectedcharacter->getPmCurrent()) {
         for (vector<int> coord : moves) {
           zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
           window.draw(zone);
@@ -242,7 +242,7 @@ void Render::display() {
   selectedcharacter = state->getMainCharacter();
   vector<Character*> chars;
 
-  unsigned int x, y;
+  int x, y;
   x = selectedcharacter->getI();
   y = selectedcharacter->getJ();
   xv = (x / n) * n;

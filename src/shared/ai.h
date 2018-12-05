@@ -6,4 +6,5 @@
 #include "ai/RandomAI.h"
 #include "ai/Score.h"
 #include "ai/HeuristicAI.h"
+#include "ai/DeepAI.h"
 #endif

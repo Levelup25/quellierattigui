@@ -25,12 +25,12 @@ namespace state {
     Direction direction;
     std::string name;
     CharacterType type;
-    unsigned int pvCurrent;
-    unsigned int pvMax;
-    unsigned int pmCurrent;
-    unsigned int pmMax;
-    unsigned int paCurrent;
-    unsigned int paMax;
+    int pvCurrent;
+    int pvMax;
+    int pmCurrent;
+    int pmMax;
+    int paCurrent;
+    int paMax;
     Weapon* weapon;
     // Operations
   public:
@@ -51,15 +51,15 @@ namespace state {
     Weapon* getWeapon ();
     void setWeapon (Weapon* weapon);
     void removeWeapon ();
-    void setPv (unsigned int pv);
-    void setPm (unsigned int pm);
-    void setPa (unsigned int pa);
-    unsigned int getPvCurrent ();
-    unsigned int getPvMax ();
-    unsigned int getPmCurrent ();
-    unsigned int getPmMax ();
-    unsigned int getPaCurrent ();
-    unsigned int getPaMax ();
+    void setPv (int pv);
+    void setPm (int pm);
+    void setPa (int pa);
+    int getPvCurrent ();
+    int getPvMax ();
+    int getPmCurrent ();
+    int getPmMax ();
+    int getPaCurrent ();
+    int getPaMax ();
     void resetPv ();
     void resetPm ();
     void resetPa ();

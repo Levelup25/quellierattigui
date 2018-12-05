@@ -35,6 +35,23 @@ vector<Team*> Fight::getTeams() {
   return {main, opponent};
 }
 
+std::vector<Character*> Fight::getCharacters(int i) {
+  std::vector<Character*> chars;
+  if (this != nullptr) {
+    if (i != 1) {
+      for (auto c : main->getCharacters(nb)) {
+        chars.push_back(c);
+      }
+    }
+    if (i != 0) {
+      for (auto c : opponent->getCharacters(nb)) {
+        chars.push_back(c);
+      }
+    }
+  }
+  return chars;
+}
+
 std::vector<Character*> Fight::getFightingCharacters(int i) {
   std::vector<Character*> chars;
   if (this != nullptr) {

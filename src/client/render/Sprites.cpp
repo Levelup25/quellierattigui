@@ -83,10 +83,7 @@ sf::Sprite Sprites::getCharacterSprite(int l,
   return characterSprite;
 }
 
-sf::Sprite Sprites::getAbilitySprite(int l,
-                                     int h,
-                                     int element,
-                                     unsigned int lv) {
+sf::Sprite Sprites::getAbilitySprite(int l, int h, int element, int lv) {
   lv--;
   abilitySprites[element][lv].setScale(Vector2f((float)l / 56, (float)h / 56));
   return abilitySprites[element][lv];

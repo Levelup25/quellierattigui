@@ -29,6 +29,7 @@ namespace state {
     int getNb ();
     Team* getTeam (std::size_t i);
     std::vector<Team*> getTeams ();
+    std::vector<Character*> getCharacters (int i = -1);
     std::vector<Character*> getFightingCharacters (int i = -1);
     void endTurn ();
     // Setters and Getters

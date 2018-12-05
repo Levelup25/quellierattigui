@@ -6,23 +6,39 @@ using namespace std;
 using namespace state;
 using namespace engine;
 
-MoveCommand::MoveCommand(State* state, Character* character, float i, float j) {
+MoveCommand::MoveCommand(State* state,
+                         Character* character,
+                         float i,
+                         float j,
+                         bool reverse) {
   this->state = state;
   this->character = character;
   this->i = i;
   this->j = j;
+  this->reverse = reverse;
 }
 
 void MoveCommand::execute() {
   float i0 = character->getI(), j0 = character->getJ();
-  if (j > j0)
-    character->setDirection(0);
-  else if (i < i0)
-    character->setDirection(1);
-  else if (i > i0)
-    character->setDirection(2);
-  else if (j < j0)
-    character->setDirection(3);
+  if (!reverse) {
+    if (j > j0)
+      character->setDirection(0);
+    else if (i < i0)
+      character->setDirection(1);
+    else if (i > i0)
+      character->setDirection(2);
+    else if (j < j0)
+      character->setDirection(3);
+  } else {
+    if (j > j0)
+      character->setDirection(3);
+    else if (i < i0)
+      character->setDirection(2);
+    else if (i > i0)
+      character->setDirection(1);
+    else if (j < j0)
+      character->setDirection(0);
+  }
 
   state->moveCharacter(character, i, j);
 }

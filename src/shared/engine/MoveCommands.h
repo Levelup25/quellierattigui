@@ -35,7 +35,7 @@ namespace engine {
     std::size_t m;
     // Operations
   public:
-    MoveCommands (state::State* state, Engine* engine, state::Character* character, std::size_t i, std::size_t j);
+    MoveCommands (state::State* state, Engine* engine, state::Character* character, std::size_t i, std::size_t j, bool reverse = false);
     std::vector<int> getDiff ();
     std::vector<std::vector<int>> getPath ();
     void execute ();

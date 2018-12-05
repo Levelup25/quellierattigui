@@ -11,12 +11,14 @@ AttackCommand::AttackCommand(State* state,
                              Engine* engine,
                              Character* character,
                              vector<int> position,
-                             int abilityNumber) {
+                             int abilityNumber,
+                             bool reverse) {
   this->state = state;
   this->engine = engine;
   this->character = character;
   this->abilityNumber = abilityNumber;
   this->position = position;
+  this->reverse = reverse;
   //    position[0] += character->getI();
   //    position[1] += character->getJ();
 }
@@ -144,11 +146,17 @@ void AttackCommand::execute() {
     for (int i = 0; i < 25; i++)
       engine->addCommand(new AnimationCommand(
           state, v, v2, ability->getElement(), ability->getLv()));
+
     engine->addCommand(new AnimationCommand(state, v, v2, ability->getElement(),
                                             ability->getLv(),
-                                            ability->getDamage()));
+                                            ability->getDamage(), reverse));
+
     v.clear();
     engine->addCommand(new AnimationCommand(state, v, v2, ability->getElement(),
                                             ability->getLv()));
+    if (!reverse)
+      engine->addCommand(new AttackCommand(state, engine, character, position,
+                                           abilityNumber, !reverse),
+                         !reverse);
   }
 }

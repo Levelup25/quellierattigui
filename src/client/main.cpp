@@ -73,10 +73,13 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
     end = true;
   });
   thread t2([engine, &end]() {
-    sf::Clock clock;
+    sf::Clock clock, clock2;
+    bool reverse = false;
     while (!end) {
+      if (clock2.getElapsedTime().asSeconds() >= 10)
+        reverse = !reverse;
       if (clock.getElapsedTime().asSeconds() >= 1.0 / 30) {
-        engine->runCommand();
+        engine->runCommand(reverse);
         clock.restart();
       }
     }
@@ -220,8 +223,7 @@ int main(int argc, char* argv[]) {
     }  // Livrable 3.final
     else if (strcmp(argv[i], "rollback") == 0) {
     } else if (strcmp(argv[i], "deep_ai") == 0) {
-      // ai = new DeepAI(state, engine);
-      cout_terminal();
+      ai = new DeepAI(state, engine);
     }  // Livrable 4.1
     else if (strcmp(argv[i], "thread") == 0) {
     } else if (strcmp(argv[i], "record") == 0) {

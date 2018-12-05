@@ -23,7 +23,7 @@ namespace engine {
     state::Team* def;
     // Operations
   public:
-    FightCommand (state::State* state, state::Team* att, state::Team* def);
+    FightCommand (state::State* state, state::Team* att, state::Team* def, bool reverse = false);
     void execute ();
     // Setters and Getters
   };

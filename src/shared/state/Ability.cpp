@@ -7,8 +7,8 @@ using namespace std;
 using namespace state;
 
 Ability::Ability(std::string name,
-                 unsigned int lv,
-                 unsigned int pa,
+                 int lv,
+                 int pa,
                  int damage,
                  ElementType element,
                  int damageReduce,
@@ -134,7 +134,7 @@ int Ability::getDamage() {
   return damage;
 }
 
-unsigned int Ability::getPa() {
+int Ability::getPa() {
   return pa;
 }
 
@@ -146,7 +146,7 @@ void Ability::setDamage(int dmg) {
   damage = dmg;
 }
 
-void Ability::setPa(unsigned int pa) {
+void Ability::setPa(int pa) {
   this->pa = pa;
 }
 
@@ -158,7 +158,7 @@ void Ability::addLv() {
   effectMax += 1;
 }
 
-unsigned int Ability::getLv() {
+int Ability::getLv() {
   return lv;
 }
 

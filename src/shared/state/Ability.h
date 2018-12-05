@@ -16,8 +16,8 @@ namespace state {
     // Attributes
   private:
     std::string name;
-    unsigned int lv     = 1;
-    unsigned int pa;
+    int lv     = 1;
+    int pa;
     int damage;
     ElementType element;
     int damageReduce;
@@ -31,7 +31,7 @@ namespace state {
     int effectMax;
     // Operations
   public:
-    Ability (std::string name = "", unsigned int lv = 1, unsigned int pa = 1, int damage = 1, ElementType element = neutral, int damageReduce = 100, int cooldown = 0, ZoneType targetType = circle, int targetMin = 1, int targetMax = 1, ZoneType effectType = circle, int effectMin = 0, int effectMax = 0);
+    Ability (std::string name = "", int lv = 1, int pa = 1, int damage = 1, ElementType element = neutral, int damageReduce = 100, int cooldown = 0, ZoneType targetType = circle, int targetMin = 1, int targetMax = 1, ZoneType effectType = circle, int effectMin = 0, int effectMax = 0);
     Ability (int id);
     std::vector<std::vector<int>> getTargetZone (std::vector<int> position);
     std::vector<std::vector<int>> getEffectZone (std::vector<int> position);
@@ -41,12 +41,12 @@ namespace state {
     std::vector<int> getTarget ();
     std::vector<int> getEffect ();
     int getDamage ();
-    unsigned int getPa ();
+    int getPa ();
     std::string getName ();
     void setDamage (int dmg);
-    void setPa (unsigned int pa);
+    void setPa (int pa);
     void addLv ();
-    unsigned int getLv ();
+    int getLv ();
     void setElement (ElementType element);
     ElementType getElement ();
   private:

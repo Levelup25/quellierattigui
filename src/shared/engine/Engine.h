@@ -19,13 +19,13 @@ namespace engine {
     // Attributes
   private:
     std::vector<Command*> commands;
+    std::vector<Command*> rollback;
     // Operations
   public:
-    void addCommand (Command* command);
-    void runCommand ();
-    void runCommands ();
-    void clearCommands ();
-    std::size_t getSize ();
+    void addCommand (Command* command, bool reverse = false);
+    void runCommand (bool reverse = false);
+    void clearCommands (bool reverse = false);
+    std::size_t getSize (bool reverse = false);
     // Setters and Getters
   };
 

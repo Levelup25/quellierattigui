@@ -26,7 +26,7 @@ namespace engine {
     int dmg;
     // Operations
   public:
-    AnimationCommand (state::State* state, std::vector<std::vector<int>> positions, std::vector<int> directions, int element, int lv, int dmg = 0);
+    AnimationCommand (state::State* state, std::vector<std::vector<int>> positions, std::vector<int> directions, int element, int lv, int dmg = 0, bool reverse = false);
     void execute ();
     // Setters and Getters
   };
