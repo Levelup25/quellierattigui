@@ -38,6 +38,9 @@ void cout_terminal() {
   cout << "Pointer un personnage affiche également ses informations à droite"
        << endl;
   cout << "Appuyez sur C pour ouvrir/fermer la fiche du personnage" << endl;
+  cout << "Appuyez sur W pour ouvrir/fermer la fiche d'arme" << endl;
+  cout << "Cliquer sur un sprite dans une fenêtre peut ouvrir d'autres fenêtres"
+       << endl;
 }
 
 void state_init(State* state) {
@@ -61,6 +64,40 @@ void state_init(State* state) {
       }
     }
   }
+}
+
+void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
+  bool end = false;
+  thread t1([render, &end]() {
+    render->display();
+    end = true;
+  });
+  thread t2([engine, &end]() {
+    sf::Clock clock;
+    while (!end) {
+      if (clock.getElapsedTime().asSeconds() >= 1.0 / 30) {
+        engine->runCommand();
+        clock.restart();
+      }
+    }
+  });
+  thread t3([ai, state, engine, &end]() {
+    while (!end) {
+      if (engine->getSize() == 0 && state->isFighting() &&
+          state->getFight()->getTurn() % 2 == 0) {
+        vector<Character*> vect =
+            ai->getTurnOrder(state->getFight()->getFightingCharacters(1));
+        for (auto c : vect) {
+          ai->run(c);
+        }
+        if (state->getFight()->getFightingCharacters(1).size() > 0)
+          engine->addCommand(new FightCommand(state, nullptr, nullptr));
+      }
+    }
+  });
+  t1.join();
+  t2.join();
+  t3.join();
 }
 
 int main(int argc, char* argv[]) {
@@ -173,105 +210,18 @@ int main(int argc, char* argv[]) {
     else if (strcmp(argv[i], "renderTest") == 0) {
       testRender();
     } else if (strcmp(argv[i], "engine") == 0) {
-      cout_terminal();
-
-      bool end = false;
-      thread t1([render, &end]() {
-        render->display();
-        end = true;
-      });
-      thread t2([engine, state, &end]() {
-        sf::Clock clock;
-        while (!end) {
-          if (clock.getElapsedTime().asSeconds() >= 1.0 / 30) {
-            engine->runCommand();
-            clock.restart();
-            if (engine->getSize() == 0 && state->isFighting() &&
-                state->getFight()->getTurn() % 2 == 0)
-              engine->addCommand(new FightCommand(state, nullptr, nullptr));
-          }
-        }
-      });
-      t1.join();
-      t2.join();
+      ai = new AI();
     }  // Livrable 2.final
     else if (strcmp(argv[i], "random_ai") == 0) {
       ai = new RandomAI(state, engine);
-
-      cout_terminal();
-
-      bool end = false;
-      thread t1([render, &end]() {
-        render->display();
-        end = true;
-      });
-      thread t2([engine, &end]() {
-        sf::Clock clock;
-        while (!end) {
-          if (clock.getElapsedTime().asSeconds() >= 1.0 / 30) {
-            engine->runCommand();
-            clock.restart();
-          }
-        }
-      });
-      thread t3([ai, state, engine, &end]() {
-        while (!end) {
-          if (engine->getSize() == 0 && state->isFighting() &&
-              state->getFight()->getTurn() % 2 == 0) {
-            vector<Character*> vect =
-                ai->getTurnOrder(state->getFight()->getFightingCharacters(1));
-            for (auto c : vect) {
-              ai->run(c);
-            }
-            if (state->getFight()->getFightingCharacters(1).size() > 0)
-              engine->addCommand(new FightCommand(state, nullptr, nullptr));
-          }
-        }
-      });
-      t1.join();
-      t2.join();
-      t3.join();
     }  // Livrable 3.1
     else if (strcmp(argv[i], "heuristic_ai") == 0) {
       ai = new HeuristicAI(state, engine);
-
-      cout_terminal();
-
-      bool end = false;
-      thread t1([render, &end]() {
-        render->display();
-        end = true;
-      });
-      thread t2([engine, &end]() {
-        sf::Clock clock;
-        while (!end) {
-          if (clock.getElapsedTime().asSeconds() >= 1.0 / 30) {
-            engine->runCommand();
-            clock.restart();
-          }
-        }
-      });
-      thread t3([ai, state, engine, &end]() {
-        while (!end) {
-          if (engine->getSize() == 0 && state->isFighting() &&
-              state->getFight()->getTurn() % 2 == 0) {
-            vector<Character*> vect =
-                ai->getTurnOrder(state->getFight()->getFightingCharacters(1));
-            for (auto c : vect) {
-              ai->run(c);
-            }
-            if (state->isFighting() &&
-                state->getFight()->getFightingCharacters(1).size() > 0)
-              engine->addCommand(new FightCommand(state, nullptr, nullptr));
-          }
-        }
-      });
-      t1.join();
-      t2.join();
-      t3.join();
     }  // Livrable 3.final
     else if (strcmp(argv[i], "rollback") == 0) {
     } else if (strcmp(argv[i], "deep_ai") == 0) {
+      // ai = new DeepAI(state, engine);
+      cout_terminal();
     }  // Livrable 4.1
     else if (strcmp(argv[i], "thread") == 0) {
     } else if (strcmp(argv[i], "record") == 0) {
@@ -279,6 +229,12 @@ int main(int argc, char* argv[]) {
     }  // Livrables 4.2 et 4.final
     else if (strcmp(argv[i], "listen") == 0) {
     } else if (strcmp(argv[i], "network") == 0) {
+    }
+
+    if (strcmp(argv[i], "hello") != 0 && strcmp(argv[i], "state") != 0 &&
+        strcmp(argv[i], "render") != 0 && strcmp(argv[i], "renderTest") != 0) {
+      cout_terminal();
+      launch_threads(state, render, engine, ai);
     }
   }
   return 0;
