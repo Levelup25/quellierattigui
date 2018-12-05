@@ -122,7 +122,14 @@ const Relatif2 Element::getPosRelative() const {
   return posRelative;
 }
 
-void Element::setPosRelative(const Relatif2 pos) {
+void Element::setPosRelative(Relatif2 pos) {
+  if (pparent && pos.x.getComputeMethod() != ComputeMethodType::pixel) {
+    sf::Vector2f parentSizeAbs = pparent->getSizeAbs();
+    float x = computeCoord(pos.x, 0, parentSizeAbs.x, sizeAbsCache.x);
+    float y = computeCoord(pos.y, 0, parentSizeAbs.y, sizeAbsCache.y);
+    pos.x = x;
+    pos.y = y;
+  }
   this->posRelative = pos;
   updatePosAbs();
 }
@@ -131,8 +138,16 @@ const sf::Vector2f Element::getPosAbs() const {
   return posAbsCache;
 }
 
+void Element::setPosAbs(const sf::Vector2f pos) {
+  this->posAbsCache = pos;
+}
+
 const sf::Vector2f Element::getSizeAbs() const {
   return sizeAbsCache;
+}
+
+void Element::setSizeAbs(const sf::Vector2f size) {
+  this->sizeAbsCache = size;
 }
 
 const Relatif2 Element::getSizeRelative() const {
@@ -152,8 +167,8 @@ void Element::add(Element* pchild) {
 void Element::remove(Element* pchild) {
   for (auto it = pchildren.begin(); it != pchildren.end(); it++) {
     if (*it == pchild) {
+      *it = nullptr;
       pchildren.erase(it);
-      pchild = nullptr;
       return;
     }
   }
@@ -443,10 +458,18 @@ void Element::processEvent(sf::Event event, sf::Vector2f mousePosAbs) {
     if (event.type == sf::Event::MouseButtonPressed &&
         event.mouseButton.button == sf::Mouse::Left) {
       Element* root = this->getParent();
+      Element* parent = nullptr;
       while (root->getParent() != nullptr) {
+        parent = root;
         root = root->getParent();
       }
-      root->add(link);
+      if (!root->getChild(link)) {
+        auto pos = parent->getPosRelative();
+        auto size = parent->getSizeRelative();
+        link->setPosRelative(
+            {pos.x.getPixel() + size.x.getPixel(), pos.y.getPixel()});
+        root->add(link);
+      }
     }
   }
 }
@@ -457,6 +480,10 @@ bool Element::getMouseOver() const {
 
 std::vector<Element*> Element::getChildren() const {
   return pchildren;
+}
+
+void Element::setChildren(vector<Element*> pchildren) {
+  this->pchildren = pchildren;
 }
 
 Element* Element::getChild(Element* child) {
@@ -472,6 +499,18 @@ void Element::setLink(Element* link) {
 
 Element* Element::getLink() {
   return link;
+}
+
+vector<Element*> Element::getLinked() {
+  vector<Element*> v;
+  if (this->getLink() != nullptr)
+    v.push_back(this);
+  for (auto child : this->getChildren()) {
+    vector<Element*> v2 = child->getLinked();
+    if (v2.size())
+      v.insert(v.end(), v2.begin(), v2.end());
+  }
+  return v;
 }
 
 vector<Element*> Element::getLinks() {

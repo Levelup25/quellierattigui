@@ -255,7 +255,7 @@ void Render::display() {
   Element* csheet = nullptr;
   Element* wsheet = nullptr;
   Character* prev = selectedcharacter;
-  int nbWindow = worldView.getChildren().size();
+  auto OpenedWindows = worldView.getChildren();
 
   while (window.isOpen()) {
     window.clear();
@@ -346,9 +346,8 @@ void Render::display() {
           state->etatCombat = 0;
           if (!worldView.getChild(wsheet)) {
             wsheet = WeaponSheet(selectedcharacter->getWeapon());
-            wsheet->setPosRelative({"25%", "25%"});
             worldView.add(wsheet);
-
+            wsheet->setPosRelative({"50%", "25%"});
           } else {
             worldView.remove(wsheet);
             wsheet = nullptr;
@@ -357,9 +356,8 @@ void Render::display() {
           state->etatCombat = 0;
           if (!worldView.getChild(csheet)) {
             csheet = CharacterSheet(selectedcharacter);
-            csheet->setPosRelative({"75%", "25%"});
             worldView.add(csheet);
-
+            csheet->setPosRelative({"25%", "25%"});
           } else {
             worldView.remove(csheet);
             csheet = nullptr;
@@ -377,14 +375,29 @@ void Render::display() {
 
     this->drawAnimations(window, worldView, sprites);
 
-    if (nbWindow != worldView.getChildren().size()) {
-      for (auto child : worldView.getChildren())
+    if (OpenedWindows != worldView.getChildren()) {
+      bool c = false, w = false;
+      for (auto child : worldView.getChildren()) {
         if (child != csheet && child != wsheet) {
-          if (child == csheet->getLinks()[0])
-            wsheet = child;
+          if (!wsheet && child == csheet->getLinks()[0]) {
+            wsheet = child->getCopy();
+            worldView.add(wsheet);
+            csheet->getLinked()[0]->setLink(wsheet->getCopy());
+          }
           worldView.remove(child);
         }
-      nbWindow = worldView.getChildren().size();
+      }
+      for (auto child : worldView.getChildren()) {
+        if (child == csheet)
+          c = true;
+        else if (child == wsheet)
+          w = true;
+      }
+      if (!c)
+        csheet = nullptr;
+      if (!w)
+        wsheet = nullptr;
+      OpenedWindows = worldView.getChildren();
     }
 
     if (prev != selectedcharacter) {
@@ -392,15 +405,15 @@ void Render::display() {
         Relatif2 r = csheet->getPosRelative();
         worldView.remove(csheet);
         csheet = CharacterSheet(selectedcharacter);
-        csheet->setPosRelative(r);
         worldView.add(csheet);
+        csheet->setPosRelative(r);
       }
       if (worldView.getChild(wsheet)) {
         Relatif2 r = wsheet->getPosRelative();
         worldView.remove(wsheet);
         wsheet = WeaponSheet(selectedcharacter->getWeapon());
-        wsheet->setPosRelative(r);
         worldView.add(wsheet);
+        wsheet->setPosRelative(r);
       }
       prev = selectedcharacter;
     }

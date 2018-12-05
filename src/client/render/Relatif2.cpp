@@ -25,4 +25,5 @@ std::ostream& operator<<(std::ostream& os, const Relatif2& rel2) {
   os << ")";
   return os;
 }
+
 }  // namespace render

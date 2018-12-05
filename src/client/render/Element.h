@@ -47,15 +47,17 @@ namespace render {
     virtual Element& operator= (const Element& obj);
     virtual void draw (sf::RenderTarget& target, sf::RenderStates states) const;
     const Relatif2 getPosRelative () const;
-    virtual void setPosRelative (Relatif2 posRelatif);
+    void setPosRelative (Relatif2 posRelatif);
     virtual void updatePosAbs ();
     const sf::Vector2f getPosAbs () const;
+    void setPosAbs (const sf::Vector2f pos);
     virtual void reactEditPosAbsParent ();
     void notifyEditPosAbs ();
     const Relatif2 getSizeRelative () const;
     void setSizeRelative (Relatif2 sizeRelatif);
     virtual void updateSizeAbs ();
     const sf::Vector2f getSizeAbs () const;
+    void setSizeAbs (const sf::Vector2f size);
     void notifyEditSizeAbs ();
     virtual void reactEditSizeAbsParent ();
     void notifyEvent (sf::Event event, sf::Vector2f mousePosAbs);
@@ -79,10 +81,12 @@ namespace render {
     void closeChildrenWaiting ();
     void updateChildrenMouseOver (sf::Vector2f mousePosAbs);
     std::vector<Element*> getChildren () const;
+    void setChildren (std::vector<Element*> pchildren);
     Element* getChild (Element* child);
     virtual Element* getCopy () const;
     void setLink (Element* link);
     Element* getLink ();
+    std::vector<Element*> getLinked ();
     std::vector<Element*> getLinks ();
   private:
     void updateDepth ();

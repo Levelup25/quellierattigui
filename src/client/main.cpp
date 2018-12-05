@@ -42,7 +42,7 @@ void cout_terminal() {
 
 void state_init(State* state) {
   vector<string> names = {"Goku", "Snake",  "Cloud", "Samus",  "Mario", "Lara",
-                          "Link", "Kratos", "Dante", "Altair", "Ryu"};
+                          "Link", "Kratos", "Dante", "Altair", "Ryu",   "Ash"};
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 4; j++) {
       state->addCharacter(i, rand() % (12 * 4), (Direction)(rand() % 4),
