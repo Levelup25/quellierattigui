@@ -320,7 +320,7 @@ Le diagramme des classes pour le moteur du jeu est présenté en Figure~\ref{uml
 \end{itemize}
 
 
-\textbf{Engine} Le moteur exécute les commandes dans l'ordre d'apparition.
+\textbf{Engine} Le moteur exécute les commandes dans l'ordre d'apparition. Il enregistre également les commandes dans un rollback pour pouvoir les inverser pour l'IA avancée, ou encore pour proposer le choix d'annuler un tour au joueur.
 
 
 \begin{landscape}
