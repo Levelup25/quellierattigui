@@ -166,8 +166,22 @@ std::tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
 }
 
 vector<Character*> HeuristicAI::getTurnOrder(vector<Character*> characters) {
-  vector<Character*> v = characters;
-  // random_shuffle(v.begin(), v.end());
+  vector<Character*> v;
+  vector<int> dist;
+  for (auto c : characters) {
+    int d = 0;
+    for (auto c2 : state->getFight()->getFightingCharacters(0))
+      d += abs(c->getI() - c2->getI()) + abs(c->getJ() - c2->getJ());
+    dist.push_back(d);
+  }
+
+  int max =
+      dist[distance(dist.begin(), max_element(dist.begin(), dist.end()))] + 1;
+  for (int j = 0; j < (int)characters.size(); j++) {
+    int i = distance(dist.begin(), min_element(dist.begin(), dist.end()));
+    v.push_back(characters[i]);
+    dist[i] = max;
+  }
   return v;
 }
 

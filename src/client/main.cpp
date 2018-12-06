@@ -41,6 +41,9 @@ void cout_terminal() {
   cout << "Appuyez sur W pour ouvrir/fermer la fiche d'arme" << endl;
   cout << "Cliquer sur un sprite dans une fenêtre peut ouvrir d'autres fenêtres"
        << endl;
+  cout << "Appuyez sur R pour effectuer un rollback, puis de nouveau sur R "
+          "pour revenir à l'état normal"
+       << endl;
 }
 
 void state_init(State* state) {
