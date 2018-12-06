@@ -73,13 +73,10 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
     end = true;
   });
   thread t2([engine, &end]() {
-    sf::Clock clock, clock2;
-    bool reverse = false;
+    sf::Clock clock;
     while (!end) {
-      if (clock2.getElapsedTime().asSeconds() >= 10)
-        reverse = !reverse;
       if (clock.getElapsedTime().asSeconds() >= 1.0 / 30) {
-        engine->runCommand(reverse);
+        engine->runCommand();
         clock.restart();
       }
     }

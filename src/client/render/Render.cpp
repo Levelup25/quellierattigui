@@ -340,6 +340,8 @@ void Render::display() {
         if (event.key.code == sf::Keyboard::Return && state->isFighting() &&
             state->getFight()->getTurn() % 2 == 1) {
           engine->addCommand(new FightCommand(state, nullptr, nullptr));
+        } else if (event.key.code == sf::Keyboard::R) {
+          engine->reverse = !engine->reverse;
         } else if (event.key.code == sf::Keyboard::T) {
           cout << worldView.getTreeView();
         } else if (event.key.code == sf::Keyboard::W) {

@@ -63,7 +63,8 @@ vector<vector<int>> MoveCommands::getPath() {
 void MoveCommands::execute() {
   this->character = character;
   this->setGenerator();
-  int i0 = character->getI(), j0 = character->getJ();
+  int iinit = character->getI(), jinit = character->getJ();
+  int i0 = iinit, j0 = jinit;
   int xv = (i0 / n) * n, yv = (j0 / m) * m;
   generator.removeCollision({i0 - xv, j0 - yv});
   generator.removeCollision({(int)i - xv, (int)j - yv});
@@ -75,19 +76,20 @@ void MoveCommands::execute() {
 
   float step = 1.0 / 12;
 
-  if (path.size() > 0 &&
-      (!state->isFighting() ||
-       (state->isFighting() && path.size() <= character->getPmCurrent()))) {
+  if (path.size() > 0 && (!state->isFighting() ||
+                          (state->isFighting() &&
+                           (int)path.size() <= character->getPmCurrent()))) {
     if (state->isFighting())
       character->removePm(path.size());
     for (auto coord = path.begin(); coord != path.end(); coord++) {
       float k = (*coord).x + xv, l = (*coord).y + yv;
-      for (float f = 1 - step; f >= 0; f = f - step) {
+      for (float f = 1; f >= 0; f = f - step) {
         if (f < step)
           f = 0;
         // cout << (i0 - k) * f + k << " " << (j0 - l) * f + l << endl;
         engine->addCommand(new MoveCommand(state, character, (i0 - k) * f + k,
-                                           (j0 - l) * f + l, reverse));
+                                           (j0 - l) * f + l, reverse),
+                           !reverse);
       }
       i0 = k;
       j0 = l;
@@ -100,22 +102,30 @@ void MoveCommands::execute() {
       ;
     engine->addCommand(
         new FightCommand(state, state->getTeam(character),
-                         state->getTeam(state->getCharacter(i, j)), reverse));
+                         state->getTeam(state->getCharacter(i, j)), reverse),
+        !reverse);
   } else if (state->getCell(i, j)->getContent() <= 1 && !state->isFighting()) {
     if (i % n == 0 && i > 0 && state->getCell(i - 1, j)->getContent() == 0) {
-      engine->addCommand(new MoveCommand(state, character, i - 1, j, reverse));
+      engine->addCommand(new MoveCommand(state, character, i - 1, j, reverse),
+                         !reverse);
     } else if ((i + 1) % n == 0 && i + 1 < state->getI() &&
                state->getCell(i + 1, j)->getContent() == 0) {
-      engine->addCommand(new MoveCommand(state, character, i + 1, j, reverse));
+      engine->addCommand(new MoveCommand(state, character, i + 1, j, reverse),
+                         !reverse);
     } else if (j % m == 0 && j > 0 &&
                state->getCell(i, j - 1)->getContent() == 0) {
-      engine->addCommand(new MoveCommand(state, character, i, j - 1, reverse));
+      engine->addCommand(new MoveCommand(state, character, i, j - 1, reverse),
+                         !reverse);
     } else if ((j + 1) % m == 0 && j + 1 < state->getJ() &&
                state->getCell(i, j + 1)->getContent() == 0) {
-      engine->addCommand(new MoveCommand(state, character, i, j + 1, reverse));
+      engine->addCommand(new MoveCommand(state, character, i, j + 1, reverse),
+                         !reverse);
     }
   }
-  if (!reverse)
-    engine->addCommand(
-        new MoveCommands(state, engine, character, i0, j0, !reverse), !reverse);
+  // if (!reverse)
+  //   engine->addCommand(
+  //       new MoveCommands(state, engine, character, i, j, !reverse),
+  //       !reverse);
+  // cout << reverse << " " << iinit << " " << jinit << " " << i << " " << j
+  //      << endl;
 }

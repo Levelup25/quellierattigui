@@ -4,37 +4,48 @@ using namespace std;
 using namespace state;
 using namespace engine;
 
-void Engine::addCommand(Command* command, bool reverse) {
-  if (!reverse)
-    commands.push_back(command);
-  else
-    rollback.push_back(command);
+void Engine::addCommand(Command* command, bool b) {
+  if (!b) {
+    if (!reverse)
+      commands.push(command);
+    // else
+    //   rollback.push(command);
+  } else {
+    commands.push(command);
+    if (!reverse)
+      rollback.push(command);
+  }
 }
 
-void Engine::runCommand(bool reverse) {
+void Engine::runCommand() {
+  if (reverse) {
+    if (rollback.size() > 0) {
+      rollback.top()->setReverse();
+      rollback.top()->execute();
+      delete rollback.top();
+      rollback.pop();
+    } else
+      reverse = !reverse;
+  }
   if (!reverse) {
     if (commands.size() > 0) {
-      commands[0]->execute();
-      delete commands[0];
-      commands.erase(commands.begin());
-    }
-  } else {
-    if (rollback.size() > 0) {
-      rollback[rollback.size() - 1]->execute();
-      delete rollback[rollback.size() - 1];
-      rollback.pop_back();
+      commands.front()->execute();
+      // delete commands.front();
+      commands.pop();
     }
   }
 }
 
-void Engine::clearCommands(bool reverse) {
+void Engine::clearCommands() {
   if (!reverse)
-    commands.clear();
+    while (commands.size())
+      commands.pop();
   else
-    rollback.clear();
+    while (rollback.size())
+      rollback.pop();
 }
 
-size_t Engine::getSize(bool reverse) {
+size_t Engine::getSize() {
   if (!reverse)
     return commands.size();
   else

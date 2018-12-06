@@ -95,8 +95,10 @@ void AttackCommand::execute() {
       direction = 5;
     else if (I < 0 && J < 0)
       direction = 6;
-    else  // if (I > 0 && J < 0)
+    else if (I > 0 && J < 0)
       direction = 7;
+    else
+      direction = 1;
 
     vector<vector<int>> v;
     vector<int> v2{direction};
@@ -135,8 +137,10 @@ void AttackCommand::execute() {
           direction = 5;
         else if (I < 0 && J < 0)
           direction = 6;
-        else  // if (I > 0 && J < 0)
+        else if (I > 0 && J < 0)
           direction = 7;
+        else
+          direction = 1;
         effect[0] += character->getI();
         effect[1] += character->getJ();
         v.push_back(effect);

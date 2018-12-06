@@ -23,6 +23,7 @@ namespace engine {
     bool reverse;
     // Operations
   public:
+    void setReverse (bool reverse = true);
     virtual void execute () = 0;
     // Setters and Getters
     const state::State*& getState() const;
@@ -30,7 +31,6 @@ namespace engine {
     const state::Character*& getCharacter() const;
     void setCharacter(const state::Character*& character);
     bool getReverse() const;
-    void setReverse(bool reverse);
   };
 
 };
