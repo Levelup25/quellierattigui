@@ -339,7 +339,9 @@ void Render::display() {
       if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Return && state->isFighting() &&
             state->getFight()->getTurn() % 2 == 1) {
-          engine->addCommand(new FightCommand(state, nullptr, nullptr));
+          engine->addCommand(new FightCommand(state,
+                                              state->getFight()->getTeam(0),
+                                              state->getFight()->getTeam(1)));
         } else if (event.key.code == sf::Keyboard::R) {
           engine->reverse = !engine->reverse;
         } else if (event.key.code == sf::Keyboard::T) {

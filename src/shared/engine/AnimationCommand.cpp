@@ -19,7 +19,7 @@ AnimationCommand::AnimationCommand(State* state,
   this->element = element;
   this->lv = lv;
   this->reverse = reverse;
-  this->dmg = reverse ? -dmg : dmg;
+  this->dmg = dmg;
 }
 
 void AnimationCommand::execute() {
@@ -32,8 +32,10 @@ void AnimationCommand::execute() {
       vector<Character*> fighters;
       if (!reverse)
         fighters = state->getFight()->getFightingCharacters();
-      else
+      else {
         fighters = state->getFight()->getCharacters();
+        dmg = -dmg;
+      }
       if (find(fighters.begin(), fighters.end(), c) != fighters.end()) {
         c->removePv(dmg);
         if (c->getPvCurrent() <= 0)

@@ -20,10 +20,11 @@ void Engine::addCommand(Command* command, bool b) {
 void Engine::runCommand() {
   if (reverse) {
     if (rollback.size() > 0) {
-      rollback.top()->setReverse();
-      rollback.top()->execute();
-      delete rollback.top();
+      Command* cmd = rollback.top();
       rollback.pop();
+      cmd->setReverse();
+      cmd->execute();
+      delete cmd;
     } else
       reverse = !reverse;
   }

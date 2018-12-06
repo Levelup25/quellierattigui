@@ -91,7 +91,9 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
           ai->run(c);
         }
         if (state->getFight()->getFightingCharacters(1).size() > 0)
-          engine->addCommand(new FightCommand(state, nullptr, nullptr));
+          engine->addCommand(new FightCommand(state,
+                                              state->getFight()->getTeam(0),
+                                              state->getFight()->getTeam(1)));
       }
     }
   });
