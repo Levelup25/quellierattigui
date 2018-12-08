@@ -31,6 +31,7 @@ vector<int> MoveCommands::getDiff() {
 void MoveCommands::setGenerator() {
   // state->resetContents();
   int i0 = character->getI(), j0 = character->getJ();
+  // i += i0, j += j0;
   int xv = (i0 / n) * n, yv = (j0 / m) * m;
   generator.clearCollisions();
   for (int l = 0; l < (int)m; l++) {

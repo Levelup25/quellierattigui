@@ -11,6 +11,7 @@ Fight::Fight(Team* main, Team* opponent, int nb) {
   this->main = main;
   this->opponent = opponent;
   this->nb = nb;
+  toDeploy = main->getCharacters(nb);
 }
 
 int Fight::getTurn() {
@@ -55,13 +56,22 @@ std::vector<Character*> Fight::getCharacters(int i) {
 std::vector<Character*> Fight::getFightingCharacters(int i) {
   std::vector<Character*> chars;
   if (this != nullptr) {
-    if (i != 1) {
+    if (i != 1 && main) {
       for (auto c : main->getCharacters(nb)) {
-        if (c->getPvCurrent() > 0)
+        if (c->getPvCurrent() > 0) {
           chars.push_back(c);
+          if (turn == 0)
+            if (toDeploy.size())
+              for (auto c2 = toDeploy.begin() + 1; c2 != toDeploy.end(); c2++) {
+                if (c == *c2) {
+                  chars.pop_back();
+                  break;
+                }
+              }
+        }
       }
     }
-    if (i != 0) {
+    if (i != 0 && opponent) {
       for (auto c : opponent->getCharacters(nb)) {
         if (c->getPvCurrent() > 0)
           chars.push_back(c);

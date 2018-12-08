@@ -2,10 +2,11 @@
 #ifndef STATE__FIGHT__H
 #define STATE__FIGHT__H
 
-#include <stdlib.h>
 #include <vector>
+#include <stdlib.h>
 
 namespace state {
+  class Character;
   class Team;
 }
 
@@ -17,8 +18,10 @@ namespace state {
   class Fight {
     // Associations
     // Attributes
+  public:
+    std::vector<Character*> toDeploy;
   private:
-    int turn     = 1;
+    int turn     = 0;
     int nb;
     Team* main;
     Team* opponent;

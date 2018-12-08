@@ -61,8 +61,27 @@ void Render::drawZones(RenderWindow& window, render::View& v) {
   int X = mouse.x / l, Y = mouse.y / h;
   RectangleShape zone(Vector2f(l, h));
   window.setView(view);
-  if (state->isFighting() && state->getFight()->getTurn() % 2 == 1 &&
-      v.getChildren().size() == 0) {
+  if (state->isFighting() && state->getFight()->getTurn() == 0) {
+    shared_ptr<Fight> fight = state->getFight();
+    vector<vector<int>> deploy;
+    zone.setFillColor(Color(0, 0, 255, 128));
+    for (int i = xv + n / 6; i < xv + n / 6 + 2 * n / 3; i++)
+      for (int j = yv + 2 * m / 3; j < yv + 2 * m / 3 + m / 4; j++)
+        if (state->getCell(i, j)->getContent() <= 1) {
+          deploy.push_back({i, j});
+          zone.setPosition(Vector2f(l * i, h * j));
+          window.draw(zone);
+        }
+    if (fight->toDeploy.size()) {
+      selectedcharacter = fight->toDeploy[0];
+      vector<int> v = {X, Y};
+      if (find(deploy.begin(), deploy.end(), v) != deploy.end()) {
+        selectedcharacter->setDirection(north);
+        state->moveCharacter(selectedcharacter, X, Y);
+      }
+    }
+  } else if (state->isFighting() && state->getFight()->getTurn() % 2 == 1 &&
+             v.getChildren().size() == 0) {
     if (state->etatCombat == 0) {
       vector<vector<int>> moves =
           (new MoveCommands(state, engine, selectedcharacter, X, Y))->getPath();
@@ -263,6 +282,10 @@ void Render::display() {
     if (state->isFighting()) {
       shared_ptr<Fight> fight = state->getFight();
       chars = fight->getFightingCharacters();
+      chars.clear();
+      for (auto c : fight->getFightingCharacters()) {
+        chars.push_back(c);
+      }
       if (selectedcharacter->getPvCurrent() <= 0) {
         abilityNumber = 0;
         selectedcharacter = fight->getFightingCharacters(0)[0];
@@ -319,7 +342,39 @@ void Render::display() {
                 state->etatCombat = 0;
             }
           } else if (worldView.getChildren().size() == 0) {
-            if (state->etatCombat == 0) {
+            shared_ptr<Fight> fight = state->getFight();
+            if (fight && fight->getTurn() == 0) {
+              if (fight->toDeploy.size() == 0 &&
+                  selectedcharacter->getI() == X &&
+                  selectedcharacter->getJ() == Y)
+                fight->toDeploy.push_back(selectedcharacter);
+              else {
+                for (auto c : fight->getFightingCharacters(0)) {
+                  if (c != selectedcharacter && c->getI() == X &&
+                      c->getJ() == Y)
+                    fight->toDeploy.push_back(c);
+                }
+                if (fight->toDeploy.size() && selectedcharacter->getI() == X &&
+                    selectedcharacter->getJ() == Y)
+                  fight->toDeploy.erase(fight->toDeploy.begin());
+              }
+
+              // if (selectedcharacter->getI() == X &&
+              //     selectedcharacter->getJ() == Y) {
+              //   vector<Character*> deploy = fight->toDeploy;
+              //   auto it = find(deploy.begin(), deploy.end(),
+              //   selectedcharacter); if (it != deploy.end())
+              //     deploy.erase(it);
+              //   for (auto c : fight->getFightingCharacters(0)) {
+              //     if (c != selectedcharacter && c->getI() == X &&
+              //         c->getJ() == Y)
+              //       deploy.push_back(c);
+              //   }
+              //   fight->toDeploy = deploy;
+              //   if (fight->toDeploy.size())
+              //     selectedcharacter = fight->toDeploy[0];
+              // }
+            } else if (state->etatCombat == 0) {
               if (!state->isFighting()) {
                 while (x + y - (int)x - (int)y != 0)
                   ;
@@ -337,11 +392,12 @@ void Render::display() {
         }
       }
       if (event.type == sf::Event::KeyPressed) {
-        if (event.key.code == sf::Keyboard::Return && state->isFighting() &&
-            state->getFight()->getTurn() % 2 == 1) {
-          engine->addCommand(new FightCommand(state,
-                                              state->getFight()->getTeam(0),
-                                              state->getFight()->getTeam(1)));
+        shared_ptr<Fight> fight = state->getFight();
+        if (event.key.code == sf::Keyboard::Return && fight &&
+            (fight->getTurn() % 2 == 1 ||
+             (fight->getTurn() == 0 && fight->toDeploy.size() == 0))) {
+          engine->addCommand(
+              new FightCommand(state, fight->getTeam(0), fight->getTeam(1)));
         } else if (event.key.code == sf::Keyboard::R) {
           engine->reverse = !engine->reverse;
         } else if (event.key.code == sf::Keyboard::T) {

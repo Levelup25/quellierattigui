@@ -33,14 +33,14 @@ void FightCommand::execute() {
 
       if (state->isFighting()) {
         int i, j, nb = fight->getNb();
-        for (auto mainchars : team1->getCharacters(nb)) {
-          do {
-            i = xv + n / 6 + rand() % (2 * n / 3);
-            j = yv + 2 * m / 3 + rand() % (m / 4);
-          } while (state->getCell(i, j)->getContent() != nothing);
-          state->moveCharacter(mainchars, i, j);
-          mainchars->setDirection(north);
-        }
+        Character* maincharacter = team1->getMainCharacter();
+        do {
+          i = xv + n / 6 + rand() % (2 * n / 3);
+          j = yv + 2 * m / 3 + rand() % (m / 4);
+        } while (state->getCell(i, j)->getContent() != nothing);
+        state->moveCharacter(maincharacter, i, j);
+        maincharacter->setDirection(north);
+
         for (auto oppchars : team2->getCharacters(nb)) {
           do {
             i = xv + n / 6 + rand() % (2 * n / 3);
@@ -50,7 +50,6 @@ void FightCommand::execute() {
           oppchars->setDirection(south);
         }
       }
-      state->resetContents();
       // 2/12   8/12   2/12   =>  1/6     2/3     1/6
 
       // 1/12 => 1/12
@@ -58,7 +57,7 @@ void FightCommand::execute() {
       // 4/12 => 1/3
       // 3/12 => 1/4
       // 1/12 => 1/12
-    } else {
+    } else if (state->isFighting()) {
       state->getFight()->endTurn();
       state->etatCombat = 0;
     }

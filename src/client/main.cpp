@@ -31,7 +31,8 @@ void cout_terminal() {
   cout << "Clic gauche sur une capacité, puis sur la zone bleue : attaque"
        << endl;
   cout << "Clic droit : choix personnage ou annulation d'attaque" << endl;
-  cout << "Entrée : passer le tour et actualiser pa et pm" << endl;
+  cout << "Entrée : finir le déploiement/passer le tour et actualiser pa et pm"
+       << endl;
   cout << "Les informations sur le personnage actif sont affichés à gauche"
        << endl;
   cout << "Les informations sur la capacité sont affichés à droite" << endl;
@@ -86,14 +87,15 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
   });
   thread t3([ai, state, engine, &end]() {
     while (!end) {
-      if (engine->getSize() == 0 && state->isFighting() &&
-          state->getFight()->getTurn() % 2 == 0) {
+      shared_ptr<Fight> fight = state->getFight();
+      if (engine->getSize() == 0 && fight && fight->getTurn() % 2 == 0 &&
+          fight->getTurn() != 0) {
         vector<Character*> vect =
-            ai->getTurnOrder(state->getFight()->getFightingCharacters(1));
+            ai->getTurnOrder(fight->getFightingCharacters(1));
         for (auto c : vect) {
           ai->run(c);
         }
-        if (state->getFight()->getFightingCharacters(1).size() > 0)
+        if (fight->getFightingCharacters(1).size())
           engine->addCommand(new FightCommand(state,
                                               state->getFight()->getTeam(0),
                                               state->getFight()->getTeam(1)));
