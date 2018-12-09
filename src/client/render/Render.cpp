@@ -84,7 +84,10 @@ void Render::drawZones(RenderWindow& window, render::View& v) {
              v.getChildren().size() == 0) {
     if (state->etatCombat == 0) {
       vector<vector<int>> moves =
-          (new MoveCommands(state, engine, selectedcharacter, X, Y))->getPath();
+          (new MoveCommands(state, engine, selectedcharacter,
+                            X - selectedcharacter->getI(),
+                            Y - selectedcharacter->getJ()))
+              ->getPath();
       zone.setFillColor(Color(0, 255, 0, 128));
       if ((int)moves.size() <= selectedcharacter->getPmCurrent()) {
         for (vector<int> coord : moves) {
@@ -358,30 +361,14 @@ void Render::display() {
                     selectedcharacter->getJ() == Y)
                   fight->toDeploy.erase(fight->toDeploy.begin());
               }
-
-              // if (selectedcharacter->getI() == X &&
-              //     selectedcharacter->getJ() == Y) {
-              //   vector<Character*> deploy = fight->toDeploy;
-              //   auto it = find(deploy.begin(), deploy.end(),
-              //   selectedcharacter); if (it != deploy.end())
-              //     deploy.erase(it);
-              //   for (auto c : fight->getFightingCharacters(0)) {
-              //     if (c != selectedcharacter && c->getI() == X &&
-              //         c->getJ() == Y)
-              //       deploy.push_back(c);
-              //   }
-              //   fight->toDeploy = deploy;
-              //   if (fight->toDeploy.size())
-              //     selectedcharacter = fight->toDeploy[0];
-              // }
             } else if (state->etatCombat == 0) {
               if (!state->isFighting()) {
                 while (x + y - (int)x - (int)y != 0)
                   ;
                 engine->clearCommands();
               }
-              engine->addCommand(
-                  new MoveCommands(state, engine, selectedcharacter, X, Y));
+              engine->addCommand(new MoveCommands(
+                  state, engine, selectedcharacter, X - (int)x, Y - (int)y));
             } else if (state->etatCombat == 1) {
               engine->addCommand(
                   new AttackCommand(state, engine, selectedcharacter,
@@ -396,6 +383,8 @@ void Render::display() {
         if (event.key.code == sf::Keyboard::Return && fight &&
             (fight->getTurn() % 2 == 1 ||
              (fight->getTurn() == 0 && fight->toDeploy.size() == 0))) {
+          if (fight->getTurn() == 0 && fight->toDeploy.size() == 0)
+            state->resetContents();
           engine->addCommand(
               new FightCommand(state, fight->getTeam(0), fight->getTeam(1)));
         } else if (event.key.code == sf::Keyboard::R) {

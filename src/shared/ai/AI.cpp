@@ -20,7 +20,7 @@ vector<Command*> AI::listCommands(Character* character, int type) {
           if ((a != 0 || b != 0) && (X + a) / n == X / n && X + a >= 0 &&
               (Y + b) / m == Y / m && Y + b >= 0) {
             MoveCommands* mvcmds =
-                new MoveCommands(state, engine, character, X + a, Y + b);
+                new MoveCommands(state, engine, character, a, b);
             if ((int)mvcmds->getPath().size() <= pm &&
                 state->getCell(X + a, Y + b)->getContent() == 0)
               commands.push_back(mvcmds);

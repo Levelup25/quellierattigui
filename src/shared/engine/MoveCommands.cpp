@@ -25,13 +25,12 @@ MoveCommands::MoveCommands(State* state,
 }
 
 vector<int> MoveCommands::getDiff() {
-  return {(int)i - (int)character->getI(), (int)j - (int)character->getJ()};
+  // return {(int)i - (int)character->getI(), (int)j - (int)character->getJ()};
+  return {(int)i, (int)j};
 }
 
 void MoveCommands::setGenerator() {
-  // state->resetContents();
   int i0 = character->getI(), j0 = character->getJ();
-  // i += i0, j += j0;
   int xv = (i0 / n) * n, yv = (j0 / m) * m;
   generator.clearCollisions();
   for (int l = 0; l < (int)m; l++) {
@@ -47,6 +46,7 @@ vector<vector<int>> MoveCommands::getPath() {
   this->character = character;
   this->setGenerator();
   int i0 = character->getI(), j0 = character->getJ();
+  i += i0, j += j0;
   int xv = (i0 / n) * n, yv = (j0 / m) * m;
   generator.removeCollision({i0 - xv, j0 - yv});
   generator.removeCollision({(int)i - xv, (int)j - yv});
@@ -58,6 +58,7 @@ vector<vector<int>> MoveCommands::getPath() {
     path.pop_back();
   for (auto coord : path)
     coords.push_back({xv + coord.x, yv + coord.y});
+  i -= i0, j -= j0;
   return coords;
 }
 
@@ -66,6 +67,7 @@ void MoveCommands::execute() {
   this->setGenerator();
   int iinit = character->getI(), jinit = character->getJ();
   int i0 = iinit, j0 = jinit;
+  i += i0, j += j0;
   int xv = (i0 / n) * n, yv = (j0 / m) * m;
   generator.removeCollision({i0 - xv, j0 - yv});
   generator.removeCollision({(int)i - xv, (int)j - yv});
@@ -129,4 +131,5 @@ void MoveCommands::execute() {
   //       !reverse);
   // cout << reverse << " " << iinit << " " << jinit << " " << i << " " << j
   //      << endl;
+  i -= i0, j -= j0;
 }
