@@ -26,14 +26,11 @@ namespace ai {
 
 #include "Score.h"
 #include "AI.h"
-#include "engine/MoveCommands.h"
-#include "engine/AttackCommand.h"
 
 namespace ai {
 
   /// class HeuristicAI - 
   class HeuristicAI : public ai::AI {
-    // Associations
     // Operations
   public:
     HeuristicAI (state::State* state, engine::Engine* engine);

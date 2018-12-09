@@ -25,7 +25,7 @@ namespace engine {
     std::stack<Command*> rollback;
     // Operations
   public:
-    void addCommand (Command* command, bool b = false);
+    void addCommand (Command* command);
     void runCommand ();
     void clearCommands ();
     std::size_t getSize ();

@@ -13,10 +13,18 @@ namespace engine {
 namespace state {
   class Character;
 };
+namespace ai {
+  class Score;
+};
 namespace engine {
+  class MoveCommands;
+  class AttackCommand;
   class Command;
 }
 
+#include "Score.h"
+#include "engine/MoveCommands.h"
+#include "engine/AttackCommand.h"
 #include "engine/Engine.h"
 #include "state/State.h"
 #include "engine/Command.h"

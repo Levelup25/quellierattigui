@@ -285,29 +285,34 @@ bool State::isFighting() {
 }
 
 void State::endFight() {
-  bool end = false;
-  if (fight->getFightingCharacters(0).size() == 0) {
-    Team* team = fight->getTeam(0);
-    for (auto c : team->getCharacters(fight->getNb()))
-      this->delCharacter(c);
-    if (team->getCharacters().size() == 0) {
-      this->delTeam(team);
-      cout << endl << "Perdu!!!" << endl;
-      exit(0);
-    }
-    end = true;
-  }
-
-  if (fight->getFightingCharacters(1).size() == 0) {
-    Team* team = fight->getTeam(1);
-    // for (c : team->getCharacters(fight->getNb())) this->delCharacter(c);
-    // if (team->getCharacters().size() == 0)
-    this->delTeam(team);
-    end = true;
-  }
-
-  if (end) {
+  if (fight->getTurn() <= 0) {
     fight = nullptr;
     this->resetContents();
+  } else {
+    bool end = false;
+    if (fight->getFightingCharacters(0).size() == 0) {
+      Team* team = fight->getTeam(0);
+      for (auto c : team->getCharacters(fight->getNb()))
+        this->delCharacter(c);
+      if (team->getCharacters().size() == 0) {
+        this->delTeam(team);
+        cout << endl << "Perdu!!!" << endl;
+        exit(0);
+      }
+      end = true;
+    }
+
+    if (fight->getFightingCharacters(1).size() == 0) {
+      Team* team = fight->getTeam(1);
+      // for (c : team->getCharacters(fight->getNb())) this->delCharacter(c);
+      // if (team->getCharacters().size() == 0)
+      this->delTeam(team);
+      end = true;
+    }
+
+    if (end) {
+      fight = nullptr;
+      this->resetContents();
+    }
   }
 }

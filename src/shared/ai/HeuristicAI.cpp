@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <algorithm>
 #include <iostream>
+#include "AI.h"
 #include "engine/AttackCommand.h"
 #include "engine/MoveCommands.h"
 

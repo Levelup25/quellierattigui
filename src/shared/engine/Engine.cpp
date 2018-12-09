@@ -4,17 +4,11 @@ using namespace std;
 using namespace state;
 using namespace engine;
 
-void Engine::addCommand(Command* command, bool b) {
-  if (!b) {
-    if (!reverse)
-      commands.push(command);
-    // else
-    //   rollback.push(command);
-  } else {
+void Engine::addCommand(Command* command) {
+  if (!reverse)
     commands.push(command);
-    if (!reverse)
-      rollback.push(command);
-  }
+  else
+    rollback.push(command);
 }
 
 void Engine::runCommand() {
@@ -31,6 +25,7 @@ void Engine::runCommand() {
   if (!reverse) {
     if (commands.size() > 0) {
       commands.front()->execute();
+      rollback.push(commands.front());
       // delete commands.front();
       commands.pop();
     }

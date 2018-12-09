@@ -28,7 +28,6 @@ namespace state {
     // Attributes
   public:
     int etatCombat     = 0;
-    bool isInventoryOpened     = false;
     std::vector<std::vector<int>> animations;
   private:
     std::size_t I     = 144;

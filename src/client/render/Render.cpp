@@ -65,8 +65,9 @@ void Render::drawZones(RenderWindow& window, render::View& v) {
     shared_ptr<Fight> fight = state->getFight();
     vector<vector<int>> deploy;
     zone.setFillColor(Color(0, 0, 255, 128));
-    for (int i = xv + n / 6; i < xv + n / 6 + 2 * n / 3; i++)
-      for (int j = yv + 2 * m / 3; j < yv + 2 * m / 3 + m / 4; j++)
+    for (int i = xv + (int)n / 6; i < xv + (int)n / 6 + 2 * (int)n / 3; i++)
+      for (int j = yv + 2 * (int)m / 3; j < yv + 2 * (int)m / 3 + (int)m / 4;
+           j++)
         if (state->getCell(i, j)->getContent() <= 1) {
           deploy.push_back({i, j});
           zone.setPosition(Vector2f(l * i, h * j));

@@ -1,6 +1,7 @@
 #include "DeepAI.h"
 #include <algorithm>
 #include <iostream>
+#include "AI.h"
 #include "engine/AttackCommand.h"
 #include "engine/MoveCommands.h"
 
@@ -165,6 +166,52 @@ DeepAI::DeepAI(State* state, Engine* engine) {
 //    */
 //   return std::make_tuple(listmv[i], listatk[j]);
 // }
+
+void DeepAI::buildTree(TreeNode* node, int depth) {
+  if (depth == 0)
+    return;
+  // get our and enemy fighters
+  vector<Character*> allies = state->getFight()->getFightingCharacters(1);
+  vector<Character*> ennemies = state->getFight()->getFightingCharacters(0);
+
+  // get possible moves and attacks for the character
+  vector<MoveCommands*> listmv;
+  vector<AttackCommand*> listatk;
+  // complete with no move and no atk
+  listmv.push_back(nullptr);
+  listatk.push_back(nullptr);
+  for (auto character : allies) {
+    for (auto pcommand : this->listCommands(character, 0)) {
+      listmv.push_back(static_cast<MoveCommands*>(pcommand));
+    }
+    for (auto pcommand : this->listCommands(character, 1)) {
+      listatk.push_back(static_cast<AttackCommand*>(pcommand));
+    }
+  }
+
+  for (auto mv : listmv) {
+    for (auto atk : listatk) {
+      TreeNode* childNode = new TreeNode();
+      childNode->commands.push_back(mv);
+      childNode->commands.push_back(atk);
+      childNode->parent = node;
+      node->children.push_back(childNode);
+      if (mv)
+        mv->execute();
+      if (atk)
+        atk->execute();
+      buildTree(childNode, depth - 1);
+      if (mv) {
+        mv->setReverse();
+        mv->execute();
+      }
+      if (atk) {
+        atk->setReverse();
+        atk->execute();
+      }
+    }
+  }
+}
 
 vector<Character*> DeepAI::getTurnOrder(vector<Character*> characters) {
   vector<Character*> v;

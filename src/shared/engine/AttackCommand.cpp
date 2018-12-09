@@ -75,107 +75,95 @@ vector<vector<int>> AttackCommand::getZone(size_t i, bool cut) {
 }
 
 void AttackCommand::execute() {
-  this->setZones();
-  if (effects.size() > 0 && ability->getPa() <= character->getPaCurrent()) {
-    if (!reverse)
+  if (reverse)
+    character->removePa(-ability->getPa());
+  else {
+    this->setZones();
+    if (effects.size() > 0 && ability->getPa() <= character->getPaCurrent()) {
       character->removePa(ability->getPa());
-    else
-      character->removePa(-ability->getPa());
 
-    int I = position[0], J = position[1];
-    int direction;
-    if (I > 0 && J == 0)
-      direction = 0;
-    else if (I == 0 && J < 0)
-      direction = 1;
-    else if (I < 0 && J == 0)
-      direction = 2;
-    else if (I == 0 && J > 0)
-      direction = 3;
-    else if (I > 0 && J > 0)
-      direction = 4;
-    else if (I < 0 && J > 0)
-      direction = 5;
-    else if (I < 0 && J < 0)
-      direction = 6;
-    else if (I > 0 && J < 0)
-      direction = 7;
-    else
-      direction = 1;
+      int I = position[0], J = position[1];
+      int direction;
+      if (I > 0 && J == 0)
+        direction = 0;
+      else if (I == 0 && J < 0)
+        direction = 1;
+      else if (I < 0 && J == 0)
+        direction = 2;
+      else if (I == 0 && J > 0)
+        direction = 3;
+      else if (I > 0 && J > 0)
+        direction = 4;
+      else if (I < 0 && J > 0)
+        direction = 5;
+      else if (I < 0 && J < 0)
+        direction = 6;
+      else if (I > 0 && J < 0)
+        direction = 7;
+      else
+        direction = 1;
 
-    vector<vector<int>> v;
-    vector<int> v2{direction};
+      vector<vector<int>> v;
+      vector<int> v2{direction};
 
-    engine->addCommand(new AnimationCommand(state, v, v2, ability->getElement(),
-                                            ability->getLv()),
-                       !reverse);
+      engine->addCommand(new AnimationCommand(
+          state, v, v2, ability->getElement(), ability->getLv()));
 
-    float nb = max(abs(I), abs(J));
-    for (int i = 1; i <= nb; i++) {
-      v = {{(int)(character->getI() + i * I / nb),
-            (int)(character->getJ() + i * J / nb)}};
-      for (int i = 0; i < 5; i++)
-        engine->addCommand(
-            new AnimationCommand(state, v, v2, ability->getElement(),
-                                 ability->getLv()),
-            !reverse);
-    }
-
-    int dist = 1;
-    for (auto effect : effects) {
-      effect[0] -= character->getI();
-      effect[1] -= character->getJ();
-      if (effect != position) {
-        int I = effect[0] - position[0], J = effect[1] - position[1];
-        if (abs(I) + abs(J) > dist) {
-          dist = abs(I) + abs(J);
-          engine->addCommand(
-              new AnimationCommand(state, v, v2, ability->getElement(),
-                                   ability->getLv()),
-              !reverse);
-        }
-        if (I > 0 && J == 0)
-          direction = 0;
-        else if (I == 0 && J < 0)
-          direction = 1;
-        else if (I < 0 && J == 0)
-          direction = 2;
-        else if (I == 0 && J > 0)
-          direction = 3;
-        else if (I > 0 && J > 0)
-          direction = 4;
-        else if (I < 0 && J > 0)
-          direction = 5;
-        else if (I < 0 && J < 0)
-          direction = 6;
-        else if (I > 0 && J < 0)
-          direction = 7;
-        else
-          direction = 1;
-        effect[0] += character->getI();
-        effect[1] += character->getJ();
-        v.push_back(effect);
-        v2.push_back(direction);
+      float nb = max(abs(I), abs(J));
+      for (int i = 1; i <= nb; i++) {
+        v = {{(int)(character->getI() + i * I / nb),
+              (int)(character->getJ() + i * J / nb)}};
+        for (int i = 0; i < 5; i++)
+          engine->addCommand(new AnimationCommand(
+              state, v, v2, ability->getElement(), ability->getLv()));
       }
+
+      int dist = 1;
+      for (auto effect : effects) {
+        effect[0] -= character->getI();
+        effect[1] -= character->getJ();
+        if (effect != position) {
+          int I = effect[0] - position[0], J = effect[1] - position[1];
+          if (abs(I) + abs(J) > dist) {
+            dist = abs(I) + abs(J);
+            engine->addCommand(new AnimationCommand(
+                state, v, v2, ability->getElement(), ability->getLv()));
+          }
+          if (I > 0 && J == 0)
+            direction = 0;
+          else if (I == 0 && J < 0)
+            direction = 1;
+          else if (I < 0 && J == 0)
+            direction = 2;
+          else if (I == 0 && J > 0)
+            direction = 3;
+          else if (I > 0 && J > 0)
+            direction = 4;
+          else if (I < 0 && J > 0)
+            direction = 5;
+          else if (I < 0 && J < 0)
+            direction = 6;
+          else if (I > 0 && J < 0)
+            direction = 7;
+          else
+            direction = 1;
+          effect[0] += character->getI();
+          effect[1] += character->getJ();
+          v.push_back(effect);
+          v2.push_back(direction);
+        }
+      }
+      for (int i = 0; i < 25; i++)
+        engine->addCommand(new AnimationCommand(
+            state, v, v2, ability->getElement(), ability->getLv()));
+
+      engine->addCommand(new AnimationCommand(
+          state, v, v2, ability->getElement(), ability->getLv(),
+          ability->getDamage(), reverse));
+
+      v.clear();
+      engine->addCommand(new AnimationCommand(
+          state, v, v2, ability->getElement(), ability->getLv()));
     }
-    for (int i = 0; i < 25; i++)
-      engine->addCommand(
-          new AnimationCommand(state, v, v2, ability->getElement(),
-                               ability->getLv()),
-          !reverse);
-
-    engine->addCommand(
-        new AnimationCommand(state, v, v2, ability->getElement(),
-                             ability->getLv(), ability->getDamage(), reverse),
-        !reverse);
-
-    v.clear();
-    engine->addCommand(new AnimationCommand(state, v, v2, ability->getElement(),
-                                            ability->getLv()),
-                       !reverse);
-    // if (!reverse)
-    //   engine->addCommand(
-    //       new AttackCommand(state, engine, character, position,
-    //       abilityNumber), !reverse);
   }
 }

@@ -4,6 +4,9 @@
 
 #include <vector>
 
+namespace ai {
+  class TreeNode;
+};
 namespace state {
   class State;
 };
@@ -18,14 +21,20 @@ namespace ai {
 }
 
 #include "AI.h"
+#include "TreeNode.h"
 
 namespace ai {
 
   /// class DeepAI - 
   class DeepAI : public ai::AI {
+    // Associations
+    // Attributes
+  private:
+    TreeNode* rootNode;
     // Operations
   public:
     DeepAI (state::State* state, engine::Engine* engine);
+    void buildTree (TreeNode* node, int depth);
     std::vector<state::Character*> getTurnOrder (std::vector<state::Character*> characters);
     void run (state::Character* character);
     // Setters and Getters

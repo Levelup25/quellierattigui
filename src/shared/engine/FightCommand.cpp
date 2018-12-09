@@ -58,13 +58,15 @@ void FightCommand::execute() {
       // 3/12 => 1/4
       // 1/12 => 1/12
     } else if (state->isFighting()) {
-      state->getFight()->endTurn();
+      state->getFight()->addTurn();
       state->etatCombat = 0;
     }
   } else {
-    if (state->isFighting())
-      state->setFight((shared_ptr<Fight>)nullptr);
-    else
+    if (state->getFight()) {
+      state->getFight()->addTurn(-1);
+      state->etatCombat = 0;
+      state->endFight();
+    } else
       state->setFight((shared_ptr<Fight>)new Fight(att, def));
   }
 }

@@ -21,9 +21,10 @@ namespace engine {
   private:
     float i;
     float j;
+    int pm;
     // Operations
   public:
-    MoveCommand (state::State* state, state::Character* character, float i, float j, bool reverse = false);
+    MoveCommand (state::State* state, state::Character* character, float i, float j, int pm = 0, bool reverse = false);
     void execute ();
     // Setters and Getters
   };

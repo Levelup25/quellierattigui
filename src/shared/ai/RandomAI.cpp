@@ -1,6 +1,7 @@
 #include "RandomAI.h"
 #include <algorithm>
 #include <iostream>
+#include "AI.h"
 #include "engine/AttackCommand.h"
 #include "engine/MoveCommands.h"
 
