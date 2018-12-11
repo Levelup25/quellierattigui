@@ -33,7 +33,9 @@ void DamageCommand::execute() {
     dmg = -dmg;
   int i = 0;
   for (auto pos : positions) {
-    state->animations.push_back({pos[0], pos[1], directions[i++], element, lv});
+    if (directions[0] != -1)
+      state->animations.push_back(
+          {pos[0], pos[1], directions[i++], element, lv});
     if (dmg != 0) {
       Character* c = state->getCharacter(pos[0], pos[1]);
       if (!reverse)

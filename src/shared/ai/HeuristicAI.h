@@ -14,17 +14,9 @@ namespace state {
   class Character;
 };
 namespace ai {
-  class Score;
-};
-namespace engine {
-  class MoveCommands;
-  class AttackCommand;
-};
-namespace ai {
   class AI;
 }
 
-#include "Score.h"
 #include "AI.h"
 
 namespace ai {
@@ -37,9 +29,6 @@ namespace ai {
     std::tuple<engine::MoveCommands*, engine::AttackCommand*> getBestAction (state::Character* character);
     std::vector<state::Character*> getTurnOrder (std::vector<state::Character*> characters);
     void run (state::Character* character);
-  private:
-    bool isCharacterAtpos (state::Character* c, int i, int j);
-    Score getScoreAction (engine::MoveCommands* mv, engine::AttackCommand* atk, state::Character* character, std::vector<state::Character*> allies, std::vector<state::Character*> ennemies);
     // Setters and Getters
   };
 
