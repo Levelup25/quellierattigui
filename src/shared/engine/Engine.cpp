@@ -20,12 +20,12 @@ void Engine::runCommand() {
         cmd->setReverse();
         cmd->execute();
         delete cmd;
-      } else if (reverse_tmp) {
-        reverse = !reverse;
-        reverse_tmp = false;
-      }
-    } else
-      reverse = !reverse;
+      } else
+        reverse = reverse_tmp;
+    } else {
+      reverse_tmp = false;
+      reverse = reverse_tmp;
+    }
   }
   if (!reverse) {
     if (commands.size() > 0) {
@@ -33,7 +33,8 @@ void Engine::runCommand() {
       rollback.push(commands.front());
       // delete commands.front();
       commands.pop();
-    }
+    } else
+      reverse = reverse_tmp;
   }
 }
 
@@ -67,8 +68,5 @@ bool Engine::getReverse() {
 }
 
 void Engine::toggleReverse() {
-  if (reverse)
-    reverse_tmp = true;
-  else
-    reverse = !reverse;
+  reverse_tmp = !reverse_tmp;
 }
