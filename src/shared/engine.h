@@ -9,5 +9,4 @@
 #include "engine/FightCommand.h"
 #include "engine/AttackCommand.h"
 #include "engine/DamageCommand.h"
-#include "engine/ResourceCommand.h"
 #endif

@@ -389,7 +389,7 @@ void Render::display() {
           engine->addCommand(
               new FightCommand(state, fight->getTeam(0), fight->getTeam(1)));
         } else if (event.key.code == sf::Keyboard::R) {
-          engine->reverse = !engine->reverse;
+          engine->toggleReverse();
         } else if (event.key.code == sf::Keyboard::T) {
           cout << worldView.getTreeView();
         } else if (event.key.code == sf::Keyboard::W) {

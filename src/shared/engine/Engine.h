@@ -18,17 +18,20 @@ namespace engine {
   class Engine {
     // Associations
     // Attributes
-  public:
-    bool reverse     = false;
   private:
     std::queue<Command*> commands;
     std::stack<Command*> rollback;
+    bool reverse     = false;
+    bool reverse_tmp     = false;
     // Operations
   public:
     void addCommand (Command* command);
     void runCommand ();
+    Command* getCommand ();
     void clearCommands (bool b = false);
     std::size_t getSize ();
+    bool getReverse ();
+    void toggleReverse ();
     // Setters and Getters
   };
 

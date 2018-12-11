@@ -16,9 +16,14 @@ void Engine::runCommand() {
     if (rollback.size() > 0) {
       Command* cmd = rollback.top();
       rollback.pop();
-      cmd->setReverse();
-      cmd->execute();
-      delete cmd;
+      if (cmd) {
+        cmd->setReverse();
+        cmd->execute();
+        delete cmd;
+      } else if (reverse_tmp) {
+        reverse = !reverse;
+        reverse_tmp = false;
+      }
     } else
       reverse = !reverse;
   }
@@ -30,6 +35,15 @@ void Engine::runCommand() {
       commands.pop();
     }
   }
+}
+
+Command* Engine::getCommand() {
+  if (!getSize())
+    return nullptr;
+  if (!reverse)
+    return commands.front();
+  else
+    return rollback.top();
 }
 
 void Engine::clearCommands(bool b) {
@@ -46,4 +60,15 @@ size_t Engine::getSize() {
     return commands.size();
   else
     return rollback.size();
+}
+
+bool Engine::getReverse() {
+  return reverse;
+}
+
+void Engine::toggleReverse() {
+  if (reverse)
+    reverse_tmp = true;
+  else
+    reverse = !reverse;
 }

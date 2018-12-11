@@ -75,9 +75,10 @@ vector<vector<int>> AttackCommand::getZone(size_t i, bool cut) {
 }
 
 void AttackCommand::execute() {
-  if (reverse)
+  if (reverse) {
     character->removePa(-ability->getPa());
-  else {
+    engine->addCommand(nullptr);
+  } else {
     this->setZones();
     if (effects.size() > 0 && ability->getPa() <= character->getPaCurrent()) {
       character->removePa(ability->getPa());
