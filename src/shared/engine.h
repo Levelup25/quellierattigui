@@ -8,5 +8,6 @@
 #include "engine/MoveCommands.h"
 #include "engine/FightCommand.h"
 #include "engine/AttackCommand.h"
-#include "engine/AnimationCommand.h"
+#include "engine/DamageCommand.h"
+#include "engine/ResourceCommand.h"
 #endif

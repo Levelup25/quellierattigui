@@ -5,12 +5,14 @@
 #include <vector>
 #include <stdlib.h>
 
+namespace state {
+  class Ability;
+  class State;
+};
 namespace engine {
   class Engine;
 };
 namespace state {
-  class Ability;
-  class State;
   class Character;
 };
 namespace engine {
@@ -19,7 +21,6 @@ namespace engine {
 
 #include "Command.h"
 #include "state/Ability.h"
-#include "Engine.h"
 
 namespace engine {
 
@@ -28,7 +29,6 @@ namespace engine {
     // Associations
     // Attributes
   private:
-    Engine* engine;
     int abilityNumber;
     std::vector<int> position;
     std::vector<std::vector<int>> targets;

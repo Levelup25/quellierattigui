@@ -11,6 +11,13 @@ FightCommand::FightCommand(State* state, Team* att, Team* def, bool reverse) {
   this->att = att;
   this->def = def;
   this->reverse = reverse;
+  if (state->getFight()) {
+    for (auto c : state->getFight()->getFightingCharacters(
+             (state->getFight()->getTurn() + 1) % 2)) {
+      pa.push_back(c->getPaCurrent() - c->getPaMax());
+      pm.push_back(c->getPmCurrent() - c->getPmMax());
+    }
+  }
 }
 
 void FightCommand::execute() {
@@ -58,15 +65,26 @@ void FightCommand::execute() {
       // 3/12 => 1/4
       // 1/12 => 1/12
     } else if (state->isFighting()) {
+      int i = 0;
+      for (auto c : state->getFight()->getFightingCharacters(
+               (state->getFight()->getTurn() + 1) % 2)) {
+        c->removePa(pa[i]);
+        c->removePm(pm[i++]);
+      }
       state->getFight()->addTurn();
       state->etatCombat = 0;
     }
   } else {
     if (state->getFight()) {
+      int i = 0;
       state->getFight()->addTurn(-1);
+      for (auto c : state->getFight()->getFightingCharacters(
+               (state->getFight()->getTurn() + 1) % 2)) {
+        c->removePa(-pa[i]);
+        c->removePm(-pm[i++]);
+      }
       state->etatCombat = 0;
       state->endFight();
-    } else
-      state->setFight((shared_ptr<Fight>)new Fight(att, def));
+    }
   }
 }

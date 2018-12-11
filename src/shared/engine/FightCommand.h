@@ -2,6 +2,7 @@
 #ifndef ENGINE__FIGHTCOMMAND__H
 #define ENGINE__FIGHTCOMMAND__H
 
+#include <vector>
 
 namespace state {
   class Team;
@@ -12,15 +13,19 @@ namespace engine {
 }
 
 #include "Command.h"
+#include "state/Team.h"
 
 namespace engine {
 
   /// class FightCommand - 
   class FightCommand : public engine::Command {
+    // Associations
     // Attributes
   private:
     state::Team* att;
     state::Team* def;
+    std::vector<int> pa;
+    std::vector<int> pm;
     // Operations
   public:
     FightCommand (state::State* state, state::Team* att, state::Team* def, bool reverse = false);

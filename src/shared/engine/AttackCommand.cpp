@@ -1,6 +1,6 @@
 #include "AttackCommand.h"
 #include <iostream>
-#include "AnimationCommand.h"
+#include "DamageCommand.h"
 #include "FightCommand.h"
 
 using namespace std;
@@ -106,16 +106,16 @@ void AttackCommand::execute() {
       vector<vector<int>> v;
       vector<int> v2{direction};
 
-      engine->addCommand(new AnimationCommand(
-          state, v, v2, ability->getElement(), ability->getLv()));
+      engine->addCommand(new DamageCommand(
+          state, engine, v, v2, ability->getElement(), ability->getLv()));
 
       float nb = max(abs(I), abs(J));
       for (int i = 1; i <= nb; i++) {
         v = {{(int)(character->getI() + i * I / nb),
               (int)(character->getJ() + i * J / nb)}};
         for (int i = 0; i < 5; i++)
-          engine->addCommand(new AnimationCommand(
-              state, v, v2, ability->getElement(), ability->getLv()));
+          engine->addCommand(new DamageCommand(
+              state, engine, v, v2, ability->getElement(), ability->getLv()));
       }
 
       int dist = 1;
@@ -126,8 +126,8 @@ void AttackCommand::execute() {
           int I = effect[0] - position[0], J = effect[1] - position[1];
           if (abs(I) + abs(J) > dist) {
             dist = abs(I) + abs(J);
-            engine->addCommand(new AnimationCommand(
-                state, v, v2, ability->getElement(), ability->getLv()));
+            engine->addCommand(new DamageCommand(
+                state, engine, v, v2, ability->getElement(), ability->getLv()));
           }
           if (I > 0 && J == 0)
             direction = 0;
@@ -154,16 +154,16 @@ void AttackCommand::execute() {
         }
       }
       for (int i = 0; i < 25; i++)
-        engine->addCommand(new AnimationCommand(
-            state, v, v2, ability->getElement(), ability->getLv()));
+        engine->addCommand(new DamageCommand(
+            state, engine, v, v2, ability->getElement(), ability->getLv()));
 
-      engine->addCommand(new AnimationCommand(
-          state, v, v2, ability->getElement(), ability->getLv(),
-          ability->getDamage(), reverse));
+      engine->addCommand(
+          new DamageCommand(state, engine, v, v2, ability->getElement(),
+                            ability->getLv(), ability->getDamage(), reverse));
 
       v.clear();
-      engine->addCommand(new AnimationCommand(
-          state, v, v2, ability->getElement(), ability->getLv()));
+      engine->addCommand(new DamageCommand(
+          state, engine, v, v2, ability->getElement(), ability->getLv()));
     }
   }
 }

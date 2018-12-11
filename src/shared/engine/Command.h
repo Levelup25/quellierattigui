@@ -5,9 +5,15 @@
 
 namespace state {
   class State;
+};
+namespace engine {
+  class Engine;
+};
+namespace state {
   class Character;
 }
 
+#include "Engine.h"
 #include "state/Character.h"
 #include "state/State.h"
 
@@ -19,6 +25,7 @@ namespace engine {
     // Attributes
   protected:
     state::State* state;
+    Engine* engine;
     state::Character* character;
     bool reverse;
     // Operations
@@ -28,6 +35,8 @@ namespace engine {
     // Setters and Getters
     const state::State*& getState() const;
     void setState(const state::State*& state);
+    const Engine*& getEngine() const;
+    void setEngine(const Engine*& engine);
     const state::Character*& getCharacter() const;
     void setCharacter(const state::Character*& character);
     bool getReverse() const;

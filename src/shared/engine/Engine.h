@@ -27,7 +27,7 @@ namespace engine {
   public:
     void addCommand (Command* command);
     void runCommand ();
-    void clearCommands ();
+    void clearCommands (bool b = false);
     std::size_t getSize ();
     // Setters and Getters
   };

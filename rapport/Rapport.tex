@@ -316,7 +316,7 @@ Le diagramme des classes pour le moteur du jeu est présenté en Figure~\ref{uml
 \textbf{Classes Command} Ces classes représentent les commandes exécutées par le moteur. 
 \begin{itemize}
 \item MoveCommands permet de générer l'ensemble des commandes individuelles MoveCommand afin de créer une animation de déplacement en utilisant un pathfinding A* (rapide mais ne générant pas nécessairement le chemin le plus optimal) et FightCommand en cas de rencontre avec un ennemi, ce qui lance la phase de combat.
-\item AttackCommand permet aux différents personnages d'attaquer avec leurs capacités et ainsi d'infliger des dégâts à différentes cibles et génère des commandes AnimationCommand pour générer les animations d'attaque.
+\item AttackCommand permet aux différents personnages d'attaquer avec leurs capacités et ainsi d'infliger des dégâts à différentes cibles et génère des commandes DamageCommand pour générer les animations d'attaque.
 \end{itemize}
 
 

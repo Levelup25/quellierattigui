@@ -32,8 +32,8 @@ void Engine::runCommand() {
   }
 }
 
-void Engine::clearCommands() {
-  if (!reverse)
+void Engine::clearCommands(bool b) {
+  if (!b)
     while (commands.size())
       commands.pop();
   else

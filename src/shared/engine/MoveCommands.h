@@ -6,11 +6,13 @@
 #include "AStar.h"
 #include <vector>
 
+namespace state {
+  class State;
+};
 namespace engine {
   class Engine;
 };
 namespace state {
-  class State;
   class Character;
 };
 namespace engine {
@@ -18,16 +20,13 @@ namespace engine {
 }
 
 #include "Command.h"
-#include "Engine.h"
 
 namespace engine {
 
   /// class MoveCommands - 
   class MoveCommands : public engine::Command {
-    // Associations
     // Attributes
   private:
-    Engine* engine;
     std::size_t i;
     std::size_t j;
     AStar::Generator generator;

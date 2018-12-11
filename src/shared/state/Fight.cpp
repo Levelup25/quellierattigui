@@ -83,8 +83,8 @@ std::vector<Character*> Fight::getFightingCharacters(int i) {
 
 void Fight::addTurn(int turn) {
   this->turn += turn;
-  for (auto c : this->getFightingCharacters((turn + 1) % 2)) {
-    c->resetPm();
-    c->resetPa();
-  }
+  // for (auto c : this->getFightingCharacters((turn + 1) % 2)) {
+  //   c->resetPm();
+  //   c->resetPa();
+  // }
 }
