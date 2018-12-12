@@ -31,6 +31,8 @@ namespace ai {
     // Attributes
   private:
     TreeNode* rootNode;
+    TreeNode* nodeToRun;
+    int scoremax     = 0;
     // Operations
   public:
     DeepAI (state::State* state, engine::Engine* engine);

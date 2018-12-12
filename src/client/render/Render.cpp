@@ -292,7 +292,8 @@ void Render::display() {
       }
       if (selectedcharacter->getPvCurrent() <= 0) {
         abilityNumber = 0;
-        selectedcharacter = fight->getFightingCharacters(0)[0];
+        if (fight->getFightingCharacters(0).size())
+          selectedcharacter = fight->getFightingCharacters(0)[0];
       }
     } else {
       chars = state->getMainCharacters();

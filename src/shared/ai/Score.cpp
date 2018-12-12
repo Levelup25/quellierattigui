@@ -40,26 +40,30 @@ void Score::setScoreAction(MoveCommands* mv,
       for (auto pennemy : ennemies) {
         if (pennemy->getI() == coord[0] && pennemy->getJ() == coord[1]) {
           int pv = pennemy->getPvCurrent();
-          int percent = (100 * dmg / pv);
-          if (percent > 100) {
-            int overkill = percent - 100;
-            percent = 100;
-            bonusDmgEnnemy += bonusKillEnemy;
-            bonusDmgEnnemy -= overkill;
+          if (pv > 0) {
+            int percent = (100 * dmg / pv);
+            if (percent > 100) {
+              int overkill = percent - 100;
+              percent = 100;
+              bonusDmgEnnemy += bonusKillEnemy;
+              bonusDmgEnnemy -= overkill;
+            }
+            bonusDmgEnnemy += percent + bonusHitEnemy;
           }
-          bonusDmgEnnemy += percent + bonusHitEnemy;
         }
       }
 
       for (auto pally : allies) {
         if (pally->getI() == coord[0] && pally->getJ() == coord[1]) {
           int pv = pally->getPvCurrent();
-          int percent = (100 * dmg / pv);
-          if (percent > 100) {
-            percent = 100;
-            malusDmgAlly += MalusKillAlly;
+          if (pv > 0) {
+            int percent = (100 * dmg / pv);
+            if (percent > 100) {
+              percent = 100;
+              malusDmgAlly += MalusKillAlly;
+            }
+            malusDmgAlly += percent + malusHitAlly;
           }
-          malusDmgAlly += percent + malusHitAlly;
         }
       }
     }

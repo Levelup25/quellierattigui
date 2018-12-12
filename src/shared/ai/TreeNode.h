@@ -6,10 +6,12 @@
 
 namespace ai {
   class TreeNode;
-  class Score;
 };
 namespace engine {
   class Command;
+};
+namespace ai {
+  class Score;
 }
 
 #include "Score.h"
@@ -24,7 +26,7 @@ namespace ai {
   public:
     TreeNode* parent;
     std::vector<TreeNode*> children;
-    Score score;
+    int score;
     std::vector<engine::Command*> commands;
     // Setters and Getters
   };
