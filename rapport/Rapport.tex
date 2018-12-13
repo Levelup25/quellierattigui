@@ -316,7 +316,7 @@ Le diagramme des classes pour le moteur du jeu est présenté en Figure~\ref{uml
 \textbf{Classes Command} Ces classes représentent les commandes exécutées par le moteur. 
 \begin{itemize}
 \item MoveCommands permet de générer l'ensemble des commandes individuelles MoveCommand afin de créer une animation de déplacement en utilisant un pathfinding A* (rapide mais ne générant pas nécessairement le chemin le plus optimal) et FightCommand en cas de rencontre avec un ennemi, ce qui lance la phase de combat.
-\item AttackCommand permet aux différents personnages d'attaquer avec leurs capacités et ainsi d'infliger des dégâts à différentes cibles et génère des commandes DamageCommand pour générer les animations d'attaque.
+\item AttackCommand permet aux différents personnages d'attaquer avec leurs capacités et ainsi d'infliger des dégâts à différentes cibles et génère des commandes DamageCommand pour générer les dégâts ainsi que les animations d'attaque.
 \end{itemize}
 
 
@@ -344,6 +344,10 @@ L'IA execute des commandes aléatoires parmi le mouvement et l'attaque, s'il lui
 L'IA balaye toutes les positions possibles du personnage et pour chaque position va affecter un Score à chaque attaque possible à partir de cette position : pour chaque dégât réellement infligé à un ennemi (respectivement un allié) le score augmente (respectivement diminue) de ce montant (un soin est considéré comme des dégâts négatifs). Si un personnage meurt suite à cette attaque, le score est majoré (respectivement minoré), mais si les dégâts sont beaucoup plus élevés que la vie du personnage, un malus est appliqué pour éviter le gaspillage des ressources. Dans une plus faible proportion, plus l'action coûte de ressources en pa, plus le score diminue, mais plus l'IA se rapproche d'un ennemi, plus le score augmente. Ces différences de score sont minimes devant le score de dégât afin de différencier de manière plus précise des actions de score similaire, et permettent de se rapprocher des ennemis si aucune action n'est possible.
 Une liste de toutes les commandes de même score maximal est établie et une commande aléatoire parmi ces meilleures commandes (déplacement puis attaque) est envoyée au moteur jusqu'à épuisement des pa et pm de chaque joueur (ou la fin du combat).
 
+\subsubsection{Intelligence avancée}
+
+L'IA balaye plusieurs options parmi ses meilleurs coups (actions avec un score au dessus d'un certain seuil fixé) grâce à un arbre de profondeur fixé, représenté par la classe TreeNode, mais cette fois elle peut anticiper les mouvements adverses (qui soustraient leur score au noeud de l'arbre) et permettre de changer plusieurs fois de personnage au lieu de les faire jouer séquentiellement. Le système de score reste identique à celui de l'intelligence heuristique. Un système de rollback permet d'annuler les actions éxécutées de proche en proche, modifiant directement l'état, au lieu de stocker plusieurs copies de l'état actuel.
+
 \clearpage
 \subsection{Conception logiciel}
 Le diagramme de classes pour l'intelligence artificielle est présentée en figure~\ref{uml:ai}
@@ -352,8 +356,10 @@ Le diagramme de classes pour l'intelligence artificielle est présentée en figu
 \begin{itemize}
 \item RandomAI : IA aléatoire
 \item HeuristicAI : IA heuristique
+\item HeuristicAI : IA avancée
 \end{itemize}
-
+\textbf{Score} Cette classe calcule et stocke le score d'une action avec les critères expliqués dans la section de l'intelligence heuristique
+\\\textbf{TreeNode} Chaque noeud possède un parent (sauf la racine de l'arbre), une liste d'enfants, un score et les commandes exécutées pour arriver à ce noeud dans l'arbre. Il est donc associé à un état virtuel du jeu.
 
 \begin{landscape}
     \begin{figure}[p]

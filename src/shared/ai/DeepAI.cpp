@@ -149,8 +149,9 @@ void DeepAI::buildTree(TreeNode* node, int depth, int teamNumber) {
       childNode->teamNumber = teamNumber;
       childNode->score =
           node->score + (2 * teamNumber - 1) * get<2>(action).getScore();
-      cout << childNode << " " << teamNumber << " " << get<2>(action).getScore()
-           << " " << depth << endl;
+      // cout << childNode << " " << teamNumber << " " <<
+      // get<2>(action).getScore()
+      //      << " " << depth << endl;
       node->children.push_back(childNode);
       if (mv) {
         MoveCommand mvcmd(state, character, i0 + i, j0 + j, i + j);
@@ -185,17 +186,19 @@ vector<Character*> DeepAI::getTurnOrder(vector<Character*> characters) {
   scoremax = 0;
   TreeNode* root = new TreeNode();
   buildTree(root, 2);
-  cout << endl << scoremax << " " << nodeToRun << endl;
+  // cout << endl << scoremax << " " << nodeToRun << endl;
   TreeNode* node = nodeToRun;
-  vector<Command*> cmds;
-  while (node != root) {
-    cmds.push_back(node->commands[1]);
-    cmds.push_back(node->commands[0]);
-    node = node->parent;
-  }
-  while (cmds.size()) {
-    engine->addCommand(cmds.back());
-    cmds.pop_back();
+  if (node) {
+    vector<Command*> cmds;
+    while (node != root) {
+      cmds.push_back(node->commands[1]);
+      cmds.push_back(node->commands[0]);
+      node = node->parent;
+    }
+    while (cmds.size()) {
+      engine->addCommand(cmds.back());
+      cmds.pop_back();
+    }
   }
   return v;
 }
