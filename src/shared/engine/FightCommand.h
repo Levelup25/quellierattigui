@@ -9,6 +9,7 @@ namespace state {
   class State;
 };
 namespace engine {
+  class Engine;
   class Command;
 }
 
@@ -28,7 +29,7 @@ namespace engine {
     std::vector<int> pm;
     // Operations
   public:
-    FightCommand (state::State* state, state::Team* att, state::Team* def, bool reverse = false);
+    FightCommand (state::State* state, Engine* engine, state::Team* att, state::Team* def, bool reverse = false);
     void execute ();
     // Setters and Getters
   };

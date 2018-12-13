@@ -1,12 +1,18 @@
 #include "FightCommand.h"
 #include <iostream>
+#include "MoveCommand.h"
 
 using namespace std;
 using namespace state;
 using namespace engine;
 
-FightCommand::FightCommand(State* state, Team* att, Team* def, bool reverse) {
+FightCommand::FightCommand(State* state,
+                           Engine* engine,
+                           Team* att,
+                           Team* def,
+                           bool reverse) {
   this->state = state;
+  this->engine = engine;
   this->character = nullptr;
   this->att = att;
   this->def = def;
@@ -45,7 +51,11 @@ void FightCommand::execute() {
           i = xv + n / 6 + rand() % (2 * n / 3);
           j = yv + 2 * m / 3 + rand() % (m / 4);
         } while (state->getCell(i, j)->getContent() != nothing);
-        state->moveCharacter(maincharacter, i, j);
+        engine->addCommand(new MoveCommand(state, maincharacter,
+                                           maincharacter->getI(),
+                                           maincharacter->getJ()));
+        engine->addCommand(new MoveCommand(state, maincharacter, i, j));
+        // state->moveCharacter(maincharacter, i, j);
         maincharacter->setDirection(north);
 
         for (auto oppchars : team2->getCharacters(nb)) {
@@ -53,7 +63,10 @@ void FightCommand::execute() {
             i = xv + n / 6 + rand() % (2 * n / 3);
             j = yv + m / 12 + rand() % (m / 4);
           } while (state->getCell(i, j)->getContent() != nothing);
-          state->moveCharacter(oppchars, i, j);
+          engine->addCommand(new MoveCommand(state, oppchars, oppchars->getI(),
+                                             oppchars->getJ()));
+          engine->addCommand(new MoveCommand(state, oppchars, i, j));
+          // state->moveCharacter(oppchars, i, j);
           oppchars->setDirection(south);
         }
       }

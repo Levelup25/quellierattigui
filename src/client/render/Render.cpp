@@ -387,10 +387,12 @@ void Render::display() {
              (fight->getTurn() == 0 && fight->toDeploy.size() == 0))) {
           if (fight->getTurn() == 0 && fight->toDeploy.size() == 0)
             state->resetContents();
-          engine->addCommand(
-              new FightCommand(state, fight->getTeam(0), fight->getTeam(1)));
+          engine->addCommand(new FightCommand(state, engine, fight->getTeam(0),
+                                              fight->getTeam(1)));
         } else if (event.key.code == sf::Keyboard::R) {
-          engine->toggleReverse();
+          if ((state->getFight() && state->getFight()->getTurn() > 0) ||
+              !state->getFight())
+            engine->toggleReverse();
         } else if (event.key.code == sf::Keyboard::T) {
           cout << worldView.getTreeView();
         } else if (event.key.code == sf::Keyboard::W) {

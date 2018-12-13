@@ -106,30 +106,25 @@ void MoveCommands::execute() {
         (int)state->getCell(i, j)->getContent() == 1 && !state->isFighting()) {
       while (character == state->getCharacter(i, j))
         ;
-      if (!reverse)
-        engine->addCommand(new FightCommand(
-            state, state->getTeam(character),
-            state->getTeam(state->getCharacter(i, j)), reverse));
+      engine->addCommand(
+          new FightCommand(state, engine, state->getTeam(character),
+                           state->getTeam(state->getCharacter(i, j))));
     } else if (state->getCell(i, j)->getContent() <= 1 &&
                !state->isFighting()) {
       if (i % n == 0 && i > 0 && state->getCell(i - 1, j)->getContent() == 0) {
-        engine->addCommand(
-            new MoveCommand(state, character, i - 1, j, reverse));
+        engine->addCommand(new MoveCommand(state, character, i - 1, j));
       } else if ((i + 1) % n == 0 && i + 1 < state->getI() &&
                  state->getCell(i + 1, j)->getContent() == 0) {
-        engine->addCommand(
-            new MoveCommand(state, character, i + 1, j, reverse));
+        engine->addCommand(new MoveCommand(state, character, i + 1, j));
       } else if (j % m == 0 && j > 0 &&
                  state->getCell(i, j - 1)->getContent() == 0) {
-        engine->addCommand(
-            new MoveCommand(state, character, i, j - 1, reverse));
+        engine->addCommand(new MoveCommand(state, character, i, j - 1));
       } else if ((j + 1) % m == 0 && j + 1 < state->getJ() &&
                  state->getCell(i, j + 1)->getContent() == 0) {
-        engine->addCommand(
-            new MoveCommand(state, character, i, j + 1, reverse));
+        engine->addCommand(new MoveCommand(state, character, i, j + 1));
       }
     }
-    i -= i0, j -= j0;
+    i -= iinit, j -= jinit;
   } else
     engine->addCommand(nullptr);
 }
