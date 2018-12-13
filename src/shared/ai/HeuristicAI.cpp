@@ -16,11 +16,18 @@ HeuristicAI::HeuristicAI(State* state, Engine* engine) {
   this->engine = engine;
 }
 
-std::tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
+tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
     Character* character) {
   // get our and enemy fighters
-  vector<Character*> allies = state->getFight()->getFightingCharacters(1);
-  vector<Character*> ennemies = state->getFight()->getFightingCharacters(0);
+  shared_ptr<Fight> fight = state->getFight();
+  vector<Character*> allies, ennemies;
+  if (fight->getTeam(1)->getCharacter(character)) {
+    allies = fight->getFightingCharacters(1);
+    ennemies = fight->getFightingCharacters(0);
+  } else {  // if (fight->getTeam(0)->getCharacter(character)) {
+    allies = fight->getFightingCharacters(0);
+    ennemies = fight->getFightingCharacters(1);
+  }
 
   // get possible moves and attacks for the character
   vector<MoveCommands*> listmv;
@@ -38,7 +45,7 @@ std::tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
 
   Score score;
   score.setScoreAction(listmv[0], listatk[0], character, allies, ennemies);
-  std::vector<Score> scoresBest = {score};
+  vector<Score> scoresBest = {score};
   int scoreMax = scoresBest[0].getScore();
   // search best actions
   int i = 0, j = 0;
@@ -81,7 +88,7 @@ std::tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
        << endl
        << endl;
    */
-  return std::make_tuple(listmv[i], listatk[j]);
+  return make_tuple(listmv[i], listatk[j]);
 }
 
 vector<Character*> HeuristicAI::getTurnOrder(vector<Character*> characters) {
@@ -110,16 +117,16 @@ void HeuristicAI::run(Character* character) {
   MoveCommands* mv;
   AttackCommand* atk;
   do {
-    std::tuple<MoveCommands*, AttackCommand*> bestAction =
+    tuple<MoveCommands*, AttackCommand*> bestAction =
         this->getBestAction(character);
-    mv = std::get<0>(bestAction);
+    mv = get<0>(bestAction);
     if (mv != nullptr) {
       engine->addCommand(mv);
       while (engine->getSize() != 0)
         ;
       listmv = this->listCommands(character, 0);
     }
-    atk = std::get<1>(bestAction);
+    atk = get<1>(bestAction);
     if (atk != nullptr) {
       engine->addCommand(atk);
       while (engine->getSize() != 0)

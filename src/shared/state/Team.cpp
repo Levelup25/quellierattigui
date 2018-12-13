@@ -27,6 +27,14 @@ Character* Team::getMainCharacter() {
   return characters[0];
 }
 
+Character* Team::getCharacter(Character* character) {
+  for (auto c : characters) {
+    if (c == character)
+      return c;
+  }
+  return nullptr;
+}
+
 Character* Team::getCharacter(size_t i) {
   return characters[i];
 }

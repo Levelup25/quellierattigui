@@ -30,6 +30,7 @@ namespace state {
     void addCharacter (Character* character);
     void delCharacter (Character* character);
     Character* getMainCharacter ();
+    Character* getCharacter (Character* character);
     Character* getCharacter (std::size_t i);
     Character* getCharacter (std::size_t i, std::size_t j);
     std::vector<Character*> getCharacters (int i = -1);

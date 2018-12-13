@@ -27,6 +27,7 @@ namespace ai {
     TreeNode* parent;
     std::vector<TreeNode*> children;
     int score;
+    int teamNumber;
     std::vector<engine::Command*> commands;
     // Setters and Getters
   };
