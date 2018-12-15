@@ -94,7 +94,8 @@ vector<tuple<MoveCommands*, AttackCommand*, Score>> DeepAI::getBestActions(
   return actions;
 }
 
-void DeepAI::buildTree(TreeNode* node, int depth, int teamNumber) {
+void DeepAI::buildTree(shared_ptr<TreeNode> node, int depth, int teamNumber) {
+  int threshold = 200;
   if (depth == 0) {
     if (node->score > scoremax) {
       nodeToRun = node;
@@ -111,7 +112,7 @@ void DeepAI::buildTree(TreeNode* node, int depth, int teamNumber) {
 
   vector<vector<tuple<MoveCommands*, AttackCommand*, Score>>> actionss;
   for (auto character : allies) {
-    actionss.push_back(getBestActions(character, 200));
+    actionss.push_back(getBestActions(character, threshold));
   }
 
   if (actionss.size() == 0) {
@@ -127,55 +128,64 @@ void DeepAI::buildTree(TreeNode* node, int depth, int teamNumber) {
     allies = fight->getFightingCharacters(teamNumber);
     ennemies = fight->getFightingCharacters(1 - teamNumber);
     for (auto character : allies) {
-      actionss.push_back(getBestActions(character, 200));
+      actionss.push_back(getBestActions(character, threshold));
     }
   }
 
-  int k = 0;
+  int k = 0, k2 = 0;
   for (auto character : allies) {
-    auto actions = actionss[k++];
-    int i0 = character->getI(), j0 = character->getJ();
-    for (auto action : actions) {
-      MoveCommands* mv = get<0>(action);
-      AttackCommand* atk = get<1>(action);
-      int i, j;
-      if (mv) {
-        i = mv->getDiff()[0], j = mv->getDiff()[1];
-      }
-      TreeNode* childNode = new TreeNode();
-      childNode->commands.push_back(mv);
-      childNode->commands.push_back(atk);
-      childNode->parent = node;
-      childNode->teamNumber = teamNumber;
-      childNode->score =
-          node->score + (2 * teamNumber - 1) * get<2>(action).getScore();
-      // cout << childNode << " " << teamNumber << " " <<
-      // get<2>(action).getScore()
-      //      << " " << depth << endl;
-      node->children.push_back(childNode);
-      if (mv) {
-        MoveCommand mvcmd(state, character, i0 + i, j0 + j, i + j);
-        mvcmd.execute();
-      }
-      if (atk) {
-        DamageCommand dmgcmd(state, engine, atk->getZone(1), {-1}, 0, 0,
-                             character->getWeapon()
-                                 ->getAbility(atk->getAbilityNumber())
-                                 ->getDamage());
-        dmgcmd.execute();
-      }
-      buildTree(childNode, depth - 1);
-      if (atk) {
-        DamageCommand dmgcmd(state, engine, atk->getZone(1), {-1}, 0, 0,
-                             character->getWeapon()
-                                 ->getAbility(atk->getAbilityNumber())
-                                 ->getDamage());
-        dmgcmd.setReverse();
-        dmgcmd.execute();
-      }
-      if (mv) {
-        MoveCommand mvcmd(state, character, i0, j0, -(i + j));
-        mvcmd.execute();
+    if (character == node->character)
+      break;
+    k2++;
+  }
+  for (auto character : allies) {
+    if (node->character == nullptr || node->character == character ||
+        actionss[k2].size() == 0) {
+      auto actions = actionss[k++];
+      int i0 = character->getI(), j0 = character->getJ();
+      for (auto action : actions) {
+        MoveCommands* mv = get<0>(action);
+        AttackCommand* atk = get<1>(action);
+        int i, j;
+        if (mv) {
+          i = mv->getDiff()[0], j = mv->getDiff()[1];
+        }
+        shared_ptr<TreeNode> childNode(new TreeNode());
+        childNode->commands.push_back(mv);
+        childNode->commands.push_back(atk);
+        childNode->character = character;
+        childNode->parent = node;
+        childNode->teamNumber = teamNumber;
+        childNode->score =
+            node->score + (2 * teamNumber - 1) * get<2>(action).getScore();
+        // cout << childNode << " " << teamNumber << " " <<
+        // get<2>(action).getScore()
+        //      << " " << depth << endl;
+        node->children.push_back(childNode);
+        if (mv) {
+          MoveCommand mvcmd(state, character, i0 + i, j0 + j, i + j);
+          mvcmd.execute();
+        }
+        if (atk) {
+          DamageCommand dmgcmd(state, engine, atk->getZone(1), {-1}, 0, 0,
+                               character->getWeapon()
+                                   ->getAbility(atk->getAbilityNumber())
+                                   ->getDamage());
+          dmgcmd.execute();
+        }
+        buildTree(childNode, depth - 1);
+        if (atk) {
+          DamageCommand dmgcmd(state, engine, atk->getZone(1), {-1}, 0, 0,
+                               character->getWeapon()
+                                   ->getAbility(atk->getAbilityNumber())
+                                   ->getDamage());
+          dmgcmd.setReverse();
+          dmgcmd.execute();
+        }
+        if (mv) {
+          MoveCommand mvcmd(state, character, i0, j0, -(i + j));
+          mvcmd.execute();
+        }
       }
     }
   }
@@ -184,10 +194,10 @@ void DeepAI::buildTree(TreeNode* node, int depth, int teamNumber) {
 vector<Character*> DeepAI::getTurnOrder(vector<Character*> characters) {
   vector<Character*> v;
   scoremax = 0;
-  TreeNode* root = new TreeNode();
+  shared_ptr<TreeNode> root(new TreeNode());
   buildTree(root, 2);
   // cout << endl << scoremax << " " << nodeToRun << endl;
-  TreeNode* node = nodeToRun;
+  shared_ptr<TreeNode> node = nodeToRun;
   if (node) {
     vector<Command*> cmds;
     while (node != root) {
@@ -196,8 +206,11 @@ vector<Character*> DeepAI::getTurnOrder(vector<Character*> characters) {
       node = node->parent;
     }
     while (cmds.size()) {
-      engine->addCommand(cmds.back());
+      if (cmds.back())
+        engine->addCommand(cmds.back());
       cmds.pop_back();
+      while (engine->getSize())
+        ;
     }
   }
   return v;

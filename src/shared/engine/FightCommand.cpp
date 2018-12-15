@@ -66,6 +66,7 @@ void FightCommand::execute() {
           engine->addCommand(new MoveCommand(state, oppchars, oppchars->getI(),
                                              oppchars->getJ()));
           engine->addCommand(new MoveCommand(state, oppchars, i, j));
+          state->getCell(i, j)->setContent(perso);
           // state->moveCharacter(oppchars, i, j);
           oppchars->setDirection(south);
         }

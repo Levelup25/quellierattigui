@@ -2,10 +2,14 @@
 #ifndef AI__TREENODE__H
 #define AI__TREENODE__H
 
+#include <memory>
 #include <vector>
 
 namespace ai {
   class TreeNode;
+};
+namespace state {
+  class Character;
 };
 namespace engine {
   class Command;
@@ -24,8 +28,9 @@ namespace ai {
     // Associations
     // Attributes
   public:
-    TreeNode* parent;
-    std::vector<TreeNode*> children;
+    std::shared_ptr<TreeNode> parent;
+    std::vector<std::shared_ptr<TreeNode>> children;
+    state::Character* character;
     int score;
     int teamNumber;
     std::vector<engine::Command*> commands;
