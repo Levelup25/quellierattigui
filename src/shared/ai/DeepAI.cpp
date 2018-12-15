@@ -95,7 +95,7 @@ vector<tuple<MoveCommands*, AttackCommand*, Score>> DeepAI::getBestActions(
 }
 
 void DeepAI::buildTree(shared_ptr<TreeNode> node, int depth, int teamNumber) {
-  int threshold = 200;
+  int threshold = -1;
   if (depth == 0) {
     if (node->score > scoremax) {
       nodeToRun = node;
@@ -195,17 +195,19 @@ vector<Character*> DeepAI::getTurnOrder(vector<Character*> characters) {
   vector<Character*> v;
   scoremax = 0;
   shared_ptr<TreeNode> root(new TreeNode());
-  buildTree(root, 2);
+  buildTree(root, 6);
   // cout << endl << scoremax << " " << nodeToRun << endl;
   shared_ptr<TreeNode> node = nodeToRun;
   if (node) {
     vector<Command*> cmds;
     while (node != root) {
-      cmds.push_back(node->commands[1]);
-      cmds.push_back(node->commands[0]);
+      if (node->teamNumber == 1) {
+        cmds.push_back(node->commands[1]);
+        cmds.push_back(node->commands[0]);
+      }
       node = node->parent;
     }
-    while (cmds.size()) {
+    while (cmds.size() && state->getFight()) {
       if (cmds.back())
         engine->addCommand(cmds.back());
       cmds.pop_back();
