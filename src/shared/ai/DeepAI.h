@@ -2,6 +2,7 @@
 #ifndef AI__DEEPAI__H
 #define AI__DEEPAI__H
 
+#include <memory>
 #include <vector>
 
 namespace ai {
@@ -20,8 +21,8 @@ namespace ai {
   class AI;
 }
 
-#include "AI.h"
 #include "TreeNode.h"
+#include "AI.h"
 
 namespace ai {
 
@@ -30,14 +31,14 @@ namespace ai {
     // Associations
     // Attributes
   private:
-    TreeNode* rootNode;
-    TreeNode* nodeToRun;
+    std::shared_ptr<TreeNode> rootNode;
+    std::shared_ptr<TreeNode> nodeToRun;
     int scoremax     = 0;
     // Operations
   public:
     DeepAI (state::State* state, engine::Engine* engine);
     std::vector<std::tuple<engine::MoveCommands*, engine::AttackCommand*,Score>> getBestActions (state::Character* character, int threshold = 0);
-    void buildTree (TreeNode* node, int depth, int teamNumber = 1);
+    void buildTree (std::shared_ptr<TreeNode> node, int depth, int teamNumber = 1);
     std::vector<state::Character*> getTurnOrder (std::vector<state::Character*> characters);
     void run (state::Character* character);
     // Setters and Getters

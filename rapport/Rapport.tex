@@ -346,7 +346,7 @@ Une liste de toutes les commandes de même score maximal est établie et une com
 
 \subsubsection{Intelligence avancée}
 
-L'IA balaye plusieurs options parmi ses meilleurs coups (actions avec un score au dessus d'un certain seuil fixé) grâce à un arbre de profondeur fixé, représenté par la classe TreeNode, mais cette fois elle peut anticiper les mouvements adverses (qui soustraient leur score au noeud de l'arbre) et permettre de changer plusieurs fois de personnage au lieu de les faire jouer séquentiellement. Le système de score reste identique à celui de l'intelligence heuristique. Un système de rollback permet d'annuler les actions éxécutées de proche en proche, modifiant directement l'état, au lieu de stocker plusieurs copies de l'état actuel.
+L'IA balaye plusieurs options parmi ses meilleurs coups (actions avec un score au dessus d'un certain seuil fixé) grâce à un arbre de profondeur fixé, représenté par la classe TreeNode, mais cette fois elle peut anticiper les mouvements adverses (qui soustraient leur score au noeud de l'arbre) si la profondeur de l'arbre est assez grande. Le système de score reste identique à celui de l'intelligence heuristique. Un système de rollback permet d'annuler les actions éxécutées de proche en proche, modifiant directement l'état, au lieu de stocker plusieurs copies de l'état actuel.
 
 \clearpage
 \subsection{Conception logiciel}

@@ -27,7 +27,7 @@ int AttackCommand::getAbilityNumber() {
   return abilityNumber;
 }
 
-// in absolute pos (not relative to character or view)
+// in relative pos
 
 void AttackCommand::setZones(bool cut) {
   int n = state->getN(), m = state->getM();
