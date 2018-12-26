@@ -2,8 +2,6 @@
 #ifndef ENGINE__ENGINE__H
 #define ENGINE__ENGINE__H
 
-#include <queue>
-#include <stack>
 #include <stdlib.h>
 
 namespace engine {
@@ -19,8 +17,8 @@ namespace engine {
     // Associations
     // Attributes
   private:
-    std::queue<Command*> commands;
-    std::stack<Command*> rollback;
+    std::deque<Command*> commands;
+    std::deque<Command*> rollback;
     bool reverse     = false;
     bool reverse_tmp     = false;
     // Operations
@@ -28,6 +26,7 @@ namespace engine {
     void addCommand (Command* command);
     void runCommand ();
     Command* getCommand ();
+    std::deque<Command*> getCommands (bool b = false);
     void clearCommands (bool b = false);
     std::size_t getSize ();
     bool getReverse ();

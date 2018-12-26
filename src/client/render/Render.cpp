@@ -1,6 +1,7 @@
 #include "Render.h"
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include <fstream>
 #include <iostream>
 #include "Sprites.h"
 #include "View.h"
@@ -320,8 +321,26 @@ void Render::display() {
     sf::Event event;
     while (window.pollEvent(event)) {
       // "close requested" event: we close the window
-      if (event.type == sf::Event::Closed)
+      if (event.type == sf::Event::Closed) {
         window.close();
+        deque<Command*> commands = engine->getCommands(true);
+        ofstream file;
+        file.open("replay.txt");
+        Json::Value root;
+        while (commands.size()) {
+          if (commands.front()) {
+            Json::Value json;
+            commands.front()->serialize(json);
+            if (json != Json::Value::null) {
+              root.append(json);
+            }
+          }
+          commands.pop_front();
+        }
+        Json::StyledWriter writer;
+        file << writer.write(root);
+        file.close();
+      }
 
       posView = {(float)xv * l, (float)yv * h};
       Vector2f posMouse{(float)MouseWorldView.x, (float)MouseWorldView.y};

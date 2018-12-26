@@ -2,9 +2,10 @@
 #ifndef ENGINE__MOVECOMMANDS__H
 #define ENGINE__MOVECOMMANDS__H
 
-#include <stdlib.h>
 #include "AStar.h"
+#include <stdlib.h>
 #include <vector>
+#include <json/json.h>
 
 namespace state {
   class State;
@@ -16,6 +17,7 @@ namespace state {
   class Character;
 };
 namespace engine {
+  class MoveCommands;
   class Command;
 }
 
@@ -27,17 +29,19 @@ namespace engine {
   class MoveCommands : public engine::Command {
     // Attributes
   private:
-    std::size_t i;
-    std::size_t j;
+    int i;
+    int j;
     AStar::Generator generator;
     std::size_t n;
     std::size_t m;
     // Operations
   public:
-    MoveCommands (state::State* state, Engine* engine, state::Character* character, std::size_t i, std::size_t j, bool reverse = false);
+    MoveCommands (state::State* state, Engine* engine, state::Character* character, int i, int j, bool reverse = false);
     std::vector<int> getDiff ();
     std::vector<std::vector<int>> getPath ();
     void execute ();
+    void const serialize (Json::Value& out);
+    static MoveCommands* deserialize (const Json::Value& in, state::State* state, engine::Engine* engine = nullptr);
   private:
     void setGenerator ();
     // Setters and Getters

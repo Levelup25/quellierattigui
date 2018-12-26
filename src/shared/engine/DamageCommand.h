@@ -3,12 +3,14 @@
 #define ENGINE__DAMAGECOMMAND__H
 
 #include <vector>
+#include <json/json.h>
 
 namespace state {
   class State;
 };
 namespace engine {
   class Engine;
+  class DamageCommand;
   class Command;
 }
 
@@ -29,6 +31,8 @@ namespace engine {
   public:
     DamageCommand (state::State* state, Engine* engine, std::vector<std::vector<int>> positions, std::vector<int> directions, int element, int lv, int dmg = 0, bool reverse = false);
     void execute ();
+    void const serialize (Json::Value& out);
+    static DamageCommand* deserialize (const Json::Value& in, state::State* state, engine::Engine* engine = nullptr);
     // Setters and Getters
   };
 

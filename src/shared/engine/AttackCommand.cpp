@@ -168,3 +168,29 @@ void AttackCommand::execute() {
     }
   }
 }
+
+void const AttackCommand::serialize(Json::Value& out) {
+  return;
+  out["command"] = "AttackCommand";
+  vector<Character*> characters = state->getCharacters();
+  int k = characters.size();
+  while (k--)
+    if (character == characters[k]) {
+      out["character"] = k;
+      break;
+    }
+  for (int k = 0; k < (int)position.size(); k++)
+    out["position"].append(position[k]);
+  out["abilityNumber"] = abilityNumber;
+}
+
+AttackCommand* AttackCommand::deserialize(const Json::Value& in,
+                                          State* state,
+                                          Engine* engine) {
+  Character* character = state->getCharacters()[in.get("character", 0).asInt()];
+  vector<int> position;
+  for (int k = 0; k < (int)in.get("position", 0).size(); k++)
+    position.push_back(in.get("position", 0)[k].asInt());
+  int abilityNumber = (int)in.get("abilityNumber", 0).asInt();
+  return new AttackCommand(state, engine, character, position, abilityNumber);
+}

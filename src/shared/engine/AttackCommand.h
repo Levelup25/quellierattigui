@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <stdlib.h>
+#include <json/json.h>
 
 namespace state {
   class Ability;
@@ -16,6 +17,7 @@ namespace state {
   class Character;
 };
 namespace engine {
+  class AttackCommand;
   class Command;
 }
 
@@ -41,6 +43,8 @@ namespace engine {
     void setZones (bool cut = true);
     std::vector<std::vector<int>> getZone (std::size_t i, bool cut = true);
     void execute ();
+    void const serialize (Json::Value& out);
+    static AttackCommand* deserialize (const Json::Value& in, state::State* state, engine::Engine* engine = nullptr);
     // Setters and Getters
   };
 

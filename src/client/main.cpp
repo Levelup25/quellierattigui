@@ -108,7 +108,8 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
 }
 
 int main(int argc, char* argv[]) {
-  srand(time(NULL));
+  // srand(time(NULL));
+  srand(0);
 
   State* state = new State();
   state_init(state);
@@ -232,6 +233,17 @@ int main(int argc, char* argv[]) {
     else if (strcmp(argv[i], "thread") == 0) {
     } else if (strcmp(argv[i], "record") == 0) {
     } else if (strcmp(argv[i], "play") == 0) {
+      ifstream file;
+      file.open("replay.txt");
+      Json::Reader reader;
+      Json::Value root;
+      reader.parse(file, root);
+      int size = root.size();
+      for (int k = 0; k < size; k++) {
+        engine->addCommand(Command::deserialize(root[k], state, engine));
+        // Json::StyledWriter writer;
+        // cout << writer.write(root[k]);
+      }
     }  // Livrables 4.2 et 4.final
     else if (strcmp(argv[i], "listen") == 0) {
     } else if (strcmp(argv[i], "network") == 0) {

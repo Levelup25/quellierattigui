@@ -2,6 +2,7 @@
 #ifndef ENGINE__COMMAND__H
 #define ENGINE__COMMAND__H
 
+#include <json/json.h>
 
 namespace state {
   class State;
@@ -11,6 +12,9 @@ namespace engine {
 };
 namespace state {
   class Character;
+};
+namespace engine {
+  class Command;
 }
 
 #include "Engine.h"
@@ -32,6 +36,8 @@ namespace engine {
   public:
     void setReverse (bool reverse = true);
     virtual void execute () = 0;
+    virtual void const serialize (Json::Value& out) = 0;
+    static Command* deserialize (const Json::Value& in, state::State* state, engine::Engine* engine = nullptr);
     // Setters and Getters
     const state::State*& getState() const;
     void setState(const state::State*& state);

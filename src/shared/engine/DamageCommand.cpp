@@ -60,3 +60,39 @@ void DamageCommand::execute() {
     engine->clearCommands(true);
   }
 }
+
+void const DamageCommand::serialize(Json::Value& out) {
+  // return;
+  out["command"] = "DamageCommand";
+  for (int k = 0; k < (int)positions.size(); k++)
+    out["ipos"].append(positions[k][0]);
+  for (int k = 0; k < (int)positions.size(); k++)
+    out["jpos"].append(positions[k][1]);
+  for (int k = 0; k < (int)directions.size(); k++)
+    out["directions"].append(directions[k]);
+  out["element"] = element;
+  out["lv"] = lv;
+  out["dmg"] = dmg;
+}
+
+DamageCommand* DamageCommand::deserialize(const Json::Value& in,
+                                          State* state,
+                                          Engine* engine) {
+  vector<vector<int>> positions;
+  vector<int> ipos, jpos;
+  int size = in.get("ipos", 0).size();
+  for (int k = 0; k < size; k++)
+    ipos.push_back(in.get("ipos", 0)[k].asInt());
+  for (int k = 0; k < size; k++)
+    jpos.push_back(in.get("jpos", 0)[k].asInt());
+  for (int k = 0; k < size; k++)
+    positions.push_back({ipos[k], jpos[k]});
+  vector<int> directions;
+  for (int k = 0; k < (int)in.get("directions", 0).size(); k++)
+    directions.push_back(in.get("directions", 0)[k].asInt());
+  int element = in.get("element", 0).asInt();
+  int lv = in.get("lv", 0).asInt();
+  int dmg = in.get("dmg", 0).asInt();
+  return new DamageCommand(state, engine, positions, directions, element, lv,
+                           dmg);
+}

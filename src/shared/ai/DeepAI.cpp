@@ -46,10 +46,8 @@ vector<tuple<MoveCommands*, AttackCommand*, Score>> DeepAI::getBestActions(
     listatk.push_back(static_cast<AttackCommand*>(pcommand));
   }
 
-  Score score;
-  score.setScoreAction(listmv[0], listatk[0], character, allies, ennemies);
   vector<Score> scoresBest;
-  int scoreMax = score.getScore();
+  int scoreMax = 1;
   // search best actions
   int i = 0, j = 0;
   vector<int> imax = {0}, jmax = {0};
@@ -95,7 +93,6 @@ vector<tuple<MoveCommands*, AttackCommand*, Score>> DeepAI::getBestActions(
 }
 
 void DeepAI::buildTree(shared_ptr<TreeNode> node, int depth, int teamNumber) {
-  int threshold = -1;
   if (depth == 0) {
     if (node->score > scoremax) {
       nodeToRun = node;
@@ -103,6 +100,8 @@ void DeepAI::buildTree(shared_ptr<TreeNode> node, int depth, int teamNumber) {
     }
     return;
   }
+
+  int threshold = -1;
 
   shared_ptr<Fight> fight = state->getFight();
   vector<Character*> allies, ennemies;
@@ -115,22 +114,28 @@ void DeepAI::buildTree(shared_ptr<TreeNode> node, int depth, int teamNumber) {
     actionss.push_back(getBestActions(character, threshold));
   }
 
-  if (actionss.size() == 0) {
-    // depth--;
-    // if (depth == 0) {
-    //   if (node->parent->score > scoremax) {
-    //     nodeToRun = node->parent;
-    //     scoremax = node->parent->score;
-    //   }
-    //   return;
-    // }
-    teamNumber = 1 - teamNumber;
-    allies = fight->getFightingCharacters(teamNumber);
-    ennemies = fight->getFightingCharacters(1 - teamNumber);
-    for (auto character : allies) {
-      actionss.push_back(getBestActions(character, threshold));
-    }
+  int size = 0;
+  for (auto actions : actionss)
+    size += actions.size();
+  if (!size) {
+    buildTree(node, depth - 1, 1 - teamNumber);
   }
+  // if (size == 0) {
+  //   // depth--;
+  //   // if (depth == 0) {
+  //   //   if (node->parent->score > scoremax) {
+  //   //     nodeToRun = node->parent;
+  //   //     scoremax = node->parent->score;
+  //   //   }
+  //   //   return;
+  //   // }
+  //   teamNumber = 1 - teamNumber;
+  //   allies = fight->getFightingCharacters(teamNumber);
+  //   ennemies = fight->getFightingCharacters(1 - teamNumber);
+  //   for (auto character : allies) {
+  //     actionss.push_back(getBestActions(character, threshold));
+  //   }
+  // }
 
   int k = 0, k2 = 0;
   for (auto character : allies) {
@@ -158,9 +163,8 @@ void DeepAI::buildTree(shared_ptr<TreeNode> node, int depth, int teamNumber) {
         childNode->teamNumber = teamNumber;
         childNode->score =
             node->score + (2 * teamNumber - 1) * get<2>(action).getScore();
-        // cout << childNode << " " << teamNumber << " " <<
-        // get<2>(action).getScore()
-        //      << " " << depth << endl;
+        cout << childNode << " " << get<2>(action).getScore() << " " << depth
+             << " " << teamNumber << " " << size << endl;
         node->children.push_back(childNode);
         if (mv) {
           MoveCommand mvcmd(state, character, i0 + i, j0 + j, i + j);
@@ -173,7 +177,9 @@ void DeepAI::buildTree(shared_ptr<TreeNode> node, int depth, int teamNumber) {
                                    ->getDamage());
           dmgcmd.execute();
         }
-        buildTree(childNode, depth - 1);
+
+        buildTree(childNode, depth, teamNumber);
+
         if (atk) {
           DamageCommand dmgcmd(state, engine, atk->getZone(1), {-1}, 0, 0,
                                character->getWeapon()
@@ -195,7 +201,7 @@ vector<Character*> DeepAI::getTurnOrder(vector<Character*> characters) {
   vector<Character*> v;
   scoremax = 0;
   shared_ptr<TreeNode> root(new TreeNode());
-  buildTree(root, 6);
+  buildTree(root, 2);
   // cout << endl << scoremax << " " << nodeToRun << endl;
   shared_ptr<TreeNode> node = nodeToRun;
   if (node) {

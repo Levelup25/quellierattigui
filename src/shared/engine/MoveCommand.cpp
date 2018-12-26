@@ -50,3 +50,28 @@ void MoveCommand::execute() {
 
   state->moveCharacter(character, i, j);
 }
+
+void const MoveCommand::serialize(Json::Value& out) {
+  // return;
+  out["command"] = "MoveCommand";
+  vector<Character*> characters = state->getCharacters();
+  int k = characters.size();
+  while (k--)
+    if (character == characters[k]) {
+      out["character"] = k;
+      break;
+    }
+  out["i"] = i;
+  out["j"] = j;
+  out["pm"] = pm;
+}
+
+MoveCommand* MoveCommand::deserialize(const Json::Value& in,
+                                      State* state,
+                                      Engine* engine) {
+  Character* character = state->getCharacters()[in.get("character", 0).asInt()];
+  float i = in.get("i", 0).asFloat();
+  float j = in.get("j", 0).asFloat();
+  int pm = in.get("pm", 0).asInt();
+  return new MoveCommand(state, character, i, j, pm);
+}

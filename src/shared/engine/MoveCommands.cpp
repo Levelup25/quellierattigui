@@ -10,8 +10,8 @@ using namespace engine;
 MoveCommands::MoveCommands(State* state,
                            Engine* engine,
                            Character* character,
-                           size_t i,
-                           size_t j,
+                           int i,
+                           int j,
                            bool reverse) {
   this->state = state;
   this->engine = engine;
@@ -127,4 +127,27 @@ void MoveCommands::execute() {
     i -= iinit, j -= jinit;
   } else
     engine->addCommand(nullptr);
+}
+
+void const MoveCommands::serialize(Json::Value& out) {
+  return;
+  out["command"] = "MoveCommands";
+  vector<Character*> characters = state->getCharacters();
+  int k = characters.size();
+  while (k--)
+    if (character == characters[k]) {
+      out["character"] = k;
+      break;
+    }
+  out["i"] = i;
+  out["j"] = j;
+}
+
+MoveCommands* MoveCommands::deserialize(const Json::Value& in,
+                                        State* state,
+                                        Engine* engine) {
+  Character* character = state->getCharacters()[in.get("character", 0).asInt()];
+  size_t i = in.get("i", 0).asInt();
+  size_t j = in.get("j", 0).asInt();
+  return new MoveCommands(state, engine, character, i, j);
 }

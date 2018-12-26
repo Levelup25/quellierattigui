@@ -3,6 +3,7 @@
 #define ENGINE__FIGHTCOMMAND__H
 
 #include <vector>
+#include <json/json.h>
 
 namespace state {
   class Team;
@@ -10,6 +11,7 @@ namespace state {
 };
 namespace engine {
   class Engine;
+  class FightCommand;
   class Command;
 }
 
@@ -31,6 +33,8 @@ namespace engine {
   public:
     FightCommand (state::State* state, Engine* engine, state::Team* att, state::Team* def, bool reverse = false);
     void execute ();
+    void const serialize (Json::Value& out);
+    static FightCommand* deserialize (const Json::Value& in, state::State* state, engine::Engine* engine = nullptr);
     // Setters and Getters
   };
 

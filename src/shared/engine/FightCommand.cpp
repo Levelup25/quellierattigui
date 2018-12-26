@@ -102,3 +102,28 @@ void FightCommand::execute() {
     }
   }
 }
+
+void const FightCommand::serialize(Json::Value& out) {
+  out["command"] = "FightCommand";
+  vector<Team*> teams = state->getTeams();
+  int k = teams.size();
+  while (k--)
+    if (att == teams[k]) {
+      out["att"] = k;
+      break;
+    }
+  k = teams.size();
+  while (k--)
+    if (def == teams[k]) {
+      out["def"] = k;
+      break;
+    }
+}
+
+FightCommand* FightCommand::deserialize(const Json::Value& in,
+                                        State* state,
+                                        Engine* engine) {
+  Team* att = state->getTeams()[in.get("att", 0).asInt()];
+  Team* def = state->getTeams()[in.get("def", 0).asInt()];
+  return new FightCommand(state, engine, att, def);
+}

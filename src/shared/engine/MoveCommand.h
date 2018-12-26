@@ -2,12 +2,15 @@
 #ifndef ENGINE__MOVECOMMAND__H
 #define ENGINE__MOVECOMMAND__H
 
+#include <json/json.h>
 
 namespace state {
   class State;
   class Character;
 };
 namespace engine {
+  class MoveCommand;
+  class Engine;
   class Command;
 }
 
@@ -26,6 +29,8 @@ namespace engine {
   public:
     MoveCommand (state::State* state, state::Character* character, float i, float j, int pm = 0, bool reverse = false);
     void execute ();
+    void const serialize (Json::Value& out);
+    static MoveCommand* deserialize (const Json::Value& in, state::State* state, engine::Engine* engine = nullptr);
     // Setters and Getters
   };
 
