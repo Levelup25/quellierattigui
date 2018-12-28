@@ -1,19 +1,19 @@
-id nom element id_capacites(4)
-1 epee_neutre 0 1
-2 epee_d'eau 1 1 2
-3 epee_de_terre 2 1 3
-4 epee_de_feu 3 1 4
-5 epee_d'air 4 1 5
-6 epee_elementaire 0 2 3 4 5
-7 arc_neutre 0 1
-8 arc_d'eau 1 1 2
-9 arc_de_terre 2 1 3
-10 arc_de_feu 3 1 4
-11 arc_d'air 4 1 5
-12 arc_elementaire 0 2 3 4 5
-13 baton_neutre 0 1
-14 baton_d'eau 1 1 2
-15 baton_de_terre 2 1 3
-16 baton_de_feu 3 1 4
-17 baton_d'air 4 1 5
-18 baton_elementaire 0 2 3 4 5
+id id_sprite nom element id_capacites(4)
+1 24 epee_neutre 0 1
+2 24 epee_d'eau 1 1 2
+3 24 epee_de_terre 2 1 3
+4 24 epee_de_feu 3 1 4
+5 24 epee_d'air 4 1 5
+6 24 epee_elementaire 0 2 3 4 5
+7 39 arc_neutre 0 1
+8 39 arc_d'eau 1 1 2
+9 39 arc_de_terre 2 1 3
+10 39 arc_de_feu 3 1 4
+11 39 arc_d'air 4 1 5
+12 39 arc_elementaire 0 2 3 4 5
+13 36 baton_neutre 0 1
+14 36 baton_d'eau 1 1 2
+15 36 baton_de_terre 2 1 3
+16 36 baton_de_feu 3 1 4
+17 36 baton_d'air 4 1 5
+18 36 baton_elementaire 0 2 3 4 5

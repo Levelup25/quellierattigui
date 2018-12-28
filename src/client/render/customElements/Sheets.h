@@ -6,8 +6,9 @@
 #include "CustomElement.h"
 
 namespace render {
-Element* CharacterSheet(state::Character* pcharacter = nullptr);
-Element* WeaponSheet(state::Weapon* pweapon = nullptr);
+Element* TeamSheet(state::Team* team = nullptr);
+Element* CharacterSheet(state::Character* character = nullptr);
+Element* WeaponSheet(state::Weapon* weapon = nullptr);
 }  // namespace render
 
 #endif

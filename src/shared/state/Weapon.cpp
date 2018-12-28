@@ -25,9 +25,10 @@ Weapon::Weapon(int id) {
       istringstream iss(line);
       vector<std::string> results(istream_iterator<string>{iss},
                                   istream_iterator<string>());
-      this->name = results[1];
-      this->element = (ElementType)atoi(results[2].c_str());
-      for (unsigned int j = 3; j < results.size(); j++)
+      this->id = atoi(results[1].c_str());
+      this->name = results[2];
+      this->element = (ElementType)atoi(results[3].c_str());
+      for (unsigned int j = 4; j < results.size(); j++)
         abilities.push_back(new Ability(atoi(results[j].c_str())));
       break;
     }

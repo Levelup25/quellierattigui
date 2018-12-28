@@ -278,6 +278,7 @@ void Render::display() {
 
   Element* csheet = nullptr;
   Element* wsheet = nullptr;
+  Element* tsheet = nullptr;
   Character* prev = selectedcharacter;
   auto OpenedWindows = worldView.getChildren();
 
@@ -436,7 +437,16 @@ void Render::display() {
               !state->getFight())
             engine->toggleReverse();
         } else if (event.key.code == sf::Keyboard::T) {
-          cout << worldView.getTreeView();
+          // cout << worldView.getTreeView();
+          state->etatCombat = 0;
+          if (!worldView.getChild(tsheet)) {
+            tsheet = TeamSheet(state->getTeam(selectedcharacter));
+            worldView.add(tsheet);
+            tsheet->setPosRelative({"25%", "25%"});
+          } else {
+            worldView.remove(tsheet);
+            tsheet = nullptr;
+          }
         } else if (event.key.code == sf::Keyboard::W) {
           state->etatCombat = 0;
           if (!worldView.getChild(wsheet)) {
@@ -471,23 +481,44 @@ void Render::display() {
     this->drawAnimations(window, worldView, sprites);
 
     if (OpenedWindows != worldView.getChildren()) {
-      bool c = false, w = false;
+      bool t = false, c = false, w = false;
       for (auto child : worldView.getChildren()) {
-        if (child != csheet && child != wsheet) {
-          if (!wsheet && child == csheet->getLinks()[0]) {
-            wsheet = child->getCopy();
-            worldView.add(wsheet);
-            csheet->getLinked()[0]->setLink(wsheet->getCopy());
+        if (child != tsheet && child != csheet && child != wsheet) {
+          if (!csheet) {
+            for (int i = 0; i < (int)tsheet->getLinked().size(); i++)
+              if (child == tsheet->getLinks()[i]) {
+                csheet = child->getCopy();
+                worldView.add(csheet);
+                tsheet->getLinked()[i]->setLink(csheet->getCopy());
+              }
+          }
+          if (!wsheet) {
+            for (int i = 0; i < (int)tsheet->getLinked().size(); i++)
+              if (child == tsheet->getLinks()[i]) {
+                wsheet = child->getCopy();
+                worldView.add(wsheet);
+                tsheet->getLinked()[i]->setLink(wsheet->getCopy());
+              }
+            for (int i = 0; i < (int)csheet->getLinked().size(); i++)
+              if (child == csheet->getLinks()[i]) {
+                wsheet = child->getCopy();
+                worldView.add(wsheet);
+                csheet->getLinked()[i]->setLink(wsheet->getCopy());
+              }
           }
           worldView.remove(child);
         }
       }
       for (auto child : worldView.getChildren()) {
-        if (child == csheet)
+        if (child == tsheet)
+          t = true;
+        else if (child == csheet)
           c = true;
         else if (child == wsheet)
           w = true;
       }
+      if (!t)
+        tsheet = nullptr;
       if (!c)
         csheet = nullptr;
       if (!w)
@@ -496,6 +527,13 @@ void Render::display() {
     }
 
     if (prev != selectedcharacter) {
+      if (worldView.getChild(tsheet)) {
+        Relatif2 r = tsheet->getPosRelative();
+        worldView.remove(tsheet);
+        tsheet = TeamSheet(state->getTeam(selectedcharacter));
+        worldView.add(tsheet);
+        tsheet->setPosRelative(r);
+      }
       if (worldView.getChild(csheet)) {
         Relatif2 r = csheet->getPosRelative();
         worldView.remove(csheet);
