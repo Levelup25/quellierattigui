@@ -112,6 +112,8 @@ vector<Character*> HeuristicAI::getTurnOrder(vector<Character*> characters) {
 }
 
 void HeuristicAI::run(Character* character) {
+  if (!state->isFighting())
+    return;
   vector<Command*> listmv = this->listCommands(character, 0);
   vector<Command*> listatk = this->listCommands(character, 1);
   MoveCommands* mv;

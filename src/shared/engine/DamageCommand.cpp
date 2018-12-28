@@ -1,5 +1,7 @@
 #include "DamageCommand.h"
 #include <algorithm>
+#include <fstream>
+#include <iostream>
 #include "FightCommand.h"
 
 using namespace std;
@@ -57,6 +59,41 @@ void DamageCommand::execute() {
       (fight->getFightingCharacters(0).size() == 0 ||
        fight->getFightingCharacters(1).size() == 0)) {
     state->endFight();
+
+    unsigned int seed;
+    {
+      ifstream file;
+      Json::Reader reader;
+      Json::Value root;
+      file.open("replay.txt");
+      reader.parse(file, root);
+      seed = root[0].get("seed", 0).asUInt();
+      file.close();
+    }
+    deque<Command*> commands = engine->getCommands(true);
+    ofstream file;
+    Json::Value root;
+    Json::Value json;
+    if (seed == state->seed) {
+      file.open("replay.txt", ios::app);
+    } else {
+      file.open("replay.txt", ios::trunc);
+      json["seed"] = state->seed;
+      root.append(json);
+    }
+    while (commands.size()) {
+      if (commands.front()) {
+        json = Json::Value::null;
+        commands.front()->serialize(json);
+        if (json != Json::Value::null) {
+          root.append(json);
+        }
+      }
+      commands.pop_front();
+    }
+    Json::StyledWriter writer;
+    file << writer.write(root);
+    file.close();
     engine->clearCommands(true);
   }
 }

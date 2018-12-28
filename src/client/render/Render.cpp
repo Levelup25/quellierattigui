@@ -323,13 +323,33 @@ void Render::display() {
       // "close requested" event: we close the window
       if (event.type == sf::Event::Closed) {
         window.close();
+
+        unsigned int seed;
+        {
+          ifstream file;
+          Json::Reader reader;
+          Json::Value root;
+          file.open("replay.txt");
+          reader.parse(file, root);
+          seed = root[0].get("seed", 0).asUInt();
+          file.close();
+        }
+
         deque<Command*> commands = engine->getCommands(true);
         ofstream file;
-        file.open("replay.txt");
         Json::Value root;
+        Json::Value json;
+        if (seed == state->seed) {
+          file.open("replay.txt", ios::app);
+        } else {
+          file.open("replay.txt", ios::trunc);
+          json["seed"] = state->seed;
+          root.append(json);
+        }
+
         while (commands.size()) {
           if (commands.front()) {
-            Json::Value json;
+            json = Json::Value::null;
             commands.front()->serialize(json);
             if (json != Json::Value::null) {
               root.append(json);
@@ -379,8 +399,11 @@ void Render::display() {
                     fight->toDeploy.push_back(c);
                 }
                 if (fight->toDeploy.size() && selectedcharacter->getI() == X &&
-                    selectedcharacter->getJ() == Y)
+                    selectedcharacter->getJ() == Y) {
                   fight->toDeploy.erase(fight->toDeploy.begin());
+                  engine->addCommand(
+                      new MoveCommand(state, selectedcharacter, X, Y));
+                }
               }
             } else if (state->etatCombat == 0) {
               if (!state->isFighting()) {

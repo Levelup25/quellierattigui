@@ -20,11 +20,13 @@ namespace render {
   class Sprites;
 };
 namespace engine {
+  class MoveCommand;
   class FightCommand;
   class AttackCommand;
   class MoveCommands;
 }
 
+#include "engine/MoveCommand.h"
 #include "engine/FightCommand.h"
 #include "engine/AttackCommand.h"
 #include "engine/MoveCommands.h"

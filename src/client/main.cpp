@@ -108,16 +108,25 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
 }
 
 int main(int argc, char* argv[]) {
-  // srand(time(NULL));
-  srand(0);
-
-  State* state = new State();
-  state_init(state);
-  Engine* engine = new Engine();
-  Render* render = new Render(state, engine);
-  AI* ai;
-
   for (int i = 1; i < argc; i++) {
+    ifstream file;
+    Json::Reader reader;
+    Json::Value root;
+    unsigned int seed = time(NULL);
+    if (strcmp(argv[i], "play") == 0) {
+      file.open("replay.txt");
+      reader.parse(file, root);
+      seed = root[0].get("seed", 0).asUInt();
+    }
+
+    State* state = new State();
+    state->seed = seed;
+    srand(seed);
+    state_init(state);
+    Engine* engine = new Engine();
+    Render* render = new Render(state, engine);
+    AI* ai = new HeuristicAI(state, engine);
+
     // Livrable 1.1
     if (strcmp(argv[i], "hello") == 0) {
       cout << "Bonjour le monde !" << endl;
@@ -224,7 +233,7 @@ int main(int argc, char* argv[]) {
       ai = new RandomAI(state, engine);
     }  // Livrable 3.1
     else if (strcmp(argv[i], "heuristic_ai") == 0) {
-      ai = new HeuristicAI(state, engine);
+      // ai = new HeuristicAI(state, engine);
     }  // Livrable 3.final
     else if (strcmp(argv[i], "rollback") == 0) {
     } else if (strcmp(argv[i], "deep_ai") == 0) {
@@ -233,17 +242,13 @@ int main(int argc, char* argv[]) {
     else if (strcmp(argv[i], "thread") == 0) {
     } else if (strcmp(argv[i], "record") == 0) {
     } else if (strcmp(argv[i], "play") == 0) {
-      ifstream file;
-      file.open("replay.txt");
-      Json::Reader reader;
-      Json::Value root;
-      reader.parse(file, root);
       int size = root.size();
-      for (int k = 0; k < size; k++) {
+      for (int k = 1; k < size; k++) {
         engine->addCommand(Command::deserialize(root[k], state, engine));
         // Json::StyledWriter writer;
         // cout << writer.write(root[k]);
       }
+      file.close();
     }  // Livrables 4.2 et 4.final
     else if (strcmp(argv[i], "listen") == 0) {
     } else if (strcmp(argv[i], "network") == 0) {

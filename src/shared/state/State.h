@@ -29,6 +29,7 @@ namespace state {
   public:
     int etatCombat     = 0;
     std::vector<std::vector<int>> animations;
+    unsigned int seed;
   private:
     std::size_t I     = 144;
     std::size_t J     = 144;

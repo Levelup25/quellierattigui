@@ -17,13 +17,6 @@ FightCommand::FightCommand(State* state,
   this->att = att;
   this->def = def;
   this->reverse = reverse;
-  if (state->getFight()) {
-    for (auto c : state->getFight()->getFightingCharacters(
-             (state->getFight()->getTurn() + 1) % 2)) {
-      pa.push_back(c->getPaCurrent() - c->getPaMax());
-      pm.push_back(c->getPmCurrent() - c->getPmMax());
-    }
-  }
 }
 
 void FightCommand::execute() {
@@ -82,6 +75,8 @@ void FightCommand::execute() {
       int i = 0;
       for (auto c : state->getFight()->getFightingCharacters(
                (state->getFight()->getTurn() + 1) % 2)) {
+        pa.push_back(c->getPaCurrent() - c->getPaMax());
+        pm.push_back(c->getPmCurrent() - c->getPmMax());
         c->removePa(pa[i]);
         c->removePm(pm[i++]);
       }
