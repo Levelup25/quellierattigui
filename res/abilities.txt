@@ -1,6 +1,72 @@
-id nom pa dmg element dmg_rdc cooldown target min max effect min max
-1 dague 1 2 0 100 0 1 1 1 1 0 0
-2 blizzard 1 1 1 100 0 1 1 3 0 0 1
-3 rocher 1 1 2 100 0 1 1 3 2 0 1
-4 explosion 1 1 3 100 0 0 1 2 0 0 1
-5 vent 1 1 4 100 0 2 1 3 1 0 1
+[
+   {
+      "name" : "dague",
+      "pa" : 1,
+      "damage" : 2,
+      "element" : 0,
+      "damageReduce" : 100,
+      "cooldownInitial" : 0,
+      "targetType" : 1,
+      "targetMin" : 1,
+      "targetMax" : 1,
+      "effectType" : 1,
+      "effectMin" : 0,
+      "effectMax" : 0
+   },
+   {
+      "name" : "blizzard",
+      "pa" : 1,
+      "damage" : 1,
+      "element" : 1,
+      "damageReduce" : 100,
+      "cooldownInitial" : 0,
+      "targetType" : 1,
+      "targetMin" : 1,
+      "targetMax" : 3,
+      "effectType" : 0,
+      "effectMin" : 0,
+      "effectMax" : 1
+   },
+   {
+      "name" : "rocher",
+      "pa" : 1,
+      "damage" : 1,
+      "element" : 2,
+      "damageReduce" : 100,
+      "cooldownInitial" : 0,
+      "targetType" : 1,
+      "targetMin" : 1,
+      "targetMax" : 3,
+      "effectType" : 2,
+      "effectMin" : 0,
+      "effectMax" : 1
+   },
+   {
+      "name" : "explosion",
+      "pa" : 1,
+      "damage" : 1,
+      "element" : 3,
+      "damageReduce" : 100,
+      "cooldownInitial" : 0,
+      "targetType" : 0,
+      "targetMin" : 1,
+      "targetMax" : 2,
+      "effectType" : 0,
+      "effectMin" : 0,
+      "effectMax" : 1
+   },
+   {
+      "name" : "vent",
+      "pa" : 1,
+      "damage" : 1,
+      "element" : 4,
+      "damageReduce" : 100,
+      "cooldownInitial" : 0,
+      "targetType" : 2,
+      "targetMin" : 1,
+      "targetMax" : 3,
+      "effectType" : 1,
+      "effectMin" : 0,
+      "effectMax" : 1
+   },
+]

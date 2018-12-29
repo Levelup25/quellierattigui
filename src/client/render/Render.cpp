@@ -276,9 +276,10 @@ void Render::display() {
   sf::Sprite sprite;
   Sprites sprites(nb);
 
+  Element* tsheet = nullptr;
   Element* csheet = nullptr;
   Element* wsheet = nullptr;
-  Element* tsheet = nullptr;
+  Element* asheet = nullptr;
   Character* prev = selectedcharacter;
   auto OpenedWindows = worldView.getChildren();
 
@@ -447,6 +448,16 @@ void Render::display() {
             worldView.remove(tsheet);
             tsheet = nullptr;
           }
+        } else if (event.key.code == sf::Keyboard::C) {
+          state->etatCombat = 0;
+          if (!worldView.getChild(csheet)) {
+            csheet = CharacterSheet(selectedcharacter);
+            worldView.add(csheet);
+            csheet->setPosRelative({"25%", "25%"});
+          } else {
+            worldView.remove(csheet);
+            csheet = nullptr;
+          }
         } else if (event.key.code == sf::Keyboard::W) {
           state->etatCombat = 0;
           if (!worldView.getChild(wsheet)) {
@@ -457,15 +468,16 @@ void Render::display() {
             worldView.remove(wsheet);
             wsheet = nullptr;
           }
-        } else if (event.key.code == sf::Keyboard::C) {
+        } else if (event.key.code == sf::Keyboard::A) {
           state->etatCombat = 0;
-          if (!worldView.getChild(csheet)) {
-            csheet = CharacterSheet(selectedcharacter);
-            worldView.add(csheet);
-            csheet->setPosRelative({"25%", "25%"});
+          if (!worldView.getChild(asheet)) {
+            asheet = AbilitySheet(
+                selectedcharacter->getWeapon()->getAbility(abilityNumber));
+            worldView.add(asheet);
+            asheet->setPosRelative({"50%", "25%"});
           } else {
-            worldView.remove(csheet);
-            csheet = nullptr;
+            worldView.remove(asheet);
+            asheet = nullptr;
           }
         }
       }
@@ -481,9 +493,10 @@ void Render::display() {
     this->drawAnimations(window, worldView, sprites);
 
     if (OpenedWindows != worldView.getChildren()) {
-      bool t = false, c = false, w = false;
+      bool t = false, c = false, w = false, a = false;
       for (auto child : worldView.getChildren()) {
-        if (child != tsheet && child != csheet && child != wsheet) {
+        if (child != tsheet && child != csheet && child != wsheet &&
+            child != asheet) {
           if (!csheet) {
             for (int i = 0; i < (int)tsheet->getLinked().size(); i++)
               if (child == tsheet->getLinks()[i]) {
@@ -506,6 +519,14 @@ void Render::display() {
                 csheet->getLinked()[i]->setLink(wsheet->getCopy());
               }
           }
+          if (!asheet) {
+            for (int i = 0; i < (int)wsheet->getLinked().size(); i++)
+              if (child == wsheet->getLinks()[i]) {
+                asheet = child->getCopy();
+                worldView.add(asheet);
+                wsheet->getLinked()[i]->setLink(asheet->getCopy());
+              }
+          }
           worldView.remove(child);
         }
       }
@@ -516,6 +537,8 @@ void Render::display() {
           c = true;
         else if (child == wsheet)
           w = true;
+        else if (child == asheet)
+          a = true;
       }
       if (!t)
         tsheet = nullptr;
@@ -523,6 +546,8 @@ void Render::display() {
         csheet = nullptr;
       if (!w)
         wsheet = nullptr;
+      if (!a)
+        asheet = nullptr;
       OpenedWindows = worldView.getChildren();
     }
 
@@ -547,6 +572,13 @@ void Render::display() {
         wsheet = WeaponSheet(selectedcharacter->getWeapon());
         worldView.add(wsheet);
         wsheet->setPosRelative(r);
+      }
+      if (worldView.getChild(asheet)) {
+        Relatif2 r = asheet->getPosRelative();
+        worldView.remove(asheet);
+        asheet = WeaponSheet(selectedcharacter->getWeapon());
+        worldView.add(asheet);
+        asheet->setPosRelative(r);
       }
       prev = selectedcharacter;
     }

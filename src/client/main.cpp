@@ -38,8 +38,11 @@ void cout_terminal() {
   cout << "Les informations sur la capacité sont affichés à droite" << endl;
   cout << "Pointer un personnage affiche également ses informations à droite"
        << endl;
+  cout << "Appuyez sur T pour ouvrir/fermer la fiche d'équipe" << endl;
   cout << "Appuyez sur C pour ouvrir/fermer la fiche du personnage" << endl;
   cout << "Appuyez sur W pour ouvrir/fermer la fiche d'arme" << endl;
+  cout << "Appuyez sur A pour ouvrir/fermer la fiche des compétences d'armes"
+       << endl;
   cout << "Cliquer sur un sprite dans une fenêtre peut ouvrir d'autres fenêtres"
        << endl;
   cout << "Appuyez sur R pour effectuer un rollback, puis de nouveau sur R "
@@ -59,7 +62,7 @@ void state_init(State* state) {
       c->setPm(2 + rand() % 5);
       c->setPv(1 + rand() % 4);
       c->setPa(3 + rand() % 2);
-      Weapon* w = new Weapon(1 + rand() % 18);
+      Weapon* w = new Weapon(rand() % 18);
       c->setWeapon(w);
       for (auto a : w->getAbilities()) {
         int r3 = rand() % 3;

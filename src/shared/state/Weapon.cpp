@@ -1,7 +1,7 @@
 #include "Weapon.h"
 #include <fstream>
 #include <iterator>
-#include <sstream>
+#include "json/json.h"
 
 using namespace std;
 using namespace state;
@@ -15,25 +15,19 @@ Weapon::Weapon(ElementType element,
 }
 
 Weapon::Weapon(int id) {
-  string line;
-  ifstream file("res/weapons.txt");
-
-  if (file.is_open()) {
-    while (!file.eof()) {
-      for (int i = 0; i <= id; i++)
-        getline(file, line);
-      istringstream iss(line);
-      vector<std::string> results(istream_iterator<string>{iss},
-                                  istream_iterator<string>());
-      this->id = atoi(results[1].c_str());
-      this->name = results[2];
-      this->element = (ElementType)atoi(results[3].c_str());
-      for (unsigned int j = 4; j < results.size(); j++)
-        abilities.push_back(new Ability(atoi(results[j].c_str())));
-      break;
-    }
-    file.close();
-  }
+  ifstream file;
+  Json::Reader reader;
+  Json::Value root;
+  Json::Value weapon;
+  file.open("res/weapons.txt");
+  reader.parse(file, root);
+  weapon = root[id];
+  this->id = weapon.get("id", 0).asInt();
+  this->name = weapon.get("name", 0).asString();
+  this->element = (ElementType)weapon.get("element", 0).asInt();
+  for (int i = 0; i < (int)weapon.get("abilities", 0).size(); i++)
+    abilities.push_back(new Ability(weapon.get("abilities", 0)[i].asInt()));
+  file.close();
 }
 
 void Weapon::addAbility(Ability* ability) {

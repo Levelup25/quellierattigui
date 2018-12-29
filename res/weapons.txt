@@ -1,19 +1,110 @@
-id id_sprite nom element id_capacites(4)
-1 24 epee_neutre 0 1
-2 24 epee_d'eau 1 1 2
-3 24 epee_de_terre 2 1 3
-4 24 epee_de_feu 3 1 4
-5 24 epee_d'air 4 1 5
-6 24 epee_elementaire 0 2 3 4 5
-7 39 arc_neutre 0 1
-8 39 arc_d'eau 1 1 2
-9 39 arc_de_terre 2 1 3
-10 39 arc_de_feu 3 1 4
-11 39 arc_d'air 4 1 5
-12 39 arc_elementaire 0 2 3 4 5
-13 36 baton_neutre 0 1
-14 36 baton_d'eau 1 1 2
-15 36 baton_de_terre 2 1 3
-16 36 baton_de_feu 3 1 4
-17 36 baton_d'air 4 1 5
-18 36 baton_elementaire 0 2 3 4 5
+[
+   {
+      "id" : 24,
+      "name" : "epee neutre",
+      "element" : 0,
+      "abilities" : [ 0 ]
+   },
+   {
+      "id" : 24,
+      "name" : "epee d'eau",
+      "element" : 1,
+      "abilities" : [ 0, 1 ]
+   },
+   {
+      "id" : 24,
+      "name" : "epee de terre",
+      "element" : 2,
+      "abilities" : [ 0, 2 ]
+   },
+   {
+      "id" : 24,
+      "name" : "epee de feu",
+      "element" : 3,
+      "abilities" : [ 0, 3 ]
+   },
+   {
+      "id" : 24,
+      "name" : "epee d'air",
+      "element" : 4,
+      "abilities" : [ 0, 4 ]
+   },
+   {
+      "id" : 24,
+      "name" : "epee elementaire",
+      "element" : 0,
+      "abilities" : [ 1, 2, 3, 4 ]
+   },
+   {
+      "id" : 39,
+      "name" : "arc neutre",
+      "element" : 0,
+      "abilities" : [ 0 ]
+   },
+   {
+      "id" : 39,
+      "name" : "arc d'eau",
+      "element" : 1,
+      "abilities" : [ 0, 1 ]
+   },
+   {
+      "id" : 39,
+      "name" : "arc de terre",
+      "element" : 2,
+      "abilities" : [ 0, 2 ]
+   },
+   {
+      "id" : 39,
+      "name" : "arc de feu",
+      "element" : 3,
+      "abilities" : [ 0, 3 ]
+   },
+   {
+      "id" : 39,
+      "name" : "arc d'air",
+      "element" : 4,
+      "abilities" : [ 0, 4 ]
+   },
+   {
+      "id" : 39,
+      "name" : "arc elementaire",
+      "element" : 0,
+      "abilities" : [ 1, 2, 3, 4 ]
+   },
+   {
+      "id" : 36,
+      "name" : "baton neutre",
+      "element" : 0,
+      "abilities" : [ 0 ]
+   },
+   {
+      "id" : 36,
+      "name" : "baton d'eau",
+      "element" : 1,
+      "abilities" : [ 0, 1 ]
+   },
+   {
+      "id" : 36,
+      "name" : "baton de terre",
+      "element" : 2,
+      "abilities" : [ 0, 2 ]
+   },
+   {
+      "id" : 36,
+      "name" : "baton de feu",
+      "element" : 3,
+      "abilities" : [ 0, 3 ]
+   },
+   {
+      "id" : 36,
+      "name" : "baton d'air",
+      "element" : 4,
+      "abilities" : [ 0, 4 ]
+   },
+   {
+      "id" : 36,
+      "name" : "baton elementaire",
+      "element" : 0,
+      "abilities" : [ 1, 2, 3, 4 ]
+   }
+]

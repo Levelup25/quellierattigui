@@ -504,24 +504,28 @@ Element* Element::getLink() {
 
 vector<Element*> Element::getLinked() {
   vector<Element*> v;
-  if (this->getLink() != nullptr)
-    v.push_back(this);
-  for (auto child : this->getChildren()) {
-    vector<Element*> v2 = child->getLinked();
-    if (v2.size())
-      v.insert(v.end(), v2.begin(), v2.end());
+  if (this) {
+    if (this->getLink())
+      v.push_back(this);
+    for (auto child : this->getChildren()) {
+      vector<Element*> v2 = child->getLinked();
+      if (v2.size())
+        v.insert(v.end(), v2.begin(), v2.end());
+    }
   }
   return v;
 }
 
 vector<Element*> Element::getLinks() {
   vector<Element*> v;
-  if (this->getLink() != nullptr)
-    v.push_back(link);
-  for (auto child : this->getChildren()) {
-    vector<Element*> v2 = child->getLinks();
-    if (v2.size())
-      v.insert(v.end(), v2.begin(), v2.end());
+  if (this) {
+    if (this->getLink())
+      v.push_back(link);
+    for (auto child : this->getChildren()) {
+      vector<Element*> v2 = child->getLinks();
+      if (v2.size())
+        v.insert(v.end(), v2.begin(), v2.end());
+    }
   }
   return v;
 }

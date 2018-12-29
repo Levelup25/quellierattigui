@@ -9,6 +9,7 @@ namespace render {
 Element* TeamSheet(state::Team* team = nullptr);
 Element* CharacterSheet(state::Character* character = nullptr);
 Element* WeaponSheet(state::Weapon* weapon = nullptr);
+Element* AbilitySheet(state::Ability* ability = nullptr);
 }  // namespace render
 
 #endif

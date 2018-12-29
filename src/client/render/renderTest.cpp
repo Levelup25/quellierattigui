@@ -3,7 +3,7 @@
 void testRender()
 {
     SpriteGenerator::init();
-    srand(time(NULL));
+    //srand(time(NULL));
 
     int i = 7;
 

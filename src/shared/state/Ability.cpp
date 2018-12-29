@@ -1,7 +1,7 @@
 #include "Ability.h"
 #include <fstream>
 #include <iterator>
-#include <sstream>
+#include "json/json.h"
 
 using namespace std;
 using namespace state;
@@ -35,32 +35,26 @@ Ability::Ability(std::string name,
 }
 
 Ability::Ability(int id) {
-  string line;
-  ifstream file("res/abilities.txt");
-
-  if (file.is_open()) {
-    while (!file.eof()) {
-      for (int i = 0; i <= id; i++)
-        getline(file, line);
-      istringstream iss(line);
-      vector<std::string> results(istream_iterator<string>{iss},
-                                  istream_iterator<string>());
-      this->name = results[1];
-      this->pa = atoi(results[2].c_str());
-      this->damage = atoi(results[3].c_str());
-      this->element = (ElementType)atoi(results[4].c_str());
-      this->damageReduce = atoi(results[5].c_str());
-      this->cooldownInitial = atoi(results[6].c_str());
-      this->targetType = (ZoneType)atoi(results[7].c_str());
-      this->targetMin = atoi(results[8].c_str());
-      this->targetMax = atoi(results[9].c_str());
-      this->effectType = (ZoneType)atoi(results[10].c_str());
-      this->effectMin = atoi(results[11].c_str());
-      this->effectMax = atoi(results[12].c_str());
-      break;
-    }
-    file.close();
-  }
+  ifstream file;
+  Json::Reader reader;
+  Json::Value root;
+  Json::Value ability;
+  file.open("res/abilities.txt");
+  reader.parse(file, root);
+  ability = root[id];
+  this->name = ability.get("name", 0).asString();
+  this->pa = ability.get("pa", 0).asInt();
+  this->damage = ability.get("damage", 0).asInt();
+  this->element = (ElementType)ability.get("element", 0).asInt();
+  this->damageReduce = ability.get("damageReduce", 0).asInt();
+  this->cooldownInitial = ability.get("cooldownInitial", 0).asInt();
+  this->targetType = (ZoneType)ability.get("targetType", 0).asInt();
+  this->targetMin = ability.get("targetMin", 0).asInt();
+  this->targetMax = ability.get("targetMax", 0).asInt();
+  this->effectType = (ZoneType)ability.get("effectType", 0).asInt();
+  this->effectMin = ability.get("effectMin", 0).asInt();
+  this->effectMax = ability.get("effectMax", 0).asInt();
+  file.close();
 }
 
 vector<vector<int>> Ability::getZone(vector<int> position,
