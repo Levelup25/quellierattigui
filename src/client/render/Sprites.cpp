@@ -13,8 +13,8 @@ Sprites::Sprites(int nb) {
   contentSprites.resize(2);
   characterTexture.loadFromFile("res/persos.png");
   characterSprite.setTexture(characterTexture);
-  abilityTextures.resize(5);
-  abilitySprites.resize(5);
+  // abilityTextures.resize(5);
+  // abilitySprites.resize(5);
   attackTexture.loadFromFile("res/fx.png");
   attackSprite.setTexture(attackTexture);
   weaponTexture.loadFromFile("res/weapons.png");
@@ -33,17 +33,6 @@ Sprites::Sprites(int nb) {
   for (int i = 0; i < (int)contentTextures.size(); i++) {
     contentTextures[i].loadFromFile("res/" + names[i] + ".png");
     contentSprites[i].setTexture(contentTextures[i]);
-  }
-
-  vector<string> elem = {"dagger", "blizzard", "earth", "explosion", "wind"};
-  for (int i = 0; i < (int)abilityTextures.size(); i++) {
-    abilityTextures[i].resize(3);
-    abilitySprites[i].resize(3);
-    for (int j = 0; j < (int)abilityTextures[i].size(); j++) {
-      abilityTextures[i][j].loadFromFile("res/attacks/" + elem[i] + "-" +
-                                         to_string(j + 1) + ".png");
-      abilitySprites[i][j].setTexture(abilityTextures[i][j]);
-    }
   }
 }
 
@@ -83,10 +72,29 @@ sf::Sprite Sprites::getCharacterSprite(int l,
   return characterSprite;
 }
 
-sf::Sprite Sprites::getAbilitySprite(int l, int h, int element, int lv) {
-  lv--;
-  abilitySprites[element][lv].setScale(Vector2f((float)l / 56, (float)h / 56));
-  return abilitySprites[element][lv];
+sf::Sprite Sprites::getAbilitySprite(int l, int h, string name, int lv) {
+  string filename;
+  if (lv > 0)
+    filename = name + "-" + to_string(lv) + ".png";
+  else
+    filename = name + ".png";
+  for (int i = 0; i < (int)filename.length(); i++)
+    if (filename[i] == ' ')
+      filename[i] = '-';
+  auto it = find(abilityNames.begin(), abilityNames.end(), filename);
+  if (it == abilityNames.end()) {
+    abilityNames.push_back(filename);
+    int size = abilityNames.size();
+    abilityTextures.resize(size);
+    abilitySprites.resize(size);
+    abilityTextures[size - 1].loadFromFile("res/attacks/" + filename);
+    abilitySprites[size - 1].setTexture(abilityTextures[size - 1]);
+    abilitySprites[size - 1].setScale(Vector2f((float)l / 56, (float)h / 56));
+    return abilitySprites[size - 1];
+  }
+  abilitySprites[it - abilityNames.begin()].setTexture(
+      abilityTextures[it - abilityNames.begin()]);
+  return abilitySprites[it - abilityNames.begin()];
 }
 
 sf::Sprite Sprites::getAttackSprite(int l,

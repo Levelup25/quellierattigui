@@ -30,6 +30,7 @@ namespace state {
   public:
     Weapon (ElementType element = neutral, std::string name = "", std::vector<Ability*> abilities = {new Ability()});
     Weapon (int id);
+    Weapon (std::string name);
     void addAbility (Ability* ability);
     void delAbility (Ability* ability);
     Ability* getAbility (std::size_t i);

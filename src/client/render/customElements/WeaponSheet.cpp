@@ -27,7 +27,7 @@ namespace render {
 //     state::Ability* a = pweapon->getAbility(i);
 //     wpnAbilities.push_back(new Sprite());
 //     wpnAbilities[i]->sprite =
-//         spriteGen->getAbilitySprite(50, 50, a->getElement(), a->getLv());
+//         spriteGen->getAbilitySprite(50, 50, a->getName(), a->getLv());
 //     wpnAbilities[i]->setSizeRelative({50, 50});
 //   }
 

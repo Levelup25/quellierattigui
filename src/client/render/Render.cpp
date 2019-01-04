@@ -200,8 +200,8 @@ void Render::drawInformations(RenderWindow& window,
                           Color::Yellow};
   for (int i = 0; i < 5; i++) {
     if ((i - 1) < (int)abs.size() && i > 0) {
-      sprite = sprites.getAbilitySprite(
-          2 * l, 2 * h, (int)abs[i - 1]->getElement(), abs[i - 1]->getLv());
+      sprite = sprites.getAbilitySprite(2 * l, 2 * h, abs[i - 1]->getName(),
+                                        abs[i - 1]->getLv());
       sprite.setPosition(Vector2f(i * view.getSize().x / 6, 0));
       window.draw(sprite);
     } else {

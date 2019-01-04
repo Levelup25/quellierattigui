@@ -2,15 +2,16 @@
 #include <fstream>
 #include <iterator>
 #include "json/json.h"
+#include "string.h"
 
 using namespace std;
 using namespace state;
 
-Ability::Ability(std::string name,
-                 int lv,
-                 int pa,
+Ability::Ability(int pa,
                  int damage,
                  ElementType element,
+                 string name,
+                 int lv,
                  int damageReduce,
                  int cooldown,
                  ZoneType targetType,
@@ -42,6 +43,7 @@ Ability::Ability(int id) {
   file.open("res/abilities.txt");
   reader.parse(file, root);
   ability = root[id];
+  this->lv = ability.get("lv", 1).asInt();
   this->name = ability.get("name", 0).asString();
   this->pa = ability.get("pa", 0).asInt();
   this->damage = ability.get("damage", 0).asInt();
@@ -54,6 +56,33 @@ Ability::Ability(int id) {
   this->effectType = (ZoneType)ability.get("effectType", 0).asInt();
   this->effectMin = ability.get("effectMin", 0).asInt();
   this->effectMax = ability.get("effectMax", 0).asInt();
+  file.close();
+}
+
+Ability::Ability(string name) {
+  ifstream file;
+  Json::Reader reader;
+  Json::Value root;
+  Json::Value ability;
+  file.open("res/abilities.txt");
+  reader.parse(file, root);
+  for (int id = 0; id < (int)root.size(); id++)
+    if (name.compare(root[id].get("name", 0).asString()) == 0) {
+      ability = root[id];
+      this->lv = ability.get("lv", 1).asInt();
+      this->name = ability.get("name", 0).asString();
+      this->pa = ability.get("pa", 0).asInt();
+      this->damage = ability.get("damage", 0).asInt();
+      this->element = (ElementType)ability.get("element", 0).asInt();
+      this->damageReduce = ability.get("damageReduce", 0).asInt();
+      this->cooldownInitial = ability.get("cooldownInitial", 0).asInt();
+      this->targetType = (ZoneType)ability.get("targetType", 0).asInt();
+      this->targetMin = ability.get("targetMin", 0).asInt();
+      this->targetMax = ability.get("targetMax", 0).asInt();
+      this->effectType = (ZoneType)ability.get("effectType", 0).asInt();
+      this->effectMin = ability.get("effectMin", 0).asInt();
+      this->effectMax = ability.get("effectMax", 0).asInt();
+    }
   file.close();
 }
 
@@ -147,7 +176,10 @@ void Ability::setPa(int pa) {
 void Ability::addLv() {
   lv += 1;
   pa += 1;
-  damage += 1;
+  if (damage > 0)
+    damage += 1;
+  else if (damage < 0)
+    damage -= 1;
   targetMax += 1;
   effectMax += 1;
 }

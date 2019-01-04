@@ -51,6 +51,14 @@ void cout_terminal() {
 }
 
 void state_init(State* state) {
+  ifstream file;
+  Json::Reader reader;
+  Json::Value root;
+  file.open("res/weapons.txt");
+  reader.parse(file, root);
+  int nb = root.size();
+  file.close();
+
   vector<string> names = {"Goku", "Snake",  "Cloud", "Samus",  "Mario", "Lara",
                           "Link", "Kratos", "Dante", "Altair", "Ryu",   "Ash"};
   for (int i = 0; i < 3; i++) {
@@ -62,7 +70,7 @@ void state_init(State* state) {
       c->setPm(2 + rand() % 5);
       c->setPv(1 + rand() % 4);
       c->setPa(3 + rand() % 2);
-      Weapon* w = new Weapon(rand() % 18);
+      Weapon* w = new Weapon(rand() % nb);
       c->setWeapon(w);
       for (auto a : w->getAbilities()) {
         int r3 = rand() % 3;
@@ -171,9 +179,9 @@ int main(int argc, char* argv[]) {
       Weapon* weapon2 = new Weapon(earth, "gant de l'infini");
 
       cout << "Création de 2 capacités" << endl;
-      Ability* ability1 = new Ability("rayon repulseur", 3, 3, fire);
+      Ability* ability1 = new Ability(3, 3, fire, "rayon repulseur");
       Ability* ability2 =
-          new Ability("gemme de l'esprit", 0, 2147483647, earth);
+          new Ability(0, 2147483647, earth, "gemme de l'esprit");
 
       cout << "Ajout de capacités dans les armes" << endl;
       weapon1->addAbility(ability1);

@@ -1,19 +1,5 @@
 [
    {
-      "name" : "dague",
-      "pa" : 1,
-      "damage" : 2,
-      "element" : 0,
-      "damageReduce" : 100,
-      "cooldownInitial" : 0,
-      "targetType" : 1,
-      "targetMin" : 1,
-      "targetMax" : 1,
-      "effectType" : 1,
-      "effectMin" : 0,
-      "effectMax" : 0
-   },
-   {
       "name" : "blizzard",
       "pa" : 1,
       "damage" : 1,
@@ -28,7 +14,49 @@
       "effectMax" : 1
    },
    {
-      "name" : "rocher",
+      "name" : "cure",
+      "pa" : 1,
+      "damage" : -2,
+      "element" : 0,
+      "damageReduce" : 100,
+      "cooldownInitial" : 0,
+      "targetType" : 1,
+      "targetMin" : 0,
+      "targetMax" : 0,
+      "effectType" : 1,
+      "effectMin" : 0,
+      "effectMax" : 0
+   },
+   {
+      "name" : "dagger",
+      "pa" : 1,
+      "damage" : 2,
+      "element" : 0,
+      "damageReduce" : 100,
+      "cooldownInitial" : 0,
+      "targetType" : 1,
+      "targetMin" : 1,
+      "targetMax" : 1,
+      "effectType" : 1,
+      "effectMin" : 0,
+      "effectMax" : 0
+   },
+   {
+      "name" : "dragon blade",
+      "pa" : 1,
+      "damage" : 1,
+      "element" : 0,
+      "damageReduce" : 100,
+      "cooldownInitial" : 0,
+      "targetType" : 3,
+      "targetMin" : 1,
+      "targetMax" : 1,
+      "effectType" : 3,
+      "effectMin" : 0,
+      "effectMax" : 0
+   },
+   {
+      "name" : "earth",
       "pa" : 1,
       "damage" : 1,
       "element" : 2,
@@ -38,6 +66,20 @@
       "targetMin" : 1,
       "targetMax" : 3,
       "effectType" : 2,
+      "effectMin" : 0,
+      "effectMax" : 1
+   },
+   {
+      "name" : "entangle",
+      "pa" : 1,
+      "damage" : 1,
+      "element" : 2,
+      "damageReduce" : 100,
+      "cooldownInitial" : 0,
+      "targetType" : 2,
+      "targetMin" : 1,
+      "targetMax" : 3,
+      "effectType" : 1,
       "effectMin" : 0,
       "effectMax" : 1
    },
@@ -56,7 +98,35 @@
       "effectMax" : 1
    },
    {
-      "name" : "vent",
+      "name" : "terror",
+      "pa" : 1,
+      "damage" : 1,
+      "element" : 0,
+      "damageReduce" : 100,
+      "cooldownInitial" : 0,
+      "targetType" : 0,
+      "targetMin" : 0,
+      "targetMax" : 0,
+      "effectType" : 0,
+      "effectMin" : 0,
+      "effectMax" : 5
+   },
+   {
+      "name" : "thunder",
+      "pa" : 1,
+      "damage" : 2,
+      "element" : 3,
+      "damageReduce" : 100,
+      "cooldownInitial" : 0,
+      "targetType" : 3,
+      "targetMin" : 0,
+      "targetMax" : 0,
+      "effectType" : 3,
+      "effectMin" : 0,
+      "effectMax" : 3
+   },
+   {
+      "name" : "wind",
       "pa" : 1,
       "damage" : 1,
       "element" : 4,

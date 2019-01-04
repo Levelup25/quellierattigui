@@ -3,108 +3,108 @@
       "id" : 24,
       "name" : "epee neutre",
       "element" : 0,
-      "abilities" : [ 0 ]
+      "abilities" : [ "dagger", "dragon blade", "terror", "cure" ]
    },
    {
       "id" : 24,
       "name" : "epee d'eau",
       "element" : 1,
-      "abilities" : [ 0, 1 ]
+      "abilities" : [ "dagger", "blizzard" ]
    },
    {
       "id" : 24,
       "name" : "epee de terre",
       "element" : 2,
-      "abilities" : [ 0, 2 ]
+      "abilities" : [ "dagger", "earth", "entangle" ]
    },
    {
       "id" : 24,
       "name" : "epee de feu",
       "element" : 3,
-      "abilities" : [ 0, 3 ]
+      "abilities" : [ "dagger", "explosion", "thunder" ]
    },
    {
       "id" : 24,
       "name" : "epee d'air",
       "element" : 4,
-      "abilities" : [ 0, 4 ]
+      "abilities" : [ "dagger", "wind" ]
    },
    {
       "id" : 24,
       "name" : "epee elementaire",
       "element" : 0,
-      "abilities" : [ 1, 2, 3, 4 ]
+      "abilities" : [ "blizzard", "earth", "explosion", "wind" ]
    },
    {
       "id" : 39,
       "name" : "arc neutre",
       "element" : 0,
-      "abilities" : [ 0 ]
+      "abilities" : [ "dagger", "dragon blade", "terror", "cure" ]
    },
    {
       "id" : 39,
       "name" : "arc d'eau",
       "element" : 1,
-      "abilities" : [ 0, 1 ]
+      "abilities" : [ "dagger", "blizzard" ]
    },
    {
       "id" : 39,
       "name" : "arc de terre",
       "element" : 2,
-      "abilities" : [ 0, 2 ]
+      "abilities" : [ "dagger", "earth", "entangle" ]
    },
    {
       "id" : 39,
       "name" : "arc de feu",
       "element" : 3,
-      "abilities" : [ 0, 3 ]
+      "abilities" : [ "dagger", "explosion", "thunder" ]
    },
    {
       "id" : 39,
       "name" : "arc d'air",
       "element" : 4,
-      "abilities" : [ 0, 4 ]
+      "abilities" : [ "dagger", "wind" ]
    },
    {
       "id" : 39,
       "name" : "arc elementaire",
       "element" : 0,
-      "abilities" : [ 1, 2, 3, 4 ]
+      "abilities" : [ "blizzard", "earth", "explosion", "wind" ]
    },
    {
       "id" : 36,
       "name" : "baton neutre",
       "element" : 0,
-      "abilities" : [ 0 ]
+      "abilities" : [ "dagger", "dragon blade", "terror", "cure" ]
    },
    {
       "id" : 36,
       "name" : "baton d'eau",
       "element" : 1,
-      "abilities" : [ 0, 1 ]
+      "abilities" : [ "dagger", "blizzard" ]
    },
    {
       "id" : 36,
       "name" : "baton de terre",
       "element" : 2,
-      "abilities" : [ 0, 2 ]
+      "abilities" : [ "dagger", "earth", "entangle" ]
    },
    {
       "id" : 36,
       "name" : "baton de feu",
       "element" : 3,
-      "abilities" : [ 0, 3 ]
+      "abilities" : [ "dagger", "explosion", "thunder" ]
    },
    {
       "id" : 36,
       "name" : "baton d'air",
       "element" : 4,
-      "abilities" : [ 0, 4 ]
+      "abilities" : [ "dagger", "wind" ]
    },
    {
       "id" : 36,
       "name" : "baton elementaire",
       "element" : 0,
-      "abilities" : [ 1, 2, 3, 4 ]
+      "abilities" : [ "blizzard", "earth", "explosion", "wind" ]
    }
 ]

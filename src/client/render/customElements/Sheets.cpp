@@ -164,7 +164,7 @@ Element* WeaponSheet(state::Weapon* weapon) {
     state::Ability* a = weapon->getAbility(i);
     wpnAbilities.push_back(new Sprite());
     wpnAbilities[i]->sprite =
-        spriteGen->getAbilitySprite(50, 50, a->getElement(), a->getLv());
+        spriteGen->getAbilitySprite(50, 50, a->getName(), a->getLv());
     wpnAbilities[i]->setLink(AbilitySheet(weapon->getAbility(i)));
     wpnAbilities[i]->setSizeRelative({50, 50});
   }
@@ -257,8 +257,8 @@ Element* AbilitySheet(state::Ability* ability) {
   // config children
   AbilityName->setString(ability->getName());
   Sprites* spriteGen = new Sprites();
-  abSprite->sprite = spriteGen->getAbilitySprite(50, 50, ability->getElement(),
-                                                 ability->getLv());
+  abSprite->sprite =
+      spriteGen->getAbilitySprite(50, 50, ability->getName(), ability->getLv());
   // abSprite->updateSizeFromTextureRect();
   abSprite->setSizeRelative({50, 50});
 
