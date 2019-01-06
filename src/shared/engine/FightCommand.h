@@ -27,6 +27,7 @@ namespace engine {
   private:
     state::Team* att;
     state::Team* def;
+    std::vector<int> pv;
     std::vector<int> pa;
     std::vector<int> pm;
     // Operations

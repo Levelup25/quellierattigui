@@ -111,7 +111,12 @@ void Render::drawZones(RenderWindow& window, render::View& v) {
         window.draw(zone);
       }
       vector<vector<int>> effects = atkcmd->getZone(1);
-      zone.setFillColor(Color(255, 0, 0, 128));
+      if (selectedcharacter->getWeapon()
+              ->getAbility(abilityNumber)
+              ->getDamage() > 0)
+        zone.setFillColor(Color(255, 0, 0, 128));
+      else
+        zone.setFillColor(Color(0, 255, 0, 128));
       for (vector<int> coord : effects) {
         zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
         window.draw(zone);
@@ -403,6 +408,9 @@ void Render::display() {
                 if (fight->toDeploy.size() && selectedcharacter->getI() == X &&
                     selectedcharacter->getJ() == Y) {
                   fight->toDeploy.erase(fight->toDeploy.begin());
+                  engine->addCommand(new MoveCommand(
+                      state, selectedcharacter, selectedcharacter->getI(),
+                      selectedcharacter->getJ()));
                   engine->addCommand(
                       new MoveCommand(state, selectedcharacter, X, Y));
                 }
@@ -443,7 +451,7 @@ void Render::display() {
           if (!worldView.getChild(tsheet)) {
             tsheet = TeamSheet(state->getTeam(selectedcharacter));
             worldView.add(tsheet);
-            tsheet->setPosRelative({"25%", "25%"});
+            tsheet->setPosRelative({"0%", "25%"});
           } else {
             worldView.remove(tsheet);
             tsheet = nullptr;
@@ -474,7 +482,7 @@ void Render::display() {
             asheet = AbilitySheet(
                 selectedcharacter->getWeapon()->getAbility(abilityNumber));
             worldView.add(asheet);
-            asheet->setPosRelative({"50%", "25%"});
+            asheet->setPosRelative({"75%", "25%"});
           } else {
             worldView.remove(asheet);
             asheet = nullptr;
@@ -587,5 +595,7 @@ void Render::display() {
 
     // end the current frame
     window.display();
+    // if (state->getFight())
+    //   cout << state->getFight()->getTurn() << endl;
   }
 }

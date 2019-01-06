@@ -123,6 +123,12 @@ void AttackCommand::execute() {
       for (auto effect : effects) {
         effect[0] -= character->getI();
         effect[1] -= character->getJ();
+        if (!effect[0] && !effect[1]) {
+          effect[0] += character->getI();
+          effect[1] += character->getJ();
+          v.push_back(effect);
+          v2.push_back(1);
+        }
         if (effect != position) {
           int I = effect[0] - position[0], J = effect[1] - position[1];
           if (abs(I) + abs(J) > dist) {
@@ -160,7 +166,7 @@ void AttackCommand::execute() {
 
       engine->addCommand(
           new DamageCommand(state, engine, v, v2, ability->getElement(),
-                            ability->getLv(), ability->getDamage(), reverse));
+                            ability->getLv(), ability->getDamage()));
 
       v.clear();
       engine->addCommand(new DamageCommand(

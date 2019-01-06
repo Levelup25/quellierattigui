@@ -21,12 +21,6 @@ MoveCommand::MoveCommand(State* state,
 }
 
 void MoveCommand::execute() {
-  if (state->isFighting()) {
-    if (reverse)
-      character->removePm(-pm);
-    else
-      character->removePm(pm);
-  }
   float i0 = character->getI(), j0 = character->getJ();
   if (!reverse) {
     if (j > j0)
@@ -46,6 +40,19 @@ void MoveCommand::execute() {
       character->setDirection(1);
     else if (j < j0)
       character->setDirection(0);
+  }
+  if (state->isFighting()) {
+    if (reverse)
+      character->removePm(-pm);
+    else
+      character->removePm(pm);
+
+    if (state->getFight()->getTurn() == 0) {
+      if (state->getTeam(character) == state->getFight()->getTeam(0))
+        character->setDirection(3);
+      else
+        character->setDirection(0);
+    }
   }
 
   state->moveCharacter(character, i, j);

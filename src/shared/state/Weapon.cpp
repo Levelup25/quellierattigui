@@ -24,7 +24,7 @@ Weapon::Weapon(int id) {
   reader.parse(file, root);
   weapon = root[id];
   this->id = weapon.get("id", 0).asInt();
-  this->name = weapon.get("name", 0).asString();
+  this->name = weapon.get("name", "").asString();
   this->element = (ElementType)weapon.get("element", 0).asInt();
   for (int i = 0; i < (int)weapon.get("abilities", 0).size(); i++)
     abilities.push_back(new Ability(weapon.get("abilities", 0)[i].asString()));
@@ -39,10 +39,10 @@ Weapon::Weapon(string name) {
   file.open("res/weapons.txt");
   reader.parse(file, root);
   for (int id = 0; id < (int)root.size(); id++)
-    if (name.compare(root[id].get("name", 0).asString()) == 0) {
+    if (name.compare(root[id].get("name", "").asString()) == 0) {
       weapon = root[id];
       this->id = weapon.get("id", 0).asInt();
-      this->name = weapon.get("name", 0).asString();
+      this->name = weapon.get("name", "").asString();
       this->element = (ElementType)weapon.get("element", 0).asInt();
       for (int i = 0; i < (int)weapon.get("abilities", 0).size(); i++)
         abilities.push_back(

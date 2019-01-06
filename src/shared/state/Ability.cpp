@@ -44,11 +44,11 @@ Ability::Ability(int id) {
   reader.parse(file, root);
   ability = root[id];
   this->lv = ability.get("lv", 1).asInt();
-  this->name = ability.get("name", 0).asString();
+  this->name = ability.get("name", "").asString();
   this->pa = ability.get("pa", 0).asInt();
   this->damage = ability.get("damage", 0).asInt();
   this->element = (ElementType)ability.get("element", 0).asInt();
-  this->damageReduce = ability.get("damageReduce", 0).asInt();
+  this->damageReduce = ability.get("damageReduce", 100).asInt();
   this->cooldownInitial = ability.get("cooldownInitial", 0).asInt();
   this->targetType = (ZoneType)ability.get("targetType", 0).asInt();
   this->targetMin = ability.get("targetMin", 0).asInt();
@@ -67,14 +67,14 @@ Ability::Ability(string name) {
   file.open("res/abilities.txt");
   reader.parse(file, root);
   for (int id = 0; id < (int)root.size(); id++)
-    if (name.compare(root[id].get("name", 0).asString()) == 0) {
+    if (name.compare(root[id].get("name", "").asString()) == 0) {
       ability = root[id];
       this->lv = ability.get("lv", 1).asInt();
-      this->name = ability.get("name", 0).asString();
+      this->name = ability.get("name", "").asString();
       this->pa = ability.get("pa", 0).asInt();
       this->damage = ability.get("damage", 0).asInt();
       this->element = (ElementType)ability.get("element", 0).asInt();
-      this->damageReduce = ability.get("damageReduce", 0).asInt();
+      this->damageReduce = ability.get("damageReduce", 100).asInt();
       this->cooldownInitial = ability.get("cooldownInitial", 0).asInt();
       this->targetType = (ZoneType)ability.get("targetType", 0).asInt();
       this->targetMin = ability.get("targetMin", 0).asInt();
@@ -103,13 +103,21 @@ vector<vector<int>> Ability::getZone(vector<int> position,
           zones.push_back({i + k - l, j - l});
           zones.push_back({i + l, j + k - l});
         }
-      } else if (zone == line || zone == star) {
+      } else if (zone == line) {
         zones.push_back({i, j - k});
         zones.push_back({i - k, j});
         zones.push_back({i + k, j});
         zones.push_back({i, j + k});
-
-      } else if (zone == diag || zone == star) {
+      } else if (zone == diag) {
+        zones.push_back({i - k, j - k});
+        zones.push_back({i - k, j + k});
+        zones.push_back({i + k, j - k});
+        zones.push_back({i + k, j + k});
+      } else if (zone == star) {
+        zones.push_back({i, j - k});
+        zones.push_back({i - k, j});
+        zones.push_back({i + k, j});
+        zones.push_back({i, j + k});
         zones.push_back({i - k, j - k});
         zones.push_back({i - k, j + k});
         zones.push_back({i + k, j - k});

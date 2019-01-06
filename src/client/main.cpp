@@ -256,10 +256,13 @@ int main(int argc, char* argv[]) {
       int size = root.size();
       for (int k = 1; k < size; k++) {
         engine->addCommand(Command::deserialize(root[k], state, engine));
-        // Json::StyledWriter writer;
-        // cout << writer.write(root[k]);
       }
       file.close();
+
+      ofstream del;
+      del.open("replay.txt", ios::trunc);
+      del.close();
+      // srand(time(NULL));
     }  // Livrables 4.2 et 4.final
     else if (strcmp(argv[i], "listen") == 0) {
     } else if (strcmp(argv[i], "network") == 0) {

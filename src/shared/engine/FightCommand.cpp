@@ -40,16 +40,21 @@ void FightCommand::execute() {
       if (state->isFighting()) {
         int i, j, nb = fight->getNb();
         Character* maincharacter = team1->getMainCharacter();
-        do {
-          i = xv + n / 6 + rand() % (2 * n / 3);
-          j = yv + 2 * m / 3 + rand() % (m / 4);
-        } while (state->getCell(i, j)->getContent() != nothing);
-        engine->addCommand(new MoveCommand(state, maincharacter,
-                                           maincharacter->getI(),
-                                           maincharacter->getJ()));
-        engine->addCommand(new MoveCommand(state, maincharacter, i, j));
-        // state->moveCharacter(maincharacter, i, j);
-        maincharacter->setDirection(north);
+        if (!(maincharacter->getI() >= xv + n / 6 &&
+              maincharacter->getI() < xv + n / 6 + 2 * n / 3 &&
+              maincharacter->getJ() >= yv + 2 * m / 3 &&
+              maincharacter->getJ() < yv + 2 * m / 3 + m / 4)) {
+          do {
+            i = xv + n / 6 + rand() % (2 * n / 3);
+            j = yv + 2 * m / 3 + rand() % (m / 4);
+          } while (state->getCell(i, j)->getContent() != nothing);
+          engine->addCommand(new MoveCommand(state, maincharacter,
+                                             maincharacter->getI(),
+                                             maincharacter->getJ()));
+          engine->addCommand(new MoveCommand(state, maincharacter, i, j));
+          // state->moveCharacter(maincharacter, i, j);
+          // maincharacter->setDirection(north);
+        }
 
         for (auto oppchars : team2->getCharacters(nb)) {
           do {
@@ -61,7 +66,7 @@ void FightCommand::execute() {
           engine->addCommand(new MoveCommand(state, oppchars, i, j));
           state->getCell(i, j)->setContent(perso);
           // state->moveCharacter(oppchars, i, j);
-          oppchars->setDirection(south);
+          // oppchars->setDirection(south);
         }
       }
       // 2/12   8/12   2/12   =>  1/6     2/3     1/6
@@ -75,20 +80,26 @@ void FightCommand::execute() {
       int i = 0;
       for (auto c : state->getFight()->getFightingCharacters(
                (state->getFight()->getTurn() + 1) % 2)) {
+        if (c->getPvCurrent() > c->getPvMax())
+          pv.push_back(c->getPvCurrent() - c->getPvMax());
+        else
+          pv.push_back(0);
         pa.push_back(c->getPaCurrent() - c->getPaMax());
         pm.push_back(c->getPmCurrent() - c->getPmMax());
+        c->removePv(pv[i]);
         c->removePa(pa[i]);
         c->removePm(pm[i++]);
       }
       state->getFight()->addTurn();
       state->etatCombat = 0;
     }
-  } else {
+  } else {  // reverse
     if (state->getFight()) {
       int i = 0;
       state->getFight()->addTurn(-1);
       for (auto c : state->getFight()->getFightingCharacters(
                (state->getFight()->getTurn() + 1) % 2)) {
+        c->removePv(-pv[i]);
         c->removePa(-pa[i]);
         c->removePm(-pm[i++]);
       }

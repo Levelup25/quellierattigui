@@ -32,7 +32,7 @@ Element* TeamSheet(state::Team* team) {
     charSprites[i]->setSizeRelative({32, 32});
     wpnSprites[i]->sprite =
         spriteGen->getWeaponSprite(50, 50, character->getWeapon()->getId());
-    wpnSprites[i]->setLink(WeaponSheet(character->getWeapon()));
+    // wpnSprites[i]->setLink(WeaponSheet(character->getWeapon()));
     // charSprite->updateSizeFromTextureRect();
     wpnSprites[i]->setSizeRelative({32, 32});
     i++;
@@ -200,62 +200,83 @@ Element* AbilitySheet(state::Ability* ability) {
 
   // create subelement/children
   Text* AbilityName = new Text();
+  Text* TargetName = new Text();
+  Text* EffectName = new Text();
   Sprite* abSprite = new Sprite();
   Sprite* targetSprite = new Sprite();
   Sprite* effectSprite = new Sprite();
 
-  int size = 120;
-
-  sf::RenderTexture targetTexture;
-  targetTexture.create(size, size);
+  int size = 126;
   int nb = 2 * ability->getTarget()[2] + 1;
+  if (nb == 1)
+    nb += 2;
+  if ((1.0 * size / nb) - (size / nb) != 0)
+    size = (size / nb) * nb;
+
+  sf::RenderTexture* targetTexture(new sf::RenderTexture());
+  targetTexture->create(size + 1, size + 1);
   vector<vector<int>> targets = ability->getTargetZone({nb / 2, nb / 2});
+  sf::RectangleShape rectangle(sf::Vector2f(size / nb, size / nb));
+  rectangle.setFillColor(sf::Color::Blue);
   for (auto target : targets) {
-    sf::RectangleShape rectangle(sf::Vector2f(size / nb, size / nb));
     rectangle.setPosition(
         sf::Vector2f(target[0] * size / nb, target[1] * size / nb));
-    rectangle.setFillColor(sf::Color::Blue);
-    targetTexture.draw(rectangle);
+    targetTexture->draw(rectangle);
   }
+  sf::RectangleShape xline(sf::Vector2f(size + 1, 1));
+  xline.setFillColor(sf::Color::Black);
+  sf::RectangleShape yline(sf::Vector2f(1, size + 1));
+  yline.setFillColor(sf::Color::Black);
   for (int i = 0; i <= size; i = i + size / nb) {
-    sf::RectangleShape xline(sf::Vector2f(size, 1));
     xline.setPosition(sf::Vector2f(0, i));
-    xline.setFillColor(sf::Color::Black);
-
-    sf::RectangleShape yline(sf::Vector2f(1, size));
     yline.setPosition(sf::Vector2f(i, 0));
-    yline.setFillColor(sf::Color::Black);
-
-    targetTexture.draw(xline);
-    targetTexture.draw(yline);
+    targetTexture->draw(xline);
+    targetTexture->draw(yline);
   }
-  targetTexture.display();
-
-  const sf::Texture& ttexture = targetTexture.getTexture();
-  sf::Sprite tSprite(ttexture);
+  targetTexture->display();
+  sf::Sprite tSprite((*targetTexture).getTexture());
   targetSprite->sprite = tSprite;
-  targetSprite->setSizeRelative({size, size});
+  targetSprite->setSizeRelative({size + 1, size + 1});
 
-  sf::RenderTexture effectTexture;
-  effectTexture.create(size, size);
-  effectTexture.clear();
+  size = 126;
   nb = 2 * ability->getEffect()[2] + 1;
-  for (int i = 0; i <= size; i = i + size / nb) {
-    sf::Vertex linex[] = {sf::Vertex(sf::Vector2f(0, i), sf::Color::Black),
-                          sf::Vertex(sf::Vector2f(size, i), sf::Color::Black)};
-    sf::Vertex liney[] = {sf::Vertex(sf::Vector2f(i, 0), sf::Color::Black),
-                          sf::Vertex(sf::Vector2f(i, size), sf::Color::Black)};
-    effectTexture.draw(linex, 2, sf::Lines);
-    effectTexture.draw(liney, 2, sf::Lines);
+  if (nb == 1)
+    nb += 2;
+  if ((1.0 * size / nb) - (size / nb) != 0)
+    size = (size / nb) * nb;
+
+  sf::RenderTexture* effectTexture(new sf::RenderTexture());
+  effectTexture->create(size + 1, size + 1);
+  vector<vector<int>> effects = ability->getEffectZone({nb / 2, nb / 2});
+  rectangle.setSize(sf::Vector2f(size / nb, size / nb));
+  rectangle.setFillColor(sf::Color::Red);
+  for (auto effect : effects) {
+    rectangle.setPosition(
+        sf::Vector2f(effect[0] * size / nb, effect[1] * size / nb));
+    effectTexture->draw(rectangle);
   }
-  effectTexture.display();
-  const sf::Texture& etexture = effectTexture.getTexture();
-  sf::Sprite eSprite(etexture);
+  xline.setSize(sf::Vector2f(size + 1, 1));
+  yline.setSize(sf::Vector2f(1, size + 1));
+  for (int i = 0; i <= size; i = i + size / nb) {
+    xline.setPosition(sf::Vector2f(0, i));
+    yline.setPosition(sf::Vector2f(i, 0));
+
+    effectTexture->draw(xline);
+    effectTexture->draw(yline);
+  }
+  effectTexture->display();
+  sf::Sprite eSprite((*effectTexture).getTexture());
   effectSprite->sprite = eSprite;
-  effectSprite->setSizeRelative({size, size});
+  effectSprite->setSizeRelative({size + 1, size + 1});
 
   // config children
   AbilityName->setString(ability->getName());
+  TargetName->setString("Pa : " + to_string(ability->getPa()) +
+                        " Portee : " + to_string(ability->getTarget()[1]) +
+                        "-" + to_string(ability->getTarget()[2]));
+  EffectName->setString("Dmg : " + to_string(ability->getDamage()) +
+                        " Portee : " + to_string(ability->getEffect()[1]) +
+                        "-" + to_string(ability->getEffect()[2]));
   Sprites* spriteGen = new Sprites();
   abSprite->sprite =
       spriteGen->getAbilitySprite(50, 50, ability->getName(), ability->getLv());
@@ -263,8 +284,8 @@ Element* AbilitySheet(state::Ability* ability) {
   abSprite->setSizeRelative({50, 50});
 
   // place children
-  std::vector<Element*> children = {AbilityName, abSprite, targetSprite,
-                                    effectSprite};
+  std::vector<Element*> children = {AbilityName,  abSprite,   TargetName,
+                                    targetSprite, EffectName, effectSprite};
   int spacepx = 20;
   int y = 0;
   for (size_t i = 0; i < children.size(); i++) {
@@ -276,7 +297,7 @@ Element* AbilitySheet(state::Ability* ability) {
       y += spacepx;
   }
 
-  abSheet.pcontent->setSizeRelative({250, y});
+  abSheet.pcontent->setSizeRelative({250, y + 20});
   int winWidth, winHeight;
   winWidth = abSheet.pcontent->getSizeAbs().x;
   winHeight =
