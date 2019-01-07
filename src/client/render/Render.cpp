@@ -286,6 +286,7 @@ void Render::display() {
   Element* wsheet = nullptr;
   Element* asheet = nullptr;
   Character* prev = selectedcharacter;
+  int prev_ab = abilityNumber;
   auto OpenedWindows = worldView.getChildren();
 
   while (window.isOpen()) {
@@ -559,7 +560,7 @@ void Render::display() {
       OpenedWindows = worldView.getChildren();
     }
 
-    if (prev != selectedcharacter) {
+    if (prev != selectedcharacter || prev_ab != abilityNumber) {
       if (worldView.getChild(tsheet)) {
         Relatif2 r = tsheet->getPosRelative();
         worldView.remove(tsheet);
@@ -584,11 +585,13 @@ void Render::display() {
       if (worldView.getChild(asheet)) {
         Relatif2 r = asheet->getPosRelative();
         worldView.remove(asheet);
-        asheet = WeaponSheet(selectedcharacter->getWeapon());
+        asheet = AbilitySheet(
+            selectedcharacter->getWeapon()->getAbility(abilityNumber));
         worldView.add(asheet);
         asheet->setPosRelative(r);
       }
       prev = selectedcharacter;
+      prev_ab = abilityNumber;
     }
 
     window.draw(worldView);
