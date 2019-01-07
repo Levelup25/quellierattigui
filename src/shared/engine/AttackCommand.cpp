@@ -178,7 +178,7 @@ void AttackCommand::execute() {
 void const AttackCommand::serialize(Json::Value& out) {
   return;
   out["command"] = "AttackCommand";
-  vector<Character*> characters = state->getCharacters();
+  vector<Character*> characters = state->initialCharacters;
   int k = characters.size();
   while (k--)
     if (character == characters[k]) {
@@ -193,7 +193,8 @@ void const AttackCommand::serialize(Json::Value& out) {
 AttackCommand* AttackCommand::deserialize(const Json::Value& in,
                                           State* state,
                                           Engine* engine) {
-  Character* character = state->getCharacters()[in.get("character", 0).asInt()];
+  Character* character =
+      state->initialCharacters[in.get("character", 0).asInt()];
   vector<int> position;
   for (int k = 0; k < (int)in.get("position", 0).size(); k++)
     position.push_back(in.get("position", 0)[k].asInt());

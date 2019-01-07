@@ -7,11 +7,11 @@
 #include <memory>
 
 namespace state {
+  class Character;
   class Team;
   class MainQuest;
   class Fight;
   class Cell;
-  class Character;
 }
 
 #include "Fight.h"
@@ -27,6 +27,7 @@ namespace state {
     // Associations
     // Attributes
   public:
+    std::vector<Character*> initialCharacters;
     int etatCombat     = 0;
     std::vector<std::vector<int>> animations;
     unsigned int seed;

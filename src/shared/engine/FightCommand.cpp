@@ -37,26 +37,29 @@ void FightCommand::execute() {
           m = state->getM();
       int xv = (i0 / n) * n, yv = (j0 / m) * m;
 
-      if (state->isFighting()) {
+      if (state->isFighting() && engine->getSize() == 1) {
         int i, j, nb = fight->getNb();
         Character* maincharacter = team1->getMainCharacter();
-        if (!(maincharacter->getI() >= xv + n / 6 &&
-              maincharacter->getI() < xv + n / 6 + 2 * n / 3 &&
-              maincharacter->getJ() >= yv + 2 * m / 3 &&
-              maincharacter->getJ() < yv + 2 * m / 3 + m / 4)) {
-          do {
-            i = xv + n / 6 + rand() % (2 * n / 3);
-            j = yv + 2 * m / 3 + rand() % (m / 4);
-          } while (state->getCell(i, j)->getContent() != nothing);
-          engine->addCommand(new MoveCommand(state, maincharacter,
-                                             maincharacter->getI(),
-                                             maincharacter->getJ()));
-          engine->addCommand(new MoveCommand(state, maincharacter, i, j));
-          // state->moveCharacter(maincharacter, i, j);
-          // maincharacter->setDirection(north);
-        }
+        // if (!(maincharacter->getI() >= xv + n / 6 &&
+        //       maincharacter->getI() < xv + n / 6 + 2 * n / 3 &&
+        //       maincharacter->getJ() >= yv + 2 * m / 3 &&
+        //       maincharacter->getJ() < yv + 2 * m / 3 + m / 4)) {
+        do {
+          i = xv + n / 6 + rand() % (2 * n / 3);
+          j = yv + 2 * m / 3 + rand() % (m / 4);
+        } while (state->getCell(i, j)->getContent() != nothing);
+        engine->addCommand(new MoveCommand(state, maincharacter,
+                                           maincharacter->getI(),
+                                           maincharacter->getJ()));
+        engine->addCommand(new MoveCommand(state, maincharacter, i, j));
+        // state->moveCharacter(maincharacter, i, j);
+        // maincharacter->setDirection(north);
 
         for (auto oppchars : team2->getCharacters(nb)) {
+          // if (!(oppchars->getI() >= xv + n / 6 &&
+          //       oppchars->getI() < xv + n / 6 + 2 * n / 3 &&
+          //       oppchars->getJ() >= yv + m / 12 &&
+          //       oppchars->getJ() < yv + m / 12 + m / 4)) {
           do {
             i = xv + n / 6 + rand() % (2 * n / 3);
             j = yv + m / 12 + rand() % (m / 4);

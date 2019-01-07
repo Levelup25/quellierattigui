@@ -204,11 +204,10 @@ vector<Character*> State::getMainCharacters() {
 
 vector<Character*> State::getCharacters() {
   vector<Character*> chars;
-  for (auto t = teams.begin(); t != teams.end(); ++t) {
-    vector<Character*> characters = (*t)->getCharacters();
-    for (auto c = characters.begin(); c != characters.end(); ++c) {
-      chars.push_back(*c);
-    }
+  for (int i = 0; i < (int)teams.size(); i++) {
+    vector<Character*> characters = teams[i]->getCharacters();
+    for (int j = 0; j < (int)characters.size(); j++)
+      chars.push_back(characters[j]);
   }
   return chars;
 }

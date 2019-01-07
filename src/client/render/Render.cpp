@@ -333,28 +333,22 @@ void Render::display() {
         window.close();
 
         unsigned int seed;
-        {
-          ifstream file;
-          Json::Reader reader;
-          Json::Value root;
-          file.open("replay.txt");
-          reader.parse(file, root);
-          seed = root[0].get("seed", 0).asUInt();
-          file.close();
-        }
+        ifstream ifile;
+        Json::Value root;
+        Json::Reader reader;
+        ifile.open("replay.txt");
+        reader.parse(ifile, root);
+        seed = root[0].get("seed", 0).asUInt();
+        ifile.close();
+        if (seed != state->seed)
+          root = Json::Value::null;
 
         deque<Command*> commands = engine->getCommands(true);
         ofstream file;
-        Json::Value root;
+        file.open("replay.txt", ios::trunc);
         Json::Value json;
-        if (seed == state->seed) {
-          file.open("replay.txt", ios::app);
-        } else {
-          file.open("replay.txt", ios::trunc);
-          json["seed"] = state->seed;
-          root.append(json);
-        }
-
+        if (root == Json::Value::null)
+          root[0]["seed"] = state->seed;
         while (commands.size()) {
           if (commands.front()) {
             json = Json::Value::null;
@@ -598,7 +592,5 @@ void Render::display() {
 
     // end the current frame
     window.display();
-    // if (state->getFight())
-    //   cout << state->getFight()->getTurn() << endl;
   }
 }

@@ -52,8 +52,8 @@ vector<Character*> Team::getCharacters(int i) {
     return characters;
   else {
     vector<Character*> v;
-    for (auto c = characters.begin(); c != characters.begin() + i; c++)
-      v.push_back(*c);
+    for (int j = 0; j < i; j++)
+      v.push_back(characters[j]);
     return v;
   }
 }

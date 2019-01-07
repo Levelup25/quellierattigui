@@ -79,6 +79,7 @@ void state_init(State* state) {
       }
     }
   }
+  state->initialCharacters = state->getCharacters();
 }
 
 void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
