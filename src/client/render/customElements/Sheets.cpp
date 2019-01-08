@@ -161,8 +161,8 @@ Element* WeaponSheet(state::Weapon* weapon) {
   // wpnSprite->updateSizeFromTextureRect();
   wpnSprite->setSizeRelative({32, 32});
   for (int i = 0; i < (int)weapon->getAbilities().size(); i++) {
-    state::Ability* a = weapon->getAbility(i);
     wpnAbilities.push_back(new Sprite());
+    state::Ability* a = weapon->getAbility(i);
     wpnAbilities[i]->sprite =
         spriteGen->getAbilitySprite(50, 50, a->getName(), a->getLv());
     wpnAbilities[i]->setLink(AbilitySheet(weapon->getAbility(i)));

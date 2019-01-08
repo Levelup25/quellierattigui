@@ -196,9 +196,8 @@ Character* State::getCharacter(size_t i, size_t j) {
 
 vector<Character*> State::getMainCharacters() {
   vector<Character*> chars;
-  for (auto t = teams.begin(); t != teams.end(); ++t) {
-    chars.push_back((*t)->getMainCharacter());
-  }
+  for (int i = 0; i < (int)teams.size(); i++)
+    chars.push_back(teams[i]->getMainCharacter());
   return chars;
 }
 
