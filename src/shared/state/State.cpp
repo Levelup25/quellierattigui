@@ -121,7 +121,7 @@ void State::addCharacter(size_t iteam,
 }
 
 void State::addCharacter(Character* character, Team* team, size_t i, size_t j) {
-  size_t i2 = i, j2 = j;
+  size_t i0 = i, j0 = j, i2 = i, j2 = j;
   while (grid[i2][j2]->getContent() != nothing) {
     i2++;
     if (i2 % n == 0) {
@@ -129,14 +129,18 @@ void State::addCharacter(Character* character, Team* team, size_t i, size_t j) {
       j2++;
       if (j2 % m == 0) {
         j2 -= m;
-        i2 += n;
+        // i2 += n;
       }
     }
+    if (i0 == i2 && j0 == j2) {
+      i2 += n;
+      i0 = i2;
+    }
     if (i2 >= I) {
-      i2 = 0;
-      j2++;
+      i2 -= I;
+      j2 += m;
       if (j2 >= J) {
-        j2 = 0;
+        j2 -= J;
       }
     }
     if (i == i2 && j == j2)

@@ -67,7 +67,7 @@ void state_init(State* state) {
   int xb = n * 1, yb = m * 1;
   // int xe = n * 1, ye = m * 1;
   int xe = xb, ye = yb;
-  for (int i = 0; i < 1; i++) {
+  for (int i = 0; i < 2; i++) {
     for (int j = 0; j < 4; j++) {
       state->addCharacter(i, rand() % (12 * 4), (Direction)(rand() % 4),
                           xb + rand() % (xe - xb + n),
@@ -86,10 +86,11 @@ void state_init(State* state) {
       }
     }
   }
-  xb = n * 0, yb = m * 0;
-  xe = n * 2, ye = m * 2;
+  // xb = n * 0, yb = m * 0;
+  // xe = n * 2, ye = m * 2;
   // xe = xb, ye = yb;
-  for (int i = 1; i < 10; i++) {
+  for (int i = 2; i < 11; i++) {
+    xb = n * ((i - 1) % 3), yb = m * ((i - 1) / 3), xe = xb, ye = yb;
     for (int j = 0; j < 4; j++) {
       state->addCharacter(i, rand() % (12 * 4), (Direction)(rand() % 4),
                           xb + rand() % (xe - xb + n),

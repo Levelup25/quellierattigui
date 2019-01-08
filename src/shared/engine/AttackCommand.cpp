@@ -82,7 +82,7 @@ void AttackCommand::execute() {
     this->setZones();
     if (effects.size() > 0 && ability->getPa() <= character->getPaCurrent()) {
       character->removePa(ability->getPa());
-
+      bool heal = (0 >= ability->getDamage());
       int I = position[0], J = position[1];
       int direction;
       if (I > 0 && J == 0)
@@ -108,15 +108,16 @@ void AttackCommand::execute() {
       vector<int> v2{direction};
 
       engine->addCommand(new DamageCommand(
-          state, engine, v, v2, ability->getElement(), ability->getLv()));
+          state, engine, v, v2, ability->getElement(), ability->getLv(), heal));
 
       float nb = max(abs(I), abs(J));
       for (int i = 1; i <= nb; i++) {
         v = {{(int)(character->getI() + i * I / nb),
               (int)(character->getJ() + i * J / nb)}};
         for (int i = 0; i < 5; i++)
-          engine->addCommand(new DamageCommand(
-              state, engine, v, v2, ability->getElement(), ability->getLv()));
+          engine->addCommand(new DamageCommand(state, engine, v, v2,
+                                               ability->getElement(),
+                                               ability->getLv(), heal));
       }
 
       int dist = 1;
@@ -133,8 +134,9 @@ void AttackCommand::execute() {
           int I = effect[0] - position[0], J = effect[1] - position[1];
           if (abs(I) + abs(J) > dist) {
             dist = abs(I) + abs(J);
-            engine->addCommand(new DamageCommand(
-                state, engine, v, v2, ability->getElement(), ability->getLv()));
+            engine->addCommand(new DamageCommand(state, engine, v, v2,
+                                                 ability->getElement(),
+                                                 ability->getLv(), heal));
           }
           if (I > 0 && J == 0)
             direction = 0;
@@ -161,16 +163,17 @@ void AttackCommand::execute() {
         }
       }
       for (int i = 0; i < 25; i++)
-        engine->addCommand(new DamageCommand(
-            state, engine, v, v2, ability->getElement(), ability->getLv()));
+        engine->addCommand(new DamageCommand(state, engine, v, v2,
+                                             ability->getElement(),
+                                             ability->getLv(), heal));
 
       engine->addCommand(
           new DamageCommand(state, engine, v, v2, ability->getElement(),
-                            ability->getLv(), ability->getDamage()));
+                            ability->getLv(), heal, ability->getDamage()));
 
       v.clear();
       engine->addCommand(new DamageCommand(
-          state, engine, v, v2, ability->getElement(), ability->getLv()));
+          state, engine, v, v2, ability->getElement(), ability->getLv(), heal));
     }
   }
 }

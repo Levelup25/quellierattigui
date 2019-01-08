@@ -14,6 +14,7 @@ DamageCommand::DamageCommand(State* state,
                              vector<int> directions,
                              int element,
                              int lv,
+                             bool heal,
                              int dmg,
                              bool reverse) {
   this->state = state;
@@ -23,6 +24,7 @@ DamageCommand::DamageCommand(State* state,
   this->directions = directions;
   this->element = element;
   this->lv = lv;
+  this->heal = heal;
   this->reverse = reverse;
   this->dmg = dmg;
 }
@@ -37,7 +39,7 @@ void DamageCommand::execute() {
   for (auto pos : positions) {
     if (directions[0] != -1)
       state->animations.push_back(
-          {pos[0], pos[1], directions[i++], element, lv});
+          {pos[0], pos[1], directions[i++], element, lv, heal});
     if (dmg != 0) {
       Character* c = state->getCharacter(pos[0], pos[1]);
       if (!reverse)
@@ -104,6 +106,7 @@ void const DamageCommand::serialize(Json::Value& out) {
     out["directions"].append(directions[k]);
   out["element"] = element;
   out["lv"] = lv;
+  out["heal"] = heal;
   out["dmg"] = dmg;
 }
 
@@ -124,7 +127,8 @@ DamageCommand* DamageCommand::deserialize(const Json::Value& in,
     directions.push_back(in.get("directions", 0)[k].asInt());
   int element = in.get("element", 0).asInt();
   int lv = in.get("lv", 0).asInt();
+  bool heal = in.get("heal", 0).asBool();
   int dmg = in.get("dmg", 0).asInt();
   return new DamageCommand(state, engine, positions, directions, element, lv,
-                           dmg);
+                           heal, dmg);
 }

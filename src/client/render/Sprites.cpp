@@ -101,15 +101,19 @@ sf::Sprite Sprites::getAttackSprite(int l,
                                     int h,
                                     int direction,
                                     int element,
-                                    int lv) {
+                                    int lv,
+                                    bool heal) {
   lv--;
   vector<Color> colors{sf::Color(255, 255, 255), Color::Blue, Color::Green,
                        Color::Red, Color::Yellow};
   vector<int> size{23, 32, 32};
   vector<int> offsetI{24, 281, 281};
   vector<int> offsetJ{288, 231, 197};
-  attackSprite.setTextureRect(IntRect(offsetI[lv] + direction * size[lv],
-                                      offsetJ[lv], size[lv], size[lv]));
+  if (!heal)
+    attackSprite.setTextureRect(IntRect(offsetI[lv] + direction * size[lv],
+                                        offsetJ[lv], size[lv], size[lv]));
+  else
+    attackSprite.setTextureRect(IntRect(24 + direction * 23, 432, 23, 23));
   attackSprite.setScale(Vector2f((float)l / 32, (float)h / 32));
   attackSprite.setColor(colors[element]);
   return attackSprite;

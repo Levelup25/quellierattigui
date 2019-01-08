@@ -175,8 +175,8 @@ void Render::drawAnimations(RenderWindow& window,
   sf::Sprite sprite;
   window.setView(view);
   for (auto animation : state->animations) {
-    sprite =
-        sprites.getAttackSprite(l, h, animation[2], animation[3], animation[4]);
+    sprite = sprites.getAttackSprite(l, h, animation[2], animation[3],
+                                     animation[4], animation[5]);
     sprite.setPosition(Vector2f(animation[0] * l, animation[1] * h));
     window.draw(sprite);
   }
