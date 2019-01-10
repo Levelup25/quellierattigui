@@ -373,6 +373,12 @@ Le diagramme de classes pour l'intelligence artificielle est présentée en figu
 \section{Modularisation}
 \label{sec:module}
 
+On décide ici de proposer au joueur le choix de faire affronter deux intelligences artificielles afin d'observer les choix pris par ceux-ci. Pour cela, un booléen indique si ce choix a été pris, et le thread de l'intelligence artificielle a été modifié pour inclure une recherche de l'ennemi le plus proche, un déploiement aléatoire en combat, puis le même algorithme de combat est appliqué, et ceci en boucle jusqu'à la victoire/défaite du joueur principal.
+
+La seconde fonctionnalité implémentée est un enregistrement et une vue d'une sauvegarde du jeu. La sauvegarde s'effectue via un fichier texte replay.txt écrit au format Json qui reprend le principe du rollback qui sauvegarde toutes les commandes effectuées. Il s'agit donc ici de défiler le rollback et de sérialiser chaque commande au lieu de le dépiler. Les commandes parasites d'annulation et de calcul ne sont alors pas prises en compte. La lecture de la sauvegarde se fait alors en déserialisant chaque commande en les envoyant dans la file de commandes du moteur qui les exécute alors soit normalement pour jouer la sauvegarde, ou alors à toute vitesse pour juste charger une partie. En plus des commandes, la random seed est aussi stockée en Json afin de pouvoir regénérer le state à partir des mêmes commandes aléatoires sans avoir à sauvegarder l'état en entier en sérialisant chacune des classes qui peuvent sensiblement changer assez régulièrement.
+
+Cette sauvegarde est effectuée à chaque fin de combat (car cette fin supprime des classes et est donc irreversible, ce qui annule le rollback. Avant d'effacer le rollback, toutes les commandes en cours sont écrites et les suivantes seront ajoutées après ) et à la fermeture de la fenêtre sfml mais pas en cas de fermeture brutale (Ctrl-C).
+
 \subsection{Organisation des modules}
 
 \clearpage
