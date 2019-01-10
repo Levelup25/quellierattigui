@@ -25,11 +25,12 @@ void cout_terminal() {
   cout << "eau \t > \t  feu" << endl;
   cout << " ^  \t    \t   v " << endl;
   cout << "vent \t < \t terre" << endl;
-  cout
-      << "Attaque elementaire forte : dégats doublés et soins changés en degats"
-      << endl;
-  cout << "Attaque elementaire faible : dégats et soins divisés" << endl;
-  cout << "Attaque elementaire miroir : soins doublés et degats changés en soin"
+  cout << "Attaque elementaire forte : dégats doublés et soins changés en "
+          "degats faibles"
+       << endl;
+  cout << "Attaque elementaire faible : dégats divisés et soins divisés"
+       << endl;
+  cout << "Attaque elementaire miroir : dégats divisés et soins doublés"
        << endl;
   cout << "Les soins en surplus restent actifs pendant le tour courant" << endl;
   cout << endl;
@@ -81,7 +82,7 @@ void state_init(State* state) {
   int xe = xb, ye = yb;
   for (int i = 0; i < 2; i++) {
     for (int j = 0; j < 4; j++) {
-      state->addCharacter(i, -1 - rand() % (8), (Direction)(rand() % 4),
+      state->addCharacter(i, rand() % (12 * 4), (Direction)(rand() % 4),
                           xb + rand() % (xe - xb + n),
                           yb + rand() % (ye - yb + m));
       Character* c = state->getCharacters().back();

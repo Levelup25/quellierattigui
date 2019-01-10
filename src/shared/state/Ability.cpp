@@ -18,9 +18,11 @@ Ability::Ability(int pa,
                  ZoneType targetType,
                  int targetMin,
                  int targetMax,
+                 bool targetBlock,
                  ZoneType effectType,
                  int effectMin,
-                 int effectMax) {
+                 int effectMax,
+                 bool effectBlock) {
   this->name = name;
   this->lv = lv;
   this->pa = pa;
@@ -31,9 +33,11 @@ Ability::Ability(int pa,
   this->targetType = targetType;
   this->targetMin = targetMin;
   this->targetMax = targetMax;
+  this->targetBlock = targetBlock;
   this->effectType = effectType;
   this->effectMin = effectMin;
   this->effectMax = effectMax;
+  this->effectBlock = effectBlock;
 }
 
 Ability::Ability(int id) {
@@ -54,9 +58,11 @@ Ability::Ability(int id) {
   this->targetType = (ZoneType)ability.get("targetType", 0).asInt();
   this->targetMin = ability.get("targetMin", 0).asInt();
   this->targetMax = ability.get("targetMax", 0).asInt();
+  this->targetBlock = ability.get("targetBlock", false).asBool();
   this->effectType = (ZoneType)ability.get("effectType", 0).asInt();
   this->effectMin = ability.get("effectMin", 0).asInt();
   this->effectMax = ability.get("effectMax", 0).asInt();
+  this->effectBlock = ability.get("effectBlock", true).asBool();
   file.close();
 }
 
@@ -80,9 +86,11 @@ Ability::Ability(string name) {
       this->targetType = (ZoneType)ability.get("targetType", 0).asInt();
       this->targetMin = ability.get("targetMin", 0).asInt();
       this->targetMax = ability.get("targetMax", 0).asInt();
+      this->targetBlock = ability.get("targetBlock", false).asBool();
       this->effectType = (ZoneType)ability.get("effectType", 0).asInt();
       this->effectMin = ability.get("effectMin", 0).asInt();
       this->effectMax = ability.get("effectMax", 0).asInt();
+      this->effectBlock = ability.get("effectBlock", true).asBool();
     }
   file.close();
 }
@@ -155,11 +163,11 @@ void Ability::setEffect(ZoneType effectZone, int min, int max, int reduce) {
 }
 
 vector<int> Ability::getTarget() {
-  return {(int)targetType, targetMin, targetMax};
+  return {(int)targetType, targetMin, targetMax, targetBlock};
 }
 
 vector<int> Ability::getEffect() {
-  return {(int)effectType, effectMin, effectMax, damageReduce};
+  return {(int)effectType, effectMin, effectMax, effectBlock, damageReduce};
 }
 
 int Ability::getDamage(Character* character) {
@@ -169,21 +177,21 @@ int Ability::getDamage(Character* character) {
     int aelem = (ElementType)((int)element - 1);
     ElementType celem = character->getWeapon()->getElement();
     // vector<ElementType> elements = {water, earth, fire, wind};
-    vector<ElementType> strengths = {fire, earth, wind, water};
-    // vector<ElementType> weaknesses = {wind, water, fire, earth}; //offset 2
+    vector<ElementType> strengths = {fire, wind, earth, water};
+    vector<ElementType> weaknesses = {wind, fire, water, earth};
     if (damage > 0) {
       if (strengths[aelem] == celem)
         mult = 2;
-      else if (strengths[(aelem + 2) % strengths.size()] == celem)
+      else if (weaknesses[aelem] == celem)
         mult = 0.5;
-      else if (aelem == (int)celem)
-        mult = -1;
+      else if (element == celem)
+        mult = 0.5;
     } else {
       if (strengths[aelem] == celem)
-        mult = -1;
-      else if (strengths[(aelem + 2) % strengths.size()] == celem)
+        mult = -0.5;
+      else if (weaknesses[aelem] == celem)
         mult = 0.5;
-      else if (aelem == (int)celem)
+      else if (element == celem)
         mult = 2;
     }
     return damage * mult;

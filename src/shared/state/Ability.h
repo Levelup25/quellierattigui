@@ -30,12 +30,14 @@ namespace state {
     ZoneType targetType;
     int targetMin;
     int targetMax;
+    bool targetBlock;
     ZoneType effectType;
     int effectMin;
     int effectMax;
+    bool effectBlock;
     // Operations
   public:
-    Ability (int pa = 1, int damage = 1, ElementType element = neutral, std::string name = "", int lv = 1, int damageReduce = 100, int cooldown = 0, ZoneType targetType = circle, int targetMin = 1, int targetMax = 1, ZoneType effectType = circle, int effectMin = 0, int effectMax = 0);
+    Ability (int pa = 1, int damage = 1, ElementType element = neutral, std::string name = "", int lv = 1, int damageReduce = 100, int cooldown = 0, ZoneType targetType = circle, int targetMin = 1, int targetMax = 1, bool targetBlock = false, ZoneType effectType = circle, int effectMin = 0, int effectMax = 0, bool effectBlock = true);
     Ability (int id);
     Ability (std::string name);
     std::vector<std::vector<int>> getTargetZone (std::vector<int> position);
