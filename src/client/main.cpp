@@ -81,7 +81,7 @@ void state_init(State* state) {
   int xe = xb, ye = yb;
   for (int i = 0; i < 2; i++) {
     for (int j = 0; j < 4; j++) {
-      state->addCharacter(i, rand() % (12 * 4), (Direction)(rand() % 4),
+      state->addCharacter(i, -1 - rand() % (8), (Direction)(rand() % 4),
                           xb + rand() % (xe - xb + n),
                           yb + rand() % (ye - yb + m));
       Character* c = state->getCharacters().back();

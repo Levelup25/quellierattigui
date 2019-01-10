@@ -13,6 +13,8 @@ Sprites::Sprites(int nb) {
   contentSprites.resize(2);
   characterTexture.loadFromFile("res/persos.png");
   characterSprite.setTexture(characterTexture);
+  monsterTexture.loadFromFile("res/monsters.png");
+  monsterSprite.setTexture(monsterTexture);
   // abilityTextures.resize(5);
   // abilitySprites.resize(5);
   attackTexture.loadFromFile("res/fx.png");
@@ -62,14 +64,24 @@ sf::Sprite Sprites::getCharacterSprite(int l,
                                        int id,
                                        int direction,
                                        int animation) {
-  vector<int> offsetI{0,   101, 210, 319, 434,  543,
-                      654, 766, 876, 985, 1094, 1208};
-  vector<int> offsetJ{0, 146, 290, 439};
-  characterSprite.setTextureRect(IntRect(animation * 32 + offsetI[id % 12],
-                                         direction * 32 + offsetJ[id / 12], 32,
-                                         32));
-  characterSprite.setScale(Vector2f(nb, (float)h / 32));
-  return characterSprite;
+  if (id >= 0) {
+    vector<int> offsetI{0,   101, 210, 319, 434,  543,
+                        654, 766, 876, 985, 1094, 1208};
+    vector<int> offsetJ{0, 146, 290, 439};
+    characterSprite.setTextureRect(IntRect(animation * 32 + offsetI[id % 12],
+                                           direction * 32 + offsetJ[id / 12],
+                                           32, 32));
+    characterSprite.setScale(Vector2f(nb, (float)h / 32));
+    return characterSprite;
+  } else {
+    id = -id - 1;
+    // sud ouest est nord (enum) - sud est nord ouest sprites
+    vector<int> directions = {0, 3, 1, 2};
+    monsterSprite.setTextureRect(IntRect(
+        animation * 32 + directions[direction] * 32 * 3, id * 32, 32, 32));
+    monsterSprite.setScale(Vector2f(nb, (float)h / 32));
+    return monsterSprite;
+  }
 }
 
 sf::Sprite Sprites::getAbilitySprite(int l, int h, string name, int lv) {

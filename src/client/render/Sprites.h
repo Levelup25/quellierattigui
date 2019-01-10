@@ -19,6 +19,8 @@ namespace render {
     std::vector<sf::Sprite> contentSprites;
     sf::Texture characterTexture;
     sf::Sprite characterSprite;
+    sf::Texture monsterTexture;
+    sf::Sprite monsterSprite;
     std::vector<std::string> abilityNames;
     std::vector<sf::Texture> abilityTextures;
     std::vector<sf::Sprite> abilitySprites;
