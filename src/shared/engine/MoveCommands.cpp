@@ -54,7 +54,8 @@ vector<vector<int>> MoveCommands::getPath() {
       generator.findPath({(int)i - xv, (int)j - yv}, {i0 - xv, j0 - yv});
   path.erase(path.begin());
 
-  if (state->getCell(i, j)->getContent() > 0 && path.size() > 0)
+  if (state->getCell(i, j) && state->getCell(i, j)->getContent() > 0 &&
+      path.size() > 0)
     path.pop_back();
   for (auto coord : path)
     coords.push_back({xv + coord.x, yv + coord.y});

@@ -73,18 +73,18 @@ void state_init(State* state) {
   int nb = root.size();
   file.close();
 
+  int nbteams = 20;
   vector<string> names = {"Goku", "Snake",  "Cloud", "Samus",  "Mario", "Lara",
                           "Link", "Kratos", "Dante", "Altair", "Ryu",   "Ash"};
   int n = state->getN(), m = state->getM();
-  // int N = state->getI(), M = state->getJ();
-  int xb = n * 1, yb = m * 1;
-  // int xe = n * 1, ye = m * 1;
-  int xe = xb, ye = yb;
-  for (int i = 0; i < 2; i++) {
+  int N = state->getI(), M = state->getJ();
+  int xb = N / 4, yb = M / 4;
+  int xe = 3 * N / 4, ye = 3 * M / 4;
+  // int xe = xb, ye = yb;
+  for (int i = 0; i < 1; i++) {
     for (int j = 0; j < 4; j++) {
       state->addCharacter(i, rand() % (12 * 4), (Direction)(rand() % 4),
-                          xb + rand() % (xe - xb + n),
-                          yb + rand() % (ye - yb + m));
+                          xb + rand() % (xe - xb), yb + rand() % (ye - yb));
       Character* c = state->getCharacters().back();
       c->setName(names[rand() % names.size()]);
       c->setPm(2 + rand() % 5);
@@ -102,12 +102,11 @@ void state_init(State* state) {
   // xb = n * 0, yb = m * 0;
   // xe = n * 2, ye = m * 2;
   // xe = xb, ye = yb;
-  for (int i = 2; i < 11; i++) {
-    xb = n * ((i - 1) % 3), yb = m * ((i - 1) / 3), xe = xb, ye = yb;
-    for (int j = 0; j < 4; j++) {
+  for (int i = 1; i <= nbteams; i++) {
+    // xb = n * ((i - 1) % 3), yb = m * ((i - 1) / 3), xe = xb, ye = yb;
+    for (int j = 0; j < 3; j++) {
       state->addCharacter(i, rand() % (12 * 4), (Direction)(rand() % 4),
-                          xb + rand() % (xe - xb + n),
-                          yb + rand() % (ye - yb + m));
+                          rand() % N, rand() % M);
       Character* c = state->getCharacters().back();
       c->setName(names[rand() % names.size()]);
       c->setPm(2 + rand() % 5);
@@ -122,6 +121,56 @@ void state_init(State* state) {
       }
     }
   }
+
+  vector<string> bossnames = {"Inconnu",        "Overlord",  "Human Slayer",
+                              "Spyro",          "Djinn",     "Dominatrix",
+                              "Fausse chieuse", "Demon Niac"};
+  // eau : 6+7   feu : 4+5   terre : 2+3   air : 0+1
+  vector<int> elems = {1, 3, 2, 4};
+  for (int i = 0; i < 4; i++) {
+    xb = 3 * (i % 2) * N / 4, yb = 3 * (i / 2) * M / 4, xe = xb + N / 4,
+    ye = yb + M / 4;
+    for (int j = 0; j < 3; j++) {
+      state->addCharacter(i + nbteams + 1,
+                          -1 - (9 - 2 * elems[state->zones[i] - 1] - (j == 0)),
+                          (Direction)(rand() % 4), xb + rand() % (xe - xb),
+                          yb + rand() % (ye - yb));
+      Character* c = state->getCharacters().back();
+      c->setName(bossnames[9 - 2 * elems[state->zones[i] - 1] - (j == 0)]);
+      c->setPm(3 + 3 * (j == 1));
+      c->setPv(3 + 6 * (j == 1));
+      c->setPa(3 + 6 * (j == 1));
+      Weapon* w = new Weapon(6 * (rand() % 3) + (j ? state->zones[i] : 5));
+      c->setWeapon(w);
+      for (auto a : w->getAbilities()) {
+        int r3 = 2 + (j ? rand() % 1 : 1);
+        for (int i = 0; i < r3; i++)
+          a->addLv();
+      }
+    }
+  }
+
+  int xv = ((int)state->getMainCharacter()->getI() / n) * n,
+      yv = ((int)state->getMainCharacter()->getJ() / m) * m;
+  for (int i = nbteams + 5; i <= nbteams + 7; i++) {
+    for (int j = 0; j < 4; j++) {
+      state->addCharacter(i, rand() % (12 * 4), (Direction)(rand() % 4),
+                          xv + rand() % n, yv + rand() % m);
+      Character* c = state->getCharacters().back();
+      c->setName(names[rand() % names.size()]);
+      c->setPm(2 + rand() % 5);
+      c->setPv(1 + rand() % 4);
+      c->setPa(3 + rand() % 2);
+      Weapon* w = new Weapon(rand() % nb);
+      c->setWeapon(w);
+      for (auto a : w->getAbilities()) {
+        int r3 = rand() % 3;
+        for (int i = 0; i < r3; i++)
+          a->addLv();
+      }
+    }
+  }
+
   state->initialCharacters = state->getCharacters();
 }
 

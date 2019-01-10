@@ -17,6 +17,7 @@ State::State(size_t i, size_t j) {
   vector<ElementType> vector{wind, fire, earth, water};
   random_shuffle(vector.begin(), vector.end());
   vector.push_back(neutral);
+  zones = vector;
   int r, r2;
   int p = 5, p2 = 5;
   grid.resize(I);
@@ -41,13 +42,13 @@ State::State(size_t i, size_t j) {
         if (k >= I / 4 && k < 3 * I / 4 && l >= J / 4 && l < 3 * J / 4) {
           cell->setElement(vector[4]);
         } else if (k < I / 2 && l < J / 2) {
-          cell->setElement(vector[3]);
-        } else if (k < I / 2 && l >= J / 2) {
-          cell->setElement(vector[2]);
+          cell->setElement(vector[0]);
         } else if (k >= I / 2 && l < J / 2) {
           cell->setElement(vector[1]);
+        } else if (k < I / 2 && l >= J / 2) {
+          cell->setElement(vector[2]);
         } else {
-          cell->setElement(vector[0]);
+          cell->setElement(vector[3]);
         }
       }
       grid[k][l] = cell;
@@ -309,6 +310,13 @@ void State::endFight() {
       // for (c : team->getCharacters(fight->getNb()))
       //   this->delCharacter(c);
       // if (team->getCharacters().size() == 0)
+      if (team->getMainCharacter()->getId() < 0) {
+        cout << endl
+             << "Bravo vous avez vaincu l'un des 4 seigneurs élémentaires!!!"
+             << endl;
+        cout << "Saurez vous vaincre les 3 autres?..." << endl;
+        exit(0);
+      }
       this->delTeam(team);
       end = true;
     }

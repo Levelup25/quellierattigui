@@ -14,6 +14,7 @@ namespace state {
   class Cell;
 }
 
+#include "ElementType.h"
 #include "Fight.h"
 #include "Direction.h"
 #include "Team.h"
@@ -31,6 +32,7 @@ namespace state {
     int etatCombat     = 0;
     std::vector<std::vector<int>> animations;
     unsigned int seed;
+    std::vector<ElementType> zones;
   private:
     std::size_t I     = 144;
     std::size_t J     = 144;
