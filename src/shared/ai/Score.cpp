@@ -28,7 +28,7 @@ void Score::setScoreAction(MoveCommands* mv,
     int bonusHitEnemy = 10;
     int malusHitAlly = 5;
     Weapon* weapon = pcharacter->getWeapon();
-    int dmg = weapon->getAbility(atk->getAbilityNumber())->getDamage();
+    // int dmg = weapon->getAbility(atk->getAbilityNumber())->getDamage();
     auto zoneDmg = atk->getZone(1);
 
     // score dmg
@@ -41,7 +41,10 @@ void Score::setScoreAction(MoveCommands* mv,
         if (pennemy->getI() == coord[0] && pennemy->getJ() == coord[1]) {
           int pv = pennemy->getPvCurrent();
           if (pv > 0) {
-            int percent = (100 * dmg / pv);
+            int percent = (100 *
+                           weapon->getAbility(atk->getAbilityNumber())
+                               ->getDamage(pennemy) /
+                           pv);
             if (percent > 100) {
               int overkill = percent - 100;
               percent = 100;
@@ -57,7 +60,10 @@ void Score::setScoreAction(MoveCommands* mv,
         if (pally->getI() == coord[0] && pally->getJ() == coord[1]) {
           int pv = pally->getPvCurrent();
           if (pv > 0) {
-            int percent = (100 * dmg / pv);
+            int percent =
+                (100 *
+                 weapon->getAbility(atk->getAbilityNumber())->getDamage(pally) /
+                 pv);
             if (percent > 100) {
               percent = 100;
               malusDmgAlly += MalusKillAlly;

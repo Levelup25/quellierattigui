@@ -24,6 +24,9 @@ Render::Render(State* state, Engine* engine, int nb, int l, int h) {
   this->h = nb * h;
   n = state->getN();
   m = state->getM();
+  font.loadFromFile("res/font/roboto/Roboto-Regular.ttf");
+  text.setFont(font);
+  text.setCharacterSize(24);
 }
 
 void Render::drawMap(RenderWindow& window, render::View& v, Sprites& sprites) {
@@ -117,11 +120,31 @@ void Render::drawZones(RenderWindow& window, render::View& v) {
         zone.setFillColor(Color(255, 0, 0, 128));
       else
         zone.setFillColor(Color(0, 255, 0, 128));
+      vector<Character*> fightingcharacters =
+          state->getFight()->getFightingCharacters();
+      text.setCharacterSize(32);
       for (vector<int> coord : effects) {
         zone.setPosition(Vector2f(l * coord[0], h * coord[1]));
         window.draw(zone);
+        auto it = find(fightingcharacters.begin(), fightingcharacters.end(),
+                       state->getCharacter(coord[0], coord[1]));
+        if (it != fightingcharacters.end()) {
+          int dmg = selectedcharacter->getWeapon()
+                        ->getAbility(abilityNumber)
+                        ->getDamage(*it);
+          text.setString(to_string(abs(dmg)));
+          text.setPosition(
+              Vector2f(l * coord[0] + (l - text.getCharacterSize()) / 2,
+                       h * coord[1] + (h - text.getCharacterSize()) / 2));
+          if (dmg > 0)
+            text.setColor(sf::Color::Red);
+          else
+            text.setColor(sf::Color::Green);
+          window.draw(text);
+        }
       }
     }
+    text.setCharacterSize(24);
     zone.setFillColor(Color::Transparent);
   }
 }
@@ -194,11 +217,6 @@ void Render::drawInformations(RenderWindow& window,
   vector<Ability*> abs = selectedcharacter->getWeapon()->getAbilities();
   Ability* a = abs[abilityNumber];
   window.setView(view);
-  sf::Text text;
-  Font font;
-  font.loadFromFile("res/font/roboto/Roboto-Regular.ttf");
-  text.setFont(font);
-  text.setCharacterSize(24);
   RectangleShape r(Vector2f(view.getSize().x / 6, view.getSize().y));
   r.setFillColor(Color::Black);
   vector<Color> colors = {Color::White, Color::Blue, Color::Green, Color::Red,
@@ -489,9 +507,9 @@ void Render::display() {
 
     this->drawMap(window, worldView, sprites);
 
-    this->drawZones(window, worldView);
-
     this->drawCharacters(window, worldView, sprites, chars);
+
+    this->drawZones(window, worldView);
 
     this->drawAnimations(window, worldView, sprites);
 

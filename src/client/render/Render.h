@@ -52,6 +52,8 @@ namespace render {
     int yv     = 0;
     std::size_t n     = 12;
     std::size_t m     = 12;
+    sf::Text text;
+    sf::Font font;
     // Operations
   public:
     Render (state::State* state, engine::Engine* engine, int nb = 2, int l = 34, int h = 24);

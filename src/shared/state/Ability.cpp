@@ -1,6 +1,7 @@
 #include "Ability.h"
 #include <fstream>
 #include <iterator>
+#include "Character.h"
 #include "json/json.h"
 #include "string.h"
 
@@ -161,7 +162,32 @@ vector<int> Ability::getEffect() {
   return {(int)effectType, effectMin, effectMax, damageReduce};
 }
 
-int Ability::getDamage() {
+int Ability::getDamage(Character* character) {
+  if (character && element != neutral) {
+    // eau > feu > terre > air > eau ...
+    float mult = 1;
+    int aelem = (ElementType)((int)element - 1);
+    ElementType celem = character->getWeapon()->getElement();
+    // vector<ElementType> elements = {water, earth, fire, wind};
+    vector<ElementType> strengths = {fire, earth, wind, water};
+    // vector<ElementType> weaknesses = {wind, water, fire, earth}; //offset 2
+    if (damage > 0) {
+      if (strengths[aelem] == celem)
+        mult = 2;
+      else if (strengths[(aelem + 2) % strengths.size()] == celem)
+        mult = 0.5;
+      else if (aelem == (int)celem)
+        mult = -1;
+    } else {
+      if (strengths[aelem] == celem)
+        mult = -1;
+      else if (strengths[(aelem + 2) % strengths.size()] == celem)
+        mult = 0.5;
+      else if (aelem == (int)celem)
+        mult = 2;
+    }
+    return damage * mult;
+  }
   return damage;
 }
 

@@ -171,7 +171,8 @@ void DeepAI::buildTree(shared_ptr<TreeNode> node, int depth, int teamNumber) {
           mvcmd.execute();
         }
         if (atk) {
-          DamageCommand dmgcmd(state, engine, atk->getZone(1), {-1}, 0, 0,
+          DamageCommand dmgcmd(state, engine, character, atk->getZone(1), {-1},
+                               atk->getAbilityNumber(),
                                character->getWeapon()
                                    ->getAbility(atk->getAbilityNumber())
                                    ->getDamage());
@@ -181,7 +182,8 @@ void DeepAI::buildTree(shared_ptr<TreeNode> node, int depth, int teamNumber) {
         buildTree(childNode, depth, teamNumber);
 
         if (atk) {
-          DamageCommand dmgcmd(state, engine, atk->getZone(1), {-1}, 0, 0,
+          DamageCommand dmgcmd(state, engine, character, atk->getZone(1), {-1},
+                               atk->getAbilityNumber(),
                                character->getWeapon()
                                    ->getAbility(atk->getAbilityNumber())
                                    ->getDamage());

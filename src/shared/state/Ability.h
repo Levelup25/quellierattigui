@@ -5,6 +5,10 @@
 #include <string>
 #include <vector>
 
+namespace state {
+  class Character;
+}
+
 #include "ElementType.h"
 #include "ZoneType.h"
 
@@ -41,7 +45,7 @@ namespace state {
     void setEffect (ZoneType effectZone, int min, int max, int reduce = 100);
     std::vector<int> getTarget ();
     std::vector<int> getEffect ();
-    int getDamage ();
+    int getDamage (Character* character = nullptr);
     int getPa ();
     std::string getName ();
     void setDamage (int dmg);

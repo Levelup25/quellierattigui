@@ -21,10 +21,22 @@ using namespace engine;
 using namespace ai;
 
 void cout_terminal() {
+  cout << "Roue des elements : " << endl;
+  cout << "eau \t > \t  feu" << endl;
+  cout << " ^  \t    \t   v " << endl;
+  cout << "vent \t < \t terre" << endl;
+  cout
+      << "Attaque elementaire forte : dégats doublés et soins changés en degats"
+      << endl;
+  cout << "Attaque elementaire faible : dégats et soins divisés" << endl;
+  cout << "Attaque elementaire miroir : soins doublés et degats changés en soin"
+       << endl;
+  cout << "Les soins en surplus restent actifs pendant le tour courant" << endl;
+  cout << endl;
   cout << "Clic gauche : déplacement" << endl;
   cout << "Clic droit : choix personnage" << endl;
-  cout << "Se déplacer au bord de l'écran change la vue sauf si un "
-          "obstacle bloque"
+  cout << "Se déplacer au bord de l'écran change la vue sauf si un obstacle "
+          "bloque"
        << endl;
   cout << "Cliquez sur un personnage pour se battre. Dans ce cas : " << endl;
   cout << "Clic gauche sur la carte : déplacement" << endl;

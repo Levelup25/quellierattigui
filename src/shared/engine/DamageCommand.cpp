@@ -10,36 +10,34 @@ using namespace engine;
 
 DamageCommand::DamageCommand(State* state,
                              Engine* engine,
+                             Character* character,
                              vector<vector<int>> positions,
                              vector<int> directions,
-                             int element,
-                             int lv,
-                             bool heal,
+                             int abilityNumber,
                              int dmg,
                              bool reverse) {
   this->state = state;
   this->engine = engine;
-  this->character = nullptr;
+  this->character = character;
   this->positions = positions;
   this->directions = directions;
-  this->element = element;
-  this->lv = lv;
-  this->heal = heal;
-  this->reverse = reverse;
+  this->abilityNumber = abilityNumber;
   this->dmg = dmg;
+  this->reverse = reverse;
 }
 
 void DamageCommand::execute() {
+  ability = character->getWeapon()->getAbility(abilityNumber);
   shared_ptr<Fight> fight = state->getFight();
   state->animations.clear();
   vector<Character*> fighters;
-  if (reverse)
-    dmg = -dmg;
   int i = 0;
+  bool heal = ability->getDamage() <= 0;
   for (auto pos : positions) {
     if (directions[0] != -1)
-      state->animations.push_back(
-          {pos[0], pos[1], directions[i++], element, lv, heal});
+      state->animations.push_back({pos[0], pos[1], directions[i++],
+                                   ability->getElement(), ability->getLv(),
+                                   heal});
     if (dmg != 0) {
       Character* c = state->getCharacter(pos[0], pos[1]);
       if (!reverse)
@@ -48,7 +46,11 @@ void DamageCommand::execute() {
         fighters = fight->getCharacters();
       }
       if (find(fighters.begin(), fighters.end(), c) != fighters.end()) {
-        c->removePv(dmg);
+        if (!reverse)
+          c->removePv(ability->getDamage(c));
+        else
+          c->removePv(-ability->getDamage(c));
+
         if (c->getPvCurrent() <= 0)
           state->getCell(c->getI(), c->getJ())->setContent(nothing);
         else
@@ -98,21 +100,28 @@ void DamageCommand::execute() {
 void const DamageCommand::serialize(Json::Value& out) {
   // return;
   out["command"] = "DamageCommand";
+  vector<Character*> characters = state->initialCharacters;
+  int k = characters.size();
+  while (k--)
+    if (character == characters[k]) {
+      out["character"] = k;
+      break;
+    }
   for (int k = 0; k < (int)positions.size(); k++)
     out["ipos"].append(positions[k][0]);
   for (int k = 0; k < (int)positions.size(); k++)
     out["jpos"].append(positions[k][1]);
   for (int k = 0; k < (int)directions.size(); k++)
     out["directions"].append(directions[k]);
-  out["element"] = element;
-  out["lv"] = lv;
-  out["heal"] = heal;
+  out["abilityNumber"] = abilityNumber;
   out["dmg"] = dmg;
 }
 
 DamageCommand* DamageCommand::deserialize(const Json::Value& in,
                                           State* state,
                                           Engine* engine) {
+  Character* character =
+      state->initialCharacters[in.get("character", 0).asInt()];
   vector<vector<int>> positions;
   vector<int> ipos, jpos;
   int size = in.get("ipos", 0).size();
@@ -125,10 +134,8 @@ DamageCommand* DamageCommand::deserialize(const Json::Value& in,
   vector<int> directions;
   for (int k = 0; k < (int)in.get("directions", 0).size(); k++)
     directions.push_back(in.get("directions", 0)[k].asInt());
-  int element = in.get("element", 0).asInt();
-  int lv = in.get("lv", 0).asInt();
-  bool heal = in.get("heal", 0).asBool();
+  int abilityNumber = in.get("abilityNumber", 0).asInt();
   int dmg = in.get("dmg", 0).asInt();
-  return new DamageCommand(state, engine, positions, directions, element, lv,
-                           heal, dmg);
+  return new DamageCommand(state, engine, character, positions, directions,
+                           abilityNumber, dmg);
 }
