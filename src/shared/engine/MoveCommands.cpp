@@ -114,13 +114,13 @@ void MoveCommands::execute() {
                !state->isFighting()) {
       if (i % n == 0 && i > 0 && state->getCell(i - 1, j)->getContent() == 0) {
         engine->addCommand(new MoveCommand(state, character, i - 1, j));
-      } else if ((i + 1) % n == 0 && i + 1 < state->getI() &&
+      } else if ((i + 1) % n == 0 && i + 1 < (int)state->getI() &&
                  state->getCell(i + 1, j)->getContent() == 0) {
         engine->addCommand(new MoveCommand(state, character, i + 1, j));
       } else if (j % m == 0 && j > 0 &&
                  state->getCell(i, j - 1)->getContent() == 0) {
         engine->addCommand(new MoveCommand(state, character, i, j - 1));
-      } else if ((j + 1) % m == 0 && j + 1 < state->getJ() &&
+      } else if ((j + 1) % m == 0 && j + 1 < (int)state->getJ() &&
                  state->getCell(i, j + 1)->getContent() == 0) {
         engine->addCommand(new MoveCommand(state, character, i, j + 1));
       }

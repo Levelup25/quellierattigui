@@ -122,8 +122,8 @@ void state_init(State* state) {
     }
   }
 
-  vector<string> bossnames = {"Inconnu",        "Overlord",  "Human Slayer",
-                              "Spyro",          "Djinn",     "Dominatrix",
+  vector<string> bossnames = {"Inconnu",        "Overlord",   "Human Slayer",
+                              "Mon ventre",     "Levi Djinn", "Dominatrix",
                               "Fausse chieuse", "Demon Niac"};
   // eau : 6+7   feu : 4+5   terre : 2+3   air : 0+1
   vector<int> elems = {1, 3, 2, 4};
