@@ -301,20 +301,21 @@ void State::endFight() {
         this->delTeam(team);
         cout << endl << "Perdu, vous ferez mieux la prochaine fois!" << endl;
         cout << endl;
-        cout << "                   Credits : " << endl;
-        cout << "Game designers :             Quellier Louis, Attigui Youness"
+        vector<string> programmers = {"Quellier Louis", "Attigui Youness"};
+        cout << "                 Credits : " << endl;
+        cout << "Game designer :            " << programmers[rand() % 2]
              << endl;
-        cout << "Directeurs artistiques :     Quellier Louis, Attigui Youness"
+        cout << "Directeur artistique :     " << programmers[rand() % 2]
              << endl;
-        cout << "Développeurs informatique :  Quellier Louis, Attigui Youness"
+        cout << "Développeur informatique : " << programmers[rand() % 2]
              << endl;
-        cout << "Level designers :            Quellier Louis, Attigui Youness"
+        cout << "Level designer :           " << programmers[rand() % 2]
              << endl;
-        cout << "Infographistes :             Quellier Louis, Attigui Youness"
+        cout << "Infographiste :            " << programmers[rand() % 2]
              << endl;
-        cout << "Testeurs :                   Quellier Louis, Attigui Youness"
+        cout << "Testeur :                  " << programmers[rand() % 2]
              << endl;
-        cout << "Sound designers :            Quellier Louis, Attigui Youness"
+        cout << "Sound designer :           " << programmers[rand() % 2]
              << endl;
         exit(0);
       }
@@ -333,20 +334,21 @@ void State::endFight() {
              << team->getCharacter(1)->getName() << endl;
         cout << "Saurez vous vaincre les 3 autres?..." << endl;
         cout << endl;
-        cout << "                   Credits : " << endl;
-        cout << "Game designers :             Quellier Louis, Attigui Youness"
+        vector<string> programmers = {"Quellier Louis", "Attigui Youness"};
+        cout << "                 Credits : " << endl;
+        cout << "Game designer :            " << programmers[rand() % 2]
              << endl;
-        cout << "Directeurs artistiques :     Quellier Louis, Attigui Youness"
+        cout << "Directeur artistique :     " << programmers[rand() % 2]
              << endl;
-        cout << "Développeurs informatique :  Quellier Louis, Attigui Youness"
+        cout << "Développeur informatique : " << programmers[rand() % 2]
              << endl;
-        cout << "Level designers :            Quellier Louis, Attigui Youness"
+        cout << "Level designer :           " << programmers[rand() % 2]
              << endl;
-        cout << "Infographistes :             Quellier Louis, Attigui Youness"
+        cout << "Infographiste :            " << programmers[rand() % 2]
              << endl;
-        cout << "Testeurs :                   Quellier Louis, Attigui Youness"
+        cout << "Testeur :                  " << programmers[rand() % 2]
              << endl;
-        cout << "Sound designers :            Quellier Louis, Attigui Youness"
+        cout << "Sound designer :           " << programmers[rand() % 2]
              << endl;
         exit(0);
       }

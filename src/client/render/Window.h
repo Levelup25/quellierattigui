@@ -3,6 +3,7 @@
 #define RENDER__WINDOW__H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 namespace render {
   class Rectangle;

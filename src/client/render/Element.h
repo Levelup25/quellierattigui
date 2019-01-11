@@ -3,6 +3,7 @@
 #define RENDER__ELEMENT__H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <vector>
 #include <string>
 #include <ostream>

@@ -3,6 +3,7 @@
 #define RENDER__RELATIF2__H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <ostream>
 
 namespace render {

@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 namespace render {
 

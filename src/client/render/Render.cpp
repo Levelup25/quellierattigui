@@ -1,4 +1,5 @@
 #include "Render.h"
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <fstream>
@@ -257,6 +258,12 @@ void Render::drawInformations(RenderWindow& window,
 }
 
 void Render::display() {
+  // sf::Music music;
+  // music.openFromFile("res/theme.wav");
+  // music.play();
+  // music.setLoop(true);
+  // music.setVolume(50.f);
+
   SpriteGenerator::init();
 
   vector<vector<Cell*>> grid = state->getGrid();
