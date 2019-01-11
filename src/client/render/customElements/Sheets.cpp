@@ -165,13 +165,14 @@ Element* WeaponSheet(state::Weapon* weapon) {
     state::Ability* a = weapon->getAbility(i);
     wpnAbilities[i]->sprite =
         spriteGen->getAbilitySprite(50, 50, a->getName(), a->getLv());
-    wpnAbilities[i]->setLink(AbilitySheet(weapon->getAbility(i)));
+    wpnAbilities[i]->setLink(AbilitySheet(a));
     wpnAbilities[i]->setSizeRelative({50, 50});
   }
 
   // place children
   std::vector<Element*> children = {WeaponName, wpnSprite};
-  children.insert(children.end(), wpnAbilities.begin(), wpnAbilities.end());
+  for (auto elem : wpnAbilities)
+    children.push_back(elem);
   int spacepx = 20;
   int y = 0;
   for (size_t i = 0; i < children.size(); i++) {

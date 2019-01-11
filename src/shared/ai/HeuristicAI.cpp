@@ -44,7 +44,8 @@ tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
   }
 
   Score score;
-  score.setScoreAction(listmv[0], listatk[0], character, allies, ennemies);
+  score.setScoreAction(state, listmv[0], listatk[0], character, allies,
+                       ennemies);
   vector<Score> scoresBest = {score};
   int scoreMax = scoresBest[0].getScore();
   // search best actions
@@ -54,7 +55,7 @@ tuple<MoveCommands*, AttackCommand*> HeuristicAI::getBestAction(
   for (auto mv : listmv) {
     for (auto atk : listatk) {
       Score score;
-      score.setScoreAction(mv, atk, character, allies, ennemies);
+      score.setScoreAction(state, mv, atk, character, allies, ennemies);
 
       if (score.getScore() > scoreMax) {
         imax.clear();

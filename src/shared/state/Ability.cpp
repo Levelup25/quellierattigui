@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iterator>
 #include "Character.h"
+#include "State.h"
 #include "json/json.h"
 #include "string.h"
 
@@ -170,29 +171,41 @@ vector<int> Ability::getEffect() {
   return {(int)effectType, effectMin, effectMax, effectBlock, damageReduce};
 }
 
-int Ability::getDamage(Character* character) {
-  if (character && element != neutral) {
-    // eau > feu > terre > air > eau ...
+int Ability::getDamage(State* state, Character* att, Character* def) {
+  if (state && element != neutral) {
     float mult = 1;
     int aelem = (ElementType)((int)element - 1);
-    ElementType celem = character->getWeapon()->getElement();
+    ElementType telem1 = state->getCell(att->getI(), att->getJ())->getElement();
+    ElementType telem2 = state->getCell(def->getI(), def->getJ())->getElement();
+    ElementType welem1 = att->getWeapon()->getElement();
+    ElementType welem2 = def->getWeapon()->getElement();
     // vector<ElementType> elements = {water, earth, fire, wind};
-    vector<ElementType> strengths = {fire, wind, earth, water};
-    vector<ElementType> weaknesses = {wind, fire, water, earth};
+    vector<ElementType> strengths = {fire, water, wind, earth};
+    vector<ElementType> weaknesses = {wind, fire, earth, water};
     if (damage > 0) {
-      if (strengths[aelem] == celem)
-        mult = 2;
-      else if (weaknesses[aelem] == celem)
-        mult = 0.5;
-      else if (element == celem)
-        mult = 0.5;
+      if (strengths[aelem] == welem2)
+        mult *= 2;
+      else if (weaknesses[aelem] == welem2)
+        mult *= 0.5;
+      else if (element == welem2)
+        mult *= 0.5;
+
+      if (welem1 == telem1)
+        mult *= 1.5;
+      if (welem2 == telem2)
+        mult /= 1.5;
     } else {
-      if (strengths[aelem] == celem)
-        mult = -0.5;
-      else if (weaknesses[aelem] == celem)
-        mult = 0.5;
-      else if (element == celem)
-        mult = 2;
+      if (strengths[aelem] == welem2)
+        mult *= -1;
+      else if (weaknesses[aelem] == welem2)
+        mult *= 0.5;
+      else if (element == welem2)
+        mult *= 2;
+
+      if (welem1 == telem1)
+        mult *= 1.5;
+      if (welem2 == telem2)
+        mult *= 1.5;
     }
     return damage * mult;
   }

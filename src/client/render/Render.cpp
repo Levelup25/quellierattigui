@@ -131,7 +131,7 @@ void Render::drawZones(RenderWindow& window, render::View& v) {
         if (it != fightingcharacters.end()) {
           int dmg = selectedcharacter->getWeapon()
                         ->getAbility(abilityNumber)
-                        ->getDamage(*it);
+                        ->getDamage(state, selectedcharacter, *it);
           text.setString(to_string(abs(dmg)));
           text.setPosition(
               Vector2f(l * coord[0] + (l - text.getCharacterSize()) / 2,
@@ -454,6 +454,8 @@ void Render::display() {
             state->resetContents();
           engine->addCommand(new FightCommand(state, engine, fight->getTeam(0),
                                               fight->getTeam(1)));
+        } else if (event.key.code == sf::Keyboard::I) {
+          state->two_ai = !state->two_ai;
         } else if (event.key.code == sf::Keyboard::R) {
           if ((state->getFight() && state->getFight()->getTurn() > 0) ||
               !state->getFight())

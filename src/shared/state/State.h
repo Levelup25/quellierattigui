@@ -33,6 +33,7 @@ namespace state {
     std::vector<std::vector<int>> animations;
     unsigned int seed;
     std::vector<ElementType> zones;
+    bool two_ai     = false;
   private:
     std::size_t I     = 144;
     std::size_t J     = 144;

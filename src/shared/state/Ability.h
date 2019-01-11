@@ -6,6 +6,7 @@
 #include <vector>
 
 namespace state {
+  class State;
   class Character;
 }
 
@@ -47,7 +48,7 @@ namespace state {
     void setEffect (ZoneType effectZone, int min, int max, int reduce = 100);
     std::vector<int> getTarget ();
     std::vector<int> getEffect ();
-    int getDamage (Character* character = nullptr);
+    int getDamage (State* state = nullptr, Character* att = nullptr, Character* def = nullptr);
     int getPa ();
     std::string getName ();
     void setDamage (int dmg);

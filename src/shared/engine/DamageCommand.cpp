@@ -47,9 +47,9 @@ void DamageCommand::execute() {
       }
       if (find(fighters.begin(), fighters.end(), c) != fighters.end()) {
         if (!reverse)
-          c->removePv(ability->getDamage(c));
+          c->removePv(ability->getDamage(state, character, c));
         else
-          c->removePv(-ability->getDamage(c));
+          c->removePv(-ability->getDamage(state, character, c));
 
         if (c->getPvCurrent() <= 0)
           state->getCell(c->getI(), c->getJ())->setContent(nothing);

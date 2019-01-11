@@ -55,7 +55,7 @@ vector<tuple<MoveCommands*, AttackCommand*, Score>> DeepAI::getBestActions(
   for (auto mv : listmv) {
     for (auto atk : listatk) {
       Score score;
-      score.setScoreAction(mv, atk, character, allies, ennemies);
+      score.setScoreAction(state, mv, atk, character, allies, ennemies);
 
       if (threshold < 0) {
         if (score.getScore() > scoreMax) {

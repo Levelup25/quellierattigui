@@ -299,7 +299,23 @@ void State::endFight() {
         this->delCharacter(c);
       if (team->getCharacters().size() == 0) {
         this->delTeam(team);
-        cout << endl << "Perdu!!!" << endl;
+        cout << endl << "Perdu, vous ferez mieux la prochaine fois!" << endl;
+        cout << endl;
+        cout << "                   Credits : " << endl;
+        cout << "Game designers :             Quellier Louis, Attigui Youness"
+             << endl;
+        cout << "Directeurs artistiques :     Quellier Louis, Attigui Youness"
+             << endl;
+        cout << "Développeurs informatique :  Quellier Louis, Attigui Youness"
+             << endl;
+        cout << "Level designers :            Quellier Louis, Attigui Youness"
+             << endl;
+        cout << "Infographistes :             Quellier Louis, Attigui Youness"
+             << endl;
+        cout << "Testeurs :                   Quellier Louis, Attigui Youness"
+             << endl;
+        cout << "Sound designers :            Quellier Louis, Attigui Youness"
+             << endl;
         exit(0);
       }
       end = true;
@@ -312,9 +328,26 @@ void State::endFight() {
       // if (team->getCharacters().size() == 0)
       if (team->getMainCharacter()->getId() < 0) {
         cout << endl
-             << "Bravo vous avez vaincu l'un des 4 seigneurs élémentaires!!!"
-             << endl;
+             << "Bravo vous avez vaincu " << team->getMainCharacter()->getName()
+             << ", l'un des 4 seigneurs élémentaires, accompagné de 2 "
+             << team->getCharacter(1)->getName() << endl;
         cout << "Saurez vous vaincre les 3 autres?..." << endl;
+        cout << endl;
+        cout << "                   Credits : " << endl;
+        cout << "Game designers :             Quellier Louis, Attigui Youness"
+             << endl;
+        cout << "Directeurs artistiques :     Quellier Louis, Attigui Youness"
+             << endl;
+        cout << "Développeurs informatique :  Quellier Louis, Attigui Youness"
+             << endl;
+        cout << "Level designers :            Quellier Louis, Attigui Youness"
+             << endl;
+        cout << "Infographistes :             Quellier Louis, Attigui Youness"
+             << endl;
+        cout << "Testeurs :                   Quellier Louis, Attigui Youness"
+             << endl;
+        cout << "Sound designers :            Quellier Louis, Attigui Youness"
+             << endl;
         exit(0);
       }
       this->delTeam(team);

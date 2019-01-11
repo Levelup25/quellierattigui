@@ -22,9 +22,9 @@ using namespace ai;
 
 void cout_terminal() {
   cout << "Roue des elements : " << endl;
-  cout << "eau \t > \t  feu" << endl;
-  cout << " ^  \t    \t   v " << endl;
-  cout << "vent \t < \t terre" << endl;
+  cout << " \033[1;34meau\033[0m   >  \033[1;31mfeu\033[0m" << endl;
+  cout << "  ^ neutre v " << endl;
+  cout << "\033[1;32mterre\033[0m  <  \033[1;33mair\033[0m" << endl;
   cout << "Attaque elementaire forte : dégats doublés et soins changés en "
           "degats faibles"
        << endl;
@@ -59,8 +59,8 @@ void cout_terminal() {
        << endl;
   cout << "Cliquer sur un sprite dans une fenêtre peut ouvrir d'autres fenêtres"
        << endl;
-  cout << "Appuyez sur R pour effectuer un rollback, puis de nouveau sur R "
-          "pour revenir à l'état normal"
+  cout << "Appuyez sur R pour activer/désactiver le rollback" << endl;
+  cout << "Appuyez sur I pour activer/désactiver l'intelligence artificielle"
        << endl;
 }
 
@@ -174,11 +174,7 @@ void state_init(State* state) {
   state->initialCharacters = state->getCharacters();
 }
 
-void launch_threads(State* state,
-                    Render* render,
-                    Engine* engine,
-                    AI* ai,
-                    bool two_ai) {
+void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
   bool end = false;
   thread t1([render, &end]() {
     render->display();
@@ -193,11 +189,11 @@ void launch_threads(State* state,
       }
     }
   });
-  thread t3([ai, state, engine, &end, &two_ai]() {
+  thread t3([ai, state, engine, &end]() {
     while (!end) {
       shared_ptr<Fight> fight = state->getFight();
       vector<Character*> maincharacters = state->getMainCharacters();
-      if (two_ai && !fight && maincharacters.size() > 1 &&
+      if (state->two_ai && !fight && maincharacters.size() > 1 &&
           state->getMainCharacter()) {
         int x0 = state->getMainCharacter()->getI(),
             y0 = state->getMainCharacter()->getJ();
@@ -332,14 +328,15 @@ void launch_threads(State* state,
                                             state->getFight()->getTeam(1)));
       }
 
-      if (two_ai && engine->getSize() == 0 && fight &&
+      if (state->two_ai && engine->getSize() == 0 && fight &&
           fight->getTurn() % 2 == 1 && fight->getTurn() != 0) {
         vector<Character*> vect =
             ai->getTurnOrder(fight->getFightingCharacters(0));
         for (auto c : vect) {
-          ai->run(c);
+          if (state->two_ai)
+            ai->run(c);
         }
-        if (fight->getFightingCharacters(0).size())
+        if (state->two_ai && fight->getFightingCharacters(0).size())
           engine->addCommand(new FightCommand(state, engine,
                                               state->getFight()->getTeam(0),
                                               state->getFight()->getTeam(1)));
@@ -383,7 +380,6 @@ int main(int argc, char* argv[]) {
     Engine* engine = new Engine();
     Render* render = new Render(state, engine);
     AI* ai = new HeuristicAI(state, engine);
-    bool two_ai = false;
 
     // Livrable 1.1
     if (strcmp(argv[i], "hello") == 0) {
@@ -498,7 +494,7 @@ int main(int argc, char* argv[]) {
       ai = new DeepAI(state, engine);
     }  // Livrable 4.1
     else if (strcmp(argv[i], "thread") == 0) {
-      two_ai = true;
+      state->two_ai = true;
     } else if (strcmp(argv[i], "record") == 0) {
     } else if (strcmp(argv[i], "play") == 0) {
       int size = root.size();
@@ -519,7 +515,7 @@ int main(int argc, char* argv[]) {
     if (strcmp(argv[i], "hello") != 0 && strcmp(argv[i], "state") != 0 &&
         strcmp(argv[i], "render") != 0 && strcmp(argv[i], "renderTest") != 0) {
       cout_terminal();
-      launch_threads(state, render, engine, ai, two_ai);
+      launch_threads(state, render, engine, ai);
     }
   }
   return 0;

@@ -16,7 +16,8 @@ int Score::getScore() const {
   return score;
 }
 
-void Score::setScoreAction(MoveCommands* mv,
+void Score::setScoreAction(State* state,
+                           MoveCommands* mv,
                            AttackCommand* atk,
                            Character* pcharacter,
                            vector<Character*> allies,
@@ -43,7 +44,7 @@ void Score::setScoreAction(MoveCommands* mv,
           if (pv > 0) {
             int percent = (100 *
                            weapon->getAbility(atk->getAbilityNumber())
-                               ->getDamage(pennemy) /
+                               ->getDamage(state, pcharacter, pennemy) /
                            pv);
             if (percent > 100) {
               int overkill = percent - 100;
@@ -60,10 +61,10 @@ void Score::setScoreAction(MoveCommands* mv,
         if (pally->getI() == coord[0] && pally->getJ() == coord[1]) {
           int pv = pally->getPvCurrent();
           if (pv > 0) {
-            int percent =
-                (100 *
-                 weapon->getAbility(atk->getAbilityNumber())->getDamage(pally) /
-                 pv);
+            int percent = (100 *
+                           weapon->getAbility(atk->getAbilityNumber())
+                               ->getDamage(state, pcharacter, pally) /
+                           pv);
             if (percent > 100) {
               percent = 100;
               malusDmgAlly += MalusKillAlly;
