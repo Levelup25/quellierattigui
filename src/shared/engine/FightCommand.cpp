@@ -11,6 +11,7 @@ FightCommand::FightCommand(State* state,
                            Team* att,
                            Team* def,
                            bool reverse) {
+  type = "FightCommand";
   this->state = state;
   this->engine = engine;
   this->character = nullptr;

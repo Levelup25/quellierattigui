@@ -12,6 +12,7 @@ MoveCommand::MoveCommand(State* state,
                          float j,
                          int pm,
                          bool reverse) {
+  type = "MoveCommand";
   this->state = state;
   this->character = character;
   this->i = i;

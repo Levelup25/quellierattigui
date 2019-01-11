@@ -1,5 +1,4 @@
 #include "MoveCommands.h"
-#include <SFML/Audio.hpp>
 #include <iostream>
 #include "FightCommand.h"
 #include "MoveCommand.h"
@@ -14,6 +13,7 @@ MoveCommands::MoveCommands(State* state,
                            int i,
                            int j,
                            bool reverse) {
+  type = "MoveCommands";
   this->state = state;
   this->engine = engine;
   this->character = character;
@@ -65,7 +65,6 @@ vector<vector<int>> MoveCommands::getPath() {
 }
 
 void MoveCommands::execute() {
-  // sf::Music music;
   if (!reverse) {
     this->character = character;
     this->setGenerator();

@@ -2,6 +2,7 @@
 #ifndef ENGINE__COMMAND__H
 #define ENGINE__COMMAND__H
 
+#include <string>
 #include <json/json.h>
 
 namespace state {
@@ -32,8 +33,10 @@ namespace engine {
     Engine* engine;
     state::Character* character;
     bool reverse;
+    std::string type     = "Command";
     // Operations
   public:
+    std::string getType ();
     void setReverse (bool reverse = true);
     virtual void execute () = 0;
     virtual void const serialize (Json::Value& out) = 0;
@@ -46,6 +49,7 @@ namespace engine {
     const state::Character*& getCharacter() const;
     void setCharacter(const state::Character*& character);
     bool getReverse() const;
+    void setType(const std::string& type);
   };
 
 };

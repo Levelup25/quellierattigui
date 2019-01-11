@@ -59,6 +59,7 @@ namespace render {
   public:
     Render (state::State* state, engine::Engine* engine, int nb = 2, int l = 34, int h = 24);
     void drawMap (sf::RenderWindow& window, render::View& v, Sprites& sprites);
+    void drawMiniMap (sf::RenderWindow& window, render::View& v, Sprites& sprites);
     void drawZones (sf::RenderWindow& window, render::View& v);
     void drawCharacters (sf::RenderWindow& window, render::View& v, Sprites& sprites, std::vector<state::Character*> chars);
     void drawAnimations (sf::RenderWindow& window, render::View& v, Sprites& sprites);

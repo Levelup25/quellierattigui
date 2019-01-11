@@ -11,6 +11,12 @@ using namespace std;
 using namespace state;
 using namespace engine;
 
+string Command::getType() {
+  if (!this)
+    return "";
+  return type;
+}
+
 void Command::setReverse(bool reverse) {
   this->reverse = reverse;
 }

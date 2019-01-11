@@ -32,7 +32,7 @@ namespace render {
     // Operations
   public:
     Sprites (int nb = 2);
-    sf::Sprite getTileSprite (int l, int h, int element);
+    sf::Sprite getTileSprite (int l, int h, int element, bool repeat = true);
     sf::Sprite getContentSprite (int l, int h, int content, int element = 0);
     sf::Sprite getCharacterSprite (int l, int h, int id, int direction = 0, int animation = 1);
     sf::Sprite getAbilitySprite (int l, int h, std::string name, int lv);

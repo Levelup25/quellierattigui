@@ -16,6 +16,7 @@ DamageCommand::DamageCommand(State* state,
                              int abilityNumber,
                              int dmg,
                              bool reverse) {
+  type = "DamageCommand";
   this->state = state;
   this->engine = engine;
   this->character = character;

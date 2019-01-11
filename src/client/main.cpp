@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <fstream>
 #include <iostream>
@@ -62,6 +63,9 @@ void cout_terminal() {
   cout << "Appuyez sur R pour activer/désactiver le rollback" << endl;
   cout << "Appuyez sur I pour activer/désactiver l'intelligence artificielle"
        << endl;
+  cout << "Appuyez sur M pour activer/désactiver la mini carte" << endl;
+  cout << "Le jeu possède des effets sonores donc pensez à allumer le son!"
+       << endl;
 }
 
 void state_init(State* state) {
@@ -74,8 +78,10 @@ void state_init(State* state) {
   file.close();
 
   int nbteams = 20;
-  vector<string> names = {"Goku", "Snake",  "Cloud", "Samus",  "Mario", "Lara",
-                          "Link", "Kratos", "Dante", "Altair", "Ryu",   "Ash"};
+  vector<string> names = {"Goku",   "Snake",  "Cloud",    "Samus",
+                          "Mario",  "Lara",   "Link",     "Kratos",
+                          "Dante",  "Altair", "Ryu",      "Sacha",
+                          "Jotaro", "Yugi",   "Meliodas", "Kirito"};
   int n = state->getN(), m = state->getM();
   int N = state->getI(), M = state->getJ();
   int xb = N / 4, yb = M / 4;
@@ -137,9 +143,9 @@ void state_init(State* state) {
                           yb + rand() % (ye - yb));
       Character* c = state->getCharacters().back();
       c->setName(bossnames[9 - 2 * elems[state->zones[i] - 1] - (j == 0)]);
-      c->setPm(3 + 3 * (j == 1));
-      c->setPv(3 + 6 * (j == 1));
-      c->setPa(3 + 6 * (j == 1));
+      c->setPm(3 + 3 * (j == 0));
+      c->setPv(3 + 6 * (j == 0));
+      c->setPa(3 + 6 * (j == 0));
       Weapon* w = new Weapon(6 * (rand() % 3) + (j ? state->zones[i] : 5));
       c->setWeapon(w);
       for (auto a : w->getAbilities()) {
@@ -177,15 +183,52 @@ void state_init(State* state) {
 void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
   bool end = false;
   thread t1([render, &end]() {
+    sf::Music music;
+    music.openFromFile("res/theme.wav");
+    music.play();
+    music.setLoop(true);
+    music.setVolume(50.f);
     render->display();
+    music.stop();
     end = true;
   });
   thread t2([engine, &end]() {
+    sf::SoundBuffer move_buffer;
+    move_buffer.loadFromFile("res/sounds/moving.ogg");
+    sf::Sound move_sound;
+    move_sound.setBuffer(move_buffer);
+
+    sf::SoundBuffer attack_buffer;
+    attack_buffer.loadFromFile("res/sounds/explode.ogg");
+    sf::Sound attack_sound;
+    attack_sound.setBuffer(attack_buffer);
+
+    sf::SoundBuffer fight_buffer;
+    fight_buffer.loadFromFile("res/sounds/cheer.ogg");
+    sf::Sound fight_sound;
+    fight_sound.setBuffer(fight_buffer);
+
     sf::Clock clock;
     while (!end) {
       if (clock.getElapsedTime().asSeconds() >= 1.0 / 30) {
-        engine->runCommand();
         clock.restart();
+        string type = engine->getCommand()->getType();
+        engine->runCommand();
+        if (!type.compare("MoveCommand") && move_sound.getStatus() != 2) {
+          attack_sound.stop();
+          fight_sound.stop();
+          move_sound.play();
+        } else if (!type.compare("AttackCommand") &&
+                   attack_sound.getStatus() != 2) {
+          move_sound.stop();
+          fight_sound.stop();
+          attack_sound.play();
+        } else if (!type.compare("FightCommand") &&
+                   attack_sound.getStatus() != 2) {
+          move_sound.stop();
+          attack_sound.stop();
+          fight_sound.play();
+        }
       }
     }
   });

@@ -1,5 +1,4 @@
 #include "Render.h"
-#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <fstream>
@@ -57,6 +56,65 @@ void Render::drawMap(RenderWindow& window, render::View& v, Sprites& sprites) {
       window.draw(zone);
     }
   }
+}
+
+void Render::drawMiniMap(RenderWindow& window,
+                         render::View& v,
+                         Sprites& sprites) {
+  sf::View view = v.view;
+  int N = state->getI(), M = state->getJ();
+  view.zoom(N / n);
+  view.setCenter(Vector2f(l * N / 2, h * M / 2));
+  sf::Sprite sprite;
+  RectangleShape zone(Vector2f(l * n, h * m));
+  zone.setFillColor(Color::Transparent);
+  zone.setOutlineThickness(-12);
+  zone.setOutlineColor(Color::Black);
+  window.setView(view);
+  for (int j = 0; j < M; j += m) {
+    for (int i = 0; i < N; i += n) {
+      int element;
+      if (i >= N / 4 && i < 3 * N / 4 && j >= M / 4 && j < 3 * M / 4) {
+        element = 0;
+      } else if (i < N / 2 && j < M / 2) {
+        element = state->zones[0];
+      } else if (i >= N / 2 && j < M / 2) {
+        element = state->zones[1];
+      } else if (i < N / 2 && j >= M / 2) {
+        element = state->zones[2];
+      } else {
+        element = state->zones[3];
+      }
+      sprite = sprites.getTileSprite(l * n, h * m, element,false);
+      sprite.setPosition(Vector2f(i * l, j * h));
+      window.draw(sprite);
+
+      zone.setPosition(Vector2f((i / n) * n * l, (j / m) * m * h));
+      window.draw(zone);
+    }
+  }
+  zone.setOutlineThickness(-24);
+  vector<Color> colors = {Color::Blue, Color::Green, Color::Red, Color::Yellow};
+  for (Character* character : state->getMainCharacters()) {
+    sprite = sprites.getCharacterSprite(l * n, h * m, character->getId(), 0, 1);
+    sprite.setPosition(Vector2f(l * ((int)character->getI() / n) * n,
+                                h * ((int)character->getJ() / m) * m));
+    window.draw(sprite);
+    if (character->getId() < 0) {
+      zone.setOutlineColor(colors[(int)state->getTeam(character)
+                                      ->getCharacter(1)
+                                      ->getWeapon()
+                                      ->getElement() -
+                                  1]);
+      zone.setPosition(Vector2f(l * ((int)character->getI() / n) * n,
+                                h * ((int)character->getJ() / m) * m));
+      window.draw(zone);
+    }
+  }
+  zone.setOutlineColor(Color::White);
+  zone.setPosition(Vector2f(l * ((int)selectedcharacter->getI() / n) * n,
+                            h * ((int)selectedcharacter->getJ() / m) * m));
+  window.draw(zone);
 }
 
 void Render::drawZones(RenderWindow& window, render::View& v) {
@@ -258,12 +316,7 @@ void Render::drawInformations(RenderWindow& window,
 }
 
 void Render::display() {
-  // sf::Music music;
-  // music.openFromFile("res/theme.wav");
-  // music.play();
-  // music.setLoop(true);
-  // music.setVolume(50.f);
-
+  bool minimap = false;
   SpriteGenerator::init();
 
   vector<vector<Cell*>> grid = state->getGrid();
@@ -393,7 +446,7 @@ void Render::display() {
       Vector2f posMouse{(float)MouseWorldView.x, (float)MouseWorldView.y};
       worldView.reactEvent(event, posMouse);
 
-      if (event.type == sf::Event::MouseButtonPressed) {
+      if (event.type == sf::Event::MouseButtonPressed && !minimap) {
         if (event.mouseButton.button == sf::Mouse::Right) {
           state->etatCombat = 0;
           if (state->isFighting() &&
@@ -463,6 +516,8 @@ void Render::display() {
                                               fight->getTeam(1)));
         } else if (event.key.code == sf::Keyboard::I) {
           state->two_ai = !state->two_ai;
+        } else if (event.key.code == sf::Keyboard::M) {
+          minimap = !minimap;
         } else if (event.key.code == sf::Keyboard::R) {
           if ((state->getFight() && state->getFight()->getTurn() > 0) ||
               !state->getFight())
@@ -514,9 +569,11 @@ void Render::display() {
     }
     this->drawInformations(window, abilityView, sprites, chars);
 
-    this->drawMap(window, worldView, sprites);
-
-    this->drawCharacters(window, worldView, sprites, chars);
+    if (!minimap) {
+      this->drawMap(window, worldView, sprites);
+      this->drawCharacters(window, worldView, sprites, chars);
+    } else
+      this->drawMiniMap(window, worldView, sprites);
 
     this->drawZones(window, worldView);
 

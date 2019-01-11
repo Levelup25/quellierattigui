@@ -38,10 +38,14 @@ Sprites::Sprites(int nb) {
   }
 }
 
-sf::Sprite Sprites::getTileSprite(int l, int h, int element) {
-  tileSprites[element].setTextureRect(IntRect(0, 0, l * nb, h * nb));
-  //        tileSprites[element].setScale(Vector2f((float) l / 34,
-  //                                               (float) h / 24));
+sf::Sprite Sprites::getTileSprite(int l, int h, int element, bool repeat) {
+  if (repeat) {
+    tileSprites[element].setScale(Vector2f(1, 1));
+    tileSprites[element].setTextureRect(IntRect(0, 0, l * nb, h * nb));
+  } else {
+    tileSprites[element].setTextureRect(IntRect(0, 0, 34, 24));
+    tileSprites[element].setScale(Vector2f((float)l / 34, (float)h / 24));
+  }
   return tileSprites[element];
 }
 
@@ -71,7 +75,7 @@ sf::Sprite Sprites::getCharacterSprite(int l,
     characterSprite.setTextureRect(IntRect(animation * 32 + offsetI[id % 12],
                                            direction * 32 + offsetJ[id / 12],
                                            32, 32));
-    characterSprite.setScale(Vector2f(nb, (float)h / 32));
+    characterSprite.setScale(Vector2f((float)l / 32, (float)h / 32));
     return characterSprite;
   } else {
     id = -id - 1;
@@ -79,7 +83,7 @@ sf::Sprite Sprites::getCharacterSprite(int l,
     vector<int> directions = {0, 3, 1, 2};
     monsterSprite.setTextureRect(IntRect(
         animation * 32 + directions[direction] * 32 * 3, id * 32, 32, 32));
-    monsterSprite.setScale(Vector2f(nb, (float)h / 32));
+    monsterSprite.setScale(Vector2f((float)l / 32, (float)h / 32));
     return monsterSprite;
   }
 }

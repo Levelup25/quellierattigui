@@ -14,6 +14,7 @@ AttackCommand::AttackCommand(State* state,
                              vector<int> position,
                              int abilityNumber,
                              bool reverse) {
+  type = "AttackCommand";
   this->state = state;
   this->engine = engine;
   this->character = character;
