@@ -53,10 +53,13 @@ void AttackCommand::setZones(bool cut) {
         if (i != (*target)[0]) {
           vect[0] /= abs(i - (*target)[0]);
           vect[1] /= abs(i - (*target)[0]);
-        } else if (j != (*target)[1]) {
+        }
+        if (j != (*target)[1]) {
           vect[0] /= abs(j - (*target)[1]);
           vect[1] /= abs(j - (*target)[1]);
         }
+        float f = max(fabs(vect[0]), fabs(vect[1]));
+        vect[0] /= f, vect[1] /= f;
         vector<float> pos = {(float)(*target)[0], (float)(*target)[1]};
         while (round(pos[0]) != i || round(pos[1]) != j) {
           if (state->getCell(round(pos[0]), round(pos[1]))->getContent() > 1) {
@@ -86,10 +89,13 @@ void AttackCommand::setZones(bool cut) {
             if (i != (*effect)[0]) {
               vect[0] /= abs(i - (*effect)[0]);
               vect[1] /= abs(i - (*effect)[0]);
-            } else if (j != (*effect)[1]) {
+            }
+            if (j != (*effect)[1]) {
               vect[0] /= abs(j - (*effect)[1]);
               vect[1] /= abs(j - (*effect)[1]);
             }
+            float f = max(fabs(vect[0]), fabs(vect[1]));
+            vect[0] /= f, vect[1] /= f;
             vector<float> pos = {(float)(*effect)[0], (float)(*effect)[1]};
             while (round(pos[0]) != i || round(pos[1]) != j) {
               if (state->getCell(round(pos[0]), round(pos[1]))->getContent() >
