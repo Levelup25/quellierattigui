@@ -21,7 +21,7 @@ configure:
 	@mkdir -p build 
 	@cd build && cmake ..
 
-build: bin/client 
+build: bin/server bin/client
 
 bin/client:
 	@make -s -j4 -C build client

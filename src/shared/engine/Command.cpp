@@ -23,7 +23,7 @@ Command* Command::deserialize(const Json::Value& in,
                               State* state,
                               Engine* engine) {
   string command_str = in.get("command", 0).asString();
-  Command* cmd;
+  Command* cmd = nullptr;
   if (command_str.compare("AttackCommand") == 0)
     cmd = AttackCommand::deserialize(in, state, engine);
   else if (command_str.compare("DamageCommand") == 0)

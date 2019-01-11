@@ -1,5 +1,5236 @@
 [
    {
-      "seed" : 1547151936
+      "seed" : 1547191039
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 94.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 93.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 93.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 93.75,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 93.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 93.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 93.5,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 93.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 93.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 93.25,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 93.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 93.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 93.0,
+      "pm" : 1
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 92.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 92.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 92.75,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 92.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 92.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 92.5,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 92.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 92.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 92.25,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 92.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 92.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 92.0,
+      "pm" : 1
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 91.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 91.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 91.75,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 91.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 91.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 91.5,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 91.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 91.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 91.25,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 91.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 91.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 91.0,
+      "pm" : 1
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.083335876464844,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.166664123535156,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.25,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.333335876464844,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.416664123535156,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.5,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.583335876464844,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.666664123535156,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.75,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.833335876464844,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 76.916664123535156,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 91.0,
+      "pm" : 1
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 77.083335876464844,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 77.166664123535156,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 77.25,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 77.333335876464844,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 77.416664123535156,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 77.5,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 77.583335876464844,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 77.666664123535156,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 77.75,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 77.833335876464844,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 77.916664123535156,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 78.0,
+      "j" : 91.0,
+      "pm" : 1
+   },
+   {
+      "att" : 0,
+      "command" : "FightCommand",
+      "def" : 27
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 78.0,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 79.0,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 87.0,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 82.0,
+      "j" : 95.0,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 85.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 0,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 2,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 2,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "att" : 0,
+      "command" : "FightCommand",
+      "def" : 27
+   },
+   {
+      "att" : 0,
+      "command" : "FightCommand",
+      "def" : 27
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1 ],
+      "dmg" : 0
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1 ],
+      "dmg" : 0,
+      "ipos" : [ 75 ],
+      "jpos" : [ 86 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1 ],
+      "dmg" : 0,
+      "ipos" : [ 75 ],
+      "jpos" : [ 86 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1 ],
+      "dmg" : 0,
+      "ipos" : [ 75 ],
+      "jpos" : [ 86 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1 ],
+      "dmg" : 0,
+      "ipos" : [ 75 ],
+      "jpos" : [ 86 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1 ],
+      "dmg" : 0,
+      "ipos" : [ 75 ],
+      "jpos" : [ 86 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1 ],
+      "dmg" : 0,
+      "ipos" : [ 75 ],
+      "jpos" : [ 85 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1 ],
+      "dmg" : 0,
+      "ipos" : [ 75 ],
+      "jpos" : [ 85 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1 ],
+      "dmg" : 0,
+      "ipos" : [ 75 ],
+      "jpos" : [ 85 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1 ],
+      "dmg" : 0,
+      "ipos" : [ 75 ],
+      "jpos" : [ 85 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1 ],
+      "dmg" : 0,
+      "ipos" : [ 75 ],
+      "jpos" : [ 85 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75 ],
+      "jpos" : [ 85, 84, 85, 85, 86 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : -4,
+      "ipos" : [ 75, 75, 74, 76, 75, 73, 77, 75, 150 ],
+      "jpos" : [ 85, 84, 85, 85, 86, 85, 85, 87, 174 ]
+   },
+   {
+      "abilityNumber" : 3,
+      "character" : 84,
+      "command" : "DamageCommand",
+      "directions" : [ 1, 1, 2, 0, 3, 2, 0, 1, 4 ],
+      "dmg" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 87.0,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 87.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 87.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 87.25,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 87.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 87.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 87.5,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 87.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 87.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 87.75,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 87.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 87.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 88.0,
+      "pm" : 1
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 88.0,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 88.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 88.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 88.25,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 88.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 88.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 88.5,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 88.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 88.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 88.75,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 88.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 88.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 84,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 89.0,
+      "pm" : 1
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.25,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.5,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.75,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.0,
+      "pm" : 1
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.25,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.5,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.75,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.0,
+      "pm" : 1
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.25,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.5,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.75,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.0,
+      "pm" : 1
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.25,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.5,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.75,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.0,
+      "pm" : 1
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.25,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.5,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.75,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 91.0,
+      "pm" : 1
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 91.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 91.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 91.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 91.25,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 91.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 91.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 91.5,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 91.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 91.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 91.75,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 91.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 91.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 92.0,
+      "pm" : 1
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 76 ],
+      "jpos" : [ 92 ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 76 ],
+      "jpos" : [ 92 ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 76 ],
+      "jpos" : [ 92 ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 76 ],
+      "jpos" : [ 92 ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 76 ],
+      "jpos" : [ 92 ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 75 ],
+      "jpos" : [ 92 ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 75 ],
+      "jpos" : [ 92 ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 75 ],
+      "jpos" : [ 92 ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 75 ],
+      "jpos" : [ 92 ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 75 ],
+      "jpos" : [ 92 ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 92 ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 92 ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 92 ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 92 ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 92 ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74, 74, 73, 75, 74 ],
+      "jpos" : [ 92, 91, 92, 92, 93 ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4 ],
+      "dmg" : 0,
+      "ipos" : [ 74, 74, 73, 75, 74, 74, 72, 76, 74, 73, 73, 75 ],
+      "jpos" : [ 92, 91, 92, 92, 93, 90, 92, 92, 94, 91, 93, 93 ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1 ],
+      "dmg" : 0,
+      "ipos" : [ 74, 74, 73, 75, 74, 74, 72, 76, 74, 73, 73, 75, 74, 77 ],
+      "jpos" : [ 92, 91, 92, 92, 93, 90, 92, 92, 94, 91, 93, 93, 89, 92 ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 3,
+      "ipos" : [
+         74,
+         74,
+         73,
+         75,
+         74,
+         74,
+         72,
+         76,
+         74,
+         73,
+         73,
+         75,
+         74,
+         77,
+         154,
+         74,
+         73,
+         76,
+         72,
+         73,
+         75,
+         76
+      ],
+      "jpos" : [
+         92,
+         91,
+         92,
+         92,
+         93,
+         90,
+         92,
+         92,
+         94,
+         91,
+         93,
+         93,
+         89,
+         92,
+         184,
+         95,
+         90,
+         91,
+         91,
+         94,
+         90,
+         93
+      ]
+   },
+   {
+      "abilityNumber" : 1,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 2, 0, 3, 1, 2, 0, 3, 6, 5, 4, 1, 1, 4, 3, 6, 7, 6, 5, 7, 4 ],
+      "dmg" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 85.0,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 85.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 85.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 85.25,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 85.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 85.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 85.5,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 85.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 85.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 85.75,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 85.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 85.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.0,
+      "pm" : 1
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.0,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.25,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.5,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.75,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 86.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.0,
+      "pm" : 1
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.0,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.25,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.5,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.75,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 87.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.0,
+      "pm" : 1
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.0,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.25,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.5,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.75,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 88.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.0,
+      "pm" : 1
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.0,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.25,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.5,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.75,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 89.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.0,
+      "pm" : 1
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.0,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.25,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.5,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.75,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 90.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 85,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 91.0,
+      "pm" : 1
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 76 ],
+      "jpos" : [ 91 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 76 ],
+      "jpos" : [ 91 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 76 ],
+      "jpos" : [ 91 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 76 ],
+      "jpos" : [ 91 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2 ],
+      "dmg" : 0,
+      "ipos" : [ 76 ],
+      "jpos" : [ 91 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77 ],
+      "jpos" : [ 91, 90, 91 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 4,
+      "ipos" : [ 76, 76, 77, 154, 76, 78, 76 ],
+      "jpos" : [ 91, 90, 91, 182, 92, 91, 93 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 85,
+      "command" : "DamageCommand",
+      "directions" : [ 2, 1, 1, 4, 3, 0, 3 ],
+      "dmg" : 0
+   },
+   {
+      "att" : 0,
+      "command" : "FightCommand",
+      "def" : 27
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.25,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.5,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.75,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 93.0,
+      "pm" : 1
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.916664123535156,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.833335876464844,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.75,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.666664123535156,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.583335876464844,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.5,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.416664123535156,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.333335876464844,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.25,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.166664123535156,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.083335876464844,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.0,
+      "pm" : 1
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.25,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.5,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.75,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 94.0,
+      "pm" : 1
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 94.0,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 94.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 94.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 94.25,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 94.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 94.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 94.5,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 94.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 94.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 94.75,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 94.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 94.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 1,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 95.0,
+      "pm" : 1
+   },
+   {
+      "att" : 0,
+      "command" : "FightCommand",
+      "def" : 27
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 77.0,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 76.916664123535156,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 76.833335876464844,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 76.75,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 76.666664123535156,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 76.583335876464844,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 76.5,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 76.416664123535156,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 76.333335876464844,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 76.25,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 76.166664123535156,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 76.083335876464844,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 92.0,
+      "pm" : 1
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 76.0,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.916664123535156,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.833335876464844,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.75,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.666664123535156,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.583335876464844,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.5,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.416664123535156,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.333335876464844,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.25,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.166664123535156,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.083335876464844,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.0,
+      "pm" : 1
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.25,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.5,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.75,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 92.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 93.0,
+      "pm" : 1
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 75.0,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.916664123535156,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.833335876464844,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.75,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.666664123535156,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.583335876464844,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.5,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.416664123535156,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.333335876464844,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.25,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.166664123535156,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.083335876464844,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.0,
+      "pm" : 1
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.0,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.083335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.166664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.25,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.333335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.416664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.5,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.583335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.666664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.75,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.833335876464844,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 93.916664123535156,
+      "pm" : 0
+   },
+   {
+      "character" : 86,
+      "command" : "MoveCommand",
+      "i" : 74.0,
+      "j" : 94.0,
+      "pm" : 1
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 2,
+      "ipos" : [ 74 ],
+      "jpos" : [ 95 ]
+   },
+   {
+      "abilityNumber" : 0,
+      "character" : 86,
+      "command" : "DamageCommand",
+      "directions" : [ 3 ],
+      "dmg" : 0
+   },
+   {
+      "command" : "FightCommand"
    }
 ]
