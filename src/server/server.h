@@ -13,4 +13,7 @@
 #include "server/VersionService.h"
 #include "server/GameService.h"
 #include "server/CommandsService.h"
+#include "server/User.h"
+#include "server/UserDB.h"
+#include "server/UserService.h"
 #endif

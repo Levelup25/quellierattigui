@@ -1,35 +1,41 @@
+/**
+ * @file AbstractService.cpp
+ * @author Philippe-Henri Gosselin
+ * @date 9 décembre 2015
+ * @copyright CNRS
+ */
+
 #include "AbstractService.h"
-//#include "ServiceException.h"
+#include "ServiceException.h"
 using namespace server;
+using namespace std;
 
-//AbstractService::AbstractService (const string& pattern) {
-    //setPattern(pattern);
-//}
+AbstractService::AbstractService(const string& pattern) {
+  setPattern(pattern);
+}
 
-//AbstractService::~AbstractService() {
+AbstractService::~AbstractService() {}
 
-//}
+const string& AbstractService::getPattern() const {
+  return pattern;
+}
 
-//const string& AbstractService::getPattern () const {
-    //return pattern;
-//}
+void AbstractService::setPattern(const string& pattern) {
+  this->pattern = pattern;
+}
 
-//void AbstractService::setPattern (const string& pattern) {
-    //this->pattern = pattern;
-//}
+HttpStatus AbstractService::get(Json::Value& out, int id) const {
+  throw ServiceException(HttpStatus::NOT_IMPLEMENTED, "Non implanté");
+}
 
-//HttpStatus AbstractService::get (Json::Value& out, int id) const {
-    //throw ServiceException(HttpStatus::NOT_IMPLEMENTED,"Non implanté");
-//}
+HttpStatus AbstractService::post(const Json::Value& in, int id) {
+  throw ServiceException(HttpStatus::NOT_IMPLEMENTED, "Non implanté");
+}
 
-//HttpStatus AbstractService::post (const Json::Value& in, int id) {
-    //throw ServiceException(HttpStatus::NOT_IMPLEMENTED,"Non implanté");
-//}
+HttpStatus AbstractService::put(Json::Value& out, const Json::Value& in) {
+  throw ServiceException(HttpStatus::NOT_IMPLEMENTED, "Non implanté");
+}
 
-//HttpStatus AbstractService::put (Json::Value& out, const Json::Value& in) {
-    //throw ServiceException(HttpStatus::NOT_IMPLEMENTED,"Non implanté");
-//}
-
-//HttpStatus AbstractService::remove (int id) {
-    //throw ServiceException(HttpStatus::NOT_IMPLEMENTED,"Non implanté");
-//}
+HttpStatus AbstractService::remove(int id) {
+  throw ServiceException(HttpStatus::NOT_IMPLEMENTED, "Non implanté");
+}
