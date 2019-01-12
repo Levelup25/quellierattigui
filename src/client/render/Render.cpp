@@ -85,7 +85,7 @@ void Render::drawMiniMap(RenderWindow& window,
       } else {
         element = state->zones[3];
       }
-      sprite = sprites.getTileSprite(l * n, h * m, element,false);
+      sprite = sprites.getTileSprite(l * n, h * m, element, false);
       sprite.setPosition(Vector2f(i * l, j * h));
       window.draw(sprite);
 

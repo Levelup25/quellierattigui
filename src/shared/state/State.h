@@ -34,6 +34,7 @@ namespace state {
     unsigned int seed;
     std::vector<ElementType> zones;
     bool two_ai     = false;
+    int mainTeamIndex     = 0;
   private:
     std::size_t I     = 144;
     std::size_t J     = 144;

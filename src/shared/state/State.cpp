@@ -57,8 +57,8 @@ State::State(size_t i, size_t j) {
 }
 
 void State::resetContents() {
-  int i0 = ((int)this->getMainCharacters()[0]->getI() / n) * n,
-      j0 = ((int)this->getMainCharacters()[0]->getJ() / m) * m;
+  int i0 = ((int)this->getMainCharacter()->getI() / n) * n,
+      j0 = ((int)this->getMainCharacter()->getJ() / m) * m;
   for (int i = i0; i < i0 + (int)n; i++)
     for (int j = j0; j < j0 + (int)m; j++)
       if (grid[i][j]->getContent() == perso)
@@ -103,6 +103,7 @@ void State::addCharacter() {
   Team* team = new Team();
   Character* character = new Character();
   team->addCharacter(character);
+  initialCharacters.push_back(character);
   teams.push_back(team);
 }
 
@@ -150,6 +151,7 @@ void State::addCharacter(Character* character, Team* team, size_t i, size_t j) {
   character->setI(i2);
   character->setJ(j2);
   team->addCharacter(character);
+  initialCharacters.push_back(character);
   if (character == team->getMainCharacter())
     grid[i2][j2]->setContent((ContentType)1);
 }
@@ -241,22 +243,24 @@ void State::addTeam(Team* team) {
 }
 
 Team* State::getMainTeam() {
-  return teams[0];
+  return teams[mainTeamIndex];
 }
 
 void State::delTeam(Team* team) {
-  for (auto t = teams.begin(); t != teams.end(); ++t) {
-    if ((*t) == team) {
-      teams.erase(t);
+  for (int i = 0; i < (int)teams.size(); i++) {
+    if (teams[i] == team) {
+      teams.erase(teams.begin() + i);
       // delete team;
       // team = nullptr;
+      if (i <= mainTeamIndex)
+        mainTeamIndex--;
       return;
     }
   }
 }
 
 Character* State::getMainCharacter() {
-  return teams[0]->getMainCharacter();
+  return teams[mainTeamIndex]->getMainCharacter();
 }
 
 int State::getEpoch() const {
