@@ -124,14 +124,14 @@ int main(int argc, char* const* argv) {
 
     Game game;
     servicesManager.registerService(
-    unique_ptr<GameService>(new GameService(std::ref(game))));
+        unique_ptr<GameService>(new GameService(std::ref(game))));
 
     Engine engine;
     servicesManager.registerService(
-    unique_ptr<CommandsService>(new CommandsService(std::ref(engine))));
+        unique_ptr<CommandsService>(new CommandsService(std::ref(engine))));
 
     PlayerDB playerDB;
-    //playerDB.addPlayer(unique_ptr<Player>(new Player("Paul")));
+    playerDB.addPlayer(unique_ptr<Player>(new Player("Paul")));
     servicesManager.registerService(
         unique_ptr<PlayerService>(new PlayerService(std::ref(playerDB))));
 

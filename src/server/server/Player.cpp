@@ -9,4 +9,5 @@
 using namespace server;
 using namespace std;
 
-Player::Player(string name, bool free) : name(name), free(free) {}
+Player::Player(string pseudo, bool isLogged, int teamId)
+    : pseudo(pseudo), isLogged(isLogged), teamId(teamId) {}
