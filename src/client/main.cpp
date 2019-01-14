@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <SFML/Audio.hpp>
-#include <SFML/Graphics.hpp>
 #include <fstream>
 #include <iostream>
 #include <thread>
@@ -14,8 +13,10 @@
 #include "engine.h"
 #include "render.h"
 #include "state.h"
+//#include "client.h"
 
 using namespace std;
+using namespace sf;
 using namespace state;
 using namespace render;
 using namespace engine;
@@ -82,34 +83,10 @@ void state_init(State* state) {
                           "Mario",  "Lara",   "Link",     "Kratos",
                           "Dante",  "Altair", "Ryu",      "Sacha",
                           "Jotaro", "Yugi",   "Meliodas", "Kirito"};
-  int n = state->getN(), m = state->getM();
+  // int n = state->getN(), m = state->getM();
   int N = state->getI(), M = state->getJ();
-  int xb = N / 4, yb = M / 4;
-  int xe = 3 * N / 4, ye = 3 * M / 4;
-  // int xe = xb, ye = yb;
-  for (int i = 0; i < 1; i++) {
-    // for (int j = 0; j < 4; j++) {
-    //   state->addCharacter(i, rand() % (12 * 4), (Direction)(rand() % 4),
-    //                       xb + rand() % (xe - xb), yb + rand() % (ye - yb));
-    //   Character* c = state->getCharacters().back();
-    //   c->setName(names[rand() % names.size()]);
-    //   c->setPm(2 + rand() % 5);
-    //   c->setPv(1 + rand() % 4);
-    //   c->setPa(3 + rand() % 2);
-    //   Weapon* w = new Weapon(rand() % nb);
-    //   c->setWeapon(w);
-    //   for (auto a : w->getAbilities()) {
-    //     int r3 = rand() % 3;
-    //     for (int i = 0; i < r3; i++)
-    //       a->addLv();
-    //   }
-    // }
-  }
-  // xb = n * 0, yb = m * 0;
-  // xe = n * 2, ye = m * 2;
-  // xe = xb, ye = yb;
+
   for (int i = 0; i < nbteams; i++) {
-    // xb = n * ((i - 1) % 3), yb = m * ((i - 1) / 3), xe = xb, ye = yb;
     for (int j = 0; j < 3; j++) {
       state->addCharacter(i, rand() % (12 * 4), (Direction)(rand() % 4),
                           rand() % N, rand() % M);
@@ -134,8 +111,8 @@ void state_init(State* state) {
   // eau : 6+7   feu : 4+5   terre : 2+3   air : 0+1
   vector<int> elems = {1, 3, 2, 4};
   for (int i = 0; i < 4; i++) {
-    xb = 3 * (i % 2) * N / 4, yb = 3 * (i / 2) * M / 4, xe = xb + N / 4,
-    ye = yb + M / 4;
+    int xb = 3 * (i % 2) * N / 4, yb = 3 * (i / 2) * M / 4, xe = xb + N / 4,
+        ye = yb + M / 4;
     for (int j = 0; j < 3; j++) {
       state->addCharacter(i + nbteams,
                           -1 - (9 - 2 * elems[state->zones[i] - 1] - (j == 0)),
@@ -156,24 +133,20 @@ void state_init(State* state) {
     }
   }
 
-  int xv = ((int)state->getMainCharacter()->getI() / n) * n,
-      yv = ((int)state->getMainCharacter()->getJ() / m) * m;
-  for (int i = nbteams + 4; i <= nbteams + 7; i++) {
-    for (int j = 0; j < 4; j++) {
-      state->addCharacter(i, rand() % (12 * 4), (Direction)(rand() % 4),
-                          xv + rand() % n, yv + rand() % m);
-      Character* c = state->getCharacters().back();
-      c->setName(names[rand() % names.size()]);
-      c->setPm(2 + rand() % 5);
-      c->setPv(1 + rand() % 4);
-      c->setPa(3 + rand() % 2);
-      Weapon* w = new Weapon(rand() % nb);
-      c->setWeapon(w);
-      for (auto a : w->getAbilities()) {
-        int r3 = rand() % 3;
-        for (int i = 0; i < r3; i++)
-          a->addLv();
-      }
+  for (int j = 0; j < 4; j++) {
+    state->addCharacter(nbteams + 4, rand() % (12 * 4), (Direction)(rand() % 4),
+                        N / 4 + rand() % (N / 2), M / 4 + rand() % (M / 2));
+    Character* c = state->getCharacters().back();
+    c->setName(names[rand() % names.size()]);
+    c->setPm(2 + rand() % 5);
+    c->setPv(1 + rand() % 4);
+    c->setPa(3 + rand() % 2);
+    Weapon* w = new Weapon(rand() % nb);
+    c->setWeapon(w);
+    for (auto a : w->getAbilities()) {
+      int r3 = rand() % 3;
+      for (int i = 0; i < r3; i++)
+        a->addLv();
     }
   }
   state->mainTeamIndex = state->getTeams().size() - 1;
@@ -183,51 +156,84 @@ void state_init(State* state) {
 void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
   bool end = false;
   thread t1([render, &end]() {
-    sf::Music music;
-    music.openFromFile("res/theme.wav");
-    music.play();
-    music.setLoop(true);
-    music.setVolume(50.f);
+    Music theme;
+    theme.openFromFile("res/sounds/theme.wav");
+    // theme.play();
+    theme.setLoop(true);
+    theme.setVolume(50.f);
     render->display();
-    music.stop();
+    theme.stop();
     end = true;
   });
-  thread t2([engine, &end]() {
-    sf::SoundBuffer move_buffer;
-    move_buffer.loadFromFile("res/sounds/moving.ogg");
-    sf::Sound move_sound;
-    move_sound.setBuffer(move_buffer);
+  thread t2([engine, state, &end]() {
+    SoundBuffer win_buffer;
+    win_buffer.loadFromFile("res/sounds/win.ogg");
+    Sound win_sound;
+    win_sound.setBuffer(win_buffer);
 
-    sf::SoundBuffer attack_buffer;
-    attack_buffer.loadFromFile("res/sounds/explode.ogg");
-    sf::Sound attack_sound;
-    attack_sound.setBuffer(attack_buffer);
+    SoundBuffer lose_buffer;
+    lose_buffer.loadFromFile("res/sounds/lose.ogg");
+    Sound lose_sound;
+    lose_sound.setBuffer(lose_buffer);
 
-    sf::SoundBuffer fight_buffer;
-    fight_buffer.loadFromFile("res/sounds/cheer.ogg");
-    sf::Sound fight_sound;
-    fight_sound.setBuffer(fight_buffer);
+    vector<string> sounds = {"grass1", "snow1", "stone1", "gravel1", "sand1"};
+    vector<SoundBuffer> move_buffers;
+    move_buffers.resize(5);
+    vector<Sound> move_sounds;
+    move_sounds.resize(5);
+    for (int i = 0; i < 5; i++) {
+      move_buffers[i].loadFromFile("res/sounds/" + sounds[i] + ".ogg");
+      move_sounds[i].setBuffer(move_buffers[i]);
+    }
 
-    sf::Clock clock;
+    sounds = {"explode1", "explode2", "explode3", "explode4", "explode5"};
+    vector<SoundBuffer> attack_buffers;
+    attack_buffers.resize(5);
+    vector<Sound> attack_sounds;
+    attack_sounds.resize(5);
+    for (int i = 0; i < 5; i++) {
+      attack_buffers[i].loadFromFile("res/sounds/" + sounds[i] + ".ogg");
+      attack_sounds[i].setBuffer(attack_buffers[i]);
+    }
+
+    Clock clock;
     while (!end) {
       if (clock.getElapsedTime().asSeconds() >= 1.0 / 30) {
         clock.restart();
-        string type = engine->getCommand()->getType();
+        Command* cmd = engine->getCommand();
+        Character* character = nullptr;
+        Team* team = nullptr;
+        if (cmd)
+          character = cmd->getCharacter();
+        string type = cmd->getType();
+        if (!type.compare("MoveCommand")) {
+          int i = state->getCell(character->getI(), character->getJ())
+                      ->getElement();
+          if (move_sounds[i].getStatus() != 2) {
+            move_sounds[i].play();
+          }
+        } else if (!type.compare("AttackCommand")) {
+          int i = character->getWeapon()
+                      ->getAbility(
+                          static_cast<AttackCommand*>(cmd)->getAbilityNumber())
+                      ->getElement();
+          if (attack_sounds[i].getStatus() != 2) {
+            attack_sounds[i].play();
+          }
+        } else if (!type.compare("FightCommand") && state->getFight()) {
+          team = state->getFight()->getTeam(1);
+        }
         engine->runCommand();
-        if (!type.compare("MoveCommand") && move_sound.getStatus() != 2) {
-          attack_sound.stop();
-          fight_sound.stop();
-          move_sound.play();
-        } else if (!type.compare("AttackCommand") &&
-                   attack_sound.getStatus() != 2) {
-          move_sound.stop();
-          fight_sound.stop();
-          attack_sound.play();
-        } else if (!type.compare("FightCommand") &&
-                   attack_sound.getStatus() != 2) {
-          move_sound.stop();
-          attack_sound.stop();
-          fight_sound.play();
+        if (!type.compare("FightCommand") && !state->getFight()) {
+          vector<Team*> teams = state->getTeams();
+          cout << find(teams.begin(), teams.end(), team) - teams.end() << endl;
+          if (find(teams.begin(), teams.end(), team) != teams.end()) {
+            lose_sound.play();
+            cout << "lose" << endl;
+          } else {
+            win_sound.play();
+            cout << "win" << endl;
+          }
         }
       }
     }
@@ -240,13 +246,13 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
           state->getMainCharacter()) {
         int x0 = state->getMainCharacter()->getI(),
             y0 = state->getMainCharacter()->getJ();
-        int min = abs(maincharacters[1]->getI() - x0) +
-                  abs(maincharacters[1]->getJ() - y0),
+        int min = abs(maincharacters[0]->getI() - x0) +
+                  abs(maincharacters[0]->getJ() - y0),
             imin = 1;
-        for (int i = 2; i < (int)maincharacters.size(); i++) {
+        for (int i = 1; i < (int)maincharacters.size(); i++) {
           int dist = abs(maincharacters[i]->getI() - x0) +
                      abs(maincharacters[i]->getJ() - y0);
-          if (dist < min) {
+          if (dist && dist < min) {
             min = dist;
             imin = i;
           }
@@ -262,18 +268,18 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
                 if (state->getCell(n * (xv0 + 1) - 1, y0 + y)->getContent() ==
                         0 &&
                     state->getCell(n * (xv0 + 1), y0 + y)->getContent() == 0) {
-                  engine->addCommand(new MoveCommands(
-                      state, engine, maincharacters[state->mainTeamIndex],
-                      n * (xv0 + 1) - 1 - x0, y));
+                  engine->addCommand(
+                      new MoveCommands(state, engine, state->getMainCharacter(),
+                                       n * (xv0 + 1) - 1 - x0, y));
                   x0 = n * (xv0 + 1), y0 = y0 + y;
                   break;
                 } else if (state->getCell(n * (xv0 + 1) - 1, y0 - y)
                                    ->getContent() == 0 &&
                            state->getCell(n * (xv0 + 1), y0 - y)
                                    ->getContent() == 0) {
-                  engine->addCommand(new MoveCommands(
-                      state, engine, maincharacters[state->mainTeamIndex],
-                      n * (xv0 + 1) - 1 - x0, -y));
+                  engine->addCommand(
+                      new MoveCommands(state, engine, state->getMainCharacter(),
+                                       n * (xv0 + 1) - 1 - x0, -y));
                   x0 = n * (xv0 + 1), y0 = y0 - y;
                   break;
                 }
@@ -284,17 +290,17 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
               if (y0 + y > yv0 * m && y0 + y < (yv0 + 1) * m) {
                 if (state->getCell(n * xv0, y0 + y)->getContent() == 0 &&
                     state->getCell(n * xv0 - 1, y0 + y)->getContent() == 0) {
-                  engine->addCommand(new MoveCommands(
-                      state, engine, maincharacters[state->mainTeamIndex],
-                      n * xv0 - x0, y));
+                  engine->addCommand(new MoveCommands(state, engine,
+                                                      state->getMainCharacter(),
+                                                      n * xv0 - x0, y));
                   x0 = n * xv0 - 1, y0 = y0 + y;
                   break;
                 } else if (state->getCell(n * xv0, y0 - y)->getContent() == 0 &&
                            state->getCell(n * xv0 - 1, y0 - y)->getContent() ==
                                0) {
-                  engine->addCommand(new MoveCommands(
-                      state, engine, maincharacters[state->mainTeamIndex],
-                      n * xv0 - x0, -y));
+                  engine->addCommand(new MoveCommands(state, engine,
+                                                      state->getMainCharacter(),
+                                                      n * xv0 - x0, -y));
                   x0 = n * xv0 - 1, y0 = y0 - y;
                   break;
                 }
@@ -309,18 +315,18 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
                 if (state->getCell(x0 + x, m * (yv0 + 1) - 1)->getContent() ==
                         0 &&
                     state->getCell(x0 + x, m * (yv0 + 1))->getContent() == 0) {
-                  engine->addCommand(new MoveCommands(
-                      state, engine, maincharacters[state->mainTeamIndex], x,
-                      m * (yv0 + 1) - 1 - y0));
+                  engine->addCommand(
+                      new MoveCommands(state, engine, state->getMainCharacter(),
+                                       x, m * (yv0 + 1) - 1 - y0));
                   x0 = x0 + x, y0 = m * (yv0 + 1);
                   break;
                 } else if (state->getCell(x0 - x, m * (yv0 + 1) - 1)
                                    ->getContent() == 0 &&
                            state->getCell(x0 - x, m * (yv0 + 1))
                                    ->getContent() == 0) {
-                  engine->addCommand(new MoveCommands(
-                      state, engine, maincharacters[state->mainTeamIndex], -x,
-                      m * (yv0 + 1) - 1 - y0));
+                  engine->addCommand(
+                      new MoveCommands(state, engine, state->getMainCharacter(),
+                                       -x, m * (yv0 + 1) - 1 - y0));
                   x0 = x0 - x, y0 = m * (yv0 + 1);
                   break;
                 }
@@ -331,17 +337,17 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
               if (x0 + x > xv0 * n && x0 + x < (xv0 + 1) * n) {
                 if (state->getCell(x0 + x, m * yv0)->getContent() == 0 &&
                     state->getCell(x0 + x, m * yv0 - 1)->getContent() == 0) {
-                  engine->addCommand(new MoveCommands(
-                      state, engine, maincharacters[state->mainTeamIndex], x,
-                      m * yv0 - y0));
+                  engine->addCommand(new MoveCommands(state, engine,
+                                                      state->getMainCharacter(),
+                                                      x, m * yv0 - y0));
                   x0 = x0 + x, y0 = m * yv0 - 1;
                   break;
                 } else if (state->getCell(x0 - x, m * yv0)->getContent() == 0 &&
                            state->getCell(x0 - x, m * yv0 - 1)->getContent() ==
                                0) {
-                  engine->addCommand(new MoveCommands(
-                      state, engine, maincharacters[state->mainTeamIndex], -x,
-                      m * yv0 - y0));
+                  engine->addCommand(new MoveCommands(state, engine,
+                                                      state->getMainCharacter(),
+                                                      -x, m * yv0 - y0));
                   x0 = x0 - x, y0 = m * yv0 - 1;
                   break;
                 }
@@ -353,8 +359,7 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
           xv0 = x0 / n, yv0 = y0 / m;
         }
         engine->addCommand(new MoveCommands(
-            state, engine, maincharacters[state->mainTeamIndex], x1 - x0,
-            y1 - y0));
+            state, engine, state->getMainCharacter(), x1 - x0, y1 - y0));
         while (!end && engine->getSize())
           ;
         int xv = xv0 * n, yv = yv0 * m, i, j;

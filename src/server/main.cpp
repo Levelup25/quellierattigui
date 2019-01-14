@@ -121,10 +121,10 @@ int main(int argc, char* const* argv) {
     servicesManager.registerService(
         unique_ptr<VersionService>(new VersionService()));
 
-    UserDB userDB;
-    userDB.addUser(unique_ptr<User>(new User("Paul", 23)));
+    PlayerDB playerDB;
+    playerDB.addPlayer(unique_ptr<Player>(new Player("Paul")));
     servicesManager.registerService(
-        unique_ptr<UserService>(new UserService(std::ref(userDB))));
+        unique_ptr<PlayerService>(new PlayerService(std::ref(playerDB))));
 
     struct MHD_Daemon* d;
     if (argc != 2) {

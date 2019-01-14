@@ -43,7 +43,7 @@ namespace client {
   protected:
     std::string getGameStatus ();
     bool getServerCommands (Json::Value& out);
-    void (engine::Command* command);
+    void putServerCommand (engine::Command* command);
     // Setters and Getters
   };
 

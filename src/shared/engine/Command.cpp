@@ -17,6 +17,10 @@ string Command::getType() {
   return type;
 }
 
+Character* Command::getCharacter() {
+  return character;
+}
+
 void Command::setReverse(bool reverse) {
   this->reverse = reverse;
 }

@@ -8,7 +8,6 @@ namespace engine {
   class Engine;
 };
 namespace server {
-  class Game;
   class AbstractService;
 }
 
@@ -26,7 +25,7 @@ namespace server {
     engine::Engine* engine;
     // Operations
   public:
-    CommandsService (Game* game);
+    CommandsService (engine::Engine* engine);
     HttpStatus get (Json::Value& out, int id) const;
     HttpStatus put (Json::Value& out, const Json::Value& in);
     HttpStatus remove (int id);

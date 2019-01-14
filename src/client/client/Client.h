@@ -33,7 +33,7 @@ namespace client {
     ai::AI* ai;
     // Operations
   public:
-    client ();
+    Client ();
     void run ();
     // Setters and Getters
   };

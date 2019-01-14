@@ -37,6 +37,7 @@ namespace engine {
     // Operations
   public:
     std::string getType ();
+    state::Character* getCharacter ();
     void setReverse (bool reverse = true);
     virtual void execute () = 0;
     virtual void const serialize (Json::Value& out) = 0;
@@ -46,7 +47,6 @@ namespace engine {
     void setState(const state::State*& state);
     const Engine*& getEngine() const;
     void setEngine(const Engine*& engine);
-    const state::Character*& getCharacter() const;
     void setCharacter(const state::Character*& character);
     bool getReverse() const;
     void setType(const std::string& type);

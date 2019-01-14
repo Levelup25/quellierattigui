@@ -2,7 +2,6 @@
 #ifndef SERVER__GAME__H
 #define SERVER__GAME__H
 
-#include <vector>
 
 namespace state {
   class State;
@@ -11,9 +10,11 @@ namespace engine {
   class Engine;
 };
 namespace server {
+  class PlayerDB;
   class Player;
 }
 
+#include "PlayerDB.h"
 #include "Player.h"
 #include "state/State.h"
 #include "engine/Engine.h"
@@ -30,19 +31,18 @@ namespace server {
     state::State* state;
     engine::Engine* engine;
   protected:
-    std::vector<Player> players;
+    PlayerDB playerDB;
     // Operations
   public:
     Game ();
     ~Game ();
     engine::Engine* getEngine ();
-    Player& player (int i);
     void run ();
     // Setters and Getters
     GameStatus getStatus() const;
     void setStatus(GameStatus status);
-    const std::vector<Player>& getPlayers() const;
-    void setPlayers(const std::vector<Player>& players);
+    const PlayerDB& getPlayerDB() const;
+    void setPlayerDB(const PlayerDB& playerDB);
   };
 
 };
