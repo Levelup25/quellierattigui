@@ -3,7 +3,7 @@
 using namespace server;
 using namespace engine;
 
-CommandsService::CommandsService(Engine* engine) : AbstractService("/commands"), engine(engine) {}
+CommandsService::CommandsService(Engine& engine) : AbstractService("/commands"), engine(engine) {}
 
 HttpStatus CommandsService::get(Json::Value& out, int id) const {}
 

@@ -22,10 +22,10 @@ namespace server {
     // Associations
     // Attributes
   private:
-    engine::Engine* engine;
+    engine::Engine& engine;
     // Operations
   public:
-    CommandsService (engine::Engine* engine);
+    CommandsService (engine::Engine& engine);
     HttpStatus get (Json::Value& out, int id) const;
     HttpStatus put (Json::Value& out, const Json::Value& in);
     HttpStatus remove (int id);

@@ -14,7 +14,7 @@ namespace server {
     bool free;
     // Operations
   public:
-    Player (std::string name = "", bool free = false);
+    Player (std::string name = "", bool free = true);
     // Setters and Getters
   };
 

@@ -7,6 +7,7 @@
 
 using namespace std;
 using namespace server;
+using namespace engine;
 
 class Request {
  public:
@@ -121,8 +122,16 @@ int main(int argc, char* const* argv) {
     servicesManager.registerService(
         unique_ptr<VersionService>(new VersionService()));
 
+    Game game;
+    servicesManager.registerService(
+    unique_ptr<GameService>(new GameService(std::ref(game))));
+
+    Engine engine;
+    servicesManager.registerService(
+    unique_ptr<CommandsService>(new CommandsService(std::ref(engine))));
+
     PlayerDB playerDB;
-    playerDB.addPlayer(unique_ptr<Player>(new Player("Paul")));
+    //playerDB.addPlayer(unique_ptr<Player>(new Player("Paul")));
     servicesManager.registerService(
         unique_ptr<PlayerService>(new PlayerService(std::ref(playerDB))));
 
