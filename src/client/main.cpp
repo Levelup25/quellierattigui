@@ -10,16 +10,17 @@
 #include "render/renderTest.h"
 
 #include "ai.h"
+#include "client.h"
 #include "engine.h"
 #include "render.h"
 #include "state.h"
-//#include "client.h"
 
 using namespace std;
 using namespace sf;
 using namespace state;
 using namespace render;
 using namespace engine;
+using namespace client;
 using namespace ai;
 
 void cout_terminal() {
@@ -220,7 +221,6 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
         engine->runCommand();
         if (!type.compare("FightCommand") && !state->getFight()) {
           vector<Team*> teams = state->getTeams();
-          cout << find(teams.begin(), teams.end(), team) - teams.end() << endl;
           if (find(teams.begin(), teams.end(), team) != teams.end()) {
             lose_sound.play();
             cout << "lose" << endl;
@@ -556,12 +556,17 @@ int main(int argc, char* argv[]) {
       del.close();
       // srand(time(NULL));
     }  // Livrables 4.2 et 4.final
-    else if (strcmp(argv[i], "listen") == 0) {
-    } else if (strcmp(argv[i], "network") == 0) {
+    // else if (strcmp(argv[i], "listen") == 0) {
+    // }
+    else if (strcmp(argv[i], "network") == 0) {
+      cout_terminal();
+      NetworkClient client("localhost", 8080);
+      client.run();
     }
 
-    if (strcmp(argv[i], "hello") != 0 && strcmp(argv[i], "state") != 0 &&
-        strcmp(argv[i], "render") != 0 && strcmp(argv[i], "renderTest") != 0) {
+    if (strcmp(argv[i], "hello") && strcmp(argv[i], "state") &&
+        strcmp(argv[i], "render") && strcmp(argv[i], "renderTest") &&
+        strcmp(argv[i], "network")) {
       cout_terminal();
       launch_threads(state, render, engine, ai);
     }

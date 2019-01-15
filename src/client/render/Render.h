@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <SFML/Network.hpp>
 #include <vector>
 
 namespace state {

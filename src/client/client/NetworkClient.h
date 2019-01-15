@@ -2,7 +2,11 @@
 #ifndef CLIENT__NETWORKCLIENT__H
 #define CLIENT__NETWORKCLIENT__H
 
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <SFML/Network.hpp>
 #include <string>
+#include <vector>
 #include <json/json.h>
 
 namespace state {
@@ -19,9 +23,9 @@ namespace render {
 }
 
 #include "render/Render.h"
+#include "engine/Engine.h"
 #include "state/State.h"
 #include "ai/AI.h"
-#include "engine/Engine.h"
 
 namespace client {
 
@@ -30,20 +34,23 @@ namespace client {
     // Associations
     // Attributes
   private:
+    sf::Http http;
     std::string url;
     int port;
-    int character;
+    int actualcmd;
     state::State* state;
     engine::Engine* engine;
     ai::AI* ai;
     // Operations
   public:
-    NetworkClient (const std::string& url, int port, int character);
+    NetworkClient (const std::string& url, int port);
+    void state_init (state::State* state);
+    void launch_threads (state::State* state, render::Render* render, engine::Engine* engine, ai::AI* ai);
     void run ();
   protected:
-    std::string getGameStatus ();
-    bool getServerCommands (Json::Value& out);
+    std::vector<engine::Command*> getServerCommands (Json::Value& out);
     void putServerCommand (engine::Command* command);
+    int getGameStatus ();
     // Setters and Getters
   };
 

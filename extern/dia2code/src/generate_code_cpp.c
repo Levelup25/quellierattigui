@@ -661,6 +661,7 @@ struct stdlib_includes {
   int random;
   int sfmlGraphics;
   int sfmlAudio;
+  int sfmlNetwork;
   int jsoncpp;
   int astar;
   int ostream;
@@ -759,6 +760,10 @@ void print_include_stdlib(struct stdlib_includes* si, char* name) {
     if (!si->sfmlAudio && (strstr(name, "sf::") == name)) {
       print("#include <SFML/Audio.hpp>\n");
       si->sfmlAudio = 1;
+    }
+    if (!si->sfmlNetwork && (strstr(name, "sf::") == name)) {
+      print("#include <SFML/Network.hpp>\n");
+      si->sfmlNetwork = 1;
     }
     if (!si->jsoncpp && (strstr(name, "Json::") == name)) {
       print("#include <json/json.h>\n");
