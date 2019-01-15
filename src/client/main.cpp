@@ -79,10 +79,6 @@ void state_init(State* state) {
   file.close();
 
   int nbteams = 20;
-  vector<string> names = {"Goku",   "Snake",  "Cloud",    "Samus",
-                          "Mario",  "Lara",   "Link",     "Kratos",
-                          "Dante",  "Altair", "Ryu",      "Sacha",
-                          "Jotaro", "Yugi",   "Meliodas", "Kirito"};
   // int n = state->getN(), m = state->getM();
   int N = state->getI(), M = state->getJ();
 
@@ -91,7 +87,6 @@ void state_init(State* state) {
       state->addCharacter(i, rand() % (12 * 4), (Direction)(rand() % 4),
                           rand() % N, rand() % M);
       Character* c = state->getCharacters().back();
-      c->setName(names[rand() % names.size()]);
       c->setPm(2 + rand() % 5);
       c->setPv(1 + rand() % 4);
       c->setPa(3 + rand() % 2);
@@ -137,7 +132,6 @@ void state_init(State* state) {
     state->addCharacter(nbteams + 4, rand() % (12 * 4), (Direction)(rand() % 4),
                         N / 4 + rand() % (N / 2), M / 4 + rand() % (M / 2));
     Character* c = state->getCharacters().back();
-    c->setName(names[rand() % names.size()]);
     c->setPm(2 + rand() % 5);
     c->setPv(1 + rand() % 4);
     c->setPa(3 + rand() % 2);

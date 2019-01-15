@@ -2,6 +2,7 @@
 #ifndef ENGINE__ENGINE__H
 #define ENGINE__ENGINE__H
 
+#include <deque>
 #include <stdlib.h>
 
 namespace engine {
@@ -27,6 +28,7 @@ namespace engine {
     void runCommand ();
     Command* getCommand ();
     std::deque<Command*> getCommands (bool b = false);
+    void clearCommand ();
     void clearCommands (bool b = false);
     std::size_t getSize ();
     bool getReverse ();

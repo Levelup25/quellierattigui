@@ -8,6 +8,7 @@
 using namespace std;
 using namespace server;
 using namespace engine;
+using namespace state;
 
 class Request {
  public:
@@ -122,18 +123,19 @@ int main(int argc, char* const* argv) {
     servicesManager.registerService(
         unique_ptr<VersionService>(new VersionService()));
 
-    Game game;
-    servicesManager.registerService(
-        unique_ptr<GameService>(new GameService(std::ref(game))));
-
+    State state;
     Engine engine;
-    servicesManager.registerService(
-        unique_ptr<CommandsService>(new CommandsService(std::ref(engine))));
+    servicesManager.registerService(unique_ptr<CommandsService>(
+        new CommandsService(ref(state), ref(engine))));
 
     PlayerDB playerDB;
-    playerDB.addPlayer(unique_ptr<Player>(new Player("Paul")));
+    // playerDB.addPlayer(unique_ptr<Player>(new Player("Paul")));
     servicesManager.registerService(
-        unique_ptr<PlayerService>(new PlayerService(std::ref(playerDB))));
+        unique_ptr<PlayerService>(new PlayerService(ref(playerDB))));
+
+    Game game;
+    servicesManager.registerService(
+        unique_ptr<GameService>(new GameService(ref(game))));
 
     struct MHD_Daemon* d;
     if (argc != 2) {

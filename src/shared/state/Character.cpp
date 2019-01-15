@@ -15,6 +15,13 @@ Character::Character(int id,
   this->id = id;
   this->direction = (Direction)0;
   this->name = nom;
+  if (!name.compare("")) {
+    vector<string> names = {"Goku",   "Snake",  "Cloud",    "Samus",
+                            "Mario",  "Lara",   "Link",     "Kratos",
+                            "Dante",  "Altair", "Ryu",      "Sacha",
+                            "Jotaro", "Yugi",   "Meliodas", "Kirito"};
+    this->name = names[rand() % names.size()];
+  }
   this->type = type;
   this->pvMax = pv;
   this->pvCurrent = pv;

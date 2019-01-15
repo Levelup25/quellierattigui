@@ -9,7 +9,11 @@
 using namespace server;
 using namespace std;
 
-PlayerDB::PlayerDB() : idseq(1) {}
+PlayerDB::PlayerDB() : idseq(-1) {}
+
+int PlayerDB::getIdseq() {
+  return idseq;
+}
 
 const Player* PlayerDB::getPlayer(int id) const {
   auto ite = players.find(id);

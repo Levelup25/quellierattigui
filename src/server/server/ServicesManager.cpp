@@ -37,7 +37,7 @@ HttpStatus ServicesManager::queryService(string& out,
                            "Service " + url + " non trouvé");
   // Recherche un éventuel id (ex: /mon/service/<id>)
   const string& pattern(service->getPattern());
-  int id = 0;
+  int id = -1;
   if (url.size() > pattern.size()) {
     string end = url.substr(pattern.size());
     if (end[0] != '/')

@@ -15,7 +15,6 @@ namespace server {
 
   /// class PlayerDB - 
   class PlayerDB {
-    // Associations
     // Attributes
   protected:
     int idseq;
@@ -23,12 +22,12 @@ namespace server {
     // Operations
   public:
     PlayerDB ();
+    int getIdseq ();
     const Player* getPlayer (int id) const;
     int addPlayer (std::unique_ptr<Player> players);
     void setPlayer (int id, std::unique_ptr<Player> players);
     void removePlayer (int id);
     // Setters and Getters
-    int getIdseq() const;
     void setIdseq(int idseq);
     const std::map<int,std::unique_ptr<Player>>& getPlayers() const;
     void setPlayers(const std::map<int,std::unique_ptr<Player>>& players);

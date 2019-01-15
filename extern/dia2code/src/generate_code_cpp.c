@@ -645,6 +645,7 @@ struct stdlib_includes {
   int stdint;
   int stdlib;
   int vector;
+  int deque;
   int memory;
   int limits;
   int map;
@@ -689,6 +690,10 @@ void print_include_stdlib(struct stdlib_includes* si, char* name) {
     if (!si->vector && strstr(name, "std::vector")) {
       print("#include <vector>\n");
       si->vector = 1;
+    }
+    if (!si->deque && strstr(name, "std::deque")) {
+      print("#include <deque>\n");
+      si->deque = 1;
     }
     if (!si->ostream && strstr(name, "std::ostream")) {
       print("#include <ostream>\n");

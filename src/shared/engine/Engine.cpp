@@ -55,6 +55,13 @@ deque<Command*> Engine::getCommands(bool b) {
     return rollback;
 }
 
+void Engine::clearCommand() {
+  if (!reverse)
+    commands.pop_front();
+  else
+    rollback.pop_back();
+}
+
 void Engine::clearCommands(bool b) {
   if (!b)
     while (commands.size())

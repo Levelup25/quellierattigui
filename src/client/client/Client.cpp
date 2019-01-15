@@ -2,6 +2,6 @@
 
 using namespace client;
 
-Client::Client (){}
-    
-void Client::run (){}
+Client::Client() {}
+
+void Client::run() {}

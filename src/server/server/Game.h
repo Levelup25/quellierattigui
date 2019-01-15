@@ -3,6 +3,9 @@
 #define SERVER__GAME__H
 
 
+namespace server {
+  class PlayerDB;
+};
 namespace state {
   class State;
 };
@@ -10,14 +13,13 @@ namespace engine {
   class Engine;
 };
 namespace server {
-  class PlayerDB;
   class Player;
 }
 
 #include "PlayerDB.h"
-#include "Player.h"
 #include "state/State.h"
 #include "engine/Engine.h"
+#include "Player.h"
 #include "GameStatus.h"
 
 namespace server {
@@ -28,21 +30,19 @@ namespace server {
     server::GameStatus status;
     // Attributes
   private:
-    state::State* state;
-    engine::Engine* engine;
-  protected:
     PlayerDB playerDB;
+    state::State state;
+    engine::Engine engine;
     // Operations
   public:
     Game ();
-    ~Game ();
-    engine::Engine* getEngine ();
+    PlayerDB& getPlayerDB ();
+    state::State& getState ();
+    engine::Engine& getEngine ();
     void run ();
     // Setters and Getters
     GameStatus getStatus() const;
     void setStatus(GameStatus status);
-    const PlayerDB& getPlayerDB() const;
-    void setPlayerDB(const PlayerDB& playerDB);
   };
 
 };
