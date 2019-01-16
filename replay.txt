@@ -1,278 +1,642 @@
 [
    {
-      "seed" : 1547642121
+      "seed" : 1547646782
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 91.0,
-      "j" : 90.0,
+      "i" : 38.0,
+      "j" : 49.0,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.916664123535156,
-      "j" : 90.0,
+      "i" : 38.0,
+      "j" : 49.083332061767578,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.833335876464844,
-      "j" : 90.0,
+      "i" : 38.0,
+      "j" : 49.166667938232422,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.75,
-      "j" : 90.0,
+      "i" : 38.0,
+      "j" : 49.25,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.666664123535156,
-      "j" : 90.0,
+      "i" : 38.0,
+      "j" : 49.333332061767578,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.583335876464844,
-      "j" : 90.0,
+      "i" : 38.0,
+      "j" : 49.416667938232422,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.5,
-      "j" : 90.0,
+      "i" : 38.0,
+      "j" : 49.5,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.416664123535156,
-      "j" : 90.0,
+      "i" : 38.0,
+      "j" : 49.583332061767578,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.333335876464844,
-      "j" : 90.0,
+      "i" : 38.0,
+      "j" : 49.666667938232422,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.25,
-      "j" : 90.0,
+      "i" : 38.0,
+      "j" : 49.75,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.166664123535156,
-      "j" : 90.0,
+      "i" : 38.0,
+      "j" : 49.833332061767578,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.083335876464844,
-      "j" : 90.0,
+      "i" : 38.0,
+      "j" : 49.916667938232422,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 90.0,
+      "i" : 38.0,
+      "j" : 50.0,
       "pm" : 1
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 90.0,
+      "i" : 38.0,
+      "j" : 50.0,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 89.916664123535156,
+      "i" : 38.0,
+      "j" : 50.083332061767578,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 89.833335876464844,
+      "i" : 38.0,
+      "j" : 50.166667938232422,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 89.75,
+      "i" : 38.0,
+      "j" : 50.25,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 89.666664123535156,
+      "i" : 38.0,
+      "j" : 50.333332061767578,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 89.583335876464844,
+      "i" : 38.0,
+      "j" : 50.416667938232422,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 89.5,
+      "i" : 38.0,
+      "j" : 50.5,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 89.416664123535156,
+      "i" : 38.0,
+      "j" : 50.583332061767578,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 89.333335876464844,
+      "i" : 38.0,
+      "j" : 50.666667938232422,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 89.25,
+      "i" : 38.0,
+      "j" : 50.75,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 89.166664123535156,
+      "i" : 38.0,
+      "j" : 50.833332061767578,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 89.083335876464844,
+      "i" : 38.0,
+      "j" : 50.916667938232422,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 89.0,
+      "i" : 38.0,
+      "j" : 51.0,
       "pm" : 1
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 89.0,
+      "i" : 38.0,
+      "j" : 51.0,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 88.916664123535156,
+      "i" : 38.0,
+      "j" : 51.083332061767578,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 88.833335876464844,
+      "i" : 38.0,
+      "j" : 51.166667938232422,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 88.75,
+      "i" : 38.0,
+      "j" : 51.25,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 88.666664123535156,
+      "i" : 38.0,
+      "j" : 51.333332061767578,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 88.583335876464844,
+      "i" : 38.0,
+      "j" : 51.416667938232422,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 88.5,
+      "i" : 38.0,
+      "j" : 51.5,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 88.416664123535156,
+      "i" : 38.0,
+      "j" : 51.583332061767578,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 88.333335876464844,
+      "i" : 38.0,
+      "j" : 51.666667938232422,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 88.25,
+      "i" : 38.0,
+      "j" : 51.75,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 88.166664123535156,
+      "i" : 38.0,
+      "j" : 51.833332061767578,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 88.083335876464844,
+      "i" : 38.0,
+      "j" : 51.916667938232422,
       "pm" : 0
    },
    {
       "character" : 72,
       "command" : "MoveCommand",
-      "i" : 90.0,
-      "j" : 88.0,
+      "i" : 38.0,
+      "j" : 52.0,
+      "pm" : 1
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 38.0,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 38.083332061767578,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 38.166667938232422,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 38.25,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 38.333332061767578,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 38.416667938232422,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 38.5,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 38.583332061767578,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 38.666667938232422,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 38.75,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 38.833332061767578,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 38.916667938232422,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 39.0,
+      "j" : 52.0,
+      "pm" : 1
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 39.0,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 39.083332061767578,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 39.166667938232422,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 39.25,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 39.333332061767578,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 39.416667938232422,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 39.5,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 39.583332061767578,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 39.666667938232422,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 39.75,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 39.833332061767578,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 39.916667938232422,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 40.0,
+      "j" : 52.0,
+      "pm" : 1
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 40.0,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 40.083332061767578,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 40.166667938232422,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 40.25,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 40.333332061767578,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 40.416667938232422,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 40.5,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 40.583332061767578,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 40.666667938232422,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 40.75,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 40.833332061767578,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 40.916667938232422,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 41.0,
+      "j" : 52.0,
+      "pm" : 1
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 41.0,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 41.083332061767578,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 41.166667938232422,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 41.25,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 41.333332061767578,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 41.416667938232422,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 41.5,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 41.583332061767578,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 41.666667938232422,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 41.75,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 41.833332061767578,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 41.916667938232422,
+      "j" : 52.0,
+      "pm" : 0
+   },
+   {
+      "character" : 72,
+      "command" : "MoveCommand",
+      "i" : 42.0,
+      "j" : 52.0,
       "pm" : 1
    }
 ]

@@ -71,84 +71,6 @@ void cout_terminal() {
        << endl;
 }
 
-void state_init(State* state) {
-  ifstream file;
-  Json::Reader reader;
-  Json::Value root;
-  file.open("res/weapons.txt");
-  reader.parse(file, root);
-  int nb = root.size();
-  file.close();
-
-  int nbteams = 20;
-  // int n = state->getN(), m = state->getM();
-  int N = state->getI(), M = state->getJ();
-
-  for (int i = 0; i < nbteams; i++) {
-    for (int j = 0; j < 3; j++) {
-      state->addCharacter(i, rand() % (12 * 4), (Direction)(rand() % 4),
-                          rand() % N, rand() % M);
-      Character* c = state->getCharacters().back();
-      c->setPm(2 + rand() % 5);
-      c->setPv(1 + rand() % 4);
-      c->setPa(3 + rand() % 2);
-      Weapon* w = new Weapon(rand() % nb);
-      c->setWeapon(w);
-      for (auto a : w->getAbilities()) {
-        int r3 = rand() % 3;
-        for (int i = 0; i < r3; i++)
-          a->addLv();
-      }
-    }
-  }
-
-  vector<string> bossnames = {"Inconnu",        "Overlord",   "Human Slayer",
-                              "Mon ventre",     "Levi Djinn", "Dominatrix",
-                              "Fausse chieuse", "Demon Niac"};
-  // eau : 6+7   feu : 4+5   terre : 2+3   air : 0+1
-  vector<int> elems = {1, 3, 2, 4};
-  for (int i = 0; i < 4; i++) {
-    int xb = 3 * (i % 2) * N / 4, yb = 3 * (i / 2) * M / 4, xe = xb + N / 4,
-        ye = yb + M / 4;
-    for (int j = 0; j < 3; j++) {
-      state->addCharacter(i + nbteams,
-                          -1 - (9 - 2 * elems[state->zones[i] - 1] - (j == 0)),
-                          (Direction)(rand() % 4), xb + rand() % (xe - xb),
-                          yb + rand() % (ye - yb));
-      Character* c = state->getCharacters().back();
-      c->setName(bossnames[9 - 2 * elems[state->zones[i] - 1] - (j == 0)]);
-      c->setPm(3 + 3 * (j == 0));
-      c->setPv(3 + 6 * (j == 0));
-      c->setPa(3 + 6 * (j == 0));
-      Weapon* w = new Weapon(6 * (rand() % 3) + (j ? state->zones[i] : 5));
-      c->setWeapon(w);
-      for (auto a : w->getAbilities()) {
-        int r3 = 2 + (j ? rand() % 1 : 1);
-        for (int i = 0; i < r3; i++)
-          a->addLv();
-      }
-    }
-  }
-
-  for (int j = 0; j < 4; j++) {
-    state->addCharacter(nbteams + 4, rand() % (12 * 4), (Direction)(rand() % 4),
-                        N / 4 + rand() % (N / 2), M / 4 + rand() % (M / 2));
-    Character* c = state->getCharacters().back();
-    c->setPm(2 + rand() % 5);
-    c->setPv(1 + rand() % 4);
-    c->setPa(3 + rand() % 2);
-    Weapon* w = new Weapon(rand() % nb);
-    c->setWeapon(w);
-    for (auto a : w->getAbilities()) {
-      int r3 = rand() % 3;
-      for (int i = 0; i < r3; i++)
-        a->addLv();
-    }
-  }
-  state->mainTeamIndex = state->getTeams().size() - 1;
-  // state->initialCharacters = state->getCharacters();
-}
-
 void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
   bool end = false;
   thread t1([render, &end]() {
@@ -440,10 +362,7 @@ int main(int argc, char* argv[]) {
       seed = root[0].get("seed", 0).asUInt();
     }
 
-    srand(seed);
-    State* state = new State();
-    state->seed = seed;
-    state_init(state);
+    State* state = new State(seed);
     Engine* engine = new Engine();
     Render* render = new Render(state, engine);
     AI* ai = new HeuristicAI(state, engine);
@@ -454,7 +373,7 @@ int main(int argc, char* argv[]) {
     }  // Livrable 1.final
     else if (strcmp(argv[i], "state") == 0) {
       cout << "création d'un état" << endl;
-      state = new State();
+      state = new State(time(NULL));
 
       cout << "Récupération et modification d'une cellule" << endl;
       cout << "l'élément vaut " << (state->getCell(2, 2))->getElement()
@@ -573,7 +492,6 @@ int main(int argc, char* argv[]) {
       ofstream del;
       del.open("replay.txt", ios::trunc);
       del.close();
-      // srand(time(NULL));
     }  // Livrables 4.2 et 4.final
     // else if (strcmp(argv[i], "listen") == 0) {
     // }

@@ -18,84 +18,6 @@ NetworkClient::NetworkClient(const string& url, int port) {
   idLastExecutedCmd = 0;
 }
 
-void NetworkClient::state_init(State* state) {
-  ifstream file;
-  Json::Reader reader;
-  Json::Value root;
-  file.open("res/weapons.txt");
-  reader.parse(file, root);
-  int nb = root.size();
-  file.close();
-
-  int nbteams = 20;
-  // int n = state->getN(), m = state->getM();
-  int N = state->getI(), M = state->getJ();
-
-  for (int i = 0; i < nbteams; i++) {
-    for (int j = 0; j < 3; j++) {
-      state->addCharacter(i, rand() % (12 * 4), (Direction)(rand() % 4),
-                          rand() % N, rand() % M);
-      Character* c = state->getCharacters().back();
-      c->setPm(2 + rand() % 5);
-      c->setPv(1 + rand() % 4);
-      c->setPa(3 + rand() % 2);
-      Weapon* w = new Weapon(rand() % nb);
-      c->setWeapon(w);
-      for (auto a : w->getAbilities()) {
-        int r3 = rand() % 3;
-        for (int i = 0; i < r3; i++)
-          a->addLv();
-      }
-    }
-  }
-
-  vector<string> bossnames = {"Inconnu",        "Overlord",   "Human Slayer",
-                              "Mon ventre",     "Levi Djinn", "Dominatrix",
-                              "Fausse chieuse", "Demon Niac"};
-  // eau : 6+7   feu : 4+5   terre : 2+3   air : 0+1
-  vector<int> elems = {1, 3, 2, 4};
-  for (int i = 0; i < 4; i++) {
-    int xb = 3 * (i % 2) * N / 4, yb = 3 * (i / 2) * M / 4, xe = xb + N / 4,
-        ye = yb + M / 4;
-    for (int j = 0; j < 3; j++) {
-      state->addCharacter(i + nbteams,
-                          -1 - (9 - 2 * elems[state->zones[i] - 1] - (j == 0)),
-                          (Direction)(rand() % 4), xb + rand() % (xe - xb),
-                          yb + rand() % (ye - yb));
-      Character* c = state->getCharacters().back();
-      c->setName(bossnames[9 - 2 * elems[state->zones[i] - 1] - (j == 0)]);
-      c->setPm(3 + 3 * (j == 0));
-      c->setPv(3 + 6 * (j == 0));
-      c->setPa(3 + 6 * (j == 0));
-      Weapon* w = new Weapon(6 * (rand() % 3) + (j ? state->zones[i] : 5));
-      c->setWeapon(w);
-      for (auto a : w->getAbilities()) {
-        int r3 = 2 + (j ? rand() % 1 : 1);
-        for (int i = 0; i < r3; i++)
-          a->addLv();
-      }
-    }
-  }
-
-  for (int j = 0; j < 4; j++) {
-    state->addCharacter(nbteams + 4, rand() % (12 * 4), (Direction)(rand() % 4),
-                        N / 4 + rand() % (N / 2), M / 4 + rand() % (M / 2));
-    Character* c = state->getCharacters().back();
-    c->setPm(2 + rand() % 5);
-    c->setPv(1 + rand() % 4);
-    c->setPa(3 + rand() % 2);
-    Weapon* w = new Weapon(rand() % nb);
-    c->setWeapon(w);
-    for (auto a : w->getAbilities()) {
-      int r3 = rand() % 3;
-      for (int i = 0; i < r3; i++)
-        a->addLv();
-    }
-  }
-  state->mainTeamIndex = state->getTeams().size() - 1;
-  // state->initialCharacters = state->getCharacters();
-}
-
 void NetworkClient::launch_threads(State* state,
                                    Render* render,
                                    Engine* engine,
@@ -367,12 +289,11 @@ vector<Command*> NetworkClient::getServerCommands(Json::Value& out) {
   Http::Request request;
   request.setMethod(Http::Request::Get);
   request.setField("Content-Type", "application/x-www-form-urlencoded");
-  request.setUri("/commands");
-  request.setBody(to_string(idLastExecutedCmd));
+  request.setUri("/commands/" + to_string(idLastExecutedCmd));
 
   Http::Response response = http.sendRequest(request);
   string output = response.getBody();
-  cout << response.getStatus() << endl;
+  cout << output << endl;
   Json::Reader reader;
   reader.parse(output, out);
 
@@ -397,7 +318,6 @@ void NetworkClient::putServerCommand(Command* command) {
   request.setBody(input);
 
   Http::Response response = http.sendRequest(request);
-  cout << response.getStatus() << endl;
 }
 
 int NetworkClient::getGameStatus() {
@@ -413,7 +333,6 @@ int NetworkClient::getGameStatus() {
   Json::Value out;
   reader.parse(output, out);
   int seed = out.get("seed", 0).asInt();
-  srand(seed);
   return seed;
 }
 
@@ -483,16 +402,15 @@ void NetworkClient::run() {
   reader.parse(output, out);
   unsigned int seed = out.get("seed", 0).asUInt();
 
-  srand(seed);
-  State* state = new State();
-  state->seed = seed;
+  State* state = new State(seed);
   Engine* engine = new Engine();
   // Render* render = new Render(state, engine);
   // AI* ai = new HeuristicAI(state, engine);
-  state_init(state);
-  // putServerCommand(new FightCommand(state, engine, state->getTeams()[0],
-  //                                   state->getTeams()[1]));
   // putServerCommand(new MoveCommand(state, state->getMainCharacter(), 0, 0));
-  // Json::Value out;
+  // putServerCommand(new MoveCommand(state, state->getMainCharacter(), 1, 1));
+  // out = Json::Value::null;
+  // getServerCommands(out);
+  // putServerCommand(new MoveCommand(state, state->getMainCharacter(), 2, 2));
+  // getServerCommands(out);
   // getServerCommands(out);
 }

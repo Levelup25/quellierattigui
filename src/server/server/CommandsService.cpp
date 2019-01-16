@@ -4,6 +4,7 @@
 using namespace server;
 using namespace state;
 using namespace engine;
+using namespace std;
 
 CommandsService::CommandsService(Game* game)
     : AbstractService("/commands"), game(game) {
@@ -14,7 +15,7 @@ CommandsService::CommandsService(Game* game)
 HttpStatus CommandsService::get(Json::Value& out, int id) const {
   if (id >= 0) {
     Json::Value json;
-    auto commands = engine->getCommands(-id - 1);
+    deque<Command*> commands = engine->getCommands();
     for (int i = id; i < (int)commands.size(); i++) {
       json = Json::Value::null;
       commands[i]->serialize(json);
