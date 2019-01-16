@@ -440,19 +440,25 @@ void NetworkClient::run() {
 
   // launch game
   cout << "Lancement du jeu..." << endl;
+  // todo...
+  cout << "Jeux lancé" << endl;
 
-  // Render* render = new Render(state, engine);
-  // AI* ai = new HeuristicAI(state, engine);
+  // Log out - start
+  cout << "Deconnexion..." << endl;
+  sf::Http::Request req_logout;
+  req_logout.setMethod(sf::Http::Request::Post);
+  req_logout.setUri("/players/" + id_player);
+  req_logout.setField("Content-Type", "application/x-www-form-urlencoded");
+  string data_str = "{\"isLogged\" : false}";
+  req_logout.setBody(data_str);
 
-  // putServerCommand(new FightCommand(state, engine, state->getTeams()[0],
-  //                                   state->getTeams()[1]));
-  // putServerCommand(new MoveCommand(state, state->getMainCharacter(), 0, 0));
-  // putServerCommand(new MoveCommand(state, state->getMainCharacter(), 1, 1));
-  // out = Json::Value::null;
-  // getServerCommands(out);
-  // putServerCommand(new MoveCommand(state, state->getMainCharacter(), 2, 2));
-  // getServerCommands(out);
-  // getServerCommands(out);
-
-  // cout << "Jeux lancé" << endl;
+  sf::Http::Response res_logout = http.sendRequest(req_logout);
+  if (res_logout.getStatus() == sf::Http::Response::Status::Ok) {
+    cout << "Deconnecté" << endl;
+  } else {
+    cout << "Erreur de déconnexion" << endl;
+    cout << "status: " << res_logout.getStatus() << endl;
+    cout << "body: " << res_logout.getBody() << endl;
+  }
+  // Log out - end
 }
