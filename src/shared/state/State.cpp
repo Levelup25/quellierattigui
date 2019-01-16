@@ -1,16 +1,20 @@
 #include "State.h"
+#include <json/json.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
 #include <algorithm>
+#include <fstream>
 #include <iostream>
 
 using namespace std;
 using namespace state;
 
-State::State(size_t i, size_t j) {
+State::State(unsigned int seed, size_t i, size_t j) {
+  this->seed = seed;
+  srand(seed);
   // Initialize the grid with the good dimension and fill them with random cells
   I = i;
   J = j;
@@ -55,6 +59,84 @@ State::State(size_t i, size_t j) {
       grid[k][l] = cell;
     }
   }
+  init();
+}
+
+void State::init() {
+  ifstream file;
+  Json::Reader reader;
+  Json::Value root;
+  file.open("res/weapons.txt");
+  reader.parse(file, root);
+  int nb = root.size();
+  file.close();
+
+  int nbteams = 20;
+  // int n = getN(), m = getM();
+  int N = getI(), M = getJ();
+
+  for (int i = 0; i < nbteams; i++) {
+    for (int j = 0; j < 3; j++) {
+      addCharacter(i, rand() % (12 * 4), (Direction)(rand() % 4), rand() % N,
+                   rand() % M);
+      Character* c = getCharacters().back();
+      c->setPm(2 + rand() % 5);
+      c->setPv(1 + rand() % 4);
+      c->setPa(3 + rand() % 2);
+      Weapon* w = new Weapon(rand() % nb);
+      c->setWeapon(w);
+      for (auto a : w->getAbilities()) {
+        int r3 = rand() % 3;
+        for (int i = 0; i < r3; i++)
+          a->addLv();
+      }
+    }
+  }
+
+  vector<string> bossnames = {"Inconnu",        "Overlord",   "Human Slayer",
+                              "Mon ventre",     "Levi Djinn", "Dominatrix",
+                              "Fausse chieuse", "Demon Niac"};
+  // eau : 6+7   feu : 4+5   terre : 2+3   air : 0+1
+  vector<int> elems = {1, 3, 2, 4};
+  for (int i = 0; i < 4; i++) {
+    int xb = 3 * (i % 2) * N / 4, yb = 3 * (i / 2) * M / 4, xe = xb + N / 4,
+        ye = yb + M / 4;
+    for (int j = 0; j < 3; j++) {
+      addCharacter(i + nbteams, -1 - (9 - 2 * elems[zones[i] - 1] - (j == 0)),
+                   (Direction)(rand() % 4), xb + rand() % (xe - xb),
+                   yb + rand() % (ye - yb));
+      Character* c = getCharacters().back();
+      c->setName(bossnames[9 - 2 * elems[zones[i] - 1] - (j == 0)]);
+      c->setPm(3 + 3 * (j == 0));
+      c->setPv(3 + 6 * (j == 0));
+      c->setPa(3 + 6 * (j == 0));
+      Weapon* w = new Weapon(6 * (rand() % 3) + (j ? zones[i] : 5));
+      c->setWeapon(w);
+      for (auto a : w->getAbilities()) {
+        int r3 = 2 + (j ? rand() % 1 : 1);
+        for (int i = 0; i < r3; i++)
+          a->addLv();
+      }
+    }
+  }
+
+  for (int j = 0; j < 4; j++) {
+    addCharacter(nbteams + 4, rand() % (12 * 4), (Direction)(rand() % 4),
+                 N / 4 + rand() % (N / 2), M / 4 + rand() % (M / 2));
+    Character* c = getCharacters().back();
+    c->setPm(2 + rand() % 5);
+    c->setPv(1 + rand() % 4);
+    c->setPa(3 + rand() % 2);
+    Weapon* w = new Weapon(rand() % nb);
+    c->setWeapon(w);
+    for (auto a : w->getAbilities()) {
+      int r3 = rand() % 3;
+      for (int i = 0; i < r3; i++)
+        a->addLv();
+    }
+  }
+  mainTeamIndex = getTeams().size() - 1;
+  // initialCharacters = getCharacters();
 }
 
 void State::resetContents() {
