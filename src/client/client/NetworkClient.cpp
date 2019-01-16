@@ -300,7 +300,6 @@ vector<Command*> NetworkClient::getServerCommands(Json::Value& out) {
 
   Http::Response response = http.sendRequest(request);
   string output = response.getBody();
-  cout << output << endl;
   Json::Reader reader;
   reader.parse(output, out);
 
@@ -345,6 +344,7 @@ int NetworkClient::getGameStatus() {
 
 void NetworkClient::run() {
   cout << "Lancement du Jeu en mode multijoueur" << endl;
+  Json::Reader reader;  // for parse response
 
   // check server co - start
   // Vérifie si on peut contacter le serveur (en récupérant la version)
@@ -371,6 +371,7 @@ void NetworkClient::run() {
   unsigned int try_max = 10;
   unsigned int try_current = 0;
   bool connected = false;
+  unsigned int id_player;
   string pseudo;
   while (!connected && try_current < try_max) {
     cout << "Veuillez rentrez votre pseudo : ";
@@ -389,7 +390,10 @@ void NetworkClient::run() {
     if (res_pseudo.getStatus() == sf::Http::Response::Status::Ok ||
         res_pseudo.getStatus() == sf::Http::Response::Status::Created) {
       connected = true;
-      cout << "Identification établie" << endl;
+      Json::Value res_pseudo_json;
+      reader.parse(res_pseudo.getBody(), res_pseudo_json);
+      id_player = res_pseudo_json.get("id", 0).asUInt();
+      cout << "Identification établie, id : " << id_player << endl;
     } else {
       connected = false;
       cout << "Identification échouée" << endl;
@@ -418,14 +422,14 @@ void NetworkClient::run() {
     cout << "body: " << res_seed_body << endl;
     return;
   }
-  Json::Reader reader;
+
   Json::Value res_seed_json;
   reader.parse(res_seed_body, res_seed_json);
   unsigned int seed = res_seed_json.get("seed", 0).asUInt();
   // récupération seed état du serveur - end
 
   // regenerate server state - start
-  State* state = new State(seed);
+  this->state = new State(seed);
   Json::Value server_commands_json;
   vector<Command*> server_commands = getServerCommands(server_commands_json);
   for (auto ptr_cmd : server_commands) {
