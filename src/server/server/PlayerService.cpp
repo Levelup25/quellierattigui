@@ -54,8 +54,30 @@ HttpStatus PlayerService::put(Json::Value& out, const Json::Value& in) {
   string pseudo = in.get("pseudo", "").asString();
   bool isLogged = in.get("isLogged", true).asBool();
   int teamId = in.get("teamId", -1).asInt();
+
+  for (int i = 0; i < playerDB.getIdseq(); i++) {
+    const Player* player = playerDB.getPlayer(i);
+    if (player) {
+      if (!pseudo.compare(player->pseudo)) {
+        if (player->isLogged) {
+          throw ServiceException(HttpStatus::BAD_REQUEST,
+                                 "Pseudo already taken");
+        } else {
+          out["id"] = i;
+          out["pseudo"] = player->pseudo;
+          out["isLogged"] = player->isLogged;
+          out["teamId"] = player->teamId;
+          return HttpStatus::OK;
+        }
+      }
+    }
+  }
+
   out["id"] = playerDB.addPlayer(
       unique_ptr<Player>(new Player(pseudo, isLogged, teamId)));
+  out["pseudo"] = pseudo;
+  out["isLogged"] = isLogged;
+  out["teamId"] = teamId;
   return HttpStatus::CREATED;
 }
 
