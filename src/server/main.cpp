@@ -120,22 +120,17 @@ static int main_handler(void* cls,
 int main(int argc, char* const* argv) {
   try {
     ServicesManager servicesManager;
-    servicesManager.registerService(
-        unique_ptr<VersionService>(new VersionService()));
+    servicesManager.registerService(new VersionService());
 
-    State state;
-    Engine engine;
-    servicesManager.registerService(unique_ptr<CommandsService>(
-        new CommandsService(ref(state), ref(engine))));
+    Game* game = new Game();
+    servicesManager.registerService(new GameService(game));
 
-    PlayerDB playerDB;
-    // playerDB.addPlayer(unique_ptr<Player>(new Player("Paul")));
-    servicesManager.registerService(
-        unique_ptr<PlayerService>(new PlayerService(ref(playerDB))));
+    State* state = game->getState();
+    Engine* engine = game->getEngine();
+    servicesManager.registerService(new CommandsService(state, engine));
 
-    Game game;
-    servicesManager.registerService(
-        unique_ptr<GameService>(new GameService(ref(game))));
+    PlayerDB* playerDB = game->getPlayerDB();
+    servicesManager.registerService(new PlayerService(playerDB));
 
     struct MHD_Daemon* d;
     if (argc != 2) {

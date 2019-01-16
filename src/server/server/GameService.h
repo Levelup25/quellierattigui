@@ -20,10 +20,10 @@ namespace server {
     // Associations
     // Attributes
   private:
-    Game& game;
+    Game* game;
     // Operations
   public:
-    GameService (Game& game);
+    GameService (Game* game);
     HttpStatus get (Json::Value& out, int id) const;
     // Setters and Getters
   };

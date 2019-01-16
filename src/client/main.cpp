@@ -30,7 +30,7 @@ void cout_terminal() {
   cout << "  ^ neutre v " << endl;
   cout << "\033[1;32mterre\033[0m  <  \033[1;33mair\033[0m" << endl;
   cout << "Attaque elementaire forte : dégats doublés et soins changés en "
-          "degats faibles"
+          "degats"
        << endl;
   cout << "Attaque elementaire faible : dégats divisés et soins divisés"
        << endl;
@@ -182,7 +182,7 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
       move_sounds[i].setBuffer(move_buffers[i]);
     }
 
-    sounds = {"explode1", "explode2", "explode3", "explode4", "explode5"};
+    sounds = {"neutral", "water", "rock", "fire", "wind"};
     vector<SoundBuffer> attack_buffers;
     attack_buffers.resize(5);
     vector<Sound> attack_sounds;
@@ -412,68 +412,74 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
 
 State getStateFromServer() {
   cout << "Chargement de l'état de la partie..." << endl;
-  // TODO
+
   cout << "Chargement de l'état de la parite terminé..." << endl;
 }
 
 // todo : rename
 bool launch_client_network() {
-  cout << "Lancement du Jeu en mode multijoueur" << endl;
+  // cout << "Lancement du Jeu en mode multijoueur" << endl;
 
-  // Vérifie si on peut contacter le serveur (en récupérant la version)
-  cout << "Connexion au serveur..." << endl;
-  sf::Http http_manager;
-  http_manager.setHost("localhost", 8080);
+  // // Vérifie si on peut contacter le serveur (en récupérant la version)
+  // cout << "Connexion au serveur..." << endl;
+  // sf::Http http_manager;
+  // http_manager.setHost("localhost", 8080);
 
-  sf::Http::Request req_version;
-  req_version.setMethod(sf::Http::Request::Get);
-  req_version.setUri("/version");
+  // sf::Http::Request req_version;
+  // req_version.setMethod(sf::Http::Request::Get);
+  // req_version.setUri("/version");
 
-  sf::Http::Response res_version = http_manager.sendRequest(req_version);
-  if (res_version.getStatus() != sf::Http::Response::Status::Ok) {
-    cout << "Erreur lors de la connexion au serveur, veulliez essayer à "
-            "nouveau plus tard"
-         << endl;
-    cout << "status: " << res_version.getStatus() << endl;
-    cout << "body: " << res_version.getBody() << endl;
-    return false;
-  }
-  cout << "Connexion établie" << endl;
+  // sf::Http::Response res_version = http_manager.sendRequest(req_version);
+  // if (res_version.getStatus() != sf::Http::Response::Status::Ok) {
+  //   cout << "Erreur lors de la connexion au serveur, veulliez essayer à "
+  //           "nouveau plus tard"
+  //        << endl;
+  //   cout << "status: " << res_version.getStatus() << endl;
+  //   cout << "body: " << res_version.getBody() << endl;
+  //   return false;
+  // }
+  // cout << "Connexion établie" << endl;
 
-  // connexion avec pseudo à la partie
-  unsigned int try_max = 10;
-  unsigned int try_current = 0;
-  bool connected = false;
-  string pseudo;
-  while (!connected && try_current < try_max) {
-    cout << "Veuillez rentrez votre pseudo : ";
-    pseudo = "";
-    cin >> pseudo;
-    cout << "Identification en  cours..." << endl;
+  // // connexion avec pseudo à la partie
+  // unsigned int try_max = 10;
+  // unsigned int try_current = 0;
+  // bool connected = false;
+  // string pseudo;
+  // while (!connected && try_current < try_max) {
+  //   cout << "Veuillez rentrez votre pseudo : ";
+  //   pseudo = "";
+  //   cin >> pseudo;
+  //   cout << "Identification en  cours..." << endl;
 
-    sf::Http::Request req_pseudo;
-    req_pseudo.setMethod(sf::Http::Request::Put);
-    req_pseudo.setUri("/players");
-    req_pseudo.setField("Content-Type", "application/x-www-form-urlencoded");
-    string data_str = "{\"pseudo\" : \"" + pseudo + "\"}";
-    req_pseudo.setBody(data_str);
+  //   sf::Http::Request req_pseudo;
+  //   req_pseudo.setMethod(sf::Http::Request::Put);
+  //   req_pseudo.setUri("/players");
+  //   req_pseudo.setField("Content-Type", "application/x-www-form-urlencoded");
+  //   string data_str = "{\"pseudo\" : \"" + pseudo + "\"}";
+  //   req_pseudo.setBody(data_str);
 
-    sf::Http::Response res_pseudo = http_manager.sendRequest(req_pseudo);
-    if (res_pseudo.getStatus() == sf::Http::Response::Status::Ok ||
-        res_pseudo.getStatus() == sf::Http::Response::Status::Created) {
-      connected = true;
-      cout << "Identification établie" << endl;
-    } else {
-      connected = false;
-      cout << "Identification échouée" << endl;
-    }
-    cout << "status: " << res_pseudo.getStatus() << endl;
-    cout << "body: " << res_pseudo.getBody() << endl;
-  }
+  //   sf::Http::Response res_pseudo = http_manager.sendRequest(req_pseudo);
+  //   if (res_pseudo.getStatus() == sf::Http::Response::Status::Ok ||
+  //       res_pseudo.getStatus() == sf::Http::Response::Status::Created) {
+  //     connected = true;
+  //     cout << "Identification établie" << endl;
+  //   } else {
+  //     connected = false;
+  //     cout << "Identification échouée" << endl;
+  //   }
+  //   cout << "status: " << res_pseudo.getStatus() << endl;
+  //   cout << "body: " << res_pseudo.getBody() << endl;
+  // }
 
-  State state = getStateFromServer();
+  // // State state = getStateFromServer();
+  // sf::Http::Request request;
+  // request.setMethod(sf::Http::Request::Get);
+  // request.setUri("/game");
+  // request.setField("Content-Type", "application/x-www-form-urlencoded");
+  // sf::Http::Response response = http_manager.sendRequest(request);
+  // cout << "body: " << response.getBody() << endl;
 
-  return true;
+  // return true;
 }
 
 int main(int argc, char* argv[]) {
@@ -627,8 +633,8 @@ int main(int argc, char* argv[]) {
     // }
     else if (strcmp(argv[i], "network") == 0) {
       // todo : merge and clean network client launcher
-      if (!launch_client_network())
-        return 1;
+      // if (!launch_client_network())
+      //   return 1;
 
       cout_terminal();
       NetworkClient client("localhost", 8080);

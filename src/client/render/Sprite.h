@@ -3,8 +3,6 @@
 #define RENDER__SPRITE__H
 
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Network.hpp>
 #include <ostream>
 
 namespace render {

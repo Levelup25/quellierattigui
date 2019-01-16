@@ -132,7 +132,7 @@ void NetworkClient::launch_threads(State* state,
       move_sounds[i].setBuffer(move_buffers[i]);
     }
 
-    sounds = {"explode1", "explode2", "explode3", "explode4", "explode5"};
+    sounds = {"neutral", "water", "rock", "fire", "wind"};
     vector<SoundBuffer> attack_buffers;
     attack_buffers.resize(5);
     vector<Sound> attack_sounds;
@@ -366,6 +366,7 @@ void NetworkClient::launch_threads(State* state,
 vector<Command*> NetworkClient::getServerCommands(Json::Value& out) {
   Http::Request request;
   request.setMethod(Http::Request::Get);
+  request.setField("Content-Type", "application/x-www-form-urlencoded");
   request.setUri("/commands");
   request.setBody(to_string(actualcmd));
 
@@ -391,6 +392,7 @@ void NetworkClient::putServerCommand(Command* command) {
 
   Http::Request request;
   request.setMethod(Http::Request::Put);
+  request.setField("Content-Type", "application/x-www-form-urlencoded");
   request.setUri("/commands");
   request.setBody(input);
 
@@ -401,6 +403,7 @@ void NetworkClient::putServerCommand(Command* command) {
 int NetworkClient::getGameStatus() {
   Http::Request request;
   request.setMethod(Http::Request::Get);
+  request.setField("Content-Type", "application/x-www-form-urlencoded");
   request.setUri("/game");
 
   Http::Response response = http.sendRequest(request);
@@ -415,14 +418,81 @@ int NetworkClient::getGameStatus() {
 }
 
 void NetworkClient::run() {
+  cout << "Lancement du Jeu en mode multijoueur" << endl;
+
+  // Vérifie si on peut contacter le serveur (en récupérant la version)
+  cout << "Connexion au serveur..." << endl;
+
+  sf::Http::Request req_version;
+  req_version.setMethod(sf::Http::Request::Get);
+  // req_version.setField("Content-Type", "application/x-www-form-urlencoded");
+  req_version.setUri("/version");
+
+  sf::Http::Response res_version = http.sendRequest(req_version);
+  if (res_version.getStatus() != sf::Http::Response::Status::Ok) {
+    cout << "Erreur lors de la connexion au serveur, veulliez essayer à "
+            "nouveau plus tard"
+         << endl;
+    cout << "status: " << res_version.getStatus() << endl;
+    cout << "body: " << res_version.getBody() << endl;
+    return;
+  }
+  cout << "Connexion établie" << endl;
+
+  // connexion avec pseudo à la partie
+  unsigned int try_max = 10;
+  unsigned int try_current = 0;
+  bool connected = false;
+  string pseudo;
+  while (!connected && try_current < try_max) {
+    cout << "Veuillez rentrez votre pseudo : ";
+    pseudo = "";
+    cin >> pseudo;
+    cout << "Identification en  cours..." << endl;
+
+    sf::Http::Request req_pseudo;
+    req_pseudo.setMethod(sf::Http::Request::Put);
+    req_pseudo.setUri("/players");
+    req_pseudo.setField("Content-Type", "application/x-www-form-urlencoded");
+    string data_str = "{\"pseudo\" : \"" + pseudo + "\"}";
+    req_pseudo.setBody(data_str);
+    cout << data_str << endl;
+
+    sf::Http::Response res_pseudo = http.sendRequest(req_pseudo);
+    if (res_pseudo.getStatus() == sf::Http::Response::Status::Ok ||
+        res_pseudo.getStatus() == sf::Http::Response::Status::Created) {
+      connected = true;
+      cout << "Identification établie" << endl;
+    } else {
+      connected = false;
+      cout << "Identification échouée" << endl;
+    }
+    cout << "status: " << res_pseudo.getStatus() << endl;
+    cout << "body: " << res_pseudo.getBody() << endl;
+  }
+
+  sf::Http::Request request;
+  request.setMethod(sf::Http::Request::Get);
+  request.setUri("/game");
+  request.setField("Content-Type", "application/x-www-form-urlencoded");
+  sf::Http::Response response = http.sendRequest(request);
+  string output = response.getBody();
+  cout << "body: " << output << endl;
+  Json::Value out;
+  Json::Reader reader;
+  reader.parse(output, out);
+  unsigned int seed = out.get("seed", 0).asUInt();
+
+  srand(seed);
   State* state = new State();
+  state->seed = seed;
   Engine* engine = new Engine();
-  Render* render = new Render(state, engine);
+  // Render* render = new Render(state, engine);
   // AI* ai = new HeuristicAI(state, engine);
   state_init(state);
-  putServerCommand(new FightCommand(state, engine, state->getTeams()[0],
-                                    state->getTeams()[1]));
-  putServerCommand(new MoveCommand(state, state->getMainCharacter(), 0, 0));
-  Json::Value out;
-  getServerCommands(out);
+  // putServerCommand(new FightCommand(state, engine, state->getTeams()[0],
+  //                                   state->getTeams()[1]));
+  // putServerCommand(new MoveCommand(state, state->getMainCharacter(), 0, 0));
+  // Json::Value out;
+  // getServerCommands(out);
 }

@@ -3,15 +3,14 @@
 #define SERVER__SERVICESMANAGER__H
 
 #include <vector>
-#include <memory>
 #include <string>
 
 namespace server {
   class AbstractService;
 }
 
-#include "AbstractService.h"
 #include "HttpStatus.h"
+#include "AbstractService.h"
 
 namespace server {
 
@@ -20,15 +19,15 @@ namespace server {
     // Associations
     // Attributes
   protected:
-    std::vector<std::unique_ptr<AbstractService>> services;
+    std::vector<AbstractService*> services;
     // Operations
   public:
-    void registerService (std::unique_ptr<AbstractService> service);
+    void registerService (AbstractService* service);
     AbstractService* findService (const std::string& url) const;
     HttpStatus queryService (std::string& out, const std::string& in, const std::string& url, const std::string& method);
     // Setters and Getters
-    const std::vector<std::unique_ptr<AbstractService>>& getServices() const;
-    void setServices(const std::vector<std::unique_ptr<AbstractService>>& services);
+    const std::vector<AbstractService*>& getServices() const;
+    void setServices(const std::vector<AbstractService*>& services);
   };
 
 };

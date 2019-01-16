@@ -9,7 +9,7 @@
 using namespace server;
 using namespace std;
 
-PlayerDB::PlayerDB() : idseq(-1) {}
+PlayerDB::PlayerDB() : idseq(0) {}
 
 int PlayerDB::getIdseq() {
   return idseq;

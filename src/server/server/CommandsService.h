@@ -26,11 +26,11 @@ namespace server {
     // Associations
     // Attributes
   private:
-    state::State& state;
-    engine::Engine& engine;
+    state::State* state;
+    engine::Engine* engine;
     // Operations
   public:
-    CommandsService (state::State& state, engine::Engine& engine);
+    CommandsService (state::State* state, engine::Engine* engine);
     HttpStatus get (Json::Value& out, int id) const;
     HttpStatus put (Json::Value& out, const Json::Value& in);
     HttpStatus remove (int id);

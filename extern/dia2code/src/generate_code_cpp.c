@@ -757,11 +757,12 @@ void print_include_stdlib(struct stdlib_includes* si, char* name) {
       print("#include <SFML/Graphics.hpp>\n");
       si->sfmlGraphics = 1;
     }
-    if (!si->sfmlAudio && (strstr(name, "sf::") == name)) {
+    if (!si->sfmlAudio && ((strstr(name, "sf::Music") == name) ||
+                           (strstr(name, "sf::Sound") == name))) {
       print("#include <SFML/Audio.hpp>\n");
       si->sfmlAudio = 1;
     }
-    if (!si->sfmlNetwork && (strstr(name, "sf::") == name)) {
+    if (!si->sfmlNetwork && (strstr(name, "sf::Http") == name)) {
       print("#include <SFML/Network.hpp>\n");
       si->sfmlNetwork = 1;
     }

@@ -11,18 +11,18 @@
 using namespace server;
 using namespace std;
 
-void ServicesManager::registerService(unique_ptr<AbstractService> service) {
-  services.push_back(std::move(service));
+void ServicesManager::registerService(AbstractService* service) {
+  services.push_back(service);
 }
 
 AbstractService* ServicesManager::findService(const string& url) const {
-  for (auto& service : services) {
+  for (auto service : services) {
     const string& pattern(service->getPattern());
     if (url.find(pattern) != 0)
       continue;
     if (url.size() > pattern.size() && url[pattern.size()] != '/')
       continue;
-    return service.get();
+    return service;
   }
   return nullptr;
 }

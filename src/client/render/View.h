@@ -3,8 +3,6 @@
 #define RENDER__VIEW__H
 
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Network.hpp>
 
 namespace render {
   class Element;
