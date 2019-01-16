@@ -273,8 +273,8 @@ Le diagramme de classes du rendu est présenté en Figure~\ref{uml:render} :
         Cette classe permet de créer des conteneurs pour les objets/éléments sfml (text, sprite et rectangle).
         la classe éléments applique le design pattern composite, ainsi un élément peut être un "parent" et contenir des éléments "enfants" qui vont automatiquement se positionner et se dimensionner en fonction de la position et taille du parent. 
         Un éléments parent peut avoir comme enfants d'autre élément parent, ainsi les éléments s'organise selon une structure d'arbre.
-        La classe élement permet également d'encapsulter la gestion des évenements sfml.
-        Voici quelques élements particulier: Window (affiche une fenêtre déplacable et fermable), CharacterStat (affiche les stats d'un perso), CharacterSheet (affiche les informations lié à un personnage)
+        La classe Element permet également d'encapsuler la gestion des évènements sfml.
+        Voici quelques Elements particuliers : Window (affiche une fenêtre déplaçable et fermable), CharacterStat (affiche les stats d'un perso), Sheets (affiche les informations d'une équipe, d'un personnage, d'une arme, d'une capacité)
 \end{itemize}
 
 \begin{figure}[p]
@@ -346,7 +346,7 @@ Une liste de toutes les commandes de même score maximal est établie et une com
 
 \subsubsection{Intelligence avancée}
 
-L'IA balaye plusieurs options parmi ses meilleurs coups (actions avec un score au dessus d'un certain seuil fixé) grâce à un arbre de profondeur fixé, représenté par la classe TreeNode, mais cette fois elle peut anticiper les mouvements adverses (qui soustraient leur score au noeud de l'arbre) si la profondeur de l'arbre est assez grande. Le système de score reste identique à celui de l'intelligence heuristique. Un système de rollback permet d'annuler les actions éxécutées de proche en proche, modifiant directement l'état, au lieu de stocker plusieurs copies de l'état actuel.
+L'IA balaye plusieurs options parmi ses meilleurs coups (actions avec un score au dessus d'un certain seuil fixé) grâce à un arbre de profondeur fixé, représenté par la classe TreeNode, mais cette fois elle peut anticiper les mouvements adverses (qui soustraient leur score au noeud de l'arbre) si la profondeur de l'arbre est assez grande. Le système de score reste identique à celui de l'intelligence heuristique. Un système de rollback permet d'annuler les actions exécutées de proche en proche, modifiant directement l'état, au lieu de stocker plusieurs copies de l'état actuel.
 
 \clearpage
 \subsection{Conception logiciel}
@@ -375,23 +375,42 @@ Le diagramme de classes pour l'intelligence artificielle est présentée en figu
 
 On décide ici de proposer au joueur le choix de faire affronter deux intelligences artificielles afin d'observer les choix pris par ceux-ci. Pour cela, un booléen indique si ce choix a été pris, et le thread de l'intelligence artificielle a été modifié pour inclure une recherche de l'ennemi le plus proche, un déploiement aléatoire en combat, puis le même algorithme de combat est appliqué, et ceci en boucle jusqu'à la victoire/défaite du joueur principal.
 
-La seconde fonctionnalité implémentée est un enregistrement et une vue d'une sauvegarde du jeu. La sauvegarde s'effectue via un fichier texte replay.txt écrit au format Json qui reprend le principe du rollback qui sauvegarde toutes les commandes effectuées. Il s'agit donc ici de défiler le rollback et de sérialiser chaque commande au lieu de le dépiler. Les commandes parasites d'annulation et de calcul ne sont alors pas prises en compte. La lecture de la sauvegarde se fait alors en déserialisant chaque commande en les envoyant dans la file de commandes du moteur qui les exécute alors soit normalement pour jouer la sauvegarde, ou alors à toute vitesse pour juste charger une partie. En plus des commandes, la random seed est aussi stockée en Json afin de pouvoir regénérer le state à partir des mêmes commandes aléatoires sans avoir à sauvegarder l'état en entier en sérialisant chacune des classes qui peuvent sensiblement changer assez régulièrement.
+La seconde fonctionnalité implémentée est un enregistrement et une vue d'une sauvegarde du jeu. La sauvegarde s'effectue via un fichier texte replay.txt écrit au format Json qui reprend le principe du rollback qui sauvegarde toutes les commandes effectuées. Il s'agit donc ici de défiler le rollback et de sérialiser chaque commande au lieu de le dépiler. Les commandes parasites d'annulation et de calcul ne sont alors pas prises en compte. La lecture de la sauvegarde se fait alors en déserialisant chaque commande en les envoyant dans la file de commandes du moteur qui les exécute alors soit normalement pour jouer la sauvegarde, ou alors à toute vitesse pour juste charger une partie. En plus des commandes, la random seed est aussi stockée en Json afin de pouvoir régénérer le state à partir des mêmes commandes aléatoires sans avoir à sauvegarder l'état en entier en sérialisant chacune des classes qui peuvent sensiblement changer assez régulièrement.
 
-Cette sauvegarde est effectuée à chaque fin de combat (car cette fin supprime des classes et est donc irreversible, ce qui annule le rollback. Avant d'effacer le rollback, toutes les commandes en cours sont écrites et les suivantes seront ajoutées après ) et à la fermeture de la fenêtre sfml mais pas en cas de fermeture brutale (Ctrl-C).
+Cette sauvegarde est effectuée à chaque fin de combat (car cette fin supprime des classes et est donc irréversible, ce qui annule le rollback. Avant d'effacer le rollback, toutes les commandes en cours sont écrites et les suivantes seront ajoutées après ) et à la fermeture de la fenêtre sfml mais pas en cas de fermeture brutale (Ctrl-C).
 
 \subsection{Organisation des modules}
+
+L'objectif est de créer un serveur qui écoute les requêtes des différents clients, gérant la connexion et la déconnexion des joueurs, l'envoi et à la réception de commandes afin que chaque client soit synchronisé avec l'état du serveur. Dans ce cas, un nouveau client notifie son envie de se connecter au serveur, qui va alors créer une nouvelle équipe pour tous les clients déjà connectés et va envoyer à ce nouveau client les informations nécessaires pour recréer l'état initial du serveur (avant qu'aucune connexion ne se fasse), ainsi que toutes les commandes qui lui ont permis de se trouver dans son état actuel (l'ensemble des commandes des autres clients dans l'ordre chronologique). Chaque client demande également périodiquement l'ensemble des commandes qui lui manquent pour retrouver l'état du serveur. Ces demandes ne sont pas synchronisées entre chaque client donc les commandes du moteur du serveur ne sont pas supprimés après l'exécution mais sauvegardées pour pouvoir renvoyer des commandes différentes pour chaque client selon son retard sur l'état actuel, ainsi que pour reconstituer l'état pour un nouveau joueur (en envoyant alors toutes les commandes disponibles).
+
+Le rendu de chaque client reste toujours désynchronisé du moteur.
 
 \clearpage
 \subsection{Conception logiciel}
 
+Le diagramme de classes pour la modularisation est présentée en figure~\ref{uml:module}.
 
-%
-%\begin{landscape}
-%\begin{figure}[p]
-%\includegraphics[width=0.9\paperheight]{module.pdf}
-%\caption{\label{uml:module}Diagramme des classes pour la modularisation.} 
-%\end{figure}
-%\end{landscape}
+\textbf{NetworkClient} Cette classe permet de se connecter au serveur grâce à l'api de connexion, puis lance une partie comme en local avec certaines restrictions liées au jeu en ligne (pas de rollback ou de replay, les commandes ne sont pas exécutées directement localement mais sont envoyées sur le serveur (putServerCommand) dès que possible puis reçues (getSeverCommands) périodiquement). Il contient donc un état, un moteur, un rendu et une intelligence artificielle. Il contient également de quoi se connecter en ligne, ainsi que l'identifiant de la dernière commande du serveur exécutée afin de récupérer les bonnes commandes lors de la demande au serveur.
+
+\textbf{Game} Le serveur possède sa propre version de l'état et du moteur, ainsi qu'une base de données des joueurs connectés, Il exécute toutes les commandes qu'il reçoit de chaque client puis les sauvegarde pour ensuite les restituer lors de la demande de chaque client qui peut demander des commandes différentes selon leur état d'avancement de leur état.
+
+\textbf{PlayerDB} stocke tous les joueurs grâce à un identifiant unique auto-incrémenté. Chaque joueur possède un pseudo servant à s'inscrire, un booléen indiquant s'il est connecté ou pas et le numéro de l'équipe que le client associé contrôle.
+
+\textbf{AbstractService} Les services REST sont implémentés via cette classe en coordination avec le ServicesManager pour fournir les différents services attendus : 
+\begin{itemize}
+\item VersionService renvoie la version de l'API afin d'éviter les conflits de version
+\item GameService renvoie les éléments nécessaires aux clients pour reconstituer l'état du serveur lors de l'inscription et de la connexion
+\item CommandsService permet d'échanger les commandes entre client et serveur afin d'assurer que chaque client exécute toutes les commandes, incluant celles des autres joueurs
+\item PlayerService gère l'inscription, la connexion et la déconnexion des différents clients. Lors de l'inscription, si le pseudo choisi n'existe pas il est crée et le joueur se connecte alors. Sinon, s'il existe et que le champ isLogged est libre, il devient pris et le client se reconnecte avec son personnage déjà crée sur le serveur lors d'une précédente connexion puis déconnexion. Enfin, si ce champ est déjà pris, un pseudo est redemandé pour reproduire les étapes précédentes. Au bout de 10 tentatives infructueuses, la connexion s'arrête.
+\end{itemize}
+
+\begin{landscape}
+    \begin{figure}[p]
+        \centering
+        \includegraphics[width=0.9\paperheight,keepaspectratio]{module.png}
+        \caption{\label{uml:module}Diagramme des classes pour la modularisation.}
+    \end{figure}
+\end{landscape}
 
 \end{document}
 

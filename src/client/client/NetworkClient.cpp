@@ -29,7 +29,7 @@ void NetworkClient::launch_threads(State* state,
   thread t1([render, &end]() {
     Music theme;
     theme.openFromFile("res/sounds/theme.wav");
-    // theme.play();
+    theme.play();
     theme.setLoop(true);
     theme.setVolume(50.f);
     render->display();

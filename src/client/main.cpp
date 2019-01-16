@@ -76,7 +76,7 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
   thread t1([render, &end]() {
     Music theme;
     theme.openFromFile("res/sounds/theme.wav");
-    // theme.play();
+    theme.play();
     theme.setLoop(true);
     theme.setVolume(50.f);
     render->display();
