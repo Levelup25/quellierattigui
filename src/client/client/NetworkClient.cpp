@@ -101,6 +101,8 @@ void NetworkClient::launch_threads(State* state,
                                    Engine* engine,
                                    AI* ai) {
   bool end = false;
+
+  // Render
   thread t1([render, &end]() {
     Music theme;
     theme.openFromFile("res/sounds/theme.wav");
@@ -111,6 +113,8 @@ void NetworkClient::launch_threads(State* state,
     theme.stop();
     end = true;
   });
+
+  // Engine
   thread t2([engine, state, &end, this]() {
     SoundBuffer win_buffer;
     win_buffer.loadFromFile("res/sounds/win.ogg");
@@ -186,6 +190,8 @@ void NetworkClient::launch_threads(State* state,
       }
     }
   });
+
+  // Ai
   thread t3([ai, state, engine, &end]() {
     while (!end) {
       shared_ptr<Fight> fight = state->getFight();
@@ -358,6 +364,7 @@ void NetworkClient::launch_threads(State* state,
       }
     }
   });
+
   t1.join();
   t2.join();
   t3.join();
@@ -490,16 +497,17 @@ void NetworkClient::run() {
   unsigned int seed = res_seed_json.get("seed", 0).asUInt();
   // récupération seed état du serveur - end
 
-  // get orinal server state from seed - start
-  srand(seed);
-  State* state = new State();
-  state->seed = seed;
-  // get orinal server state from seed - end
-
   // regenerate server state - start
+  State* state = new State(seed);
+  Json::Value server_commands_json;
+  vector<Command*> server_commands = getServerCommands(server_commands_json);
+  for (auto ptr_cmd : server_commands) {
+    ptr_cmd->execute();
+  }
+  // regenerate server state - end
 
   // launch game
-  Engine* engine = new Engine();
+
   // Render* render = new Render(state, engine);
   // AI* ai = new HeuristicAI(state, engine);
 
