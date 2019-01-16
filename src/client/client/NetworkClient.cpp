@@ -395,8 +395,11 @@ void NetworkClient::run() {
       connected = false;
       cout << "Identification échouée" << endl;
     }
-    cout << "status: " << res_pseudo.getStatus() << endl;
-    cout << "body: " << res_pseudo.getBody() << endl;
+    // cout << "status: " << res_pseudo.getStatus() << endl;
+    // cout << "body: " << res_pseudo.getBody() << endl;
+  }
+  if (!connected) {
+    return;
   }
   // connexion avec pseudo à la partie - end
 
@@ -408,8 +411,13 @@ void NetworkClient::run() {
 
   sf::Http::Response res_seed = http.sendRequest(req_seed);
   string res_seed_body = res_seed.getBody();
-  cout << "Statut: " << res_seed.getStatus() << endl;
-  cout << "body: " << res_seed_body << endl;
+  if (res_seed.getStatus() != sf::Http::Response::Status::Ok) {
+    cout << "Erreur lors de la récupération de l'état originel du serveur"
+         << endl;
+    cout << "Statut: " << res_seed.getStatus() << endl;
+    cout << "body: " << res_seed_body << endl;
+    return;
+  }
   Json::Reader reader;
   Json::Value res_seed_json;
   reader.parse(res_seed_body, res_seed_json);
