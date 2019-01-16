@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <thread>
+#include "ai/HeuristicAI.h"
 
 using namespace client;
 using namespace engine;
@@ -14,6 +15,8 @@ using namespace std;
 using namespace sf;
 
 NetworkClient::NetworkClient(const string& url, int port) {
+  this->url = url;
+  this->port = port;
   http.setHost(url, port);
   idLastExecutedCmd = 0;
 }
@@ -23,8 +26,6 @@ void NetworkClient::launch_threads(State* state,
                                    Engine* engine,
                                    AI* ai) {
   bool end = false;
-
-  // Render
   thread t1([render, &end]() {
     Music theme;
     theme.openFromFile("res/sounds/theme.wav");
@@ -36,8 +37,9 @@ void NetworkClient::launch_threads(State* state,
     end = true;
   });
 
-  // Engine
+  // Engine loop and play sound
   thread t2([engine, state, &end, this]() {
+    // Loads sounds - start
     SoundBuffer win_buffer;
     win_buffer.loadFromFile("res/sounds/win.ogg");
     Sound win_sound;
@@ -67,53 +69,74 @@ void NetworkClient::launch_threads(State* state,
       attack_buffers[i].loadFromFile("res/sounds/" + sounds[i] + ".ogg");
       attack_sounds[i].setBuffer(attack_buffers[i]);
     }
+    // Load sounds - end
 
-    Clock clock;
+    Clock clock, clock2;
+    deque<Command*> commands;
     while (!end) {
+      putServerCommand(engine->getCommand());
+      engine->clearCommand();
+      if (!(clock2.getElapsedTime().asSeconds() >= 1.0)) {
+        deque<Command*> serverCommands = getServerCommands();
+        for (auto cmd : serverCommands)
+          commands.push_back(cmd);
+        clock2.restart();
+      }
+      if (!(clock.getElapsedTime().asSeconds() >= 1.0 / 30)) {
+        continue;
+      }
+      clock.restart();
+
       Command* cmd = engine->getCommand();
-      if (cmd)
-        putServerCommand(cmd);
-      if (clock.getElapsedTime().asSeconds() >= 1.0 / 30) {
-        clock.restart();
-        Command* cmd = engine->getCommand();
-        Character* character = nullptr;
-        Team* team = nullptr;
-        if (cmd)
-          character = cmd->getCharacter();
-        string type = cmd->getType();
-        if (!type.compare("MoveCommand")) {
-          int i = state->getCell(character->getI(), character->getJ())
-                      ->getElement();
-          if (move_sounds[i].getStatus() != 2) {
-            move_sounds[i].play();
-          }
-        } else if (!type.compare("AttackCommand")) {
-          int i = character->getWeapon()
-                      ->getAbility(
-                          static_cast<AttackCommand*>(cmd)->getAbilityNumber())
-                      ->getElement();
-          if (attack_sounds[i].getStatus() != 2) {
-            attack_sounds[i].play();
-          }
-        } else if (!type.compare("FightCommand") && state->getFight()) {
-          team = state->getFight()->getTeam(1);
-        }
-        // engine->runCommand();
-        if (!type.compare("FightCommand") && !state->getFight()) {
-          vector<Team*> teams = state->getTeams();
-          if (find(teams.begin(), teams.end(), team) != teams.end()) {
-            lose_sound.play();
-            cout << "lose" << endl;
-          } else {
-            win_sound.play();
-            cout << "win" << endl;
-          }
+      if (!cmd) {
+        continue;
+      }
+      string type = cmd->getType();
+      Character* character = cmd->getCharacter();
+      Team* team = nullptr;
+
+      // Anylayse command type and play associated sound - start
+      if (!type.compare("MoveCommand")) {
+        int i =
+            state->getCell(character->getI(), character->getJ())->getElement();
+        if (move_sounds[i].getStatus() != 2) {
+          move_sounds[i].play();
         }
       }
+
+      else if (!type.compare("AttackCommand")) {
+        int i = character->getWeapon()
+                    ->getAbility(
+                        static_cast<AttackCommand*>(cmd)->getAbilityNumber())
+                    ->getElement();
+        if (attack_sounds[i].getStatus() != 2) {
+          attack_sounds[i].play();
+        }
+      }
+
+      else if (!type.compare("FightCommand") && state->getFight()) {
+        team = state->getFight()->getTeam(1);
+      }
+      // Anylayse command type and play associated sound - end
+
+      // engine->runCommand();
+      commands.front()->execute();
+      commands.pop_front();
+
+      // play sound at end of fight - start
+      if (!type.compare("FightCommand") && !state->getFight()) {
+        vector<Team*> teams = state->getTeams();
+        if (find(teams.begin(), teams.end(), team) != teams.end()) {
+          lose_sound.play();
+          cout << "lose" << endl;
+        } else {
+          win_sound.play();
+          cout << "win" << endl;
+        }
+      }
+      // play sound at end of fight - end
     }
   });
-
-  // Ai
   thread t3([ai, state, engine, &end]() {
     while (!end) {
       shared_ptr<Fight> fight = state->getFight();
@@ -286,13 +309,12 @@ void NetworkClient::launch_threads(State* state,
       }
     }
   });
-
   t1.join();
   t2.join();
   t3.join();
 }
 
-vector<Command*> NetworkClient::getServerCommands(Json::Value& out) {
+deque<Command*> NetworkClient::getServerCommands() {
   Http::Request request;
   request.setMethod(Http::Request::Get);
   request.setField("Content-Type", "application/x-www-form-urlencoded");
@@ -302,9 +324,10 @@ vector<Command*> NetworkClient::getServerCommands(Json::Value& out) {
   string output = response.getBody();
   cout << output << endl;
   Json::Reader reader;
+  Json::Value out;
   reader.parse(output, out);
 
-  vector<Command*> commands;
+  deque<Command*> commands;
   for (int i = 0; i < (int)out.size(); i++) {
     commands.push_back(Command::deserialize(out[i], state, engine));
   }
@@ -313,6 +336,8 @@ vector<Command*> NetworkClient::getServerCommands(Json::Value& out) {
 }
 
 void NetworkClient::putServerCommand(Command* command) {
+  if (!command)
+    return;
   Json::Value in;
   command->serialize(in);
   Json::StyledWriter writer;
@@ -335,7 +360,6 @@ int NetworkClient::getGameStatus() {
 
   Http::Response response = http.sendRequest(request);
   string output = response.getBody();
-  cout << output << endl;
   Json::Reader reader;
   Json::Value out;
   reader.parse(output, out);
@@ -346,7 +370,6 @@ int NetworkClient::getGameStatus() {
 void NetworkClient::run() {
   cout << "Lancement du Jeu en mode multijoueur" << endl;
 
-  // check server co - start
   // Vérifie si on peut contacter le serveur (en récupérant la version)
   cout << "Connexion au serveur..." << endl;
 
@@ -365,9 +388,8 @@ void NetworkClient::run() {
     return;
   }
   cout << "Connexion établie" << endl;
-  // check server co - end
 
-  // connexion avec pseudo à la partie - start
+  // connexion avec pseudo à la partie
   unsigned int try_max = 10;
   unsigned int try_current = 0;
   bool connected = false;
@@ -384,6 +406,7 @@ void NetworkClient::run() {
     req_pseudo.setField("Content-Type", "application/x-www-form-urlencoded");
     string data_str = "{\"pseudo\" : \"" + pseudo + "\"}";
     req_pseudo.setBody(data_str);
+    cout << data_str << endl;
 
     sf::Http::Response res_pseudo = http.sendRequest(req_pseudo);
     if (res_pseudo.getStatus() == sf::Http::Response::Status::Ok ||
@@ -394,61 +417,25 @@ void NetworkClient::run() {
       connected = false;
       cout << "Identification échouée" << endl;
     }
-    // cout << "status: " << res_pseudo.getStatus() << endl;
-    // cout << "body: " << res_pseudo.getBody() << endl;
+    cout << "status: " << res_pseudo.getStatus() << endl;
+    cout << "body: " << res_pseudo.getBody() << endl;
   }
-  if (!connected) {
-    return;
-  }
-  // connexion avec pseudo à la partie - end
 
-  // récupération seed état du serveur - start
-  cout << "Récupération de l'état de la partie..." << endl;
-  sf::Http::Request req_seed;
-  req_seed.setMethod(sf::Http::Request::Get);
-  req_seed.setUri("/game");
-  req_seed.setField("Content-Type", "application/x-www-form-urlencoded");
-
-  sf::Http::Response res_seed = http.sendRequest(req_seed);
-  string res_seed_body = res_seed.getBody();
-  if (res_seed.getStatus() != sf::Http::Response::Status::Ok) {
-    cout << "Erreur lors de la récupération de l'état originel du serveur"
-         << endl;
-    cout << "Statut: " << res_seed.getStatus() << endl;
-    cout << "body: " << res_seed_body << endl;
-    return;
-  }
+  sf::Http::Request request;
+  request.setMethod(sf::Http::Request::Get);
+  request.setUri("/game");
+  request.setField("Content-Type", "application/x-www-form-urlencoded");
+  sf::Http::Response response = http.sendRequest(request);
+  string output = response.getBody();
+  cout << "body: " << output << endl;
+  Json::Value out;
   Json::Reader reader;
-  Json::Value res_seed_json;
-  reader.parse(res_seed_body, res_seed_json);
-  unsigned int seed = res_seed_json.get("seed", 0).asUInt();
-  // récupération seed état du serveur - end
+  reader.parse(output, out);
+  unsigned int seed = out.get("seed", 0).asUInt();
 
-  // regenerate server state - start
-  State* state = new State(seed);
-  Json::Value server_commands_json;
-  vector<Command*> server_commands = getServerCommands(server_commands_json);
-  for (auto ptr_cmd : server_commands) {
-    ptr_cmd->execute();
-  }
-  cout << "Récupération de l'état de la partie terminée" << endl;
-  // regenerate server state - end
-
-  // launch game
-  cout << "Lancement du jeu..." << endl;
-
-  // Render* render = new Render(state, engine);
-  // AI* ai = new HeuristicAI(state, engine);
-
-  // putServerCommand(new FightCommand(state, engine, state->getTeams()[0],
-  //                                   state->getTeams()[1]));
-  // putServerCommand(new MoveCommand(state, state->getMainCharacter(), 0, 0));
-  // putServerCommand(new MoveCommand(state, state->getMainCharacter(), 1, 1));
-  // out = Json::Value::null;
-  // getServerCommands(out);
-  // putServerCommand(new MoveCommand(state, state->getMainCharacter(), 2, 2));
-  // getServerCommands(out);
-  // getServerCommands(out);
-
-  // cout << "Jeux lancé" << endl;
+  state = new State(seed);
+  engine = new Engine();
+  render = new Render(state, engine);
+  ai = new HeuristicAI(state, engine);
+  launch_threads(state, render, engine, ai);
 }

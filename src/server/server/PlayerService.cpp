@@ -45,9 +45,12 @@ HttpStatus PlayerService::post(const Json::Value& in, int id) {
   if (!player)
     throw ServiceException(HttpStatus::NOT_FOUND, "Invalid player id");
   unique_ptr<Player> playermod(new Player(*player));
-  playermod->pseudo = in.get("pseudo", "").asString();
-  playermod->isLogged = in.get("isLogged", true).asBool();
-  playermod->teamId = in.get("teamId", -1).asInt();
+  if (in.isMember("pseudo"))
+    playermod->pseudo = in.get("pseudo", "").asString();
+  if (in.isMember("isLogged"))
+    playermod->isLogged = in.get("isLogged", true).asBool();
+  if (in.isMember("teamId"))
+    playermod->teamId = in.get("teamId", -1).asInt();
   playerDB->setPlayer(id, std::move(playermod));
   return HttpStatus::NO_CONTENT;
 }

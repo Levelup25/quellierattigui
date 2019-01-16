@@ -5,20 +5,19 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
 #include <string>
-#include <vector>
-#include <json/json.h>
+#include <deque>
 
 namespace state {
   class State;
+};
+namespace render {
+  class Render;
 };
 namespace engine {
   class Engine;
 };
 namespace ai {
   class AI;
-};
-namespace render {
-  class Render;
 }
 
 #include "render/Render.h"
@@ -38,6 +37,7 @@ namespace client {
     int port;
     int idLastExecutedCmd;
     state::State* state;
+    render::Render* render;
     engine::Engine* engine;
     ai::AI* ai;
     // Operations
@@ -46,7 +46,7 @@ namespace client {
     void launch_threads (state::State* state, render::Render* render, engine::Engine* engine, ai::AI* ai);
     void run ();
   protected:
-    std::vector<engine::Command*> getServerCommands (Json::Value& out);
+    std::deque<engine::Command*> getServerCommands ();
     void putServerCommand (engine::Command* command);
     int getGameStatus ();
     // Setters and Getters
