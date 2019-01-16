@@ -420,6 +420,7 @@ int NetworkClient::getGameStatus() {
 void NetworkClient::run() {
   cout << "Lancement du Jeu en mode multijoueur" << endl;
 
+  // check server co - start
   // Vérifie si on peut contacter le serveur (en récupérant la version)
   cout << "Connexion au serveur..." << endl;
 
@@ -438,8 +439,9 @@ void NetworkClient::run() {
     return;
   }
   cout << "Connexion établie" << endl;
+  // check server co - end
 
-  // connexion avec pseudo à la partie
+  // connexion avec pseudo à la partie - start
   unsigned int try_max = 10;
   unsigned int try_current = 0;
   bool connected = false;
@@ -470,26 +472,38 @@ void NetworkClient::run() {
     cout << "status: " << res_pseudo.getStatus() << endl;
     cout << "body: " << res_pseudo.getBody() << endl;
   }
+  // connexion avec pseudo à la partie - end
 
-  sf::Http::Request request;
-  request.setMethod(sf::Http::Request::Get);
-  request.setUri("/game");
-  request.setField("Content-Type", "application/x-www-form-urlencoded");
-  sf::Http::Response response = http.sendRequest(request);
-  string output = response.getBody();
-  cout << "body: " << output << endl;
-  Json::Value out;
+  // récupération seed état du serveur - start
+  sf::Http::Request req_seed;
+  req_seed.setMethod(sf::Http::Request::Get);
+  req_seed.setUri("/game");
+  req_seed.setField("Content-Type", "application/x-www-form-urlencoded");
+
+  sf::Http::Response res_seed = http.sendRequest(req_seed);
+  string res_seed_body = res_seed.getBody();
+  cout << "Statut: " << res_seed.getStatus() << endl;
+  cout << "body: " << res_seed_body << endl;
   Json::Reader reader;
-  reader.parse(output, out);
-  unsigned int seed = out.get("seed", 0).asUInt();
+  Json::Value res_seed_json;
+  reader.parse(res_seed_body, res_seed_json);
+  unsigned int seed = res_seed_json.get("seed", 0).asUInt();
+  // récupération seed état du serveur - end
 
+  // get orinal server state from seed - start
   srand(seed);
   State* state = new State();
   state->seed = seed;
+  state_init(state);
+  // get orinal server state from seed - end
+
+  // regenerate server state - start
+
+  // launch game
   Engine* engine = new Engine();
   // Render* render = new Render(state, engine);
   // AI* ai = new HeuristicAI(state, engine);
-  state_init(state);
+
   // putServerCommand(new FightCommand(state, engine, state->getTeams()[0],
   //                                   state->getTeams()[1]));
   // putServerCommand(new MoveCommand(state, state->getMainCharacter(), 0, 0));
