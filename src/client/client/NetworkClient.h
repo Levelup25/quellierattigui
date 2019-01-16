@@ -3,7 +3,6 @@
 #define CLIENT__NETWORKCLIENT__H
 
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 #include <string>
 #include <vector>

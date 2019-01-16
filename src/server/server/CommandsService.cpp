@@ -5,13 +5,16 @@ using namespace server;
 using namespace state;
 using namespace engine;
 
-CommandsService::CommandsService(State& state, Engine& engine)
-    : AbstractService("/commands"), state(state), engine(engine) {}
+CommandsService::CommandsService(Game* game)
+    : AbstractService("/commands"), game(game) {
+  state = game->getState();
+  engine = game->getEngine();
+}
 
 HttpStatus CommandsService::get(Json::Value& out, int id) const {
   if (id >= 0) {
     Json::Value json;
-    auto commands = engine.getCommands(-id - 1);
+    auto commands = engine->getCommands(-id - 1);
     for (int i = id; i < (int)commands.size(); i++) {
       json = Json::Value::null;
       commands[i]->serialize(json);
@@ -25,16 +28,16 @@ HttpStatus CommandsService::get(Json::Value& out, int id) const {
 }
 
 HttpStatus CommandsService::put(Json::Value& out, const Json::Value& in) {
-  out["i"] = engine.getSize();
-  engine.addCommand(Command::deserialize(in, &state, &engine));
+  out["i"] = engine->getSize();
+  engine->addCommand(Command::deserialize(in, state, engine));
   return HttpStatus::CREATED;
 }
 
 HttpStatus CommandsService::remove(int id) {
   if (id < 0)
-    engine.clearCommands();
+    engine->clearCommands();
   else if (id == 0)
-    engine.clearCommand();
+    engine->clearCommand();
   else
     throw ServiceException(HttpStatus::BAD_REQUEST, "Cannot access element");
   return HttpStatus::NO_CONTENT;

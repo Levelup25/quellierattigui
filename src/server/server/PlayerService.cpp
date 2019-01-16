@@ -10,14 +10,16 @@
 using namespace server;
 using namespace std;
 
-PlayerService::PlayerService(PlayerDB& playerDB)
-    : AbstractService("/players"), playerDB(playerDB) {}
+PlayerService::PlayerService(Game* game)
+    : AbstractService("/players"), game(game) {
+  playerDB = game->getPlayerDB();
+}
 
 HttpStatus PlayerService::get(Json::Value& out, int id) const {
   if (id < 0) {
     Json::Value json;
-    for (int i = 0; i < playerDB.getIdseq(); i++) {
-      const Player* player = playerDB.getPlayer(id);
+    for (int i = 0; i < playerDB->getIdseq(); i++) {
+      const Player* player = playerDB->getPlayer(id);
       if (player) {
         json = Json::Value::null;
         json["id"] = i;
@@ -28,7 +30,7 @@ HttpStatus PlayerService::get(Json::Value& out, int id) const {
       }
     }
   } else {
-    const Player* player = playerDB.getPlayer(id);
+    const Player* player = playerDB->getPlayer(id);
     if (!player)
       throw ServiceException(HttpStatus::NOT_FOUND, "Invalid player id");
     out["pseudo"] = player->pseudo;
@@ -39,14 +41,14 @@ HttpStatus PlayerService::get(Json::Value& out, int id) const {
 }
 
 HttpStatus PlayerService::post(const Json::Value& in, int id) {
-  const Player* player = playerDB.getPlayer(id);
+  const Player* player = playerDB->getPlayer(id);
   if (!player)
     throw ServiceException(HttpStatus::NOT_FOUND, "Invalid player id");
   unique_ptr<Player> playermod(new Player(*player));
   playermod->pseudo = in.get("pseudo", "").asString();
   playermod->isLogged = in.get("isLogged", true).asBool();
   playermod->teamId = in.get("teamId", -1).asInt();
-  playerDB.setPlayer(id, std::move(playermod));
+  playerDB->setPlayer(id, std::move(playermod));
   return HttpStatus::NO_CONTENT;
 }
 
@@ -54,9 +56,9 @@ HttpStatus PlayerService::put(Json::Value& out, const Json::Value& in) {
   string pseudo = in.get("pseudo", "").asString();
   bool isLogged = in.get("isLogged", true).asBool();
   int teamId = in.get("teamId", -1).asInt();
-
-  for (int i = 0; i < playerDB.getIdseq(); i++) {
-    const Player* player = playerDB.getPlayer(i);
+  // game.getState().getTeams().size()
+  for (int i = 0; i < playerDB->getIdseq(); i++) {
+    const Player* player = playerDB->getPlayer(i);
     if (player) {
       if (!pseudo.compare(player->pseudo)) {
         if (player->isLogged) {
@@ -73,7 +75,7 @@ HttpStatus PlayerService::put(Json::Value& out, const Json::Value& in) {
     }
   }
 
-  out["id"] = playerDB.addPlayer(
+  out["id"] = playerDB->addPlayer(
       unique_ptr<Player>(new Player(pseudo, isLogged, teamId)));
   out["pseudo"] = pseudo;
   out["isLogged"] = isLogged;
@@ -82,9 +84,9 @@ HttpStatus PlayerService::put(Json::Value& out, const Json::Value& in) {
 }
 
 HttpStatus PlayerService::remove(int id) {
-  const Player* player = playerDB.getPlayer(id);
+  const Player* player = playerDB->getPlayer(id);
   if (!player)
     throw ServiceException(HttpStatus::NOT_FOUND, "Invalid player id");
-  playerDB.removePlayer(id);
+  playerDB->removePlayer(id);
   return HttpStatus::NO_CONTENT;
 }

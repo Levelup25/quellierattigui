@@ -3,8 +3,6 @@
 #define RENDER__TEXT__H
 
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Network.hpp>
 #include <string>
 
 namespace render {

@@ -4,8 +4,6 @@
 
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Network.hpp>
 #include <string>
 
 namespace render {

@@ -4,6 +4,9 @@
 
 #include <json/json.h>
 
+namespace server {
+  class Game;
+};
 namespace state {
   class State;
 };
@@ -16,8 +19,9 @@ namespace server {
 
 #include "HttpStatus.h"
 #include "AbstractService.h"
-#include "state/State.h"
 #include "engine/Engine.h"
+#include "state/State.h"
+#include "Game.h"
 
 namespace server {
 
@@ -26,11 +30,12 @@ namespace server {
     // Associations
     // Attributes
   private:
-    state::State& state;
-    engine::Engine& engine;
+    Game* game;
+    state::State* state;
+    engine::Engine* engine;
     // Operations
   public:
-    CommandsService (state::State& state, engine::Engine& engine);
+    CommandsService (Game* game);
     HttpStatus get (Json::Value& out, int id) const;
     HttpStatus put (Json::Value& out, const Json::Value& in);
     HttpStatus remove (int id);
