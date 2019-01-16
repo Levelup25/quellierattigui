@@ -322,7 +322,6 @@ deque<Command*> NetworkClient::getServerCommands() {
 
   Http::Response response = http.sendRequest(request);
   string output = response.getBody();
-  cout << output << endl;
   Json::Reader reader;
   Json::Value out;
   reader.parse(output, out);
@@ -360,6 +359,13 @@ int NetworkClient::getGameStatus() {
 
   Http::Response response = http.sendRequest(request);
   string output = response.getBody();
+  if (response.getStatus() != sf::Http::Response::Status::Ok) {
+    cout << "Erreur lors de la récupération de l'état originel du serveur"
+         << endl;
+    cout << "Statut: " << response.getStatus() << endl;
+    cout << "body: " << output << endl;
+    return 0;
+  }
   Json::Reader reader;
   Json::Value out;
   reader.parse(output, out);
@@ -369,6 +375,7 @@ int NetworkClient::getGameStatus() {
 
 void NetworkClient::run() {
   cout << "Lancement du Jeu en mode multijoueur" << endl;
+  Json::Reader reader;  // for parse response
 
   // Vérifie si on peut contacter le serveur (en récupérant la version)
   cout << "Connexion au serveur..." << endl;
@@ -393,6 +400,7 @@ void NetworkClient::run() {
   unsigned int try_max = 10;
   unsigned int try_current = 0;
   bool connected = false;
+  unsigned int id_player;
   string pseudo;
   while (!connected && try_current < try_max) {
     cout << "Veuillez rentrez votre pseudo : ";
@@ -412,7 +420,10 @@ void NetworkClient::run() {
     if (res_pseudo.getStatus() == sf::Http::Response::Status::Ok ||
         res_pseudo.getStatus() == sf::Http::Response::Status::Created) {
       connected = true;
-      cout << "Identification établie" << endl;
+      Json::Value res_pseudo_json;
+      reader.parse(res_pseudo.getBody(), res_pseudo_json);
+      id_player = res_pseudo_json.get("id", 0).asUInt();
+      cout << "Identification établie, id : " << id_player << endl;
     } else {
       connected = false;
       cout << "Identification échouée" << endl;
@@ -421,21 +432,44 @@ void NetworkClient::run() {
     cout << "body: " << res_pseudo.getBody() << endl;
   }
 
-  sf::Http::Request request;
-  request.setMethod(sf::Http::Request::Get);
-  request.setUri("/game");
-  request.setField("Content-Type", "application/x-www-form-urlencoded");
-  sf::Http::Response response = http.sendRequest(request);
-  string output = response.getBody();
-  cout << "body: " << output << endl;
-  Json::Value out;
-  Json::Reader reader;
-  reader.parse(output, out);
-  unsigned int seed = out.get("seed", 0).asUInt();
+  unsigned int seed = getGameStatus();
 
-  state = new State(seed);
+  // récupération seed état du serveur - end
+
+  // regenerate server state - start
+  this->state = new State(seed);
+  deque<Command*> server_commands = getServerCommands();
+  for (auto ptr_cmd : server_commands) {
+    ptr_cmd->execute();
+  }
+  cout << "Récupération de l'état de la partie terminée" << endl;
+  // regenerate server state - end
+
+  // launch game
+  cout << "Lancement du jeu..." << endl;
+  // todo...
+  cout << "Jeu lancé" << endl;
   engine = new Engine();
   render = new Render(state, engine);
   ai = new HeuristicAI(state, engine);
-  launch_threads(state, render, engine, ai);
+  // launch_threads(state, render, engine, ai);
+
+  // Log out - start
+  cout << "Deconnexion..." << endl;
+  sf::Http::Request req_logout;
+  req_logout.setMethod(sf::Http::Request::Post);
+  req_logout.setUri("/players/" + to_string(id_player));
+  req_logout.setField("Content-Type", "application/x-www-form-urlencoded");
+  string data_str = "{\"isLogged\" : false}";
+  req_logout.setBody(data_str);
+
+  sf::Http::Response res_logout = http.sendRequest(req_logout);
+  if (res_logout.getStatus() == sf::Http::Response::Status::Ok) {
+    cout << "Deconnecté" << endl;
+  } else {
+    cout << "Erreur de déconnexion" << endl;
+    cout << "status: " << res_logout.getStatus() << endl;
+    cout << "body: " << res_logout.getBody() << endl;
+  }
+  // Log out - end
 }

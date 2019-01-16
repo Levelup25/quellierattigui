@@ -52,7 +52,7 @@ HttpStatus PlayerService::post(const Json::Value& in, int id) {
   if (in.isMember("teamId"))
     playermod->teamId = in.get("teamId", -1).asInt();
   playerDB->setPlayer(id, std::move(playermod));
-  return HttpStatus::NO_CONTENT;
+  return HttpStatus::OK;
 }
 
 HttpStatus PlayerService::put(Json::Value& out, const Json::Value& in) {
