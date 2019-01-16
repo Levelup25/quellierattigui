@@ -161,7 +161,10 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
     theme.stop();
     end = true;
   });
+
+  // Engine loop and play sound
   thread t2([engine, state, &end]() {
+    // Loads sounds - start
     SoundBuffer win_buffer;
     win_buffer.loadFromFile("res/sounds/win.ogg");
     Sound win_sound;
@@ -191,46 +194,61 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
       attack_buffers[i].loadFromFile("res/sounds/" + sounds[i] + ".ogg");
       attack_sounds[i].setBuffer(attack_buffers[i]);
     }
+    // Load sounds - end
 
     Clock clock;
     while (!end) {
-      if (clock.getElapsedTime().asSeconds() >= 1.0 / 30) {
-        clock.restart();
-        Command* cmd = engine->getCommand();
-        Character* character = nullptr;
-        Team* team = nullptr;
-        if (cmd)
-          character = cmd->getCharacter();
-        string type = cmd->getType();
-        if (!type.compare("MoveCommand")) {
-          int i = state->getCell(character->getI(), character->getJ())
-                      ->getElement();
-          if (move_sounds[i].getStatus() != 2) {
-            move_sounds[i].play();
-          }
-        } else if (!type.compare("AttackCommand")) {
-          int i = character->getWeapon()
-                      ->getAbility(
-                          static_cast<AttackCommand*>(cmd)->getAbilityNumber())
-                      ->getElement();
-          if (attack_sounds[i].getStatus() != 2) {
-            attack_sounds[i].play();
-          }
-        } else if (!type.compare("FightCommand") && state->getFight()) {
-          team = state->getFight()->getTeam(1);
-        }
-        engine->runCommand();
-        if (!type.compare("FightCommand") && !state->getFight()) {
-          vector<Team*> teams = state->getTeams();
-          if (find(teams.begin(), teams.end(), team) != teams.end()) {
-            lose_sound.play();
-            cout << "lose" << endl;
-          } else {
-            win_sound.play();
-            cout << "win" << endl;
-          }
+      if (!(clock.getElapsedTime().asSeconds() >= 1.0 / 30)) {
+        continue;
+      }
+      clock.restart();
+
+      Command* cmd = engine->getCommand();
+      if (!cmd) {
+        continue;
+      }
+      string type = cmd->getType();
+      Character* character = cmd->getCharacter();
+      Team* team = nullptr;
+
+      // Anylayse command type and play associated sound - start
+      if (!type.compare("MoveCommand")) {
+        int i =
+            state->getCell(character->getI(), character->getJ())->getElement();
+        if (move_sounds[i].getStatus() != 2) {
+          move_sounds[i].play();
         }
       }
+
+      else if (!type.compare("AttackCommand")) {
+        int i = character->getWeapon()
+                    ->getAbility(
+                        static_cast<AttackCommand*>(cmd)->getAbilityNumber())
+                    ->getElement();
+        if (attack_sounds[i].getStatus() != 2) {
+          attack_sounds[i].play();
+        }
+      }
+
+      else if (!type.compare("FightCommand") && state->getFight()) {
+        team = state->getFight()->getTeam(1);
+      }
+      // Anylayse command type and play associated sound - end
+
+      engine->runCommand();
+
+      // play sound at end of fight - start
+      if (!type.compare("FightCommand") && !state->getFight()) {
+        vector<Team*> teams = state->getTeams();
+        if (find(teams.begin(), teams.end(), team) != teams.end()) {
+          lose_sound.play();
+          cout << "lose" << endl;
+        } else {
+          win_sound.play();
+          cout << "win" << endl;
+        }
+      }
+      // play sound at end of fight - end
     }
   });
   thread t3([ai, state, engine, &end]() {
@@ -410,78 +428,6 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
   t3.join();
 }
 
-State getStateFromServer() {
-  cout << "Chargement de l'état de la partie..." << endl;
-
-  cout << "Chargement de l'état de la parite terminé..." << endl;
-}
-
-// todo : rename
-bool launch_client_network() {
-  // cout << "Lancement du Jeu en mode multijoueur" << endl;
-
-  // // Vérifie si on peut contacter le serveur (en récupérant la version)
-  // cout << "Connexion au serveur..." << endl;
-  // sf::Http http_manager;
-  // http_manager.setHost("localhost", 8080);
-
-  // sf::Http::Request req_version;
-  // req_version.setMethod(sf::Http::Request::Get);
-  // req_version.setUri("/version");
-
-  // sf::Http::Response res_version = http_manager.sendRequest(req_version);
-  // if (res_version.getStatus() != sf::Http::Response::Status::Ok) {
-  //   cout << "Erreur lors de la connexion au serveur, veulliez essayer à "
-  //           "nouveau plus tard"
-  //        << endl;
-  //   cout << "status: " << res_version.getStatus() << endl;
-  //   cout << "body: " << res_version.getBody() << endl;
-  //   return false;
-  // }
-  // cout << "Connexion établie" << endl;
-
-  // // connexion avec pseudo à la partie
-  // unsigned int try_max = 10;
-  // unsigned int try_current = 0;
-  // bool connected = false;
-  // string pseudo;
-  // while (!connected && try_current < try_max) {
-  //   cout << "Veuillez rentrez votre pseudo : ";
-  //   pseudo = "";
-  //   cin >> pseudo;
-  //   cout << "Identification en  cours..." << endl;
-
-  //   sf::Http::Request req_pseudo;
-  //   req_pseudo.setMethod(sf::Http::Request::Put);
-  //   req_pseudo.setUri("/players");
-  //   req_pseudo.setField("Content-Type", "application/x-www-form-urlencoded");
-  //   string data_str = "{\"pseudo\" : \"" + pseudo + "\"}";
-  //   req_pseudo.setBody(data_str);
-
-  //   sf::Http::Response res_pseudo = http_manager.sendRequest(req_pseudo);
-  //   if (res_pseudo.getStatus() == sf::Http::Response::Status::Ok ||
-  //       res_pseudo.getStatus() == sf::Http::Response::Status::Created) {
-  //     connected = true;
-  //     cout << "Identification établie" << endl;
-  //   } else {
-  //     connected = false;
-  //     cout << "Identification échouée" << endl;
-  //   }
-  //   cout << "status: " << res_pseudo.getStatus() << endl;
-  //   cout << "body: " << res_pseudo.getBody() << endl;
-  // }
-
-  // // State state = getStateFromServer();
-  // sf::Http::Request request;
-  // request.setMethod(sf::Http::Request::Get);
-  // request.setUri("/game");
-  // request.setField("Content-Type", "application/x-www-form-urlencoded");
-  // sf::Http::Response response = http_manager.sendRequest(request);
-  // cout << "body: " << response.getBody() << endl;
-
-  // return true;
-}
-
 int main(int argc, char* argv[]) {
   for (int i = 1; i < argc; i++) {
     ifstream file;
@@ -632,10 +578,6 @@ int main(int argc, char* argv[]) {
     // else if (strcmp(argv[i], "listen") == 0) {
     // }
     else if (strcmp(argv[i], "network") == 0) {
-      // todo : merge and clean network client launcher
-      // if (!launch_client_network())
-      //   return 1;
-
       cout_terminal();
       NetworkClient client("localhost", 8080);
       client.run();
