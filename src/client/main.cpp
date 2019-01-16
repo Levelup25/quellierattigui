@@ -161,7 +161,10 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
     theme.stop();
     end = true;
   });
+
+  // Engine loop and play sound
   thread t2([engine, state, &end]() {
+    // Loads sounds - start
     SoundBuffer win_buffer;
     win_buffer.loadFromFile("res/sounds/win.ogg");
     Sound win_sound;
@@ -191,46 +194,61 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
       attack_buffers[i].loadFromFile("res/sounds/" + sounds[i] + ".ogg");
       attack_sounds[i].setBuffer(attack_buffers[i]);
     }
+    // Load sounds - end
 
     Clock clock;
     while (!end) {
-      if (clock.getElapsedTime().asSeconds() >= 1.0 / 30) {
-        clock.restart();
-        Command* cmd = engine->getCommand();
-        Character* character = nullptr;
-        Team* team = nullptr;
-        if (cmd)
-          character = cmd->getCharacter();
-        string type = cmd->getType();
-        if (!type.compare("MoveCommand")) {
-          int i = state->getCell(character->getI(), character->getJ())
-                      ->getElement();
-          if (move_sounds[i].getStatus() != 2) {
-            move_sounds[i].play();
-          }
-        } else if (!type.compare("AttackCommand")) {
-          int i = character->getWeapon()
-                      ->getAbility(
-                          static_cast<AttackCommand*>(cmd)->getAbilityNumber())
-                      ->getElement();
-          if (attack_sounds[i].getStatus() != 2) {
-            attack_sounds[i].play();
-          }
-        } else if (!type.compare("FightCommand") && state->getFight()) {
-          team = state->getFight()->getTeam(1);
-        }
-        engine->runCommand();
-        if (!type.compare("FightCommand") && !state->getFight()) {
-          vector<Team*> teams = state->getTeams();
-          if (find(teams.begin(), teams.end(), team) != teams.end()) {
-            lose_sound.play();
-            cout << "lose" << endl;
-          } else {
-            win_sound.play();
-            cout << "win" << endl;
-          }
+      if (!(clock.getElapsedTime().asSeconds() >= 1.0 / 30)) {
+        continue;
+      }
+      clock.restart();
+
+      Command* cmd = engine->getCommand();
+      if (!cmd) {
+        continue;
+      }
+      string type = cmd->getType();
+      Character* character = cmd->getCharacter();
+      Team* team = nullptr;
+
+      // Anylayse command type and play associated sound - start
+      if (!type.compare("MoveCommand")) {
+        int i =
+            state->getCell(character->getI(), character->getJ())->getElement();
+        if (move_sounds[i].getStatus() != 2) {
+          move_sounds[i].play();
         }
       }
+
+      else if (!type.compare("AttackCommand")) {
+        int i = character->getWeapon()
+                    ->getAbility(
+                        static_cast<AttackCommand*>(cmd)->getAbilityNumber())
+                    ->getElement();
+        if (attack_sounds[i].getStatus() != 2) {
+          attack_sounds[i].play();
+        }
+      }
+
+      else if (!type.compare("FightCommand") && state->getFight()) {
+        team = state->getFight()->getTeam(1);
+      }
+      // Anylayse command type and play associated sound - end
+
+      engine->runCommand();
+
+      // play sound at end of fight - start
+      if (!type.compare("FightCommand") && !state->getFight()) {
+        vector<Team*> teams = state->getTeams();
+        if (find(teams.begin(), teams.end(), team) != teams.end()) {
+          lose_sound.play();
+          cout << "lose" << endl;
+        } else {
+          win_sound.play();
+          cout << "win" << endl;
+        }
+      }
+      // play sound at end of fight - end
     }
   });
   thread t3([ai, state, engine, &end]() {
@@ -413,7 +431,7 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
 State getStateFromServer() {
   cout << "Chargement de l'état de la partie..." << endl;
   // TODO
-  cout << "Chargement de l'état de la parite terminé..." << endl;
+  cout << "Chargement de l'état de la parite terminé" << endl;
 }
 
 // todo : rename
