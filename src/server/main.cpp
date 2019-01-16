@@ -125,12 +125,9 @@ int main(int argc, char* const* argv) {
     Game* game = new Game();
     servicesManager.registerService(new GameService(game));
 
-    State* state = game->getState();
-    Engine* engine = game->getEngine();
-    servicesManager.registerService(new CommandsService(state, engine));
+    servicesManager.registerService(new CommandsService(game));
 
-    PlayerDB* playerDB = game->getPlayerDB();
-    servicesManager.registerService(new PlayerService(playerDB));
+    servicesManager.registerService(new PlayerService(game));
 
     struct MHD_Daemon* d;
     if (argc != 2) {

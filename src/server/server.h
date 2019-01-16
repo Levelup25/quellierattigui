@@ -8,10 +8,10 @@
 #include "server/ServicesManager.h"
 #include "server/Player.h"
 #include "server/PlayerDB.h"
-#include "server/PlayerService.h"
-#include "server/VersionService.h"
 #include "server/GameStatus.h"
 #include "server/Game.h"
+#include "server/PlayerService.h"
+#include "server/VersionService.h"
 #include "server/GameService.h"
 #include "server/CommandsService.h"
 #endif

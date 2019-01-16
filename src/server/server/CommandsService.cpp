@@ -5,8 +5,11 @@ using namespace server;
 using namespace state;
 using namespace engine;
 
-CommandsService::CommandsService(State* state, Engine* engine)
-    : AbstractService("/commands"), state(state), engine(engine) {}
+CommandsService::CommandsService(Game* game)
+    : AbstractService("/commands"), game(game) {
+  state = game->getState();
+  engine = game->getEngine();
+}
 
 HttpStatus CommandsService::get(Json::Value& out, int id) const {
   if (id >= 0) {

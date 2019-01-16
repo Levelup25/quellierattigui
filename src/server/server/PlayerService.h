@@ -5,6 +5,7 @@
 #include <json/json.h>
 
 namespace server {
+  class Game;
   class PlayerDB;
   class AbstractService;
 }
@@ -12,6 +13,7 @@ namespace server {
 #include "HttpStatus.h"
 #include "AbstractService.h"
 #include "PlayerDB.h"
+#include "Game.h"
 
 namespace server {
 
@@ -20,10 +22,11 @@ namespace server {
     // Associations
     // Attributes
   private:
+    Game* game;
     PlayerDB* playerDB;
     // Operations
   public:
-    PlayerService (PlayerDB* playerDB);
+    PlayerService (Game* game);
     HttpStatus get (Json::Value& out, int id) const;
     HttpStatus post (const Json::Value& in, int id);
     HttpStatus put (Json::Value& out, const Json::Value& in);

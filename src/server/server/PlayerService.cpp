@@ -10,8 +10,10 @@
 using namespace server;
 using namespace std;
 
-PlayerService::PlayerService(PlayerDB* playerDB)
-    : AbstractService("/players"), playerDB(playerDB) {}
+PlayerService::PlayerService(Game* game)
+    : AbstractService("/players"), game(game) {
+  playerDB = game->getPlayerDB();
+}
 
 HttpStatus PlayerService::get(Json::Value& out, int id) const {
   if (id < 0) {
