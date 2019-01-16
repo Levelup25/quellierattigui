@@ -496,9 +496,9 @@ int main(int argc, char* argv[]) {
     // else if (strcmp(argv[i], "listen") == 0) {
     // }
     else if (strcmp(argv[i], "network") == 0) {
-      cout_terminal();
       NetworkClient client("localhost", 8080);
       client.run();
+      // cout_terminal();
     }
 
     if (strcmp(argv[i], "hello") && strcmp(argv[i], "state") &&

@@ -384,7 +384,6 @@ void NetworkClient::run() {
     req_pseudo.setField("Content-Type", "application/x-www-form-urlencoded");
     string data_str = "{\"pseudo\" : \"" + pseudo + "\"}";
     req_pseudo.setBody(data_str);
-    cout << data_str << endl;
 
     sf::Http::Response res_pseudo = http.sendRequest(req_pseudo);
     if (res_pseudo.getStatus() == sf::Http::Response::Status::Ok ||
@@ -404,6 +403,7 @@ void NetworkClient::run() {
   // connexion avec pseudo à la partie - end
 
   // récupération seed état du serveur - start
+  cout << "Récupération de l'état de la partie..." << endl;
   sf::Http::Request req_seed;
   req_seed.setMethod(sf::Http::Request::Get);
   req_seed.setUri("/game");
@@ -431,9 +431,11 @@ void NetworkClient::run() {
   for (auto ptr_cmd : server_commands) {
     ptr_cmd->execute();
   }
+  cout << "Récupération de l'état de la partie terminée" << endl;
   // regenerate server state - end
 
   // launch game
+  cout << "Lancement du jeu..." << endl;
 
   // Render* render = new Render(state, engine);
   // AI* ai = new HeuristicAI(state, engine);
@@ -447,4 +449,6 @@ void NetworkClient::run() {
   // putServerCommand(new MoveCommand(state, state->getMainCharacter(), 2, 2));
   // getServerCommands(out);
   // getServerCommands(out);
+
+  // cout << "Jeux lancé" << endl;
 }
