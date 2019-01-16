@@ -49,7 +49,8 @@ namespace state {
     int epochRate     = 0;
     // Operations
   public:
-    State (std::size_t I = 144, std::size_t J = 144);
+    State (unsigned int seed = 0, std::size_t I = 144, std::size_t J = 144);
+    void init ();
     void resetContents ();
     std::size_t getI ();
     std::size_t getJ ();

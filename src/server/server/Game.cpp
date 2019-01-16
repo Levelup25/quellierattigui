@@ -8,12 +8,10 @@ using namespace engine;
 using namespace std;
 
 Game::Game() {
-  playerDB = new PlayerDB();
-  state = new State();
-  engine = new Engine();
   unsigned int seed = time(NULL);
-  srand(seed);
-  state->seed = seed;
+  playerDB = new PlayerDB();
+  state = new State(seed);
+  engine = new Engine();
 }
 
 PlayerDB* Game::getPlayerDB() {

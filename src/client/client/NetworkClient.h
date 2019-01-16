@@ -43,7 +43,6 @@ namespace client {
     // Operations
   public:
     NetworkClient (const std::string& url, int port);
-    void state_init (state::State* state);
     void launch_threads (state::State* state, render::Render* render, engine::Engine* engine, ai::AI* ai);
     void run ();
   protected:
