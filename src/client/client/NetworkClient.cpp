@@ -494,7 +494,6 @@ void NetworkClient::run() {
   srand(seed);
   State* state = new State();
   state->seed = seed;
-  state_init(state);
   // get orinal server state from seed - end
 
   // regenerate server state - start
