@@ -55,8 +55,7 @@ HttpStatus PlayerService::post(const Json::Value& in, int id) {
 HttpStatus PlayerService::put(Json::Value& out, const Json::Value& in) {
   string pseudo = in.get("pseudo", "").asString();
   bool isLogged = in.get("isLogged", true).asBool();
-  int teamId = in.get("teamId", -1).asInt();
-  // game.getState().getTeams().size()
+  int teamId = in.get("teamId", game->getState()->getTeams().size()).asInt();
   for (int i = 0; i < playerDB->getIdseq(); i++) {
     const Player* player = playerDB->getPlayer(i);
     if (player) {

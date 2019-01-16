@@ -36,7 +36,7 @@ namespace client {
     sf::Http http;
     std::string url;
     int port;
-    int actualcmd;
+    int idLastExecutedCmd;
     state::State* state;
     engine::Engine* engine;
     ai::AI* ai;

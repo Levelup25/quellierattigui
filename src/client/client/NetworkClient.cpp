@@ -15,7 +15,7 @@ using namespace sf;
 
 NetworkClient::NetworkClient(const string& url, int port) {
   http.setHost(url, port);
-  actualcmd = 0;
+  idLastExecutedCmd = 0;
 }
 
 void NetworkClient::state_init(State* state) {
@@ -368,7 +368,7 @@ vector<Command*> NetworkClient::getServerCommands(Json::Value& out) {
   request.setMethod(Http::Request::Get);
   request.setField("Content-Type", "application/x-www-form-urlencoded");
   request.setUri("/commands");
-  request.setBody(to_string(actualcmd));
+  request.setBody(to_string(idLastExecutedCmd));
 
   Http::Response response = http.sendRequest(request);
   string output = response.getBody();
@@ -380,7 +380,7 @@ vector<Command*> NetworkClient::getServerCommands(Json::Value& out) {
   for (int i = 0; i < (int)out.size(); i++) {
     commands.push_back(Command::deserialize(out[i], state, engine));
   }
-  actualcmd += out.size();
+  idLastExecutedCmd += out.size();
   return commands;
 }
 
