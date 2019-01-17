@@ -1,4 +1,5 @@
 #include "CommandsService.h"
+#include <iostream>
 #include "ServiceException.h"
 
 using namespace server;
@@ -8,14 +9,14 @@ using namespace std;
 
 CommandsService::CommandsService(Game* game)
     : AbstractService("/commands"), game(game) {
-  state = game->getState();
-  engine = game->getEngine();
+  // state = game->getState();
+  // engine = game->getEngine();
 }
 
 HttpStatus CommandsService::get(Json::Value& out, int id) const {
   if (id >= 0) {
     Json::Value json;
-    deque<Command*> commands = engine->getCommands();
+    deque<Command*> commands = game->getEngine()->getCommands();
     for (int i = id; i < (int)commands.size(); i++) {
       json = Json::Value::null;
       commands[i]->serialize(json);
@@ -29,16 +30,17 @@ HttpStatus CommandsService::get(Json::Value& out, int id) const {
 }
 
 HttpStatus CommandsService::put(Json::Value& out, const Json::Value& in) {
-  out["i"] = engine->getSize();
-  engine->addCommand(Command::deserialize(in, state, engine));
+  out["i"] = game->getEngine()->getSize();
+  game->getEngine()->addCommand(
+      Command::deserialize(in, game->getState(), game->getEngine()));
   return HttpStatus::CREATED;
 }
 
 HttpStatus CommandsService::remove(int id) {
   if (id < 0)
-    engine->clearCommands();
+    game->getEngine()->clearCommands();
   else if (id == 0)
-    engine->clearCommand();
+    game->getEngine()->clearCommand();
   else
     throw ServiceException(HttpStatus::BAD_REQUEST, "Cannot access element");
   return HttpStatus::NO_CONTENT;
