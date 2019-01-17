@@ -77,19 +77,24 @@ void NetworkClient::launch_threads(State* state,
     deque<Command*> commands;
     while (!end) {
       Command* command = engine->getCommand();
-      if (!command->getType().compare("MoveCommands") ||
-          !command->getType().compare("AttackCommand")) {
-        engine->runCommand();
-      } else {
-        putServerCommand(command);
-        engine->clearCommand();
+
+      if (command) {
+        if (!command->getType().compare("MoveCommands") ||
+            !command->getType().compare("AttackCommand")) {
+          engine->runCommand();
+        } else {
+          putServerCommand(command);
+          engine->clearCommand();
+        }
       }
+
       if (!(clock2.getElapsedTime().asSeconds() >= 1.0)) {
         deque<Command*> serverCommands = getServerCommands();
         for (auto cmd : serverCommands)
           commands.push_back(cmd);
         clock2.restart();
       }
+
       if (!(clock.getElapsedTime().asSeconds() >= 1.0 / 30)) {
         continue;
       }
@@ -451,14 +456,11 @@ void NetworkClient::run() {
     }
   }
 
-  // récupération seed état du serveur - end
-  unsigned int seed = getGameStatus();
-  this->state->mainTeamIndex = player_team_index;
-  // récupération seed état du serveur - end
-
   // regenerate server state - start
   cout << "Récupération de l'état de la partie..." << endl;
+  unsigned int seed = getGameStatus();
   this->state = new State(seed);
+  this->state->mainTeamIndex = player_team_index;
   deque<Command*> server_commands = getServerCommands();
   for (auto ptr_cmd : server_commands) {
     ptr_cmd->execute();
