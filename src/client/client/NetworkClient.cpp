@@ -42,6 +42,7 @@ void NetworkClient::launch_threads(State* state,
   // Engine loop and play sound
   thread t2([engine, state, &end, this]() {
     // Loads sounds - start
+    cout << "Loading sounds..." << endl;
     SoundBuffer win_buffer;
     win_buffer.loadFromFile("res/sounds/win.ogg");
     Sound win_sound;
@@ -71,6 +72,7 @@ void NetworkClient::launch_threads(State* state,
       attack_buffers[i].loadFromFile("res/sounds/" + sounds[i] + ".ogg");
       attack_sounds[i].setBuffer(attack_buffers[i]);
     }
+    cout << "Sounds loaded" << endl;
     // Load sounds - end
 
     Clock clock, clock2;
