@@ -82,6 +82,8 @@ HttpStatus PlayerService::put(Json::Value& out, const Json::Value& in) {
   out["pseudo"] = pseudo;
   out["isLogged"] = isLogged;
   out["teamId"] = teamId;
+  game->teamIndexes.push_back(teamId);
+  game->fights.push_back(nullptr);
   return HttpStatus::CREATED;
 }
 
