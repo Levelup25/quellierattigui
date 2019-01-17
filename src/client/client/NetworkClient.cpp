@@ -406,6 +406,8 @@ void NetworkClient::run() {
   unsigned int try_current = 0;
   bool connected = false;
   unsigned int id_player;
+  unsigned int player_team_index;
+
   string pseudo;
   while (!connected && try_current < try_max) {
     cout << "Veuillez rentrez votre pseudo : ";
@@ -427,6 +429,7 @@ void NetworkClient::run() {
       Json::Value res_pseudo_json;
       reader.parse(res_pseudo.getBody(), res_pseudo_json);
       id_player = res_pseudo_json.get("id", 0).asUInt();
+      player_team_index = res_pseudo_json.get("teamId", 0).asUInt();
       cout << "Identification établie, id : " << id_player << endl;
     } else {
       connected = false;
@@ -436,6 +439,7 @@ void NetworkClient::run() {
 
   // récupération seed état du serveur - end
   unsigned int seed = getGameStatus();
+  this->state->mainTeamIndex = player_team_index;
   // récupération seed état du serveur - end
 
   // regenerate server state - start
