@@ -75,7 +75,9 @@ void NetworkClient::launch_threads(State* state,
     cout << "Sounds loaded" << endl;
     // Load sounds - end
 
-    Clock clock, clock2;
+    // Engine loop
+    Clock clk_engine, clk_sync_server;
+    float period_engine = 1.0 / 30, period_sync_server = 5;
     deque<Command*> commands;
     while (!end) {
       Command* command = engine->getCommand();
@@ -90,24 +92,26 @@ void NetworkClient::launch_threads(State* state,
         }
       }
 
-      if (!(clock2.getElapsedTime().asSeconds() >= 1.0)) {
+      // Get commands for sync state - start
+      if (clk_sync_server.getElapsedTime().asSeconds() >= period_sync_server) {
         deque<Command*> serverCommands = getServerCommands();
         for (auto cmd : serverCommands)
           commands.push_back(cmd);
-        clock2.restart();
+        clk_sync_server.restart();
       }
+      // Get commands for sync state - end
 
-      if (!(clock.getElapsedTime().asSeconds() >= 1.0 / 30)) {
+      // execute command from server - start
+      if (!(clk_engine.getElapsedTime().asSeconds() >= period_engine)) {
         continue;
       }
-      clock.restart();
+      clk_engine.restart();
 
-      Command* cmd = nullptr;
-      if (commands.size())
-        cmd = commands.front();
-      if (!cmd) {
+      if (commands.size() == 0) {
         continue;
       }
+
+      Command* cmd = commands.front();
       string type = cmd->getType();
       Character* character = cmd->getCharacter();
       Team* team = nullptr;
@@ -136,11 +140,8 @@ void NetworkClient::launch_threads(State* state,
       }
       // Anylayse command type and play associated sound - end
 
-      // engine->runCommand();
-      if (commands.size()) {
-        commands.front()->execute();
-        commands.pop_front();
-      }
+      cmd->execute();
+      commands.pop_front();
 
       // play sound at end of fight - start
       if (!type.compare("FightCommand") && !state->getFight()) {
