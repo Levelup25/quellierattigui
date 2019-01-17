@@ -76,8 +76,14 @@ void NetworkClient::launch_threads(State* state,
     Clock clock, clock2;
     deque<Command*> commands;
     while (!end) {
-      putServerCommand(engine->getCommand());
-      engine->clearCommand();
+      Command* command = engine->getCommand();
+      if (!command->getType().compare("MoveCommands") ||
+          !command->getType().compare("AttackCommand")) {
+        engine->runCommand();
+      } else {
+        putServerCommand(command);
+        engine->clearCommand();
+      }
       if (!(clock2.getElapsedTime().asSeconds() >= 1.0)) {
         deque<Command*> serverCommands = getServerCommands();
         for (auto cmd : serverCommands)
@@ -89,7 +95,9 @@ void NetworkClient::launch_threads(State* state,
       }
       clock.restart();
 
-      Command* cmd = engine->getCommand();
+      Command* cmd = nullptr;
+      if (commands.size())
+        cmd = commands.front();
       if (!cmd) {
         continue;
       }
@@ -122,8 +130,10 @@ void NetworkClient::launch_threads(State* state,
       // Anylayse command type and play associated sound - end
 
       // engine->runCommand();
-      commands.front()->execute();
-      commands.pop_front();
+      if (commands.size()) {
+        commands.front()->execute();
+        commands.pop_front();
+      }
 
       // play sound at end of fight - start
       if (!type.compare("FightCommand") && !state->getFight()) {
@@ -329,12 +339,15 @@ deque<Command*> NetworkClient::getServerCommands() {
   Json::Reader reader;
   Json::Value out;
   reader.parse(output, out);
+  // cout << output << endl;
 
   deque<Command*> commands;
-  for (int i = 0; i < (int)out.size(); i++) {
-    commands.push_back(Command::deserialize(out[i], state, engine));
+  if (out != Json::Value::null) {
+    for (int i = 0; i < (int)out.size(); i++) {
+      commands.push_back(Command::deserialize(out[i], state, engine));
+    }
+    idLastExecutedCmd += out.size();
   }
-  idLastExecutedCmd += out.size();
   return commands;
 }
 
@@ -351,6 +364,7 @@ void NetworkClient::putServerCommand(Command* command) {
   request.setField("Content-Type", "application/x-www-form-urlencoded");
   request.setUri("/commands");
   request.setBody(input);
+  // cout << input << endl;
 
   Http::Response response = this->http.sendRequest(request);
 }
@@ -457,8 +471,7 @@ void NetworkClient::run() {
   this->engine = new Engine();
   this->render = new Render(state, engine);
   this->ai = new HeuristicAI(state, engine);
-  // todo
-  // launch_threads(state, render, engine, ai);
+  launch_threads(state, render, engine, ai);
   cout << "Jeu lancé" << endl;
 
   // Log out - start
