@@ -17,7 +17,7 @@ using namespace sf;
 NetworkClient::NetworkClient(const string& url, int port) {
   this->url = url;
   this->port = port;
-  http.setHost(url, port);
+  this->http.setHost(url, port);
   idLastExecutedCmd = 0;
 }
 
@@ -26,6 +26,8 @@ void NetworkClient::launch_threads(State* state,
                                    Engine* engine,
                                    AI* ai) {
   bool end = false;
+
+  // Render
   thread t1([render, &end]() {
     Music theme;
     theme.openFromFile("res/sounds/theme.wav");
@@ -75,12 +77,14 @@ void NetworkClient::launch_threads(State* state,
     while (!end) {
       while (engine->getSize()) {
         Command* command = engine->getCommand();
-        if (!command->getType().compare("MoveCommands") ||
-            !command->getType().compare("AttackCommand")) {
-          engine->runCommand();
-        } else {
-          putServerCommand(command);
-          engine->clearCommand();
+        if (command) {
+          if (!command->getType().compare("MoveCommands") ||
+              !command->getType().compare("AttackCommand")) {
+            engine->runCommand();
+          } else {
+            putServerCommand(command);
+            engine->clearCommand();
+          }
         }
       }
       if (!commands.size()) {
@@ -88,6 +92,7 @@ void NetworkClient::launch_threads(State* state,
         for (auto cmd : serverCommands)
           commands.push_back(cmd);
       }
+
       if (!(clock.getElapsedTime().asSeconds() >= 1.0 / 30)) {
         continue;
       }
@@ -226,7 +231,7 @@ deque<Command*> NetworkClient::getServerCommands() {
   request.setField("Content-Type", "application/x-www-form-urlencoded");
   request.setUri("/commands/" + to_string(idLastExecutedCmd));
 
-  Http::Response response = http.sendRequest(request);
+  Http::Response response = this->http.sendRequest(request);
   string output = response.getBody();
   Json::Reader reader;
   Json::Value out;
@@ -258,7 +263,7 @@ void NetworkClient::putServerCommand(Command* command) {
   request.setBody(input);
   // cout << input << endl;
 
-  Http::Response response = http.sendRequest(request);
+  Http::Response response = this->http.sendRequest(request);
 }
 
 int NetworkClient::getGameStatus() {
@@ -267,7 +272,7 @@ int NetworkClient::getGameStatus() {
   request.setField("Content-Type", "application/x-www-form-urlencoded");
   request.setUri("/game");
 
-  Http::Response response = http.sendRequest(request);
+  Http::Response response = this->http.sendRequest(request);
   string output = response.getBody();
   if (response.getStatus() != sf::Http::Response::Status::Ok) {
     cout << "Erreur lors de la récupération de l'état originel du serveur"
@@ -287,15 +292,17 @@ void NetworkClient::run() {
   cout << "Lancement du Jeu en mode multijoueur" << endl;
   Json::Reader reader;  // for parse response
 
+  // check server co - start
   // Vérifie si on peut contacter le serveur (en récupérant la version)
   cout << "Connexion au serveur..." << endl;
 
   sf::Http::Request req_version;
   req_version.setMethod(sf::Http::Request::Get);
-  // req_version.setField("Content-Type", "application/x-www-form-urlencoded");
+  // req_version.setField("Content-Type",
+  // "application/x-www-form-urlencoded");
   req_version.setUri("/version");
 
-  sf::Http::Response res_version = http.sendRequest(req_version);
+  sf::Http::Response res_version = this->http.sendRequest(req_version);
   if (res_version.getStatus() != sf::Http::Response::Status::Ok) {
     cout << "Erreur lors de la connexion au serveur, veulliez essayer à "
             "nouveau plus tard"
@@ -306,11 +313,13 @@ void NetworkClient::run() {
   }
   cout << "Connexion établie" << endl;
 
-  // connexion avec pseudo à la partie
+  // connexion avec pseudo à la partie - start
   unsigned int try_max = 10;
   unsigned int try_current = 0;
   bool connected = false;
   unsigned int id_player;
+  unsigned int player_team_index;
+
   string pseudo;
   while (!connected && try_current < try_max) {
     cout << "Veuillez rentrez votre pseudo : ";
@@ -324,30 +333,27 @@ void NetworkClient::run() {
     req_pseudo.setField("Content-Type", "application/x-www-form-urlencoded");
     string data_str = "{\"pseudo\" : \"" + pseudo + "\"}";
     req_pseudo.setBody(data_str);
-    cout << data_str << endl;
 
-    sf::Http::Response res_pseudo = http.sendRequest(req_pseudo);
+    sf::Http::Response res_pseudo = this->http.sendRequest(req_pseudo);
     if (res_pseudo.getStatus() == sf::Http::Response::Status::Ok ||
         res_pseudo.getStatus() == sf::Http::Response::Status::Created) {
       connected = true;
       Json::Value res_pseudo_json;
       reader.parse(res_pseudo.getBody(), res_pseudo_json);
       id_player = res_pseudo_json.get("id", 0).asUInt();
+      player_team_index = res_pseudo_json.get("teamId", 0).asUInt();
       cout << "Identification établie, id : " << id_player << endl;
     } else {
       connected = false;
       cout << "Identification échouée" << endl;
     }
-    cout << "status: " << res_pseudo.getStatus() << endl;
-    cout << "body: " << res_pseudo.getBody() << endl;
   }
 
-  unsigned int seed = getGameStatus();
-
-  // récupération seed état du serveur - end
-
   // regenerate server state - start
+  cout << "Récupération de l'état de la partie..." << endl;
+  unsigned int seed = getGameStatus();
   this->state = new State(seed);
+  this->state->mainTeamIndex = player_team_index;
   deque<Command*> server_commands = getServerCommands();
   for (auto ptr_cmd : server_commands) {
     ptr_cmd->execute();
@@ -357,23 +363,23 @@ void NetworkClient::run() {
 
   // launch game
   cout << "Lancement du jeu..." << endl;
-  // todo...
-  cout << "Jeu lancé" << endl;
-  engine = new Engine();
-  render = new Render(state, engine);
-  ai = new HeuristicAI(state, engine);
+  this->engine = new Engine();
+  this->render = new Render(state, engine);
+  this->ai = new HeuristicAI(state, engine);
   launch_threads(state, render, engine, ai);
+  cout << "Jeu lancé" << endl;
 
   // Log out - start
   cout << "Deconnexion..." << endl;
   sf::Http::Request req_logout;
   req_logout.setMethod(sf::Http::Request::Post);
-  req_logout.setUri("/players/" + to_string(id_player));
+  req_logout.setUri("/players/" +
+                    to_string(id_player));  // global var id_player
   req_logout.setField("Content-Type", "application/x-www-form-urlencoded");
   string data_str = "{\"isLogged\" : false}";
   req_logout.setBody(data_str);
 
-  sf::Http::Response res_logout = http.sendRequest(req_logout);
+  sf::Http::Response res_logout = this->http.sendRequest(req_logout);
   if (res_logout.getStatus() == sf::Http::Response::Status::Ok) {
     cout << "Deconnecté" << endl;
   } else {

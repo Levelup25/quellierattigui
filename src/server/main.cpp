@@ -143,6 +143,7 @@ int main(int argc, char* const* argv) {
         MHD_OPTION_NOTIFY_COMPLETED, request_completed, NULL, MHD_OPTION_END);
     if (d == NULL)
       return 1;
+    // game->run();
     cout << "Pressez <entrée> pour arrêter le serveur" << endl;
     (void)getc(stdin);
     MHD_stop_daemon(d);

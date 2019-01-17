@@ -2,6 +2,8 @@
 #ifndef SERVER__GAME__H
 #define SERVER__GAME__H
 
+#include <vector>
+#include <memory>
 
 namespace server {
   class PlayerDB;
@@ -11,8 +13,15 @@ namespace state {
 };
 namespace engine {
   class Engine;
+};
+namespace ai {
+  class AI;
+};
+namespace state {
+  class Fight;
 }
 
+#include "state/Fight.h"
 #include "PlayerDB.h"
 #include "state/State.h"
 #include "engine/Engine.h"
@@ -25,10 +34,14 @@ namespace server {
     // Associations
     server::GameStatus status;
     // Attributes
+  public:
+    std::vector<int> teamIndexes;
+    std::vector<std::shared_ptr<state::Fight>> fights;
   private:
     PlayerDB* playerDB;
     state::State* state;
     engine::Engine* engine;
+    ai::AI* ai;
     // Operations
   public:
     Game ();

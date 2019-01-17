@@ -56,9 +56,10 @@ HttpStatus PlayerService::post(const Json::Value& in, int id) {
 }
 
 HttpStatus PlayerService::put(Json::Value& out, const Json::Value& in) {
+  static unsigned int countLog = 0;
   string pseudo = in.get("pseudo", "").asString();
   bool isLogged = in.get("isLogged", true).asBool();
-  int teamId = in.get("teamId", game->getState()->getTeams().size()).asInt();
+  int teamId = in.get("teamId", countLog).asInt();
   for (int i = 0; i < playerDB->getIdseq(); i++) {
     const Player* player = playerDB->getPlayer(i);
     if (player) {
@@ -84,6 +85,7 @@ HttpStatus PlayerService::put(Json::Value& out, const Json::Value& in) {
   out["teamId"] = teamId;
   game->teamIndexes.push_back(teamId);
   game->fights.push_back(nullptr);
+  countLog++;
   return HttpStatus::CREATED;
 }
 

@@ -14,7 +14,7 @@ FightCommand::FightCommand(State* state,
   type = "FightCommand";
   this->state = state;
   this->engine = engine;
-  this->character = nullptr;
+  this->character = att->getMainCharacter();
   this->att = att;
   this->def = def;
   this->reverse = reverse;

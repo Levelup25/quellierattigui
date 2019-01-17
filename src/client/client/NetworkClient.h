@@ -23,7 +23,6 @@ namespace ai {
 #include "render/Render.h"
 #include "engine/Engine.h"
 #include "state/State.h"
-#include "ai/AI.h"
 
 namespace client {
 
@@ -40,6 +39,7 @@ namespace client {
     render::Render* render;
     engine::Engine* engine;
     ai::AI* ai;
+    std::deque<engine::Command*> commands;
     // Operations
   public:
     NetworkClient (const std::string& url, int port);

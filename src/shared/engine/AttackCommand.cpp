@@ -25,6 +25,11 @@ AttackCommand::AttackCommand(State* state,
   //    position[1] += character->getJ();
 }
 
+void AttackCommand::offsetPosition(vector<int> offset) {
+  position[0] += offset[0];
+  position[1] += offset[1];
+}
+
 int AttackCommand::getAbilityNumber() {
   return abilityNumber;
 }

@@ -39,6 +39,7 @@ namespace engine {
     // Operations
   public:
     AttackCommand (state::State* state, Engine* engine, state::Character* character, std::vector<int> position, int abilityNumber = 0, bool reverse = false);
+    void offsetPosition (std::vector<int> offset);
     int getAbilityNumber ();
     void setZones (bool cut = true);
     std::vector<std::vector<int>> getZone (std::size_t i, bool cut = true);

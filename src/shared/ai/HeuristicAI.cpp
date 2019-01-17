@@ -131,6 +131,7 @@ void HeuristicAI::run(Character* character) {
     }
     atk = get<1>(bestAction);
     if (atk != nullptr) {
+      // atk->offsetPosition(mv->getDiff());
       engine->addCommand(atk);
       while (engine->getSize() != 0)
         ;
