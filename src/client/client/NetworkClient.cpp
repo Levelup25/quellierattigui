@@ -80,15 +80,16 @@ void NetworkClient::launch_threads(State* state,
     float period_engine = 1.0 / 30, period_sync_server = 5;
     deque<Command*> commands;
     while (!end) {
-      Command* command = engine->getCommand();
-
-      if (command) {
-        if (!command->getType().compare("MoveCommands") ||
-            !command->getType().compare("AttackCommand")) {
-          engine->runCommand();
-        } else {
-          putServerCommand(command);
-          engine->clearCommand();
+      while (engine->getSize()) {
+        Command* command = engine->getCommand();
+        if (command) {
+          if (!command->getType().compare("MoveCommands") ||
+              !command->getType().compare("AttackCommand")) {
+            engine->runCommand();
+          } else {
+            putServerCommand(command);
+            engine->clearCommand();
+          }
         }
       }
 
@@ -121,7 +122,7 @@ void NetworkClient::launch_threads(State* state,
         int i =
             state->getCell(character->getI(), character->getJ())->getElement();
         if (move_sounds[i].getStatus() != 2) {
-          move_sounds[i].play();
+          // move_sounds[i].play();
         }
       }
 
@@ -131,7 +132,7 @@ void NetworkClient::launch_threads(State* state,
                         static_cast<AttackCommand*>(cmd)->getAbilityNumber())
                     ->getElement();
         if (attack_sounds[i].getStatus() != 2) {
-          attack_sounds[i].play();
+          // attack_sounds[i].play();
         }
       }
 
@@ -147,182 +148,76 @@ void NetworkClient::launch_threads(State* state,
       if (!type.compare("FightCommand") && !state->getFight()) {
         vector<Team*> teams = state->getTeams();
         if (find(teams.begin(), teams.end(), team) != teams.end()) {
-          lose_sound.play();
-          cout << "lose" << endl;
+          // lose_sound.play();
         } else {
-          win_sound.play();
-          cout << "win" << endl;
+          // win_sound.play();
         }
       }
       // play sound at end of fight - end
     }
   });
-
-  // AI
-  thread t3([ai, state, engine, &end]() {
+  thread t3([ai, state, engine, &end, this]() {
+    bool deploy = false;
     while (!end) {
-      shared_ptr<Fight> fight = state->getFight();
-      vector<Character*> maincharacters = state->getMainCharacters();
-      if (state->two_ai && !fight && maincharacters.size() > 1 &&
-          state->getMainCharacter()) {
-        int x0 = state->getMainCharacter()->getI(),
-            y0 = state->getMainCharacter()->getJ();
-        int min = abs(maincharacters[0]->getI() - x0) +
-                  abs(maincharacters[0]->getJ() - y0),
-            imin = 1;
-        for (int i = 1; i < (int)maincharacters.size(); i++) {
-          int dist = abs(maincharacters[i]->getI() - x0) +
-                     abs(maincharacters[i]->getJ() - y0);
-          if (dist && dist < min) {
-            min = dist;
-            imin = i;
-          }
-        }
+      auto fight = state->getFight();
+      if (!fight)
+        deploy = false;
+      if (fight && !fight->getTurn() && !deploy) {
+        deploy = true;
+        int i, j, nb = fight->getNb();
         int n = state->getN(), m = state->getM();
-        int x1 = maincharacters[imin]->getI(),
-            y1 = maincharacters[imin]->getJ();
-        int xv0 = x0 / n, yv0 = y0 / m, xv1 = x1 / n, yv1 = y1 / m;
-        while (!end && (xv0 != xv1 || yv0 != yv1)) {
-          if (xv0 < xv1) {
-            for (int y = 0; y < max(yv0 * m + m - y0, y0 - yv0 * m); y++) {
-              if (y0 + y > yv0 * m && y0 + y < (yv0 + 1) * m) {
-                if (state->getCell(n * (xv0 + 1) - 1, y0 + y)->getContent() ==
-                        0 &&
-                    state->getCell(n * (xv0 + 1), y0 + y)->getContent() == 0) {
-                  engine->addCommand(
-                      new MoveCommands(state, engine, state->getMainCharacter(),
-                                       n * (xv0 + 1) - 1 - x0, y));
-                  x0 = n * (xv0 + 1), y0 = y0 + y;
-                  break;
-                } else if (state->getCell(n * (xv0 + 1) - 1, y0 - y)
-                                   ->getContent() == 0 &&
-                           state->getCell(n * (xv0 + 1), y0 - y)
-                                   ->getContent() == 0) {
-                  engine->addCommand(
-                      new MoveCommands(state, engine, state->getMainCharacter(),
-                                       n * (xv0 + 1) - 1 - x0, -y));
-                  x0 = n * (xv0 + 1), y0 = y0 - y;
-                  break;
-                }
-              }
-            }
-          } else if (xv0 > xv1) {
-            for (int y = 0; y < max(yv0 * m + m - y0, y0 - yv0 * m); y++) {
-              if (y0 + y > yv0 * m && y0 + y < (yv0 + 1) * m) {
-                if (state->getCell(n * xv0, y0 + y)->getContent() == 0 &&
-                    state->getCell(n * xv0 - 1, y0 + y)->getContent() == 0) {
-                  engine->addCommand(new MoveCommands(state, engine,
-                                                      state->getMainCharacter(),
-                                                      n * xv0 - x0, y));
-                  x0 = n * xv0 - 1, y0 = y0 + y;
-                  break;
-                } else if (state->getCell(n * xv0, y0 - y)->getContent() == 0 &&
-                           state->getCell(n * xv0 - 1, y0 - y)->getContent() ==
-                               0) {
-                  engine->addCommand(new MoveCommands(state, engine,
-                                                      state->getMainCharacter(),
-                                                      n * xv0 - x0, -y));
-                  x0 = n * xv0 - 1, y0 = y0 - y;
-                  break;
-                }
-              }
-            }
-          }
-          while (!end && engine->getSize())
-            ;
-          if (yv0 < yv1) {
-            for (int x = 0; x < max(xv0 * n + n - x0, x0 - xv0 * n); x++) {
-              if (x0 + x > xv0 * n && x0 + x < (xv0 + 1) * n) {
-                if (state->getCell(x0 + x, m * (yv0 + 1) - 1)->getContent() ==
-                        0 &&
-                    state->getCell(x0 + x, m * (yv0 + 1))->getContent() == 0) {
-                  engine->addCommand(
-                      new MoveCommands(state, engine, state->getMainCharacter(),
-                                       x, m * (yv0 + 1) - 1 - y0));
-                  x0 = x0 + x, y0 = m * (yv0 + 1);
-                  break;
-                } else if (state->getCell(x0 - x, m * (yv0 + 1) - 1)
-                                   ->getContent() == 0 &&
-                           state->getCell(x0 - x, m * (yv0 + 1))
-                                   ->getContent() == 0) {
-                  engine->addCommand(
-                      new MoveCommands(state, engine, state->getMainCharacter(),
-                                       -x, m * (yv0 + 1) - 1 - y0));
-                  x0 = x0 - x, y0 = m * (yv0 + 1);
-                  break;
-                }
-              }
-            }
-          } else if (yv0 > yv1) {
-            for (int x = 0; x < max(xv0 * n + n - x0, x0 - xv0 * n); x++) {
-              if (x0 + x > xv0 * n && x0 + x < (xv0 + 1) * n) {
-                if (state->getCell(x0 + x, m * yv0)->getContent() == 0 &&
-                    state->getCell(x0 + x, m * yv0 - 1)->getContent() == 0) {
-                  engine->addCommand(new MoveCommands(state, engine,
-                                                      state->getMainCharacter(),
-                                                      x, m * yv0 - y0));
-                  x0 = x0 + x, y0 = m * yv0 - 1;
-                  break;
-                } else if (state->getCell(x0 - x, m * yv0)->getContent() == 0 &&
-                           state->getCell(x0 - x, m * yv0 - 1)->getContent() ==
-                               0) {
-                  engine->addCommand(new MoveCommands(state, engine,
-                                                      state->getMainCharacter(),
-                                                      -x, m * yv0 - y0));
-                  x0 = x0 - x, y0 = m * yv0 - 1;
-                  break;
-                }
-              }
-            }
-          }
-          while (!end && engine->getSize())
-            ;
-          xv0 = x0 / n, yv0 = y0 / m;
-        }
-        engine->addCommand(new MoveCommands(
-            state, engine, state->getMainCharacter(), x1 - x0, y1 - y0));
-        while (!end && engine->getSize())
-          ;
-        int xv = xv0 * n, yv = yv0 * m, i, j;
-        if (state->getFight())
-          for (auto chars : state->getFight()->getTeam(0)->getCharacters(
-                   state->getFight()->getNb())) {
-            do {
-              i = xv + n / 6 + rand() % (2 * n / 3);
-              j = yv + 2 * m / 3 + rand() % (m / 4);
-            } while (state->getCell(i, j)->getContent() != nothing);
-            engine->addCommand(
-                new MoveCommand(state, chars, chars->getI(), chars->getJ()));
-            engine->addCommand(new MoveCommand(state, chars, i, j));
-            state->getCell(i, j)->setContent(perso);
-          }
-        while (!end && engine->getSize())
-          ;
-        engine->addCommand(new FightCommand(state, engine,
-                                            state->getFight()->getTeam(0),
-                                            state->getFight()->getTeam(1)));
-      }
+        int xv = ((int)state->getMainCharacter()->getI() / n) * n,
+            yv = ((int)state->getMainCharacter()->getJ() / m) * m;
 
-      if (state->two_ai && engine->getSize() == 0 && fight &&
-          fight->getTurn() % 2 == 1 && fight->getTurn() != 0) {
-        vector<Character*> vect =
-            ai->getTurnOrder(fight->getFightingCharacters(0));
-        for (auto c : vect) {
-          if (state->two_ai)
-            ai->run(c);
+        for (auto oppchars : fight->getTeam(1)->getCharacters(nb)) {
+          // if (!(oppchars->getI() >= xv + n / 6 &&
+          //       oppchars->getI() < xv + n / 6 + 2 * n / 3 &&
+          //       oppchars->getJ() >= yv + m / 12 &&
+          //       oppchars->getJ() < yv + m / 12 + m / 4)) {
+          do {
+            i = xv + n / 6 + rand() % (2 * n / 3);
+            j = yv + m / 12 + rand() % (m / 4);
+          } while (state->getCell(i, j)->getContent() != nothing);
+          engine->addCommand(new MoveCommand(state, oppchars, oppchars->getI(),
+                                             oppchars->getJ()));
+          engine->addCommand(new MoveCommand(state, oppchars, i, j));
+          state->getCell(i, j)->setContent(perso);
         }
-        if (state->two_ai && fight->getFightingCharacters(0).size())
-          engine->addCommand(new FightCommand(state, engine,
-                                              state->getFight()->getTeam(0),
-                                              state->getFight()->getTeam(1)));
       }
-
-      if (engine->getSize() == 0 && fight && fight->getTurn() % 2 == 0 &&
+      while (engine->getSize()) {
+        Command* command = engine->getCommand();
+        if (!command->getType().compare("MoveCommands") ||
+            !command->getType().compare("AttackCommand")) {
+          engine->runCommand();
+        } else {
+          putServerCommand(command);
+          engine->clearCommand();
+        }
+      }
+      if (!commands.size()) {
+        deque<Command*> serverCommands = getServerCommands();
+        for (auto cmd : serverCommands)
+          commands.push_back(cmd);
+      }
+      if (commands.size() == 0 && fight && fight->getTurn() % 2 == 0 &&
           fight->getTurn() != 0) {
         vector<Character*> vect =
             ai->getTurnOrder(fight->getFightingCharacters(1));
         for (auto c : vect) {
           ai->run(c);
+          vector<int> offset = {0, 0};
+          deque<Command*> engineCommands = engine->getCommands();
+          for (int i = 0; i < (int)engineCommands.size(); i++) {
+            if (!engineCommands[i]->getType().compare("MoveCommands")) {
+              offset[0] +=
+                  static_cast<MoveCommands*>(engineCommands[i])->getDiff()[0];
+              offset[1] +=
+                  static_cast<MoveCommands*>(engineCommands[i])->getDiff()[1];
+            } else if (!engineCommands[i]->getType().compare("AttackCommand")) {
+              static_cast<AttackCommand*>(engineCommands[i])
+                  ->offsetPosition(offset);
+            }
+          }
         }
         if (fight->getFightingCharacters(1).size())
           engine->addCommand(new FightCommand(state, engine,
@@ -409,7 +304,8 @@ void NetworkClient::run() {
 
   sf::Http::Request req_version;
   req_version.setMethod(sf::Http::Request::Get);
-  // req_version.setField("Content-Type", "application/x-www-form-urlencoded");
+  // req_version.setField("Content-Type",
+  // "application/x-www-form-urlencoded");
   req_version.setUri("/version");
 
   sf::Http::Response res_version = this->http.sendRequest(req_version);

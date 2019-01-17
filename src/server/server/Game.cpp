@@ -1,10 +1,18 @@
 #include "Game.h"
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 #include <fstream>
+#include <thread>
+#include "ai/HeuristicAI.h"
+#include "engine/FightCommand.h"
+#include "engine/MoveCommand.h"
 
 using namespace server;
 using namespace state;
 using namespace engine;
+using namespace ai;
 using namespace std;
 
 Game::Game() {
@@ -12,6 +20,7 @@ Game::Game() {
   playerDB = new PlayerDB();
   state = new State(seed);
   engine = new Engine();
+  ai = new HeuristicAI(state, engine);
 }
 
 PlayerDB* Game::getPlayerDB() {
@@ -27,38 +36,67 @@ Engine* Game::getEngine() {
 }
 
 void Game::run() {
-  ifstream file;
-  Json::Reader reader;
-  Json::Value root;
-  file.open("res/weapons.txt");
-  reader.parse(file, root);
-  int nb = root.size();
-  file.close();
+  bool end = false;
+  while (!end) {
+    for (int i = 0; i < (int)fights.size(); i++) {
+      auto fight = fights[i];
+      if (fight && fight->getTurn() == 0) {
+        // int n = state->getN(), m = state->getM();
+        // int xv0 =
+        //         state->getTeams()[teamIndexes[i]]->getMainCharacter()->getI()
+        //         / n,
+        //     yv0 =
+        //         state->getTeams()[teamIndexes[i]]->getMainCharacter()->getJ()
+        //         / m;
+        // int xv = xv0 * n, yv = yv0 * m, i, j;
 
-  int N = state->getI(), M = state->getJ();
-  int idseq, idseq_prev = -1;
-  while (1) {
-    idseq = playerDB->getIdseq();
-    if (idseq != idseq_prev) {
-      idseq_prev = idseq;
-      int index = state->getTeams().size();
-      for (int j = 0; j < 4; j++) {
-        state->addCharacter(index, rand() % (12 * 4), (Direction)(rand() % 4),
-                            N / 4 + rand() % (N / 2), M / 4 + rand() % (M / 2));
-        Character* c = state->getCharacters().back();
-        c->setPm(2 + rand() % 5);
-        c->setPv(1 + rand() % 4);
-        c->setPa(3 + rand() % 2);
-        Weapon* w = new Weapon(rand() % nb);
-        c->setWeapon(w);
-        for (auto a : w->getAbilities()) {
-          int r3 = rand() % 3;
-          for (int i = 0; i < r3; i++)
-            a->addLv();
+        // for (auto chars : fight->getTeam(1)->getCharacters(fight->getNb())) {
+        //   do {
+        //     i = xv + n / 6 + rand() % (2 * n / 3);
+        //     j = yv + m / 12 + rand() % (m / 4);
+        //   } while (state->getCell(i, j)->getContent() != nothing);
+        //   engine->addCommand(
+        //       new MoveCommand(state, chars, chars->getI(), chars->getJ()));
+        //   engine->addCommand(new MoveCommand(state, chars, i, j));
+        //   state->getCell(i, j)->setContent(perso);
+        // }
+        // while (!end && engine->getSize())
+        //   ;
+      }
+
+      if (fight && fight->getTurn() > 0) {
+        vector<bool> aiToPlay;
+        int id0 = -1, id1 = -1;
+        Team* team0 = fight->getTeam(0);
+        Team* team1 = fight->getTeam(1);
+        vector<Team*> teams = state->getTeams();
+        for (int i = 0; i < (int)teamIndexes.size(); i++) {
+          if (teams[teamIndexes[i]] == team0) {
+            id0 = i;
+          } else if (teams[teamIndexes[i]] == team1) {
+            id1 = i;
+          }
+        }
+        if (id0 == -1)
+          aiToPlay.push_back(false);
+        if (id1 == -1)
+          aiToPlay.push_back(true);
+
+        for (bool i : aiToPlay) {
+          if (engine->getSize() == 0 && fight && fight->getTurn() % 2 == (!i) &&
+              fight->getTurn() != 0) {
+            vector<Character*> vect =
+                ai->getTurnOrder(fight->getFightingCharacters(i));
+            for (auto c : vect) {
+              ai->run(c);
+            }
+            if (fight->getFightingCharacters(i).size())
+              engine->addCommand(new FightCommand(
+                  state, engine, state->getFight()->getTeam(!i),
+                  state->getFight()->getTeam(i)));
+          }
         }
       }
-      // state->mainTeamIndex = state->getTeams().size() - 1;
     }
-    engine->runCommand();
   }
 }
