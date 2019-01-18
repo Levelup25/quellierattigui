@@ -76,7 +76,7 @@ void NetworkClient::launch_threads(State* state,
     // Load sounds - end
 
     // Engine loop
-    Clock clk_engine, clk_sync_server;
+    Clock clk_engine;
     float period_engine = 1.0 / 30, period_sync_server = 5;
     deque<Command*> commands;
     while (!end) {
@@ -93,11 +93,10 @@ void NetworkClient::launch_threads(State* state,
       }
 
       // Get commands for sync state - start
-      if (clk_sync_server.getElapsedTime().asSeconds() >= period_sync_server) {
+      if (commands.size() == 0) {
         deque<Command*> serverCommands = getServerCommands();
         for (auto cmd : serverCommands)
           commands.push_back(cmd);
-        clk_sync_server.restart();
       }
       // Get commands for sync state - end
 
