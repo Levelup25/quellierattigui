@@ -191,8 +191,10 @@ void NetworkClient::launch_threads(State* state,
             ai->getTurnOrder(fight->getFightingCharacters(1));
         for (auto c : vect) {
           while (ai->run(c)) {
-            while (commands.size())
-              ;
+            while (commands.size()) {
+              while (engine->getSize()) {
+              }
+            }
           }
         }
         if (fight->getFightingCharacters(1).size())
