@@ -42,7 +42,7 @@ namespace ai {
     // Operations
   public:
     virtual std::vector<state::Character*> getTurnOrder (std::vector<state::Character*> characters);
-    virtual void run (state::Character* character);
+    virtual bool run (state::Character* character);
   protected:
     std::vector<engine::Command*> listCommands (state::Character* character, int type = -1);
     // Setters and Getters

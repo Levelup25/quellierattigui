@@ -21,13 +21,21 @@ vector<Character*> RandomAI::getTurnOrder(vector<Character*> characters) {
   return v;
 }
 
-void RandomAI::run(Character* character) {
+bool RandomAI::run(Character* character) {
+  // vector<Command*> commands = this->listCommands(character);
+  // while (state->isFighting() && commands.size() > 0 &&
+  //        character->getPvCurrent() > 0) {
+  //   engine->addCommand(commands[rand() % commands.size()]);
+  //   while (engine->getSize() != 0)
+  //     ;
+  //   commands = this->listCommands(character);
+  // }
+
+  if (!(state->isFighting() && character->getPvCurrent() > 0))
+    return false;
   vector<Command*> commands = this->listCommands(character);
-  while (state->isFighting() && commands.size() > 0 &&
-         character->getPvCurrent() > 0) {
-    engine->addCommand(commands[rand() % commands.size()]);
-    while (engine->getSize() != 0)
-      ;
-    commands = this->listCommands(character);
-  }
+  if (!commands.size())
+    return false;
+  engine->addCommand(commands[rand() % commands.size()]);
+  return true;
 }

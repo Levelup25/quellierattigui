@@ -24,6 +24,8 @@ void Score::setScoreAction(State* state,
                            vector<Character*> ennemies) {
   // score atk
   if (atk != nullptr) {
+    if (mv)
+      atk->offsetPosition(mv->getDiff());
     int bonusKillEnemy = 100;
     int MalusKillAlly = 200;
     int bonusHitEnemy = 10;
@@ -34,10 +36,6 @@ void Score::setScoreAction(State* state,
 
     // score dmg
     for (auto coord : zoneDmg) {
-      if (mv != nullptr) {
-        coord[0] += mv->getDiff()[0];
-        coord[1] += mv->getDiff()[1];
-      }
       for (auto pennemy : ennemies) {
         if (pennemy->getI() == coord[0] && pennemy->getJ() == coord[1]) {
           int pv = pennemy->getPvCurrent();
@@ -79,6 +77,8 @@ void Score::setScoreAction(State* state,
     int malusRatioPaUsed = 1;
     malusPaUsed =
         malusRatioPaUsed * weapon->getAbility(atk->getAbilityNumber())->getPa();
+    if (mv)
+      atk->offsetPosition({-mv->getDiff()[0], -mv->getDiff()[1]});
   }
 
   // score PM

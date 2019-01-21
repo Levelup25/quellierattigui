@@ -76,7 +76,7 @@ void State::init() {
   int N = getI(), M = getJ();
 
   for (int i = 0; i < nbteams; i++) {
-    for (int j = 0; j < 3; j++) {
+    for (int j = 0; j < 4; j++) {
       addCharacter(i, rand() % (12 * 4), (Direction)(rand() % 4), rand() % N,
                    rand() % M);
       Character* c = getCharacters().back();
@@ -411,8 +411,8 @@ void State::endFight() {
 
     if (fight->getFightingCharacters(1).size() == 0) {
       Team* team = fight->getTeam(1);
-      // for (c : team->getCharacters(fight->getNb()))
-      //   this->delCharacter(c);
+      for (auto c : team->getCharacters(fight->getNb()))
+        this->delCharacter(c);
       // if (team->getCharacters().size() == 0)
       if (team->getMainCharacter()->getId() < 0) {
         cout << endl
@@ -439,6 +439,8 @@ void State::endFight() {
              << endl;
         exit(0);
       }
+      if (team->getMainCharacter())
+        fight->getTeam(0)->addCharacter(team->getMainCharacter());
       this->delTeam(team);
       end = true;
     }

@@ -40,7 +40,7 @@ namespace ai {
     std::vector<std::tuple<engine::MoveCommands*, engine::AttackCommand*,Score>> getBestActions (state::Character* character, int threshold = 0);
     void buildTree (std::shared_ptr<TreeNode> node, int depth, int teamNumber = 1);
     std::vector<state::Character*> getTurnOrder (std::vector<state::Character*> characters);
-    void run (state::Character* character);
+    bool run (state::Character* character);
     // Setters and Getters
   };
 

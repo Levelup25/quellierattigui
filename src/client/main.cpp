@@ -196,7 +196,7 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
         int x1 = maincharacters[imin]->getI(),
             y1 = maincharacters[imin]->getJ();
         int xv0 = x0 / n, yv0 = y0 / m, xv1 = x1 / n, yv1 = y1 / m;
-        while (!end && (xv0 != xv1 || yv0 != yv1)) {
+        while (!end && state->two_ai && (xv0 != xv1 || yv0 != yv1)) {
           if (xv0 < xv1) {
             for (int y = 0; y < max(yv0 * m + m - y0, y0 - yv0 * m); y++) {
               if (y0 + y > yv0 * m && y0 + y < (yv0 + 1) * m) {
@@ -323,7 +323,10 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
             ai->getTurnOrder(fight->getFightingCharacters(0));
         for (auto c : vect) {
           if (state->two_ai)
-            ai->run(c);
+            while (ai->run(c)) {
+              while (engine->getSize())
+                ;
+            }
         }
         if (state->two_ai && fight->getFightingCharacters(0).size())
           engine->addCommand(new FightCommand(state, engine,
@@ -336,7 +339,10 @@ void launch_threads(State* state, Render* render, Engine* engine, AI* ai) {
         vector<Character*> vect =
             ai->getTurnOrder(fight->getFightingCharacters(1));
         for (auto c : vect) {
-          ai->run(c);
+          while (ai->run(c)) {
+            while (engine->getSize())
+              ;
+          }
         }
         if (fight->getFightingCharacters(1).size())
           engine->addCommand(new FightCommand(state, engine,

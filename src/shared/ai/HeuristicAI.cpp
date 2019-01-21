@@ -112,30 +112,56 @@ vector<Character*> HeuristicAI::getTurnOrder(vector<Character*> characters) {
   return v;
 }
 
-void HeuristicAI::run(Character* character) {
-  if (!state->isFighting())
-    return;
+bool HeuristicAI::run(Character* character) {
+  // if (!state->isFighting())
+  //   return false;
+  // vector<Command*> listmv = this->listCommands(character, 0);
+  // vector<Command*> listatk = this->listCommands(character, 1);
+  // MoveCommands* mv;
+  // AttackCommand* atk;
+  // do {
+  //   tuple<MoveCommands*, AttackCommand*> bestAction =
+  //       this->getBestAction(character);
+  //   mv = get<0>(bestAction);
+  //   if (mv != nullptr) {
+  //     engine->addCommand(mv);
+  //     while (engine->getSize() != 0)
+  //       ;
+  //     listmv = this->listCommands(character, 0);
+  //   }
+  //   atk = get<1>(bestAction);
+  //   if (atk != nullptr) {
+  //     engine->addCommand(atk);
+  //     while (engine->getSize() != 0)
+  //       ;
+  //     listatk = this->listCommands(character, 1);
+  //   }
+  // } while ((mv != nullptr || atk != nullptr) && state->isFighting() &&
+  //          listmv.size() + listatk.size() > 2 && character->getPvCurrent() >
+  //          0);
+
+  if (!(state->isFighting() && character->getPvCurrent() > 0))
+    return false;
   vector<Command*> listmv = this->listCommands(character, 0);
   vector<Command*> listatk = this->listCommands(character, 1);
+  if (listmv.size() + listatk.size() <= 2)
+    return false;
   MoveCommands* mv;
   AttackCommand* atk;
-  do {
-    tuple<MoveCommands*, AttackCommand*> bestAction =
-        this->getBestAction(character);
-    mv = get<0>(bestAction);
-    if (mv != nullptr) {
-      engine->addCommand(mv);
-      while (engine->getSize() != 0)
-        ;
-      listmv = this->listCommands(character, 0);
-    }
+  tuple<MoveCommands*, AttackCommand*> bestAction =
+      this->getBestAction(character);
+  mv = get<0>(bestAction);
+  vector<int> offset = {0, 0};
+  if (mv != nullptr) {
+    engine->addCommand(mv);
+    // offset = mv->getDiff();
+  } else {
     atk = get<1>(bestAction);
     if (atk != nullptr) {
+      // atk->offsetPosition(offset);
       engine->addCommand(atk);
-      while (engine->getSize() != 0)
-        ;
-      listatk = this->listCommands(character, 1);
-    }
-  } while ((mv != nullptr || atk != nullptr) && state->isFighting() &&
-           listmv.size() + listatk.size() > 2 && character->getPvCurrent() > 0);
+    } else
+      return false;
+  }
+  return true;
 }

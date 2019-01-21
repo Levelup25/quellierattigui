@@ -56,4 +56,6 @@ vector<Character*> AI::getTurnOrder(vector<Character*> characters) {
   return characters;
 }
 
-void AI::run(Character* character) {}
+bool AI::run(Character* character) {
+  return false;
+}

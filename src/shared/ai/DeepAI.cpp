@@ -226,7 +226,8 @@ vector<Character*> DeepAI::getTurnOrder(vector<Character*> characters) {
   return v;
 }
 
-void DeepAI::run(Character* character) {
+bool DeepAI::run(Character* character) {
+  return false;
   // vector<Command*> commands = this->listCommands(character);
   // while (state->isFighting() && commands.size() > 0 &&
   //        character->getPvCurrent() > 0) {

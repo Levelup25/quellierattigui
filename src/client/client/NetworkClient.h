@@ -40,6 +40,7 @@ namespace client {
     render::Render* render;
     engine::Engine* engine;
     ai::AI* ai;
+    std::deque<engine::Command*> commands;
     // Operations
   public:
     NetworkClient (const std::string& url, int port);
