@@ -132,7 +132,7 @@ void MoveCommands::execute() {
 }
 
 void const MoveCommands::serialize(Json::Value& out) {
-  return;
+  // return;
   out["command"] = "MoveCommands";
   vector<Character*> characters = state->initialCharacters;
   int k = characters.size();

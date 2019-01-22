@@ -44,6 +44,5 @@ Command* Command::deserialize(const Json::Value& in,
     cmd = MoveCommand::deserialize(in, state, engine);
   else if (command_str.compare("MoveCommands") == 0)
     cmd = MoveCommands::deserialize(in, state, engine);
-
   return cmd;
 }

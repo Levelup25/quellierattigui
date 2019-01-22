@@ -233,7 +233,7 @@ void AttackCommand::execute() {
 }
 
 void const AttackCommand::serialize(Json::Value& out) {
-  return;
+  // return;
   out["command"] = "AttackCommand";
   vector<Character*> characters = state->initialCharacters;
   int k = characters.size();

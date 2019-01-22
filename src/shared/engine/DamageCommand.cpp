@@ -83,7 +83,10 @@ void DamageCommand::execute() {
     while (commands.size()) {
       if (commands.front()) {
         json = Json::Value::null;
-        commands.front()->serialize(json);
+        Command* cmd = commands.front();
+        if (cmd->getType().compare("MoveCommands") &&
+            cmd->getType().compare("AttackCommand"))
+          cmd->serialize(json);
         if (json != Json::Value::null) {
           root.append(json);
         }

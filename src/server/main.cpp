@@ -130,16 +130,18 @@ int main(int argc, char* const* argv) {
     servicesManager.registerService(new PlayerService(game));
 
     struct MHD_Daemon* d;
-    if (argc != 2) {
-      printf("%s PORT\n", argv[0]);
-      return 1;
+    int port = 8080;
+    if (argc >= 2) {
+      port = atoi(argv[1]);
+      // printf("%s PORT\n", argv[0]);
+      // return 1;
     }
     d = MHD_start_daemon(  // MHD_USE_SELECT_INTERNALLY | MHD_USE_DEBUG |
                            // MHD_USE_POLL,
         MHD_USE_SELECT_INTERNALLY | MHD_USE_DEBUG,
         // MHD_USE_THREAD_PER_CONNECTION | MHD_USE_DEBUG | MHD_USE_POLL,
         // MHD_USE_THREAD_PER_CONNECTION | MHD_USE_DEBUG,
-        atoi(argv[1]), NULL, NULL, &main_handler, (void*)&servicesManager,
+        port, NULL, NULL, &main_handler, (void*)&servicesManager,
         MHD_OPTION_NOTIFY_COMPLETED, request_completed, NULL, MHD_OPTION_END);
     if (d == NULL)
       return 1;

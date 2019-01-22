@@ -80,16 +80,8 @@ void NetworkClient::launch_threads(State* state,
     float period_engine = 1.0 / 30;
     while (!end) {
       Command* command = engine->getCommand();
-
-      if (command) {
-        if (!command->getType().compare("MoveCommands") ||
-            !command->getType().compare("AttackCommand")) {
-          engine->runCommand();
-        } else {
-          putServerCommand(command);
-          engine->clearCommand();
-        }
-      }
+      putServerCommand(command);
+      engine->clearCommand();
 
       // execute command from server - start
       if (!(clk_engine.getElapsedTime().asSeconds() >= period_engine)) {
@@ -170,6 +162,16 @@ void NetworkClient::launch_threads(State* state,
         int xv = ((int)state->getMainCharacter()->getI() / n) * n,
             yv = ((int)state->getMainCharacter()->getJ() / m) * m;
 
+        Character* maincharacter = state->getMainCharacter();
+        do {
+          i = xv + n / 6 + rand() % (2 * n / 3);
+          j = yv + 2 * m / 3 + rand() % (m / 4);
+        } while (state->getCell(i, j)->getContent() != nothing);
+        engine->addCommand(new MoveCommand(state, maincharacter,
+                                           maincharacter->getI(),
+                                           maincharacter->getJ()));
+        engine->addCommand(new MoveCommand(state, maincharacter, i, j));
+        state->getCell(i, j)->setContent(perso);
         for (auto oppchars : fight->getTeam(1)->getCharacters(nb)) {
           // if (!(oppchars->getI() >= xv + n / 6 &&
           //       oppchars->getI() < xv + n / 6 + 2 * n / 3 &&
@@ -191,9 +193,8 @@ void NetworkClient::launch_threads(State* state,
             ai->getTurnOrder(fight->getFightingCharacters(1));
         for (auto c : vect) {
           while (ai->run(c)) {
-            while (commands.size()) {
-              while (engine->getSize()) {
-              }
+            while (engine->getSize() || commands.size()) {
+              // cout << engine->getSize() << " " << commands.size() << endl;
             }
           }
         }
